@@ -1,0 +1,6 @@
+{
+    "meta.title": "Painel de controle",
+    "noWidgets": "Adicione um novo widget ao seu painel de controle",
+    "dashboardHeader.new": "Novo",
+    "dashboard.newWidget": "widget {label}"
+}
