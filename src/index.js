@@ -27,7 +27,8 @@ class App extends React.Component {
     return (
       <Suspense fallback={null}>
         <Switch>
-          <Route component={DashboardRoute} path={`${path}`} />
+          <Route component={DashboardRoute} path={`${path}/:dashName`} />
+          <Route component={DashboardRoute} path={path} />
         </Switch>
       </Suspense>
     );
