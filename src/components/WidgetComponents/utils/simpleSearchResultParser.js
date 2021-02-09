@@ -1,5 +1,23 @@
 import { get } from 'lodash';
 
+/*
+  Takes in the fetched data, and returns an object of the shape:
+  [
+    {
+      <column_name_1>: {
+        value: foo,
+        label:bar
+      },
+      <column_name_2>: {
+        value: baz,
+        label:bat
+      },
+      ...
+    },
+    ...
+  ]
+*/
+
 const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
   const { resultColumns } = widgetConf;
   const { resultColumns: defResultColumns } = widgetDef;
@@ -8,7 +26,7 @@ const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
 
   // First combine the configured result column data with the widgetdef result column data
   const enrichedResultColumns = resultColumns.map(rc => {
-    const drc = defResultColumns.find(c => c.name === rc.column)
+    const drc = defResultColumns.find(c => c.name === rc.name)
     const returnCol = {...drc}
     if(rc.label) {
       returnCol.label = rc.label

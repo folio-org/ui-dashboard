@@ -17,9 +17,9 @@ const SimpleSearch = ({
   const displayData = resultParser(data, widgetDef, widgetConf)
 
   return (
-    <div>
+    <pre>
       {JSON.stringify(displayData, null, 2)}
-    </div>
+    </pre>
   );
 }
 

@@ -15,7 +15,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
   let pathString = `${baseUrl}`
 
   if (filterColumns) {
-    const groupedFilters = groupBy(filterColumns, 'column')
+    const groupedFilters = groupBy(filterColumns, 'name')
 
     // Start building the filterString
     let filterString = "?"
