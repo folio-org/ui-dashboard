@@ -20,7 +20,11 @@ import { get } from 'lodash';
 
 const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
   const { resultColumns } = widgetConf;
-  const { resultColumns: defResultColumns } = widgetDef;
+  const { 
+    results: {
+      columns: defResultColumns = []
+    }
+  } = widgetDef;
   // This again assumes that all of the result columns in the widgetinstance are coming from the widgetDef.
   // If they're not there it'll cause issues.
 
