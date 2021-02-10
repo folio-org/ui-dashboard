@@ -21,19 +21,18 @@ const DashboardRoute = ({
     }
   }
 }) => {
-
   // WHILE LOADING DATA JUST RETURN OUT
   if (!dashboards.length) {
-    return null
+    return null;
   }
-  const [dashName, setDashName] = useState(params.dashName ?? "DEFAULT")
+  const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
 
   if (location.pathname !== `/dashboard/${dashName}`) {
     history.push(`/dashboard/${dashName}${location.search}`);
   }
 
   // Check dashboard exists
-  const dash = dashboards.find(d => d.name === params.dashName)
+  const dash = dashboards.find(d => d.name === params.dashName);
   if (dash) {
     return (
       <Dashboard
@@ -43,7 +42,7 @@ const DashboardRoute = ({
     );
   }
   // TODO Clean up this error screen
-  return <p> No dash with that name </p>
+  return <p> No dash with that name </p>;
 };
 
 export default stripesConnect(DashboardRoute);
@@ -61,8 +60,8 @@ DashboardRoute.manifest = Object.freeze({
         dashboards: {
           records : dashboards = []
         } = {}
-      }} = props;
-      const dash = dashboards.find(d => d.name === params.dashName)
+      } } = props;
+      const dash = dashboards.find(d => d.name === params.dashName);
       return dash ? `servint/dashboard/${dash.id}` : null;
     },
     shouldRefresh: () => true,

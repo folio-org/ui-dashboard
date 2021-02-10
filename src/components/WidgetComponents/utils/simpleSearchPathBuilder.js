@@ -14,21 +14,21 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
 
   // Start building the pathString with the baseUrl
   let pathString = baseUrl;
-  if (baseUrl.charAt(0) === "/") {
+  if (baseUrl.charAt(0) === '/') {
     // This allows the baseUrl to be defined as either "/erm/agreements" or "erm/agreements"
     pathString = baseUrl.substring(1);
   }
 
-  const { filterColumns, sortColumn: { 0: sortColumn } = [] } = widgetConf
+  const { filterColumns, sortColumn: { 0: sortColumn } = [] } = widgetConf;
   if (filterColumns || sortColumn) {
-    pathString += "?"
+    pathString += '?';
   }
 
   if (filterColumns) {
-    const groupedFilters = groupBy(filterColumns, 'name')
+    const groupedFilters = groupBy(filterColumns, 'name');
 
     // Start building the filterString
-    let filterString = ""
+    let filterString = '';
     /*
       This will return an object of the form:
       {
@@ -51,45 +51,45 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
         ]
       }
     */
-    Object.keys(groupedFilters).forEach ((f, index) => {
-      let specificFilterString = "";
+    Object.keys(groupedFilters).forEach((f, index) => {
+      let specificFilterString = '';
       if (index !== 0) {
-        specificFilterString = `&filters=`
+        specificFilterString = '&filters=';
       } else {
-        specificFilterString = "filters="
+        specificFilterString = 'filters=';
       }
-      
-      const filter = groupedFilters[f]
+
+      const filter = groupedFilters[f];
       // This assumes that if a filterColumn exists then that column will always be in the widgetDef
       // We need to implement some kind of auto-schema check on the backend to support this
-      const filterPath = (defFilterColumns.find(fc => fc.name === f))?.filterPath
-      filter.forEach ((sf, index) => {
+      const filterPath = (defFilterColumns.find(fc => fc.name === f))?.filterPath;
+      filter.forEach((sf, index) => {
         // TODO add support for other comparitors
-        specificFilterString += `${filterPath}=${sf.filterValue}`
+        specificFilterString += `${filterPath}=${sf.filterValue}`;
         if (index !== filter.length - 1) {
-          specificFilterString += "||"
+          specificFilterString += '||';
         }
-      })
+      });
       filterString += specificFilterString;
     });
-    pathString += filterString
+    pathString += filterString;
   }
 
   if (sortColumn) {
     // Start building the sortString
-    let sortString= "";
+    let sortString = '';
     if (filterColumns) {
-      sortString += "&"
+      sortString += '&';
     }
-    sortString += "sort="
+    sortString += 'sort=';
     // At this point we should have either '&sort=' or 'sort='
     const sortPath = (defSortColumns.find(sc => sc.name === sortColumn.name))?.sortPath;
     sortString += `${sortPath};${sortColumn.sortType}`;
 
-    pathString += sortString
+    pathString += sortString;
   }
 
   return pathString;
-}
+};
 
-export default simpleSearchPathBuilder
+export default simpleSearchPathBuilder;

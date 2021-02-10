@@ -20,7 +20,7 @@ import { get } from 'lodash';
 
 const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
   const { resultColumns } = widgetConf;
-  const { 
+  const {
     results: {
       columns: defResultColumns = []
     }
@@ -30,29 +30,29 @@ const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
 
   // First combine the configured result column data with the widgetdef result column data
   const enrichedResultColumns = resultColumns.map(rc => {
-    const drc = defResultColumns.find(c => c.name === rc.name)
-    const returnCol = {...drc}
-    if(rc.label) {
-      returnCol.label = rc.label
+    const drc = defResultColumns.find(c => c.name === rc.name);
+    const returnCol = { ...drc };
+    if (rc.label) {
+      returnCol.label = rc.label;
     }
     return returnCol;
   });
 
   // Then use those to reduce the incoming data to just display what's needed
   const returnData = data.map(d => {
-    const returnDatum = {}
+    const returnDatum = {};
     enrichedResultColumns.forEach(erc => {
-      const result = get(d, erc.accessPath)
+      const result = get(d, erc.accessPath);
       returnDatum[erc.name] = {
         value: result,
         label: erc.label
-      }
+      };
     });
     return (
       returnDatum
     );
-  })
+  });
   return (returnData);
-}
+};
 
-export default simpleSearchResultParser
+export default simpleSearchResultParser;

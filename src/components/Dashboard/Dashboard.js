@@ -10,14 +10,14 @@ import { AppIcon } from '@folio/stripes/core';
 import DashboardHeader from '../DashboardHeader';
 import NoWidgets from '../NoWidgets';
 
-import SimpleSearch from '../WidgetComponents/SimpleSearch'
+import SimpleSearch from '../WidgetComponents/SimpleSearch';
 
 import css from './Dashboard.css';
 
 const propTypes = {
 };
 
-const Dashboard = ({dashboard}) => {
+const Dashboard = ({ dashboard }) => {
   const widgetOptions = [
     {
       name: 'agreementList',
@@ -76,9 +76,9 @@ const Dashboard = ({dashboard}) => {
   };
 
   const getWidgetComponent = (widget) => {
-    const widgetType = widget.definition.type.name
+    const widgetType = widget.definition.type.name;
     switch (widgetType) {
-      case "SimpleSearch":
+      case 'SimpleSearch':
         return (
           <SimpleSearch
             widget={widget}
@@ -86,14 +86,14 @@ const Dashboard = ({dashboard}) => {
         );
         break;
       default:
-        console.error("No widget component for type: ", widgetType);
+        console.error('No widget component for type: ', widgetType);
         break;
     }
     return null;
-  } 
+  };
 
   const dashboardContents = () => {
-    const widgetList = dashboard?.widgets
+    const widgetList = dashboard?.widgets;
     if (!widgetList?.length) {
       return <NoWidgets />;
     }
@@ -101,7 +101,7 @@ const Dashboard = ({dashboard}) => {
       <div className={css.widgetContainer}>
         {
           // TODO WEIGHT NOT YET IMPLEMENTED
-          /*.sort(
+          /* .sort(
           (a, b) => {
             if (a.weight > b.weight) return 1;
             else if (b.weight > a.weight) return -1;
@@ -124,7 +124,7 @@ const Dashboard = ({dashboard}) => {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
 
