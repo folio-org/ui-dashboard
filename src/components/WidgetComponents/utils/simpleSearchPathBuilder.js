@@ -64,9 +64,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
       // We need to implement some kind of auto-schema check on the backend to support this
       const filterPath = (defFilterColumns.find(fc => fc.name === f))?.filterPath;
 
-      filter.forEach((sf, index) => {
+      filter.forEach((sf, ind) => {
         specificFilterString += `${filterPath}${sf.comparator}${sf.filterValue}`;
-        if (index !== filter.length - 1) {
+        if (ind !== filter.length - 1) {
           // This doesn't work as "||", it needs encoded value
           specificFilterString += '%7C%7C';
         }

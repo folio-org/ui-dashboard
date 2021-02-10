@@ -25,6 +25,7 @@ export default function DashboardHeader({ widgetOptions }) {
         buttonStyle="dropdownItem"
         id={`widget-${widget.name}`}
         marginBottom0
+        // TODO remove this alert
         onClick={() => alert(`Create new ${widget.label} widget`)}
       >
         <Icon

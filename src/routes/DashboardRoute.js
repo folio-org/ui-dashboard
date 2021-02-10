@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { stripesConnect } from '@folio/stripes/core';
+import PropTypes from 'prop-types';
 
-import Dashboard from '../components/Dashboard/Dashboard.js';
+import Dashboard from '../components/Dashboard/Dashboard';
 
 
 const DashboardRoute = ({
@@ -21,11 +22,12 @@ const DashboardRoute = ({
     }
   }
 }) => {
+  const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
+
   // WHILE LOADING DATA JUST RETURN OUT
   if (!dashboards.length) {
     return null;
   }
-  const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
 
   if (location.pathname !== `/dashboard/${dashName}`) {
     history.push(`/dashboard/${dashName}${location.search}`);
@@ -68,3 +70,22 @@ DashboardRoute.manifest = Object.freeze({
     throwErrors: false
   },
 });
+
+DashboardRoute.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      dashName: PropTypes.string
+    })
+  }).isRequired,
+  resources: PropTypes.shape({
+    dashboards: PropTypes.object,
+    dashboard: PropTypes.object
+  })
+};

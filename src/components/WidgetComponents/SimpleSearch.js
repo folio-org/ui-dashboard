@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
 import pathBuilder from './utils/simpleSearchPathBuilder';
 import resultParser from './utils/simpleSearchResultParser';
@@ -37,3 +38,15 @@ SimpleSearch.manifest = Object.freeze({
     throwErrors: false
   }
 });
+
+SimpleSearch.propTypes = {
+  resources: PropTypes.shape({
+    data: PropTypes.object
+  }).isRequired,
+  widget: PropTypes.shape({
+    configuration: PropTypes.string.isRequired,
+    definition: PropTypes.shape({
+      definition: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
+};

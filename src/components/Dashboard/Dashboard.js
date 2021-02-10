@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Badge,
   Card,
   Headline
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+// import { AppIcon } from '@folio/stripes/core';
 
 import DashboardHeader from '../DashboardHeader';
 import NoWidgets from '../NoWidgets';
@@ -15,6 +16,7 @@ import SimpleSearch from '../WidgetComponents/SimpleSearch';
 import css from './Dashboard.css';
 
 const propTypes = {
+  dashboard: PropTypes.object
 };
 
 const Dashboard = ({ dashboard }) => {
@@ -32,6 +34,21 @@ const Dashboard = ({ dashboard }) => {
       label: 'RSS'
     },
   ];
+
+  const getWidgetComponent = (widget) => {
+    const widgetType = widget.definition.type.name;
+    switch (widgetType) {
+      case 'SimpleSearch':
+        return (
+          <SimpleSearch
+            widget={widget}
+          />
+        );
+      default:
+        // TODO add real error here
+        return `No widget component for type: ${widgetType}`;
+    }
+  };
 
   const renderWidget = (widget) => {
     return (
@@ -73,23 +90,6 @@ const Dashboard = ({ dashboard }) => {
         </Card>
       </div>
     );
-  };
-
-  const getWidgetComponent = (widget) => {
-    const widgetType = widget.definition.type.name;
-    switch (widgetType) {
-      case 'SimpleSearch':
-        return (
-          <SimpleSearch
-            widget={widget}
-          />
-        );
-        break;
-      default:
-        console.error('No widget component for type: ', widgetType);
-        break;
-    }
-    return null;
   };
 
   const dashboardContents = () => {
