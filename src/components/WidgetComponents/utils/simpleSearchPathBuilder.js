@@ -6,7 +6,10 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     baseUrl,
     filters: {
       columns: defFilterColumns = []
-    }
+    } = {},
+    sort: {
+      columns: defSortColumns = [],
+    } = {},
   } = widgetDef;
 
   // Start building the pathString with the baseUrl
@@ -16,13 +19,16 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     pathString = baseUrl.substring(1);
   }
 
-  const { filterColumns } = widgetConf
+  const { filterColumns, sortColumn: { 0: sortColumn } = [] } = widgetConf
+  if (filterColumns || sortColumn) {
+    pathString += "?"
+  }
 
   if (filterColumns) {
     const groupedFilters = groupBy(filterColumns, 'name')
 
     // Start building the filterString
-    let filterString = "?"
+    let filterString = ""
     /*
       This will return an object of the form:
       {
@@ -46,9 +52,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
       }
     */
     Object.keys(groupedFilters).forEach ((f, index) => {
-      let specificFilterString;
+      let specificFilterString = "";
       if (index !== 0) {
-        specificFilterString = "&filters="
+        specificFilterString = `&filters=`
       } else {
         specificFilterString = "filters="
       }
@@ -68,6 +74,21 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     });
     pathString += filterString
   }
+
+  if (sortColumn) {
+    // Start building the sortString
+    let sortString= "";
+    if (filterColumns) {
+      sortString += "&"
+    }
+    sortString += "sort="
+    // At this point we should have either '&sort=' or 'sort='
+    const sortPath = (defSortColumns.find(sc => sc.name === sortColumn.name))?.sortPath;
+    sortString += `${sortPath};${sortColumn.sortType}`;
+
+    pathString += sortString
+  }
+
   return pathString;
 }
 
