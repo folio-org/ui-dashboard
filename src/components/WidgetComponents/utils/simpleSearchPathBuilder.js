@@ -63,11 +63,12 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
       // This assumes that if a filterColumn exists then that column will always be in the widgetDef
       // We need to implement some kind of auto-schema check on the backend to support this
       const filterPath = (defFilterColumns.find(fc => fc.name === f))?.filterPath;
+
       filter.forEach((sf, index) => {
-        // TODO add support for other comparitors
-        specificFilterString += `${filterPath}=${sf.filterValue}`;
+        specificFilterString += `${filterPath}${sf.comparator}${sf.filterValue}`;
         if (index !== filter.length - 1) {
-          specificFilterString += '||';
+          // This doesn't work as "||", it needs encoded value
+          specificFilterString += '%7C%7C';
         }
       });
       filterString += specificFilterString;
