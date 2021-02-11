@@ -20,21 +20,6 @@ const propTypes = {
 };
 
 const Dashboard = ({ dashboard }) => {
-  const widgetOptions = [
-    {
-      name: 'agreementList',
-      label: 'Agreement list'
-    },
-    {
-      name: 'licenseList',
-      label: 'License list'
-    },
-    {
-      name: 'rss',
-      label: 'RSS'
-    },
-  ];
-
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
@@ -116,9 +101,7 @@ const Dashboard = ({ dashboard }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader
-        widgetOptions={widgetOptions}
-      />
+      <DashboardHeader dashboard={dashboard} />
       <div className={css.dashboardContent}>
         {dashboardContents()}
       </div>

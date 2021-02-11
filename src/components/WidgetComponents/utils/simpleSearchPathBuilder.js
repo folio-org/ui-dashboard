@@ -20,9 +20,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
   }
 
   const { filterColumns, sortColumn: { 0: sortColumn } = [] } = widgetConf;
-  if (filterColumns || sortColumn) {
-    pathString += '?';
-  }
+  pathString += '?';
 
   if (filterColumns) {
     const groupedFilters = groupBy(filterColumns, 'name');
@@ -90,6 +88,13 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     pathString += sortString;
   }
 
+  if (filterColumns || sortColumn) {
+    pathString += "&stats=true"
+  } else {
+    pathString += "stats=true"
+  }
+
+  
   return pathString;
 };
 

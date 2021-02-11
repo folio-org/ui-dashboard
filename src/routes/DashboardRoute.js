@@ -63,6 +63,7 @@ DashboardRoute.manifest = Object.freeze({
           records : dashboards = []
         } = {}
       } } = props;
+      // For now we're assuming a user won't have many dashboards, so this search can be done on the frontend
       const dash = dashboards.find(d => d.name === params.dashName);
       return dash ? `servint/dashboard/${dash.id}` : null;
     },

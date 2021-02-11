@@ -18,13 +18,20 @@ import { get } from 'lodash';
   ]
 */
 
-const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
-  const { resultColumns } = widgetConf;
-  const {
+const simpleSearchResultParser = ({
+  data: {
+    results = []
+  } = {},
+  widgetConf: {
+    resultColumns= []
+  } = {},
+  widgetDef: {
     results: {
       columns: defResultColumns = []
-    }
-  } = widgetDef;
+    } = {}
+  } = {}
+}) => {
+
   // This again assumes that all of the result columns in the widgetinstance are coming from the widgetDef.
   // If they're not there it'll cause issues.
 
@@ -39,7 +46,7 @@ const simpleSearchResultParser = (data, widgetDef, widgetConf) => {
   });
 
   // Then use those to reduce the incoming data to just display what's needed
-  const returnData = data.map(d => {
+  const returnData = results.map(d => {
     const returnDatum = {};
     enrichedResultColumns.forEach(erc => {
       const result = get(d, erc.accessPath);
