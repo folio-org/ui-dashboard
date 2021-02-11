@@ -3,5 +3,7 @@
   "noWidgets": "Add a new widget to your dashboard",
   "dashboardHeader.new": "New",
 
-  "dashboard.newWidget": "{label} widget"
+  "dashboard.newWidget": "{label} widget",
+
+  "widgetForm.createWidget": "Create widget"
 }

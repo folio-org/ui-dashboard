@@ -33,6 +33,10 @@ const DashboardRoute = ({
     history.push(`/dashboard/${dashName}${location.search}`);
   }
 
+  const handleCreate = () => {
+    history.push(`${location.pathname}/create${location.search}`);
+  }
+
   // Check dashboard exists
   const dash = dashboards.find(d => d.name === params.dashName);
   if (dash) {
@@ -40,6 +44,7 @@ const DashboardRoute = ({
       <Dashboard
         dashboard={dashboard}
         onChangeDash={setDashName}
+        onCreate={handleCreate}
       />
     );
   }
@@ -58,14 +63,10 @@ DashboardRoute.manifest = Object.freeze({
   dashboard: {
     type: 'okapi',
     path: (_p, params, _r, _s, props) => {
-      const { resources: {
-        dashboards: {
-          records : dashboards = []
-        } = {}
-      } } = props;
-      // For now we're assuming a user won't have many dashboards, so this search can be done on the frontend
-      const dash = dashboards.find(d => d.name === params.dashName);
-      return dash ? `servint/dashboard/${dash.id}` : null;
+      if (props.resources?.dashboards?.records?.length) {
+        return `servint/dashboard/my-dashboards?filters=name=${params.dashName}`;
+      }
+      return null;
     },
     shouldRefresh: () => true,
     throwErrors: false

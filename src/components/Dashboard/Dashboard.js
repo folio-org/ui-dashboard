@@ -19,7 +19,7 @@ const propTypes = {
   dashboard: PropTypes.object
 };
 
-const Dashboard = ({ dashboard }) => {
+const Dashboard = ({ dashboard, onCreate }) => {
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
@@ -101,7 +101,7 @@ const Dashboard = ({ dashboard }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader dashboard={dashboard} />
+      <DashboardHeader onCreate={onCreate}/>
       <div className={css.dashboardContent}>
         {dashboardContents()}
       </div>

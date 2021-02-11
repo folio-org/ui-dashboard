@@ -15,7 +15,7 @@ const propTypes = {
   dashboard: PropTypes.object
 };
 
-export default function DashboardHeader({ dashboard }) {
+export default function DashboardHeader({ onCreate }) {
   return (
     <div className={css.dashboardHeader}>
       <Button
@@ -23,7 +23,7 @@ export default function DashboardHeader({ dashboard }) {
           'buttonStyle': 'primary',
           'marginBottom0': true,
         }}
-        to={`${dashboard?.id}/create`}
+        onClick={onCreate}
       >
         <FormattedMessage id="ui-dashboard.dashboardHeader.new" />
       </Button>
