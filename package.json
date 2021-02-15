@@ -11,7 +11,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage"
   },
@@ -65,7 +65,6 @@
     "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^6.0.0",
     "@folio/stripes-cli": "^1.20.0 || ^1.14.0",
-    "babel-eslint": "^10.0.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^6.2.1",
