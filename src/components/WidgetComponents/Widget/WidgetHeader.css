@@ -1,0 +1,13 @@
+@import '@folio/stripes-components/lib/variables';
+
+.header {
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--bg);
+}
+
+.widgetTitle {
+  flex: 1;
+  margin-bottom: 0;
+  margin-left: var(--gutter-static-one-third);
+}

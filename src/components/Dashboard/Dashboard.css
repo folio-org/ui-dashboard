@@ -44,7 +44,3 @@
   @media (--x-large) { width: 33%; }
   @media (min-width: 1921px) { width: 25%; }
 }
-
-.widgetTitle {
-  margin-left: var(--gutter-static-one-third);
-}

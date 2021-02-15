@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Badge,
-  Card,
-  Headline
-} from '@folio/stripes/components';
-// import { AppIcon } from '@folio/stripes/core';
-
 import DashboardHeader from '../DashboardHeader';
 import NoWidgets from '../NoWidgets';
 
 import SimpleSearch from '../WidgetComponents/SimpleSearch';
+import Widget from '../WidgetComponents/Widget';
 
 import css from './Dashboard.css';
 
@@ -38,41 +32,11 @@ const Dashboard = ({ dashboard, onCreate }) => {
   const renderWidget = (widget) => {
     return (
       <div className={css.widget}>
-        <Card
-          cardStyle="positive"
-          headerStart={(
-
-            // TODO AppName not implemented, no way of knowing what Icon to display
-            /* <AppIcon
-              app={widget.appName}
-              size="medium"
-            >
-              <Headline
-                className={css.widgetTitle}
-                margin="none"
-                size="large"
-              >
-                {widget.name}
-              </Headline>
-            </AppIcon> */
-            <Headline
-              className={css.widgetTitle}
-              margin="none"
-              size="large"
-            >
-              {widget.name}
-            </Headline>
-          )
-          }
-          headerEnd={
-            <Badge>
-              23
-            </Badge>
-          }
-          roundedBorder
+        <Widget
+          widget={widget}
         >
           {getWidgetComponent(widget)}
-        </Card>
+        </Widget>
       </div>
     );
   };
