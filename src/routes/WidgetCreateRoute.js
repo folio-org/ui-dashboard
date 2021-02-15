@@ -80,12 +80,12 @@ const WidgetCreateRoute = ({
 
   return (
     <Form
-      onSubmit={doTheSubmit}
       // initialValues={initialValues}
       enableReinitialize
       keepDirtyOnReinitialize
-      subscription={{ value: true }}
       navigationCheck
+      onSubmit={doTheSubmit}
+      subscription={{ value: true }}
     >
       {({ handleSubmit }) => {
         return (
