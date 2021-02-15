@@ -1,0 +1,6 @@
+{
+    "meta.title": "仪表盘",
+    "noWidgets": "向仪表盘添加新的小部件",
+    "dashboardHeader.new": "新建",
+    "dashboard.newWidget": "{label}小部件"
+}
