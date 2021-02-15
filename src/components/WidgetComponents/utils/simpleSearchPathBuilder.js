@@ -89,12 +89,12 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
   }
 
   if (filterColumns || sortColumn) {
-    pathString += "&stats=true"
+    pathString += '&stats=true';
   } else {
-    pathString += "stats=true"
+    pathString += 'stats=true';
   }
 
-  
+
   return pathString;
 };
 

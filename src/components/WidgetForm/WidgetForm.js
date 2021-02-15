@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
 
 import { Field } from 'react-final-form';
@@ -14,6 +16,18 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+const propTypes = {
+  data: PropTypes.shape({
+    widgetDefinitions: PropTypes.array
+  }).isRequired,
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
+  }),
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool
+};
+
 const WidgetForm = ({
   data: {
     widgetDefinitions = []
@@ -25,7 +39,6 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
-  
   // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
   const renderPaneFooter = () => {
     return (
@@ -34,7 +47,7 @@ const WidgetForm = ({
           <Button
             buttonStyle="primary mega"
             disabled={pristine || submitting}
-            id='clickable-create-widget'
+            id="clickable-create-widget"
             marginBottom0
             onClick={onSubmit}
             type="submit"
@@ -54,11 +67,11 @@ const WidgetForm = ({
         )}
       />
     );
-  }
+  };
 
   const selectifiedWidgetDefs = [
-    {value: '', label: ''},
-    ...widgetDefinitions.map(wd => ({value: wd.id, label: wd.name}))
+    { value: '', label: '' },
+    ...widgetDefinitions.map(wd => ({ value: wd.id, label: wd.name }))
   ];
 
   return (
@@ -77,7 +90,7 @@ const WidgetForm = ({
             />
           </Col>
           <Col xs={6}>
-            <Field 
+            <Field
               component={Select}
               dataOptions={selectifiedWidgetDefs}
               name="definition.id"
@@ -87,6 +100,8 @@ const WidgetForm = ({
       </Pane>
     </Paneset>
   );
-}
+};
+
+WidgetForm.propTypes = propTypes;
 
 export default WidgetForm;

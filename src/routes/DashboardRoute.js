@@ -35,7 +35,7 @@ const DashboardRoute = ({
 
   const handleCreate = () => {
     history.push(`${location.pathname}/create${location.search}`);
-  }
+  };
 
   // Check dashboard exists
   const dash = dashboards.find(d => d.name === params.dashName);

@@ -4,15 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
-  Dropdown,
-  DropdownMenu,
-  Icon
 } from '@folio/stripes/components';
 
 import css from './DashboardHeader.css';
 
 const propTypes = {
-  dashboard: PropTypes.object
+  onCreate: PropTypes.func
 };
 
 export default function DashboardHeader({ onCreate }) {

@@ -8,8 +8,8 @@ const SimpleSearch = ({
   resources: {
     data: {
       records: {
-      0: data = {}
-    } = []
+        0: data = {}
+      } = []
     } = {}
   },
   widget
@@ -17,7 +17,7 @@ const SimpleSearch = ({
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetDef = JSON.parse(widget.definition.definition);
   const widgetConf = JSON.parse(widget.configuration);
-  const displayData = resultParser({data, widgetDef, widgetConf});
+  const displayData = resultParser({ data, widgetDef, widgetConf });
 
   return (
     <pre>

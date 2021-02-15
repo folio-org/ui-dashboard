@@ -10,7 +10,8 @@ import Widget from '../WidgetComponents/Widget';
 import css from './Dashboard.css';
 
 const propTypes = {
-  dashboard: PropTypes.object
+  dashboard: PropTypes.object,
+  onCreate: PropTypes.func.isRequired
 };
 
 const Dashboard = ({ dashboard, onCreate }) => {
@@ -65,7 +66,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader onCreate={onCreate}/>
+      <DashboardHeader onCreate={onCreate} />
       <div className={css.dashboardContent}>
         {dashboardContents()}
       </div>

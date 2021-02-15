@@ -24,74 +24,73 @@ const WidgetCreateRoute = ({
     } = {},
   }
 }) => {
+  const doTheSubmit = (widget) => {
+    const dashId = dashboard.id;
 
-  const handleSubmit = (widget) => {
-    const dashId = dashboard.id
-    
     // TODO this is just a hard coded configuration for now
     const conf = JSON.stringify({
       resultColumns:[
         {
-          name:"agreementName",
-          label:"Overwritten column label"
+          name:'agreementName',
+          label:'Overwritten column label'
         },
         {
-          name:"startDate"
+          name:'startDate'
         }
       ],
       filterColumns:[
         {
-          comparator: "==",
-          name:"agreementStatus",
-          filterValue:"active"
+          comparator: '==',
+          name:'agreementStatus',
+          filterValue:'active'
         },
         {
-          comparator: "==",
-          name:"agreementStatus",
-          filterValue:"closed"
+          comparator: '==',
+          name:'agreementStatus',
+          filterValue:'closed'
         },
         {
-          comparator: "<",
-          name: "startDate",
-          filterValue: "2021-02-21"
+          comparator: '<',
+          name: 'startDate',
+          filterValue: '2021-02-21'
         }
       ],
       sortColumn:[
         {
-          name:"agreementName",
-          sortType:"desc"
+          name:'agreementName',
+          sortType:'desc'
         }
       ]
-    })
+    });
 
-    const submitValue = {...widget, owner: { id: dashId }, configuration: conf}
+    const submitValue = { ...widget, owner: { id: dashId }, configuration: conf };
 
     return mutator.widgetInst
       .POST(submitValue)
       .then(() => {
         history.push(`dashboard/${params.dashName}`);
       });
-  }
+  };
 
   const handleClose = () => {
     history.push(`dashboard/${params.dashName}${location.search}`);
-  }
+  };
 
   // TODO have this form move onto page 2 instead of submitting hardcoded widget
 
   return (
     <Form
-      onSubmit={handleSubmit}
-      //initialValues={initialValues}
+      onSubmit={doTheSubmit}
+      // initialValues={initialValues}
       enableReinitialize
       keepDirtyOnReinitialize
       subscription={{ value: true }}
       navigationCheck
     >
-      {({ handleSubmit, mutators }) => {
+      {({ handleSubmit }) => {
         return (
           <form onSubmit={handleSubmit}>
-            <WidgetForm 
+            <WidgetForm
               data={{
                 widgetDefinitions
               }}
@@ -147,7 +146,11 @@ WidgetCreateRoute.propTypes = {
       dashName: PropTypes.string
     })
   }).isRequired,
+  mutator: PropTypes.object,
   resources: PropTypes.shape({
+    dashboard: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    }).isRequired,
     widgetDefs: PropTypes.object
   })
 };

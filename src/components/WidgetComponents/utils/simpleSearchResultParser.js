@@ -23,7 +23,7 @@ const simpleSearchResultParser = ({
     results = []
   } = {},
   widgetConf: {
-    resultColumns= []
+    resultColumns = []
   } = {},
   widgetDef: {
     results: {
@@ -31,7 +31,6 @@ const simpleSearchResultParser = ({
     } = {}
   } = {}
 }) => {
-
   // This again assumes that all of the result columns in the widgetinstance are coming from the widgetDef.
   // If they're not there it'll cause issues.
 

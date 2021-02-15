@@ -9,12 +9,11 @@ const Widget = ({
   children,
   widget
 }) => {
-
   return (
     <div
       className={css.card}
     >
-      <WidgetHeader name={widget.name}/>
+      <WidgetHeader name={widget.name} />
       <div
         className={css.body}
       >
@@ -22,7 +21,7 @@ const Widget = ({
       </div>
     </div>
   );
-}
+};
 
 Widget.propTypes = {
   children: PropTypes.oneOfType([
@@ -32,6 +31,6 @@ Widget.propTypes = {
   widget: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired
-}
+};
 
 export default Widget;
