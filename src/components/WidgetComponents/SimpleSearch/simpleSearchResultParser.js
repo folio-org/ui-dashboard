@@ -49,10 +49,7 @@ const simpleSearchResultParser = ({
     const returnDatum = {};
     enrichedResultColumns.forEach(erc => {
       const result = get(d, erc.accessPath);
-      returnDatum[erc.name] = {
-        value: result,
-        label: erc.label
-      };
+      returnDatum[erc.label] = result;
     });
     return (
       returnDatum

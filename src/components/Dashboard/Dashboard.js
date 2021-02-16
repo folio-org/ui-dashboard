@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DashboardHeader from '../DashboardHeader';
-import NoWidgets from '../NoWidgets';
+import DashboardHeader from './DashboardHeader';
+import NoWidgets from './NoWidgets';
 
-import SimpleSearch from '../WidgetComponents/SimpleSearch';
+import SimpleSearch from '../WidgetComponents/SimpleSearch/SimpleSearch';
 import Widget from '../WidgetComponents/Widget';
 
 import css from './Dashboard.css';

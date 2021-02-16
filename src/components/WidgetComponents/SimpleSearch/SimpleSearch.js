@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
-import pathBuilder from './utils/simpleSearchPathBuilder';
-import resultParser from './utils/simpleSearchResultParser';
+import pathBuilder from './simpleSearchPathBuilder';
+import resultParser from './simpleSearchResultParser';
+
+import SimpleTable from '../SimpleTable';
 
 const SimpleSearch = ({
   resources: {
@@ -20,9 +22,10 @@ const SimpleSearch = ({
   const displayData = resultParser({ data, widgetDef, widgetConf });
 
   return (
-    <pre>
+    <SimpleTable/>
+/*     <pre>
       {JSON.stringify(displayData, null, 2)}
-    </pre>
+    </pre> */
   );
 };
 
