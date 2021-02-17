@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useMemo } from "react";
 import PropTypes from 'prop-types';
-import { stripesConnect } from '@folio/stripes/core';
 import pathBuilder from './simpleSearchPathBuilder';
-import resultParser from './simpleSearchResultParser';
+import columnParser from './simpleSearchColumnParser';
 
 import SimpleTable from '../SimpleTable';
 
 const SimpleSearch = ({
   resources: {
-    data: {
+    simple_search_data: {
       records: {
         0: data = {}
       } = []
@@ -19,27 +18,24 @@ const SimpleSearch = ({
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetDef = JSON.parse(widget.definition.definition);
   const widgetConf = JSON.parse(widget.configuration);
-  const displayData = resultParser({ data, widgetDef, widgetConf });
+  const columns = useMemo(() => columnParser({ widgetDef, widgetConf }), [widgetDef, widgetConf]);
 
   return (
-    <SimpleTable/>
-/*     <pre>
-      {JSON.stringify(displayData, null, 2)}
-    </pre> */
+    <SimpleTable columns={columns} data={data?.results || []}/>
   );
 };
 
-export default stripesConnect(SimpleSearch);
+export default SimpleSearch;
 
 SimpleSearch.manifest = Object.freeze({
-  data: {
+  simple_search_data: {
     type: 'okapi',
     path: (_p, _q, _r, _s, props) => {
       const widgetDef = JSON.parse(props.widget.definition.definition);
       const widgetConf = JSON.parse(props.widget.configuration);
       return pathBuilder(widgetDef, widgetConf);
     },
-    shouldRefresh: () => true,
+    shouldRefresh: () => false,
     throwErrors: false
   }
 });

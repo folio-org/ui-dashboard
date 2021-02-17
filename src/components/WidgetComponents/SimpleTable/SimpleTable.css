@@ -1,0 +1,38 @@
+@import '@folio/stripes-components/lib/variables.css';
+ 
+.tableContainer { 
+  height: 100%;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.table {
+  display: inline-block;
+  border-spacing: 0;
+}
+
+.oddRow {
+  background-color: var(--color-fill-table-row-odd);
+}
+
+.evenRow {
+  background-color: var(--color-fill-table-row-even);
+}
+
+.th,.td {
+  margin: 0;
+  padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+  border-right: 1px solid var(--color-border-p2);
+
+  &:last-child {
+    border-right: 0;
+  }
+}
+
+  .headerCell {
+    margin: 0;
+    padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+    font-weight: var(--text-weight-bold);
+    font-size: var(--font-size-medium);
+  }

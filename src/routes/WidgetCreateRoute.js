@@ -32,7 +32,7 @@ const WidgetCreateRoute = ({
       resultColumns:[
         {
           name:'agreementName',
-          label:'Overwritten column label'
+          label:'Label 2'
         },
         {
           name:'startDate'
@@ -45,11 +45,6 @@ const WidgetCreateRoute = ({
           filterValue:'active'
         },
         {
-          comparator: '==',
-          name:'agreementStatus',
-          filterValue:'closed'
-        },
-        {
           comparator: '<',
           name: 'startDate',
           filterValue: '2021-02-21'
@@ -58,7 +53,7 @@ const WidgetCreateRoute = ({
       sortColumn:[
         {
           name:'agreementName',
-          sortType:'desc'
+          sortType:'asc'
         }
       ]
     });

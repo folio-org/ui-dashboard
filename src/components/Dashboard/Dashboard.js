@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from "react";
 import PropTypes from 'prop-types';
 
 import DashboardHeader from './DashboardHeader';
@@ -6,6 +6,8 @@ import NoWidgets from './NoWidgets';
 
 import SimpleSearch from '../WidgetComponents/SimpleSearch/SimpleSearch';
 import Widget from '../WidgetComponents/Widget';
+
+import { useStripes } from '@folio/stripes/core';
 
 import css from './Dashboard.css';
 
@@ -15,12 +17,14 @@ const propTypes = {
 };
 
 const Dashboard = ({ dashboard, onCreate }) => {
+  const stripes = useStripes();
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
       case 'SimpleSearch':
+        const ConnectedSimpleSearch = useMemo(() => stripes.connect(SimpleSearch, { dataKey: widget.id }),[]);
         return (
-          <SimpleSearch
+          <ConnectedSimpleSearch
             widget={widget}
           />
         );

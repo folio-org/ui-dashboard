@@ -1,27 +1,26 @@
-import { get } from 'lodash';
-
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
     {
-      <column_name_1>: {
-        value: foo,
-        label:bar
-      },
-      <column_name_2>: {
-        value: baz,
-        label:bat
-      },
-      ...
+      Header: "Name",
+      accessor: "show.name"
     },
-    ...
+    {
+      Header: "Type",
+      accessor: "show.type"
+    },
+    {
+      Header: "Language",
+      accessor: "show.language"
+    },
+    {
+      Header: "Genre(s)",
+      accessor: "show.genres"
+    }
   ]
 */
 
-const simpleSearchResultParser = ({
-  data: {
-    results = []
-  } = {},
+const simpleSearchColumnParser = ({
   widgetConf: {
     resultColumns = []
   } = {},
@@ -42,20 +41,9 @@ const simpleSearchResultParser = ({
       returnCol.label = rc.label;
     }
     return returnCol;
-  });
+  }).map(erc => {return {Header: erc.label, accessor: erc.accessPath}});
 
-  // Then use those to reduce the incoming data to just display what's needed
-  const returnData = results.map(d => {
-    const returnDatum = {};
-    enrichedResultColumns.forEach(erc => {
-      const result = get(d, erc.accessPath);
-      returnDatum[erc.label] = result;
-    });
-    return (
-      returnDatum
-    );
-  });
-  return (returnData);
+  return enrichedResultColumns;
 };
 
-export default simpleSearchResultParser;
+export default simpleSearchColumnParser;

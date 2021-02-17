@@ -16,7 +16,7 @@ export default function DashboardHeader({ onCreate }) {
   return (
     <div className={css.dashboardHeader}>
       <Button
-        buttonProps={{
+        {...{
           'buttonStyle': 'primary',
           'marginBottom0': true,
         }}

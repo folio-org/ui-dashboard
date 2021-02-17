@@ -9,13 +9,13 @@
   overflow: hidden;
   border-radius: var(--radius);
   margin-bottom: 0;
-  padding: var(--gutter-static-one-third) var(--gutter-static);
-
+  padding: var(--gutter-static);
+  box-shadow: var(--shadow);
 }
 
 .body {
+  margin-bottom: 0;
   width: 100%;
-  padding: var(--gutter-static);
 }
 
 /* Card Styles */
