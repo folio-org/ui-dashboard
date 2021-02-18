@@ -32,7 +32,7 @@ const WidgetCreateRoute = ({
       resultColumns:[
         {
           name:'agreementName',
-          label:'Label 2'
+          label:'Name'
         },
         {
           name:'startDate'
