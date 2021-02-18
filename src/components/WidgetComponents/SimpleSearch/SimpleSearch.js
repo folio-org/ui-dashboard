@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -11,6 +11,7 @@ import { WidgetFooter } from '../Widget';
 import { useStripes } from '@folio/stripes/core';
 
 const DisconnectedSimpleSearch = ({
+  refreshCounter,
   resources: {
     simple_search_data: {
       loadedAt,
@@ -19,8 +20,10 @@ const DisconnectedSimpleSearch = ({
       } = []
     } = {}
   },
+  setRefreshCounter,
   widget
 }) => {
+
   const timestamp = loadedAt ? moment(loadedAt).format("hh:mm a") : '';
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetDef = JSON.parse(widget.definition.definition);
@@ -30,16 +33,27 @@ const DisconnectedSimpleSearch = ({
   return (
     <>
       <SimpleTable columns={columns} data={data?.results || []}/>
-      <WidgetFooter timestamp={timestamp}/>
+      <WidgetFooter timestamp={timestamp} onRefresh={() => setRefreshCounter(refreshCounter + 1)}/>
     </>
   );
 };
 
 // Do the connecting in here to avoid having hooks inside a switch in the Dashboard Component
 const SimpleSearch = ({ widget }) => {
+
+  //Simple state we can update to force component rerender
+  const [refreshCounter, setRefreshCounter] = useState(0);
+
   const stripes = useStripes();
-  const ConnectedSimpleSearch = useMemo(() => stripes.connect(DisconnectedSimpleSearch, {dataKey: widget.id}), [])
-  return <ConnectedSimpleSearch widget={widget}/>;
+  // IMPORTANT -- We need to cache this result to prevent stripes endlessly looping... Feed it refreshCounter as a dep to allow controlled refreshing
+  const ConnectedSimpleSearch = useMemo(() => stripes.connect(DisconnectedSimpleSearch, {dataKey: widget.id}), [refreshCounter])
+  return (
+    <ConnectedSimpleSearch
+      widget={widget}
+      refreshCounter={refreshCounter}
+      setRefreshCounter={setRefreshCounter}
+    />
+  );
 }
 
 export default SimpleSearch;

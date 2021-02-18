@@ -5,14 +5,27 @@ import { IconButton } from '@folio/stripes/components';
 import css from './WidgetFooter.css';
 
 const WidgetFooter = ({
+  centerContent,
   onRefresh,
+  rightContent,
   timestamp
 }) => {
   return (
     <div
-      className={css.footer}
+      className={css.footerContainer}
     >
-      {timestamp}
+      <div className={css.leftContent}>
+        <IconButton
+          icon="replace"
+          onClick={onRefresh}
+        />
+        <div className={css.timestamp}>
+          {timestamp}
+        </div>
+      </div>
+      <div className={css.rightContent}>
+        {rightContent}
+      </div>
     </div>
   );
 };
