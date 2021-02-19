@@ -15,24 +15,24 @@ const WidgetFooter = ({
       className={css.footerContainer}
     >
       <div
-        className={css.leftContent}
         key={`widget-footer-${widgetId}-left-content`}
+        className={css.leftContent}
       >
         <IconButton
+          key={`widget-footer-${widgetId}-refresh-icon`}
           icon="replace"
           onClick={onRefresh}
-          key={`widget-footer-${widgetId}-refresh-icon`}
         />
         <div
-          className={css.timestamp}
           key={`widget-footer-${widgetId}-timestamp`}
+          className={css.timestamp}
         >
           {timestamp}
         </div>
       </div>
       <div
-        className={css.rightContent}
         key={`widget-footer-${widgetId}-right-content`}
+        className={css.rightContent}
       >
         {rightContent}
       </div>
@@ -41,6 +41,10 @@ const WidgetFooter = ({
 };
 
 WidgetFooter.propTypes = {
+  onRefresh: PropTypes.func.isRequired,
+  rightContent: PropTypes.oneOf([PropTypes.node, PropTypes.func]),
+  timestamp: PropTypes.string,
+  widgetId: PropTypes.string.isRequired
 };
 
 export default WidgetFooter;

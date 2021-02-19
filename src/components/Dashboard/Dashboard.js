@@ -68,8 +68,8 @@ const Dashboard = ({ dashboard, onCreate }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader onCreate={onCreate} key={`dashboard-header-${dashboard?.id}`} />
-      <div className={css.dashboardContent} key={`dashboard-content-${dashboard?.id}`}>
+      <DashboardHeader key={`dashboard-header-${dashboard?.id}`} onCreate={onCreate} />
+      <div key={`dashboard-content-${dashboard?.id}`} className={css.dashboardContent}>
         {dashboardContents()}
       </div>
     </div>

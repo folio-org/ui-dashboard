@@ -89,6 +89,7 @@
     "react-dom": "^16.8.6",
     "react-intl": "^5.8.1",
     "react-router-dom": "^5.2.0",
+    "react-query": "^3.9.0",
     "sinon": "^9.0.2"
   },
   "dependencies": {
@@ -112,6 +113,7 @@
     "react": "*",
     "react-dom": "*",
     "react-intl": "^5.8.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-query": "^3.9.0"
   }
 }

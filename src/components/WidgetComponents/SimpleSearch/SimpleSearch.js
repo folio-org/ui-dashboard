@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -14,7 +14,6 @@ import { WidgetFooter } from '../Widget';
 const SimpleSearch = ({
   widget
 }) => {
-
   /*
    * IMPORTANT this code uses react-query.
    * At some point after Stripes' Iris release there is a possibility this will be removed in favour of SWR.
@@ -32,15 +31,15 @@ const SimpleSearch = ({
     ['simpleSearch', widget.id],
     () => ky(pathBuilder(widgetDef, widgetConf)).json()
   );
-  
+
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
-  
+
   return (
     <>
       <SimpleTable
+        key={`simple-table-${widget.id}`}
         columns={columns}
         data={data?.results || []}
-        key={`simple-table-${widget.id}`}
         widgetId={widget.id}
       />
       <WidgetFooter
@@ -60,6 +59,7 @@ SimpleSearch.propTypes = {
     configuration: PropTypes.string.isRequired,
     definition: PropTypes.shape({
       definition: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    id: PropTypes.string
   }).isRequired
 };

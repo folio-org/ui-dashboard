@@ -1,10 +1,10 @@
 import React from 'react';
-import { stripesConnect } from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 
 import { useMutation, useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+
 
 import WidgetForm from '../components/WidgetForm/WidgetForm';
 
@@ -15,9 +15,8 @@ const WidgetCreateRoute = ({
     params
   }
 }) => {
-
   const ky = useOkapiKy();
-  const { data: {0: dashboard = {}} = [] } = useQuery(
+  const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['widgetCreateRoute', 'getDash'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
@@ -26,10 +25,10 @@ const WidgetCreateRoute = ({
     ['widgetCreateRoute', 'getWidgetDefs'],
     () => ky('servint/widgets/definitions').json()
   );
-  
+
   const { mutateAsync: postWidget } = useMutation(
     ['widgetCreateRoute', 'postWidget'],
-    (data) => ky.post('servint/widgets/instances', {json: data})
+    (data) => ky.post('servint/widgets/instances', { json: data })
   );
 
   const doTheSubmit = (widget) => {
@@ -65,10 +64,10 @@ const WidgetCreateRoute = ({
     });
 
     const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
-      postWidget(submitValue)
-        .then(() => {
-          history.push(`dashboard/${params.dashName}`);
-        });
+    postWidget(submitValue)
+      .then(() => {
+        history.push(`dashboard/${params.dashName}`);
+      });
   };
 
   const handleClose = () => {

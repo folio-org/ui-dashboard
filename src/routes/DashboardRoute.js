@@ -13,14 +13,13 @@ const DashboardRoute = ({
     params
   }
 }) => {
-
   /*
    * IMPORTANT this code uses react-query.
    * At some point after Stripes' Iris release there is a possibility this will be removed in favour of SWR.
    * A decision has not been made either way yet, so for now I've gone with react-query.
    * Should that happen, the APIs seem quite similar so porting won't be too difficult.
    */
-  
+
   const ky = useOkapiKy();
   const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
     ['dashboardRoute', 'dashboards'],
@@ -30,12 +29,12 @@ const DashboardRoute = ({
   const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
 
   // Load specific dashboard -- for now will only be DEFAULT
-  const { data: {0: dashboard} = [], isLoading: dashboardLoading } = useQuery(
+  const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
     ['dashboardRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
 
-    
+
   // DASHBOARD DEFAULT SHOULD BE CREATED AUTOMATICALLY BUT MIGHT TAKE MORE THAN ONE RENDER CYCLE
   if (dashboardsLoading || !dashboards.length) {
     return null;
@@ -51,14 +50,14 @@ const DashboardRoute = ({
 
   if (dashboardLoading) {
     // TODO Clean up this loading screen
-    return <p> DASHBOARD LOADING </p>
+    return <p> DASHBOARD LOADING </p>;
   }
 
   if (dashboard) {
     return (
       <Dashboard
-        dashboard={dashboard}
         key={`dashboard-${dashboard.id}`}
+        dashboard={dashboard}
         onChangeDash={setDashName}
         onCreate={handleCreate}
       />

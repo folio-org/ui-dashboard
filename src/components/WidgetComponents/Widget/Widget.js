@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import WidgetHeader from './WidgetHeader';
@@ -13,10 +13,10 @@ const Widget = ({
     <div
       className={css.card}
     >
-      <WidgetHeader id={widget.id} key={`widget-header-${widget.id}`} name={widget.name}/>
+      <WidgetHeader key={`widget-header-${widget.id}`} name={widget.name} widgetId={widget.id} />
       <div
-        className={css.body}
         key={`widget-body-${widget.id}`}
+        className={css.body}
       >
         {children}
       </div>
@@ -30,7 +30,8 @@ Widget.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   widget: PropTypes.shape({
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
   }).isRequired
 };
 

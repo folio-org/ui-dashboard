@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+
 import { get } from 'lodash';
 import { useTable, useBlockLayout } from 'react-table';
 import css from './SimpleTable.css';
@@ -16,7 +18,11 @@ const getColumnWidth = (rows, accessor, headerText) => {
 };
 
 const SimpleTable = ({ columns, data, widgetId }) => {
-  const resizedCols = useMemo(() => columns.map(c => ({ ...c, width: getColumnWidth(data, c.accessor, c.Header) })), [columns]);
+  const resizedCols = useMemo(
+    () => columns.map(
+      c => ({ ...c, width: getColumnWidth(data, c.accessor, c.Header) })
+    ), [columns, data]
+  );
   return (
     <ResizedTable columns={resizedCols} data={data} widgetId={widgetId} />
   );
@@ -76,7 +82,7 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                       >
                         {cell.render(
                           'Cell',
-                          {key: `simple-table-${widgetId}-row-${i}-col-${j}`}
+                          { key: `simple-table-${widgetId}-row-${i}-col-${j}` }
                         )}
                       </div>
                     );
@@ -92,3 +98,15 @@ const ResizedTable = ({ columns, data, widgetId }) => {
 };
 
 export default SimpleTable;
+
+const propTypes = {
+  columns: PropTypes.arrayOf(PropTypes.shape({
+    Header: PropTypes.string.isRequired,
+    accessor: PropTypes.string.isRequired
+  })),
+  data: PropTypes.arrayOf(PropTypes.object),
+  widgetId: PropTypes.string.isRequired
+};
+
+SimpleTable.propTypes = propTypes;
+ResizedTable.propTypes = propTypes;
