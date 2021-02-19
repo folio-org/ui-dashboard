@@ -1,25 +1,24 @@
+import React from 'react';
+import { FormattedUTCDate } from "@folio/stripes/components";
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
     {
       Header: "Name",
       accessor: "show.name",
-      dataType: "String"
     },
     {
       Header: "Type",
       accessor: "show.type",
-      dataType: "String"
     },
     {
       Header: "Language",
       accessor: "show.language",
-      dataType: "String"
     },
     {
       Header: "Last updated",
       accessor: "lastUpdated",
-      dataType: "Date"
+      Cell: dateRenderer
     }
   ]
 */
@@ -30,6 +29,11 @@ const capitaliseText = (str) => {
   }
   return `${str[0].toUpperCase()}${str.slice(1)}`
 }
+
+// Render dates in FOLIO standard
+const dateRenderer = ({ cell: { value }}) => (
+  <FormattedUTCDate value={value} />
+)
 
 const simpleSearchColumnParser = ({
   widgetConf: {
@@ -50,8 +54,26 @@ const simpleSearchColumnParser = ({
 
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
     const headerText = (rc.label || drc.label || capitaliseText(drc.name))
-    return { Header: headerText, accessor: drc.accessPath, valueType: drc.valueType }
+    const returnColumn = { Header: headerText, accessor: drc.accessPath };
+
+    // Add any custom column rendering in here
+    // NOTE this is column-wide, not cell wide.
+    // That would need to happen in the SimpleTable component.
+    let cellRenderer;
+    switch (drc.valueType) {
+      case "Date":
+        cellRenderer = dateRenderer
+        break;
+      default:
+        break;
+    }
+    if (cellRenderer) {
+      returnColumn.Cell = cellRenderer
+    }
+
+    return returnColumn;
   })
+
   return enrichedResultColumns;
 };
 

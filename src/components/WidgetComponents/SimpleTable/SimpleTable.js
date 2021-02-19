@@ -31,7 +31,9 @@ const SimpleTable = ({ columns, data, widgetId }) => {
 const ResizedTable = ({ columns, data, widgetId }) => {
   const defaultColumn = React.useMemo(
     () => ({
-      minWidth: 150,
+      minWidth: 30,
+      width: 150,
+      maxWidth: 400,
     }),
     []
   );
@@ -74,7 +76,6 @@ const ResizedTable = ({ columns, data, widgetId }) => {
               return (
                 <div {...row.getRowProps()} className={i % 2 === 0 ? css.evenRow : css.oddRow}>
                   {row.cells.map((cell, j) => {
-                    // TODO Need to add automatic handling of different data types, eg Date
                     return (
                       <div
                         {...cell.getCellProps()}
