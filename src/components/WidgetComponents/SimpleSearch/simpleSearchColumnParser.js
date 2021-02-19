@@ -24,6 +24,13 @@
   ]
 */
 
+const capitaliseText = (str) => {
+  if (!str){
+    return ''
+  }
+  return `${str[0].toUpperCase()}${str.slice(1)}`
+}
+
 const simpleSearchColumnParser = ({
   widgetConf: {
     resultColumns = []
@@ -40,20 +47,12 @@ const simpleSearchColumnParser = ({
   // First combine the configured result column data with the widgetdef result column data
   const enrichedResultColumns = resultColumns.map(rc => {
     const drc = defResultColumns.find(c => c.name === rc.name);
-    console.log("RC: %o", rc)
-    console.log("DRC: %o", drc)
-    
-    const returnCol = { ...drc };
-    if (rc.label) {
-      returnCol.label = rc.label;
-    }
-    return returnCol;
+
+    // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
+    const headerText = (rc.label || drc.label || capitaliseText(drc.name))
+    return { Header: headerText, accessor: drc.accessPath, valueType: drc.valueType }
   })
-
-  
-  const returnColumns = enrichedResultColumns.map(erc => { return { Header: erc.label, accessor: erc.accessPath }; });
-
-  return returnColumns;
+  return enrichedResultColumns;
 };
 
 export default simpleSearchColumnParser;
