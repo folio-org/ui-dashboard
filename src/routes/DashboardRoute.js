@@ -21,6 +21,7 @@ const DashboardRoute = ({
    */
 
   const ky = useOkapiKy();
+  // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
   const { data: dashboards = [], isLoading: dashboardsLoading, isSuccess: isDashboardsSuccess } = useQuery(
     ['dashboardRoute', 'dashboards'],
     () => ky('servint/dashboard/my-dashboards').json()
