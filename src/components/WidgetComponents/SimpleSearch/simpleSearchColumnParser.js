@@ -41,7 +41,7 @@ const simpleSearchColumnParser = ({
       returnCol.label = rc.label;
     }
     return returnCol;
-  }).map(erc => {return {Header: erc.label, accessor: erc.accessPath}});
+  }).map(erc => { return { Header: erc.label, accessor: erc.accessPath }; });
 
   return enrichedResultColumns;
 };

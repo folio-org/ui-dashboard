@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import DashboardHeader from './DashboardHeader';
@@ -15,7 +15,6 @@ const propTypes = {
 };
 
 const Dashboard = ({ dashboard, onCreate }) => {
-
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {

@@ -1,26 +1,26 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import { get } from 'lodash';
-import { useTable, useBlockLayout } from "react-table";
-import css from './SimpleTable.css'
+import { useTable, useBlockLayout } from 'react-table';
+import css from './SimpleTable.css';
 
 const getColumnWidth = (rows, accessor, headerText) => {
-  const maxWidth = 400
-  const magicSpacing = 10
+  const maxWidth = 400;
+  const magicSpacing = 10;
 
   const cellLength = Math.max(
     ...rows.map(row => (get(row, accessor) || '').length),
     headerText.length,
-  )
-  const returnWidth = Math.min(maxWidth, cellLength * magicSpacing)
-  return returnWidth
-}
+  );
+  const returnWidth = Math.min(maxWidth, cellLength * magicSpacing);
+  return returnWidth;
+};
 
 const SimpleTable = ({ columns, data }) => {
-  const resizedCols = useMemo(() => columns.map(c  => ({...c, width: getColumnWidth(data, c.accessor, c.Header)})),[columns]);
+  const resizedCols = useMemo(() => columns.map(c => ({ ...c, width: getColumnWidth(data, c.accessor, c.Header) })), [columns]);
   return (
     <ResizedTable columns={resizedCols} data={data} />
   );
-}
+};
 
 const ResizedTable = ({ columns, data }) => {
   const defaultColumn = React.useMemo(
@@ -41,13 +41,13 @@ const ResizedTable = ({ columns, data }) => {
     columns,
     data,
     defaultColumn
-  },useBlockLayout);
+  }, useBlockLayout);
 
-  /* 
+  /*
     Render the UI for your table
     - react-table doesn't have UI, it's headless. We just need to put the react-table props from the Hooks, and it will do its magic automatically
   */
- return (
+  return (
     <div className={css.tableContainer}>
       <div {...getTableProps()} className={css.table}>
         <div>
@@ -72,15 +72,16 @@ const ResizedTable = ({ columns, data }) => {
                       <div {...cell.getCellProps()} className={css.td}>
                         {cell.render('Cell')}
                       </div>
-                    )
+                    );
                   })}
                 </div>
-              )}
+              );
+            }
           )}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default SimpleTable;

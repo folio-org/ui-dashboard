@@ -117,11 +117,7 @@ WidgetCreateRoute.manifest = Object.freeze({
   },
   widgetInst: {
     // Disable GET
-    GET: {
-      path: () => {
-        return null;
-      }
-    },
+    fetch: false,
     type: 'okapi',
     path: 'servint/widgets/instances',
     shouldRefresh: () => false,

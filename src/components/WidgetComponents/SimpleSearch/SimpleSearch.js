@@ -1,6 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+
+import { useQuery } from 'react-query';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
@@ -8,68 +11,42 @@ import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../SimpleTable';
 import { WidgetFooter } from '../Widget';
 
-import { useStripes } from '@folio/stripes/core';
-
-const DisconnectedSimpleSearch = ({
-  refreshCounter,
-  resources: {
-    simple_search_data: {
-      loadedAt,
-      records: {
-        0: data = {}
-      } = []
-    } = {}
-  },
-  setRefreshCounter,
+const SimpleSearch = ({
   widget
 }) => {
 
-  const timestamp = loadedAt ? moment(loadedAt).format("hh:mm a") : '';
+  /*
+   * IMPORTANT this code uses react-query.
+   * At some point after Stripes' Iris release there is a possibility this will be removed in favour of SWR.
+   * A decision has not been made either way yet, so for now I've gone with react-query.
+   * Should that happen, the APIs seem quite similar so porting won't be too difficult.
+   */
+
+  // Simple state we can update to force component rerender
+  const [refreshCount, setRefreshCount] = useState(0);
+
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetDef = JSON.parse(widget.definition.definition);
   const widgetConf = JSON.parse(widget.configuration);
-  const columns = useMemo(() => columnParser({ widgetDef, widgetConf }), [widgetDef, widgetConf]);
+  const columns = columnParser({ widgetDef, widgetConf });
 
+  const ky = useOkapiKy();
+  const { data, dataUpdatedAt } = useQuery(
+    ['simpleSearch', widget.id, refreshCount],
+    () => ky(pathBuilder(widgetDef, widgetConf)).json()
+  );
+  
+  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
+  
   return (
     <>
-      <SimpleTable columns={columns} data={data?.results || []}/>
-      <WidgetFooter timestamp={timestamp} onRefresh={() => setRefreshCounter(refreshCounter + 1)}/>
+      <SimpleTable columns={columns} data={data?.results || []} />
+      <WidgetFooter onRefresh={() => setRefreshCount(refreshCount + 1)} timestamp={timestamp} />
     </>
   );
 };
 
-// Do the connecting in here to avoid having hooks inside a switch in the Dashboard Component
-const SimpleSearch = ({ widget }) => {
-
-  //Simple state we can update to force component rerender
-  const [refreshCounter, setRefreshCounter] = useState(0);
-
-  const stripes = useStripes();
-  // IMPORTANT -- We need to cache this result to prevent stripes endlessly looping... Feed it refreshCounter as a dep to allow controlled refreshing
-  const ConnectedSimpleSearch = useMemo(() => stripes.connect(DisconnectedSimpleSearch, {dataKey: widget.id}), [refreshCounter])
-  return (
-    <ConnectedSimpleSearch
-      widget={widget}
-      refreshCounter={refreshCounter}
-      setRefreshCounter={setRefreshCounter}
-    />
-  );
-}
-
 export default SimpleSearch;
-
-DisconnectedSimpleSearch.manifest = Object.freeze({
-  simple_search_data: {
-    type: 'okapi',
-    path: (_p, _q, _r, _s, props) => {
-      const widgetDef = JSON.parse(props.widget.definition.definition);
-      const widgetConf = JSON.parse(props.widget.configuration);
-      return pathBuilder(widgetDef, widgetConf);
-    },
-    shouldRefresh: () => false,
-    throwErrors: false
-  }
-});
 
 SimpleSearch.propTypes = {
   resources: PropTypes.shape({

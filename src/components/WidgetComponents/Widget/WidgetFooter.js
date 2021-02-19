@@ -5,7 +5,6 @@ import { IconButton } from '@folio/stripes/components';
 import css from './WidgetFooter.css';
 
 const WidgetFooter = ({
-  centerContent,
   onRefresh,
   rightContent,
   timestamp

@@ -1,1 +1,1 @@
-export { default } from './SimpleSearch'
+export { default } from './SimpleSearch';
