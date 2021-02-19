@@ -6,6 +6,7 @@ import { Headline } from '@folio/stripes/components';
 import css from './WidgetHeader.css';
 
 const WidgetHeader = ({
+  id,
   name
 }) => {
   return (

@@ -15,14 +15,14 @@ const getColumnWidth = (rows, accessor, headerText) => {
   return returnWidth;
 };
 
-const SimpleTable = ({ columns, data }) => {
+const SimpleTable = ({ columns, data, widgetId }) => {
   const resizedCols = useMemo(() => columns.map(c => ({ ...c, width: getColumnWidth(data, c.accessor, c.Header) })), [columns]);
   return (
-    <ResizedTable columns={resizedCols} data={data} />
+    <ResizedTable columns={resizedCols} data={data} widgetId={widgetId} />
   );
 };
 
-const ResizedTable = ({ columns, data }) => {
+const ResizedTable = ({ columns, data, widgetId }) => {
   const defaultColumn = React.useMemo(
     () => ({
       minWidth: 150,
@@ -44,8 +44,8 @@ const ResizedTable = ({ columns, data }) => {
   }, useBlockLayout);
 
   /*
-    Render the UI for your table
-    - react-table doesn't have UI, it's headless. We just need to put the react-table props from the Hooks, and it will do its magic automatically
+    Render the UI for our table
+    react-table doesn't have UI, it's headless.
   */
   return (
     <div className={css.tableContainer}>
@@ -67,10 +67,17 @@ const ResizedTable = ({ columns, data }) => {
               prepareRow(row);
               return (
                 <div {...row.getRowProps()} className={i % 2 === 0 ? css.evenRow : css.oddRow}>
-                  {row.cells.map(cell => {
+                  {row.cells.map((cell, j) => {
+                    // TODO Need to add automatic handling of different data types, eg Date
                     return (
-                      <div {...cell.getCellProps()} className={css.td}>
-                        {cell.render('Cell')}
+                      <div
+                        {...cell.getCellProps()}
+                        className={css.td}
+                      >
+                        {cell.render(
+                          'Cell',
+                          {key: `simple-table-${widgetId}-row-${i}-col-${j}`}
+                        )}
                       </div>
                     );
                   })}

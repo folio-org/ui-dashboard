@@ -44,11 +44,13 @@ const SimpleSearch = ({
         columns={columns}
         data={data?.results || []}
         key={`simple-table-${widget.id}`}
+        widgetId={widget.id}
       />
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => setRefreshCount(refreshCount + 1)}
         timestamp={timestamp}
+        widgetId={widget.id}
       />
     </>
   );
@@ -57,9 +59,6 @@ const SimpleSearch = ({
 export default SimpleSearch;
 
 SimpleSearch.propTypes = {
-  resources: PropTypes.shape({
-    data: PropTypes.object
-  }).isRequired,
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
     definition: PropTypes.shape({

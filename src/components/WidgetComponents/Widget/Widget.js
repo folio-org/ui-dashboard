@@ -13,9 +13,10 @@ const Widget = ({
     <div
       className={css.card}
     >
-      <WidgetHeader name={widget.name} />
+      <WidgetHeader id={widget.id} key={`widget-header-${widget.id}`} name={widget.name}/>
       <div
         className={css.body}
+        key={`widget-body-${widget.id}`}
       >
         {children}
       </div>
