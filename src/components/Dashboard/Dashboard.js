@@ -21,6 +21,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
       case 'SimpleSearch':
         return (
           <SimpleSearch
+            key={`simple-search-${widget.id}`}
             widget={widget}
           />
         );
@@ -34,6 +35,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
     return (
       <div className={css.widget}>
         <Widget
+          key={`widget-${widget.id}`}
           widget={widget}
         >
           {getWidgetComponent(widget)}
@@ -66,8 +68,8 @@ const Dashboard = ({ dashboard, onCreate }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader onCreate={onCreate} />
-      <div className={css.dashboardContent}>
+      <DashboardHeader onCreate={onCreate} key="dashboard-header" />
+      <div className={css.dashboardContent} key="dashboard-content">
         {dashboardContents()}
       </div>
     </div>

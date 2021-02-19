@@ -40,8 +40,16 @@ const SimpleSearch = ({
   
   return (
     <>
-      <SimpleTable columns={columns} data={data?.results || []} />
-      <WidgetFooter onRefresh={() => setRefreshCount(refreshCount + 1)} timestamp={timestamp} />
+      <SimpleTable
+        columns={columns}
+        data={data?.results || []}
+        key={`simple-table-${widget.id}`}
+      />
+      <WidgetFooter
+        key={`widget-footer-${widget.id}`}
+        onRefresh={() => setRefreshCount(refreshCount + 1)}
+        timestamp={timestamp}
+      />
     </>
   );
 };
