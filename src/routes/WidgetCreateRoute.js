@@ -22,7 +22,7 @@ const WidgetCreateRoute = ({
   );
 
   const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard' ,'widgetCreateRoute', 'getWidgetDefs'],
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
     () => ky('servint/widgets/definitions').json()
   );
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { FormattedUTCDate } from "@folio/stripes/components";
+import PropTypes from 'prop-types';
+
+import { FormattedUTCDate } from '@folio/stripes/components';
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
@@ -24,16 +26,20 @@ import { FormattedUTCDate } from "@folio/stripes/components";
 */
 
 const capitaliseText = (str) => {
-  if (!str){
-    return ''
+  if (!str) {
+    return '';
   }
-  return `${str[0].toUpperCase()}${str.slice(1)}`
-}
+  return `${str[0].toUpperCase()}${str.slice(1)}`;
+};
 
 // Render dates in FOLIO standard
-const dateRenderer = ({ cell: { value }}) => (
+const dateRenderer = ({ cell: { value } }) => (
   <FormattedUTCDate value={value} />
-)
+);
+
+dateRenderer.propTypes = {
+  cell: PropTypes.object
+};
 
 const simpleSearchColumnParser = ({
   widgetConf: {
@@ -53,7 +59,7 @@ const simpleSearchColumnParser = ({
     const drc = defResultColumns.find(c => c.name === rc.name);
 
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
-    const headerText = (rc.label || drc.label || capitaliseText(drc.name))
+    const headerText = (rc.label || drc.label || capitaliseText(drc.name));
     const returnColumn = { Header: headerText, accessor: drc.accessPath };
 
     // Add any custom column rendering in here
@@ -61,18 +67,18 @@ const simpleSearchColumnParser = ({
     // That would need to happen in the SimpleTable component.
     let cellRenderer;
     switch (drc.valueType) {
-      case "Date":
-        cellRenderer = dateRenderer
+      case 'Date':
+        cellRenderer = dateRenderer;
         break;
       default:
         break;
     }
     if (cellRenderer) {
-      returnColumn.Cell = cellRenderer
+      returnColumn.Cell = cellRenderer;
     }
 
     return returnColumn;
-  })
+  });
 
   return enrichedResultColumns;
 };
