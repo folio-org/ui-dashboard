@@ -28,7 +28,7 @@ const SimpleSearch = ({
 
   const ky = useOkapiKy();
   const { data, dataUpdatedAt, refetch } = useQuery(
-    ['simpleSearch', widget.id],
+    ['ui-dashboard', 'simpleSearch', widget.id],
     () => ky(pathBuilder(widgetDef, widgetConf)).json()
   );
 

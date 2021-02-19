@@ -17,17 +17,17 @@ const WidgetCreateRoute = ({
 }) => {
   const ky = useOkapiKy();
   const { data: { 0: dashboard = {} } = [] } = useQuery(
-    ['widgetCreateRoute', 'getDash'],
+    ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
 
   const { data: widgetDefinitions } = useQuery(
-    ['widgetCreateRoute', 'getWidgetDefs'],
+    ['ui-dashboard' ,'widgetCreateRoute', 'getWidgetDefs'],
     () => ky('servint/widgets/definitions').json()
   );
 
   const { mutateAsync: postWidget } = useMutation(
-    ['widgetCreateRoute', 'postWidget'],
+    ['ui-dashboard', 'widgetCreateRoute', 'postWidget'],
     (data) => ky.post('servint/widgets/instances', { json: data })
   );
 

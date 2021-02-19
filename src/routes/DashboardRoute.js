@@ -23,7 +23,7 @@ const DashboardRoute = ({
   const ky = useOkapiKy();
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
   const { data: dashboards = [], isLoading: dashboardsLoading, isSuccess: isDashboardsSuccess } = useQuery(
-    ['dashboardRoute', 'dashboards'],
+    ['ui-dashboard', 'dashboardRoute', 'dashboards'],
     () => ky('servint/dashboard/my-dashboards').json()
   );
 
@@ -31,7 +31,7 @@ const DashboardRoute = ({
 
   // Load specific dashboard -- for now will only be DEFAULT
   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
-    ['dashboardRoute', 'dashboard'],
+    ['ui-dashboard', 'dashboardRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
     {
       /* Only run this query if the dashboards query has already run.
