@@ -21,19 +21,27 @@ const DashboardRoute = ({
    */
 
   const ky = useOkapiKy();
-  const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
+  const { data: dashboards = [], isLoading: dashboardsLoading, isSuccess: isDashboardsSuccess } = useQuery(
     ['dashboardRoute', 'dashboards'],
     () => ky('servint/dashboard/my-dashboards').json()
   );
 
-  const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
+  const [dashName, setDashName] = useState(params.dashName || 'DEFAULT');
 
   // Load specific dashboard -- for now will only be DEFAULT
   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
     ['dashboardRoute', 'dashboard'],
-    () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
+    () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
+    {
+      /* Only run this query if the dashboards query has already run.
+       * This is for the first fetch, where the backend will create the user record
+       * (after this it can resolve to that entity)
+       * We need to know that is complete before we make a second call,
+       * to ensure we're not attempting to create the same userRecord again
+      */
+      enabled: isDashboardsSuccess
+    }
   );
-
 
   // DASHBOARD DEFAULT SHOULD BE CREATED AUTOMATICALLY BUT MIGHT TAKE MORE THAN ONE RENDER CYCLE
   if (dashboardsLoading || !dashboards.length) {

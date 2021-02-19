@@ -3,19 +3,23 @@
   [
     {
       Header: "Name",
-      accessor: "show.name"
+      accessor: "show.name",
+      dataType: "String"
     },
     {
       Header: "Type",
-      accessor: "show.type"
+      accessor: "show.type",
+      dataType: "String"
     },
     {
       Header: "Language",
-      accessor: "show.language"
+      accessor: "show.language",
+      dataType: "String"
     },
     {
-      Header: "Genre(s)",
-      accessor: "show.genres"
+      Header: "Last updated",
+      accessor: "lastUpdated",
+      dataType: "Date"
     }
   ]
 */
@@ -36,14 +40,20 @@ const simpleSearchColumnParser = ({
   // First combine the configured result column data with the widgetdef result column data
   const enrichedResultColumns = resultColumns.map(rc => {
     const drc = defResultColumns.find(c => c.name === rc.name);
+    console.log("RC: %o", rc)
+    console.log("DRC: %o", drc)
+    
     const returnCol = { ...drc };
     if (rc.label) {
       returnCol.label = rc.label;
     }
     return returnCol;
-  }).map(erc => { return { Header: erc.label, accessor: erc.accessPath }; });
+  })
 
-  return enrichedResultColumns;
+  
+  const returnColumns = enrichedResultColumns.map(erc => { return { Header: erc.label, accessor: erc.accessPath }; });
+
+  return returnColumns;
 };
 
 export default simpleSearchColumnParser;
