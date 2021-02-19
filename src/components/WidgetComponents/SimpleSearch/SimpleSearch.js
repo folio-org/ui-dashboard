@@ -22,17 +22,14 @@ const SimpleSearch = ({
    * Should that happen, the APIs seem quite similar so porting won't be too difficult.
    */
 
-  // Simple state we can update to force component rerender
-  const [refreshCount, setRefreshCount] = useState(0);
-
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetDef = JSON.parse(widget.definition.definition);
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
 
   const ky = useOkapiKy();
-  const { data, dataUpdatedAt } = useQuery(
-    ['simpleSearch', widget.id, refreshCount],
+  const { data, dataUpdatedAt, refetch } = useQuery(
+    ['simpleSearch', widget.id],
     () => ky(pathBuilder(widgetDef, widgetConf)).json()
   );
   
@@ -48,7 +45,7 @@ const SimpleSearch = ({
       />
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
-        onRefresh={() => setRefreshCount(refreshCount + 1)}
+        onRefresh={() => refetch()}
         timestamp={timestamp}
         widgetId={widget.id}
       />

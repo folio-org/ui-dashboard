@@ -22,7 +22,7 @@ const DashboardRoute = ({
    */
   
   const ky = useOkapiKy();
-  const { data: dashboards, status: dashboardsStatus } = useQuery(
+  const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
     ['dashboardRoute', 'dashboards'],
     () => ky('servint/dashboard/my-dashboards').json()
   );
@@ -30,14 +30,14 @@ const DashboardRoute = ({
   const [dashName, setDashName] = useState(params.dashName ?? 'DEFAULT');
 
   // Load specific dashboard -- for now will only be DEFAULT
-  const { data: {0: dashboard} = [], status: dashboardStatus } = useQuery(
+  const { data: {0: dashboard} = [], isLoading: dashboardLoading } = useQuery(
     ['dashboardRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
 
     
   // DASHBOARD DEFAULT SHOULD BE CREATED AUTOMATICALLY BUT MIGHT TAKE MORE THAN ONE RENDER CYCLE
-  if (dashboardsStatus === 'loading' || !dashboards.length) {
+  if (dashboardsLoading || !dashboards.length) {
     return null;
   }
 
@@ -49,7 +49,7 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/create${location.search}`);
   };
 
-  if (dashboardStatus === 'loading') {
+  if (dashboardLoading) {
     // TODO Clean up this loading screen
     return <p> DASHBOARD LOADING </p>
   }
