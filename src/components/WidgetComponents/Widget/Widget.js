@@ -10,15 +10,17 @@ const Widget = ({
   widget
 }) => {
   return (
-    <div
-      className={css.card}
-    >
-      <WidgetHeader key={`widget-header-${widget.id}`} name={widget.name} widgetId={widget.id} />
+    <div className={css.widgetContainer}>
       <div
-        key={`widget-body-${widget.id}`}
-        className={css.body}
+        className={css.card}
       >
-        {children}
+        <WidgetHeader key={`widget-header-${widget.id}`} name={widget.name} widgetId={widget.id} />
+        <div
+          key={`widget-body-${widget.id}`}
+          className={css.body}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

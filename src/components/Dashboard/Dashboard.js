@@ -33,14 +33,12 @@ const Dashboard = ({ dashboard, onCreate }) => {
 
   const renderWidget = (widget) => {
     return (
-      <div className={css.widget}>
-        <Widget
-          key={`widget-${widget.id}`}
-          widget={widget}
-        >
-          {getWidgetComponent(widget)}
-        </Widget>
-      </div>
+      <Widget
+        key={`widget-${widget.id}`}
+        widget={widget}
+      >
+        {getWidgetComponent(widget)}
+      </Widget>
     );
   };
 
@@ -68,8 +66,11 @@ const Dashboard = ({ dashboard, onCreate }) => {
   };
   return (
     <div className={css.dashboard}>
-      <DashboardHeader key={`dashboard-header-${dashboard?.id}`} onCreate={onCreate} />
-      <div key={`dashboard-content-${dashboard?.id}`} className={css.dashboardContent}>
+      <DashboardHeader
+        key={`dashboard-header-${dashboard?.id}`}
+        onCreate={onCreate}
+      />
+      <div className={css.dashboardContent}>
         {dashboardContents()}
       </div>
     </div>
