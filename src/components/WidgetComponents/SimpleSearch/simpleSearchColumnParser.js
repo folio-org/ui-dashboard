@@ -55,7 +55,7 @@ const simpleSearchColumnParser = ({
   // If they're not there it'll cause issues.
 
   // First combine the configured result column data with the widgetdef result column data
-  const enrichedResultColumns = resultColumns.map(rc => {
+  return resultColumns.map(rc => {
     const drc = defResultColumns.find(c => c.name === rc.name);
 
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
@@ -65,22 +65,12 @@ const simpleSearchColumnParser = ({
     // Add any custom column rendering in here
     // NOTE this is column-wide, not cell wide.
     // That would need to happen in the SimpleTable component.
-    let cellRenderer;
-    switch (drc.valueType) {
-      case 'Date':
-        cellRenderer = dateRenderer;
-        break;
-      default:
-        break;
-    }
-    if (cellRenderer) {
-      returnColumn.Cell = cellRenderer;
+    if (drc.valueType === 'Date') {
+      returnColumn.Cell = dateRenderer;
     }
 
     return returnColumn;
   });
-
-  return enrichedResultColumns;
 };
 
 export default simpleSearchColumnParser;

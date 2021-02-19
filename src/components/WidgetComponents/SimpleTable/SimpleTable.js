@@ -13,8 +13,8 @@ const getColumnWidth = (rows, accessor, headerText) => {
     ...rows.map(row => (get(row, accessor) || '').length),
     headerText.length,
   );
-  const returnWidth = Math.min(maxWidth, cellLength * magicSpacing);
-  return returnWidth;
+
+  return Math.min(maxWidth, cellLength * magicSpacing);
 };
 
 const SimpleTable = ({ columns, data, widgetId }) => {
