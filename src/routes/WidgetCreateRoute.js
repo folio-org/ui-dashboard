@@ -5,12 +5,10 @@ import { Form } from 'react-final-form';
 
 import { useMutation, useQuery } from 'react-query';
 
-
 import WidgetForm from '../components/WidgetForm/WidgetForm';
 
 const WidgetCreateRoute = ({
   history,
-  location,
   match: {
     params
   }
@@ -30,6 +28,10 @@ const WidgetCreateRoute = ({
     ['ui-dashboard', 'widgetCreateRoute', 'postWidget'],
     (data) => ky.post('servint/widgets/instances', { json: data })
   );
+
+  const handleClose = () => {
+    history.push(`dashboard/${params.dashName}`);
+  };
 
   const doTheSubmit = (widget) => {
     // TODO this is just a hard coded configuration for now
@@ -65,17 +67,10 @@ const WidgetCreateRoute = ({
 
     const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
-      .then(() => {
-        history.push(`dashboard/${params.dashName}`);
-      });
-  };
-
-  const handleClose = () => {
-    history.push(`dashboard/${params.dashName}${location.search}`);
+      .then(handleClose);
   };
 
   // TODO have this form move onto page 2 instead of submitting hardcoded widget
-
   return (
     <Form
       // initialValues={initialValues}
@@ -83,23 +78,21 @@ const WidgetCreateRoute = ({
       keepDirtyOnReinitialize
       navigationCheck
       onSubmit={doTheSubmit}
-      subscription={{ value: true }}
+      subscription={{ values: true }}
     >
-      {({ handleSubmit }) => {
-        return (
-          <form onSubmit={handleSubmit}>
-            <WidgetForm
-              data={{
-                widgetDefinitions
-              }}
-              handlers={{
-                onSubmit: handleSubmit,
-                onClose: handleClose
-              }}
-            />
-          </form>
-        );
-      }}
+      {({ handleSubmit }) =>
+        <form onSubmit={handleSubmit}>
+          <WidgetForm
+            data={{
+              widgetDefinitions
+            }}
+            handlers={{
+              onClose: handleClose,
+              onSubmit: handleSubmit
+            }}
+          />
+        </form>
+      }
     </Form>
   );
 };

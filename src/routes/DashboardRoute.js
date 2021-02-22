@@ -50,11 +50,11 @@ const DashboardRoute = ({
   }
 
   if (location.pathname !== `/dashboard/${dashName}`) {
-    history.push(`/dashboard/${dashName}${location.search}`);
+    history.push(`/dashboard/${dashName}`);
   }
 
   const handleCreate = () => {
-    history.push(`${location.pathname}/create${location.search}`);
+    history.push(`${location.pathname}/create`);
   };
 
   if (dashboardLoading) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -39,7 +39,7 @@ const SimpleSearch = ({
       <SimpleTable
         key={`simple-table-${widget.id}`}
         columns={columns}
-        data={data?.results || []}
+        data={useMemo(() => data?.results || [], [data])}
         widgetId={widget.id}
       />
       <WidgetFooter

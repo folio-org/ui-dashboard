@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
+
+import { useOkapiKy } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
 
 import {
   Button,
@@ -15,6 +18,7 @@ import {
   Select,
   TextField
 } from '@folio/stripes/components';
+import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -22,12 +26,12 @@ const propTypes = {
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
   }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };
 
+// This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
     widgetDefinitions = []
@@ -39,7 +43,33 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
-  // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
+  const ky = useOkapiKy();
+  const { values } = useFormState();
+
+  // Selected widget definition will be just an id, so fetch full definition again here
+  const { data: specificWidgetDefinition } = useQuery(
+    // Ensure we get a fresh fetch per CREATE/EDIT with values.definition?.id
+    ['ui-dashboard', 'widgetCreateRoute', 'getSpecificWidgetDef', values.definition?.id],
+    () => ky(`servint/widgets/definitions/${values.definition?.id}`).json(),
+    {
+      /* Only run this query if the user has selected a widgetDefinition */
+      enabled: !!values.definition?.id
+    }
+  );
+
+  // This may be (probably will be) versioned in future, keep an eye out for that
+  const getWidgetFormComponent = (widgetDef) => {
+    switch (widgetDef?.type?.name) {
+      case 'SimpleSearch':
+        return (
+          <SimpleSearchForm />
+        );
+      default:
+        // TODO add real error here
+        return `No widget form component for type: ${widgetDef?.type?.name}`;
+    }
+  };
+
   const renderPaneFooter = () => {
     return (
       <PaneFooter
@@ -90,18 +120,23 @@ const WidgetForm = ({
             />
           </Col>
           <Col xs={6}>
-            <Field
+            <Field name="definition.id"
               component={Select}
               dataOptions={selectifiedWidgetDefs}
-              name="definition.id"
+              required
             />
           </Col>
         </Row>
+        {specificWidgetDefinition &&
+          // Get specific form component for the selected widgetDefinition
+          // TODO work out if changing to a definition of same type saves some inputted information
+          // If so, does it then get submitted by mistake when field is no longer present?
+          getWidgetFormComponent(specificWidgetDefinition)
+        }
       </Pane>
     </Paneset>
   );
 };
 
 WidgetForm.propTypes = propTypes;
-
 export default WidgetForm;
