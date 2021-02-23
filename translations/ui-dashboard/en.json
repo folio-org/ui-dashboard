@@ -17,5 +17,7 @@
 
   "simpleSearchForm.filters.filterField.rule.addRule": "Add rule",
   "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
-  "simpleSearchForm.filters.filterField.rule": "Rule {index}"
+  "simpleSearchForm.filters.filterField.rule": "Rule {index}",
+  "simpleSearchForm.filters.filterField.rule.or": "OR"
+
 }
