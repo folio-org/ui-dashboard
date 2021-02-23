@@ -1,26 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, useFormState } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
+import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
 
-import {
-  TextField
-} from '@folio/stripes/components';
-
-const SimpleSearchForm = () => {
-  const { values } = useFormState();
-
-  console.log("SSF VALUES: %o", values)
+const SimpleSearchForm = ({
+  specificWidgetDefinition
+}) => {
+  const {
+    filters: {
+      columns: filterColumns = []
+    } = {}
+  } = JSON.parse(specificWidgetDefinition?.definition);
 
   return (
     <>
-      <p> Hello, this is a SimpleSearch form </p>
-      <Field
-        component={TextField}
-        name="simplesearch.textfield"
+      <FieldArray
+        addButtonId="simple-search-form-add-filter-button"
+        addButtonTooltipId="ui-dashboard.simpleSearchForm.filters.addFilterTooltip"
+        addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
+        component={SimpleSearchFilterArray}
+        data={{
+          filterColumns
+        }}
+        deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
+        disabled={false}
+        headerId="ui-dashboard.simpleSearchForm.filters"
+        id="simple-search-form-filters"
+        name="filterColumns"
       />
     </>
   );
-}
+};
 
 export default SimpleSearchForm;

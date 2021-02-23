@@ -45,7 +45,7 @@ const WidgetForm = ({
 }) => {
   const ky = useOkapiKy();
   const { values } = useFormState();
-  console.log("WF VALUES: %o", values)
+  console.log('WF VALUES: %o', values);
 
   // Selected widget definition will be just an id, so fetch full definition again here
   const { data: specificWidgetDefinition } = useQuery(
@@ -63,7 +63,9 @@ const WidgetForm = ({
     switch (widgetDef?.type?.name) {
       case 'SimpleSearch':
         return (
-          <SimpleSearchForm />
+          <SimpleSearchForm
+            specificWidgetDefinition={specificWidgetDefinition}
+          />
         );
       default:
         // TODO add real error here
@@ -121,9 +123,10 @@ const WidgetForm = ({
             />
           </Col>
           <Col xs={6}>
-            <Field name="definition.id"
+            <Field
               component={Select}
               dataOptions={selectifiedWidgetDefs}
+              name="definition.id"
               required
             />
           </Col>

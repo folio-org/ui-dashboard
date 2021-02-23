@@ -5,5 +5,11 @@
 
   "dashboard.newWidget": "{label} widget",
 
-  "widgetForm.createWidget": "Create widget"
+  "widgetForm.createWidget": "Create widget",
+
+  "simpleSearchForm.filters": "Filters",
+  "simpleSearchForm.filters.addFilter": "Add filter",
+  "simpleSearchForm.filters.removeFilter": "Remove filter {index}",
+  "simpleSearchForm.filters.filter": "Filter {index}",
+  "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration"
 }

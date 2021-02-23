@@ -2,6 +2,7 @@ import React from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery } from 'react-query';
 
@@ -36,6 +37,7 @@ const WidgetCreateRoute = ({
   const doTheSubmit = (widget) => {
     // TODO this is just a hard coded configuration for now
     const conf = JSON.stringify({
+      ...widget,
       resultColumns:[
         {
           name:'agreementName',
@@ -43,18 +45,6 @@ const WidgetCreateRoute = ({
         },
         {
           name:'startDate'
-        }
-      ],
-      filterColumns:[
-        {
-          comparator: '==',
-          name:'agreementStatus',
-          filterValue:'active'
-        },
-        {
-          comparator: '<',
-          name: 'startDate',
-          filterValue: '2021-02-21'
         }
       ],
       sortColumn:[
@@ -76,22 +66,22 @@ const WidgetCreateRoute = ({
       // initialValues={initialValues}
       enableReinitialize
       keepDirtyOnReinitialize
+      mutators={arrayMutators}
       navigationCheck
       onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) =>
-        <form onSubmit={handleSubmit}>
-          <WidgetForm
-            data={{
-              widgetDefinitions
-            }}
-            handlers={{
-              onClose: handleClose,
-              onSubmit: handleSubmit
-            }}
-          />
-        </form>
+      {({ handleSubmit }) => <form onSubmit={handleSubmit}>
+        <WidgetForm
+          data={{
+            widgetDefinitions
+          }}
+          handlers={{
+            onClose: handleClose,
+            onSubmit: handleSubmit
+          }}
+        />
+                             </form>
       }
     </Form>
   );
