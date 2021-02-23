@@ -1,16 +1,21 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { get } from 'lodash';
 
 import { Field, useForm, useFormState } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Col,
   Datepicker,
+  KeyValue,
   Row,
   Select,
   TextField
 } from '@folio/stripes/components';
+import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 
 const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
   const { initialValues, values } = useFormState();
@@ -60,25 +65,15 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
         }
       />
       {selectedFilter &&
-        <Row>
-          <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={selectedFilterColumn.comparators.map(
-                sfcc => ({ value: sfcc, label: sfcc })
-              )}
-              initialValue={get(initialValues, `${name}.comparator`) ?? selectedFilterColumn.comparators[0]}
-              name={`${name}.comparator`}
-            />
-          </Col>
-          <Col xs={6}>
-            <Field
-              {...filterComponentProps}
-              component={FilterComponent}
-              name={`${name}.filterValue`}
-            />
-          </Col>
-        </Row>
+        <FieldArray
+          component={SimpleSearchFilterRuleArray}
+          filterComponent={FilterComponent}
+          filterComponentProps={filterComponentProps}
+          initialValue={get(initialValues, `${name}.rules`) ?? [{}]}
+          id="simple-search-filter-rules"
+          name={`${name}.rules`}
+          selectedFilterColumn={selectedFilterColumn}
+        />
       }
     </>
   );

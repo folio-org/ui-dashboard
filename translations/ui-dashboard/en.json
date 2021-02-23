@@ -11,5 +11,11 @@
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",
   "simpleSearchForm.filters.filter": "Filter {index}",
-  "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration"
+  "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration",
+  "simpleSearchForm.filters.filterField.comparator": "Comparator",
+  "simpleSearchForm.filters.filterField.value": "Value",
+
+  "simpleSearchForm.filters.filterField.rule.addRule": "Add rule",
+  "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
+  "simpleSearchForm.filters.filterField.rule": "Rule {index}"
 }

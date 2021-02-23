@@ -9,13 +9,11 @@ import SimpleSearchFilterField from './SimpleSearchFilterField';
 
 const SimpleSearchFilterArray = ({
   addButtonId,
-  addButtonTooltipId,
   addLabelId,
   data: {
     filterColumns = []
   } = {},
   deleteButtonTooltipId,
-  disabled,
   fields,
   headerId,
   id
@@ -24,7 +22,7 @@ const SimpleSearchFilterArray = ({
     return (
       fields.map((fieldName, index) => (
         <EditCard
-          data-test-ag-line-number={index}
+          data-test-filter-number={index}
           deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
           header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
           onDelete={() => fields.remove(index)}
@@ -54,33 +52,9 @@ const SimpleSearchFilterArray = ({
       >
         {renderFilterFields()}
       </KeyValue>
-      {
-        addButtonTooltipId && disabled ? (
-          <Tooltip
-            id="add-filter-button-tooltip"
-            placement="bottom-start"
-            text={<FormattedMessage id={addButtonTooltipId} />}
-          >
-            {({ ref, ariaIds }) => (
-              <div
-                ref={ref}
-                aria-labelledby={ariaIds.text}
-              >
-                <Button
-                  disabled={disabled}
-                  id={addButtonId}
-                >
-                  <FormattedMessage id={addLabelId} />
-                </Button>
-              </div>
-            )}
-          </Tooltip>
-        ) : (
-          <Button id={addButtonId} onClick={() => fields.push({})}>
-            <FormattedMessage id={addLabelId} />
-          </Button>
-        )
-      }
+      <Button id={addButtonId} onClick={() => fields.push({})}>
+        <FormattedMessage id={addLabelId} />
+      </Button>
     </div>
   );
 };

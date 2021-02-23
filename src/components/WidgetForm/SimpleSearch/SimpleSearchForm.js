@@ -17,14 +17,12 @@ const SimpleSearchForm = ({
     <>
       <FieldArray
         addButtonId="simple-search-form-add-filter-button"
-        addButtonTooltipId="ui-dashboard.simpleSearchForm.filters.addFilterTooltip"
         addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
         component={SimpleSearchFilterArray}
         data={{
           filterColumns
         }}
         deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
-        disabled={false}
         headerId="ui-dashboard.simpleSearchForm.filters"
         id="simple-search-form-filters"
         name="filterColumns"
