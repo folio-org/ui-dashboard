@@ -33,4 +33,8 @@ const SimpleSearchForm = ({
   );
 };
 
+SimpleSearchForm.propTypes = {
+  specificWidgetDefinition: PropTypes.object
+};
+
 export default SimpleSearchForm;

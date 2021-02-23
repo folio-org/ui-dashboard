@@ -71,18 +71,19 @@ const WidgetCreateRoute = ({
       onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) => <form onSubmit={handleSubmit}>
-        <WidgetForm
-          data={{
-            widgetDefinitions
-          }}
-          handlers={{
-            onClose: handleClose,
-            onSubmit: handleSubmit
-          }}
-        />
-                             </form>
-      }
+      {({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <WidgetForm
+            data={{
+              widgetDefinitions
+            }}
+            handlers={{
+              onClose: handleClose,
+              onSubmit: handleSubmit
+            }}
+          />
+        </form>
+      )}
     </Form>
   );
 };

@@ -20,23 +20,24 @@ const SimpleSearchFilterArray = ({
   headerId,
   id
 }) => {
-  const renderFilterFields = (fields) => {
+  const renderFilterFields = () => {
     return (
-      fields.map((fieldName, index) => <EditCard
-        data-test-ag-line-number={index}
-        deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
-        header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
-        onDelete={() => fields.remove(index)}
-      >
-        <>
-          <Field
-            component={SimpleSearchFilterField}
-            filterColumns={filterColumns}
-            index={index}
-            name={fieldName}
-          />
-        </>
-                                       </EditCard>)
+      fields.map((fieldName, index) => (
+        <EditCard
+          data-test-ag-line-number={index}
+          deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
+          header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
+          onDelete={() => fields.remove(index)}
+        >
+          <>
+            <Field
+              component={SimpleSearchFilterField}
+              filterColumns={filterColumns}
+              name={fieldName}
+            />
+          </>
+        </EditCard>
+      ))
     );
   };
 
@@ -51,7 +52,7 @@ const SimpleSearchFilterArray = ({
           </Headline>
         }
       >
-        {renderFilterFields(fields)}
+        {renderFilterFields()}
       </KeyValue>
       {
         addButtonTooltipId && disabled ? (
@@ -82,6 +83,24 @@ const SimpleSearchFilterArray = ({
       }
     </div>
   );
+};
+
+SimpleSearchFilterArray.propTypes = {
+  addButtonId: PropTypes.string,
+  addButtonTooltipId: PropTypes.string,
+  addLabelId: PropTypes.string,
+  data: PropTypes.shape({
+    filterColumns: PropTypes.arrayOf(PropTypes.object)
+  }),
+  deleteButtonTooltipId: PropTypes.string,
+  disabled: PropTypes.bool,
+  fields: PropTypes.arrayOf(PropTypes.shape({
+    map: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired
+  })),
+  headerId: PropTypes.string,
+  id: PropTypes.string
 };
 
 export default SimpleSearchFilterArray;

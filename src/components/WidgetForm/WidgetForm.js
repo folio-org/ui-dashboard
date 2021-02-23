@@ -26,6 +26,7 @@ const propTypes = {
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
@@ -45,7 +46,6 @@ const WidgetForm = ({
 }) => {
   const ky = useOkapiKy();
   const { values } = useFormState();
-  console.log('WF VALUES: %o', values);
 
   // Selected widget definition will be just an id, so fetch full definition again here
   const { data: specificWidgetDefinition } = useQuery(
