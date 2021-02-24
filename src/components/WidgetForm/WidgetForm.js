@@ -46,7 +46,7 @@ const WidgetForm = ({
 }) => {
   const ky = useOkapiKy();
   const { values } = useFormState();
-  console.log('VALUES: %o', values);
+  console.log("VALUES: %o", values)
 
   // Selected widget definition will be just an id, so fetch full definition again here
   const { data: specificWidgetDefinition } = useQuery(

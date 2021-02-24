@@ -35,11 +35,17 @@ const WidgetCreateRoute = ({
   };
 
   const doTheSubmit = (widget) => {
-    // TODO this is just a hard coded configuration for now
-    console.log("WIDGET: %o", widget)
+    // Flatten the filter columns we get from the form
+    const flattenedFilterColumns = [];
+    widget.filterColumns.forEach(fc => {
+      fc.rules.forEach(rule => {
+        flattenedFilterColumns.push({...rule, name: fc.name})
+      });
+    });
     
+    // TODO this is just a mostly hard coded configuration for now
     const conf = JSON.stringify({
-      ...widget,
+      filterColumns: flattenedFilterColumns,
       resultColumns:[
         {
           name:'agreementName',
@@ -57,9 +63,9 @@ const WidgetCreateRoute = ({
       ]
     });
 
-    /* const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
+    const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
-      .then(handleClose); */
+      .then(handleClose);
   };
 
   // TODO have this form move onto page 2 instead of submitting hardcoded widget

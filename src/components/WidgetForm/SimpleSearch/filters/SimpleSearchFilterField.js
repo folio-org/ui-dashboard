@@ -31,7 +31,7 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
       filterComponentProps = {
         dataOptions: selectedFilterColumn.enumValues.map(ev => ({ value: ev.value, label: ev.label ?? ev.value })),
         // Set an initialValue where none was set previously
-        initialValue: get(initialValues, `${name}.filterValue`) ?? selectedFilterColumn.enumValues[0].value
+        initialValue: get(initialValues, `${name}.rules`) ?? selectedFilterColumn.enumValues[0].value
       };
       FilterComponent = Select;
       break;
@@ -57,7 +57,7 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
         // Reset filter value when selecting different filter type
         onChange={
           e => {
-            change(`${name}.filterValue`, undefined);
+            change(`${name}.rules`, [{}]);
             change(`${name}.name`, e.target.value);
           }
         }
