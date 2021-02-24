@@ -18,7 +18,6 @@ const SimpleSearchFilterArray = ({
   headerId,
   id
 }) => {
-  console.log("FIELDS: %o", fields)
   const renderFilterFields = () => {
     return (
       fields.map((fieldName, index) => (
@@ -26,6 +25,7 @@ const SimpleSearchFilterArray = ({
           data-test-filter-number={index}
           deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
           header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
+          key={`simple-search-filter-array-${fieldName}`}
           onDelete={() => fields.remove(index)}
         >
           <>
