@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormattedUTCDate } from '@folio/stripes/components';
+import { FormattedUTCDate, NoValue } from '@folio/stripes/components';
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
@@ -34,7 +34,9 @@ const capitaliseText = (str) => {
 
 // Render dates in FOLIO standard
 const dateRenderer = ({ cell: { value } }) => (
-  <FormattedUTCDate value={value} />
+  value ?
+    <FormattedUTCDate value={value} /> :
+    <NoValue />
 );
 
 dateRenderer.propTypes = {
