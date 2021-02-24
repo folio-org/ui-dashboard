@@ -34,27 +34,28 @@ const WidgetCreateRoute = ({
     history.push(`dashboard/${params.dashName}`);
   };
 
-  const doTheSubmit = (widget) => {
+  const doTheSubmit = ({
+    definition,
+    name,
+    ...widgetConf
+  }) => {
+    const {filterColumns, ...restOfConf} = widgetConf;
+
     // Flatten the filter columns we get from the form
-    const flattenedFilterColumns = [];
-    widget.filterColumns.forEach(fc => {
-      fc.rules.forEach(rule => {
-        flattenedFilterColumns.push({ ...rule, name: fc.name });
+    let flattenedFilterColumns;
+    if (filterColumns) {
+      flattenedFilterColumns = [];
+      filterColumns.forEach(fc => {
+        fc.rules.forEach(rule => {
+          flattenedFilterColumns.push({ ...rule, name: fc.name });
+        });
       });
-    });
+    }
 
     // TODO this is just a mostly hard coded configuration for now
     const conf = JSON.stringify({
+      ...restOfConf,
       filterColumns: flattenedFilterColumns,
-      resultColumns:[
-        {
-          name:'agreementName',
-          label:'Name'
-        },
-        {
-          name:'startDate'
-        }
-      ],
       sortColumn:[
         {
           name:'agreementName',
@@ -63,7 +64,7 @@ const WidgetCreateRoute = ({
       ]
     });
 
-    const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
+    const submitValue = { definition: definition, name: name, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
       .then(handleClose);
   };
