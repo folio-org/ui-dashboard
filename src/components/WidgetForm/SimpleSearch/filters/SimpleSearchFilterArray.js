@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button, Headline, KeyValue, Tooltip } from '@folio/stripes/components';
+import { Button, Headline, KeyValue } from '@folio/stripes/components';
 
 import { EditCard } from '@folio/stripes-erm-components';
 import SimpleSearchFilterField from './SimpleSearchFilterField';
@@ -22,10 +22,10 @@ const SimpleSearchFilterArray = ({
     return (
       fields.map((fieldName, index) => (
         <EditCard
+          key={`simple-search-filter-array-${fieldName}`}
           data-test-filter-number={index}
           deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
           header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
-          key={`simple-search-filter-array-${fieldName}`}
           onDelete={() => fields.remove(index)}
         >
           <>
@@ -62,13 +62,11 @@ const SimpleSearchFilterArray = ({
 
 SimpleSearchFilterArray.propTypes = {
   addButtonId: PropTypes.string,
-  addButtonTooltipId: PropTypes.string,
   addLabelId: PropTypes.string,
   data: PropTypes.shape({
     filterColumns: PropTypes.arrayOf(PropTypes.object)
   }),
   deleteButtonTooltipId: PropTypes.string,
-  disabled: PropTypes.bool,
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,

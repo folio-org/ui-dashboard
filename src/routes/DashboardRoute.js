@@ -33,7 +33,7 @@ const DashboardRoute = ({
     if (location.pathname !== `/dashboard/${dashName}`) {
       history.push(`/dashboard/${dashName}`);
     }
-  },[location.pathname, dashName]);
+  }, [history, location.pathname, dashName]);
 
   // Load specific dashboard -- for now will only be DEFAULT
   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(

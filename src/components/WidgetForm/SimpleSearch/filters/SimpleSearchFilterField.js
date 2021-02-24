@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import { get } from 'lodash';
 
@@ -8,10 +7,7 @@ import { Field, useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
-  Col,
   Datepicker,
-  KeyValue,
-  Row,
   Select,
   TextField
 } from '@folio/stripes/components';
@@ -69,8 +65,8 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
           component={SimpleSearchFilterRuleArray}
           filterComponent={FilterComponent}
           filterComponentProps={filterComponentProps}
-          initialValue={get(initialValues, `${name}.rules`) ?? [{}]}
           id="simple-search-filter-rules"
+          initialValue={get(initialValues, `${name}.rules`) ?? [{}]}
           name={`${name}.rules`}
           selectedFilterColumn={selectedFilterColumn}
         />
@@ -81,7 +77,6 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
 
 SimpleSearchFilterField.propTypes = {
   filterColumns: PropTypes.arrayOf(PropTypes.object),
-  index: PropTypes.number,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,
