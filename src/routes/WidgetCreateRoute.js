@@ -36,6 +36,8 @@ const WidgetCreateRoute = ({
 
   const doTheSubmit = (widget) => {
     // TODO this is just a hard coded configuration for now
+    console.log("WIDGET: %o", widget)
+    
     const conf = JSON.stringify({
       ...widget,
       resultColumns:[
@@ -55,9 +57,9 @@ const WidgetCreateRoute = ({
       ]
     });
 
-    const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
+    /* const submitValue = { ...widget, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
-      .then(handleClose);
+      .then(handleClose); */
   };
 
   // TODO have this form move onto page 2 instead of submitting hardcoded widget
