@@ -1,0 +1,10 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.children {
+  display:inline-block
+}
+
+.deleteIcon {
+  display: inline-block;
+  padding: var(--gutter-static-two-thirds);
+}

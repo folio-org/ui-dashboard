@@ -19,6 +19,10 @@
   "simpleSearchForm.filters.filterField.rule.addRule": "Add rule",
   "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
   "simpleSearchForm.filters.filterField.rule": "Rule {index}",
-  "simpleSearchForm.filters.filterField.rule.or": "OR"
+  "simpleSearchForm.filters.filterField.rule.or": "OR",
 
+  "simpleSearchForm.results": "Result columns",
+  "simpleSearchForm.results.addResult": "Add result column",
+  "simpleSearchForm.results.removeResult": "Remove result column {index}",
+  "simpleSearchForm.results.result": "Result column {index}"
 }

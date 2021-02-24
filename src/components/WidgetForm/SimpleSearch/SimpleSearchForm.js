@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FieldArray } from 'react-final-form-arrays';
 
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
+import SimpleSearchResultArray from './results/SimpleSearchResultArray';
 
 const SimpleSearchForm = ({
   specificWidgetDefinition
@@ -10,6 +11,9 @@ const SimpleSearchForm = ({
   const {
     filters: {
       columns: filterColumns = []
+    } = {},
+    results: {
+      columns: resultColumns = []
     } = {}
   } = JSON.parse(specificWidgetDefinition?.definition);
 
@@ -26,6 +30,18 @@ const SimpleSearchForm = ({
         headerId="ui-dashboard.simpleSearchForm.filters"
         id="simple-search-form-filters"
         name="filterColumns"
+      />
+      <FieldArray
+        addButtonId="simple-search-form-add-result-column-button"
+        addLabelId="ui-dashboard.simpleSearchForm.results.addResult"
+        component={SimpleSearchResultArray}
+        data={{
+          resultColumns
+        }}
+        deleteButtonTooltipId="ui-dashboard.simpleSearchForm.results.removeResult"
+        headerId="ui-dashboard.simpleSearchForm.results"
+        id="simple-search-form-results"
+        name="resultColumns"
       />
     </>
   );
