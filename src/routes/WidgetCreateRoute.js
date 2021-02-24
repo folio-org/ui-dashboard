@@ -39,10 +39,10 @@ const WidgetCreateRoute = ({
     const flattenedFilterColumns = [];
     widget.filterColumns.forEach(fc => {
       fc.rules.forEach(rule => {
-        flattenedFilterColumns.push({...rule, name: fc.name})
+        flattenedFilterColumns.push({ ...rule, name: fc.name });
       });
     });
-    
+
     // TODO this is just a mostly hard coded configuration for now
     const conf = JSON.stringify({
       filterColumns: flattenedFilterColumns,

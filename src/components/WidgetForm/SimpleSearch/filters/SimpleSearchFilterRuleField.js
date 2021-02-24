@@ -55,7 +55,7 @@ SimpleSearchFilterRuleField.propTypes = {
   }).isRequired,
   selectedFilterColumn: PropTypes.shape({
     comparators: PropTypes.arrayOf(
-      PropTypes.shape(PropTypes.string)
+      PropTypes.string
     )
   })
 

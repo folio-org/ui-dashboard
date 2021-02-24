@@ -7,11 +7,11 @@ const filterPresent = (value, allValues, meta) => {
     // Name is something like "filterColumns[3].name" and we want the "filterColumns" array
     const filterColumnCount = get(
       allValues,
-      meta.name.substring(0, meta.name.lastIndexOf('[')
-    ), []).map(fc => fc.name).reduce(
-      (acc,cur) => {
-        if(cur === value) {
-          acc++
+      meta.name.substring(0, meta.name.lastIndexOf('[')), []
+    ).map(fc => fc.name).reduce(
+      (acc, cur) => {
+        if (cur === value) {
+          return acc + 1;
         }
         return acc;
       },
