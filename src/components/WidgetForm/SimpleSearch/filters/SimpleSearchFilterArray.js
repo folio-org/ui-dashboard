@@ -18,6 +18,7 @@ const SimpleSearchFilterArray = ({
   headerId,
   id
 }) => {
+  console.log("FIELDS: %o", fields)
   const renderFilterFields = () => {
     return (
       fields.map((fieldName, index) => (
@@ -68,11 +69,11 @@ SimpleSearchFilterArray.propTypes = {
   }),
   deleteButtonTooltipId: PropTypes.string,
   disabled: PropTypes.bool,
-  fields: PropTypes.arrayOf(PropTypes.shape({
+  fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired
-  })),
+  }),
   headerId: PropTypes.string,
   id: PropTypes.string
 };
