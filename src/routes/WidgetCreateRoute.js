@@ -39,7 +39,7 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
-    const {filterColumns, ...restOfConf} = widgetConf;
+    const { filterColumns, ...restOfConf } = widgetConf;
 
     // Flatten the filter columns we get from the form
     let flattenedFilterColumns;
@@ -64,7 +64,7 @@ const WidgetCreateRoute = ({
       ]
     });
 
-    const submitValue = { definition: definition, name: name, owner: { id: dashboard.id }, configuration: conf };
+    const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
       .then(handleClose);
   };

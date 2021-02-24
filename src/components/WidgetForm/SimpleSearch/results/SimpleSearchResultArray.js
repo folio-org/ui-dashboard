@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button, Headline, KeyValue } from '@folio/stripes/components';
 
-import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete'
+import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 
 const SimpleSearchResultArray = ({
@@ -14,12 +14,10 @@ const SimpleSearchResultArray = ({
   data: {
     resultColumns = []
   } = {},
-  deleteButtonTooltipId,
   fields,
   headerId,
   id
 }) => {
-
   const renderResultFields = () => {
     return (
       fields.map((fieldName, index) => (
@@ -28,10 +26,10 @@ const SimpleSearchResultArray = ({
           onDelete={() => fields.remove(index)}
         >
           <Field
-              component={SimpleSearchResultField}
-              resultColumns={resultColumns}
-              name={fieldName}
-            />
+            component={SimpleSearchResultField}
+            name={fieldName}
+            resultColumns={resultColumns}
+          />
         </RowWithDelete>
       ))
     );
@@ -63,7 +61,6 @@ SimpleSearchResultArray.propTypes = {
   data: PropTypes.shape({
     resultColumns: PropTypes.arrayOf(PropTypes.object)
   }),
-  deleteButtonTooltipId: PropTypes.string,
   fields: PropTypes.shape({
     map: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
