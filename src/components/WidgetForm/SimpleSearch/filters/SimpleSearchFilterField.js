@@ -13,7 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
-import validators from './validators';
+import validators from '../validators';
 
 const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
   const { initialValues, values } = useFormState();
