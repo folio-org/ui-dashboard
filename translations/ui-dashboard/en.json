@@ -11,6 +11,7 @@
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",
   "simpleSearchForm.filters.filter": "Filter {index}",
+  "simpleSearchForm.filters.filterAlreadyPresent": "Filter {filterName} already present in the form",
   "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration",
   "simpleSearchForm.filters.filterField.comparator": "Comparator",
   "simpleSearchForm.filters.filterField.value": "Value",

@@ -48,13 +48,15 @@ const SimpleSearchFilterRuleField = ({
 };
 
 SimpleSearchFilterRuleField.propTypes = {
-  filterComponent: PropTypes.node,
+  filterComponent: PropTypes.object,
   filterComponentProps: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,
   selectedFilterColumn: PropTypes.shape({
-    comparators: PropTypes.arrayOf(PropTypes.shape(PropTypes.object))
+    comparators: PropTypes.arrayOf(
+      PropTypes.shape(PropTypes.string)
+    )
   })
 
 };

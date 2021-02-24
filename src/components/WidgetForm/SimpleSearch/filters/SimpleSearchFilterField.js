@@ -11,7 +11,9 @@ import {
   Select,
   TextField
 } from '@folio/stripes/components';
+
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
+import { filterPresent } from './validators';
 
 const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
   const { initialValues, values } = useFormState();
@@ -59,6 +61,7 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
             change(`${name}.name`, e.target.value);
           }
         }
+        validate={filterPresent}
       />
       {selectedFilter &&
         <FieldArray
