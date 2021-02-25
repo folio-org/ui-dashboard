@@ -1,5 +1,3 @@
-import { groupBy } from 'lodash';
-
 const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
   // TODO add sort column support
   const {
@@ -63,7 +61,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
   if (filterColumns) {
     // Start building the filterString
     let filterString = '';
-    
+
     // Begin each filter with & unless it's the first one
     filterColumns.forEach((f, index) => {
       let specificFilterString = '';

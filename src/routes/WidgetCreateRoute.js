@@ -39,7 +39,6 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
-
     const conf = JSON.stringify({
       ...widgetConf,
 

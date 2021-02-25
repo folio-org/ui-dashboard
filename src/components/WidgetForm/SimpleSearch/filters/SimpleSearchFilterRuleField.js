@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 
-import { Field, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   Col,
@@ -18,8 +17,6 @@ const SimpleSearchFilterRuleField = ({
   input: { name },
   selectedFilterColumn
 }) => {
-  const { initialValues } = useFormState();
-
   return (
     <Row>
       <Col xs={6}>
@@ -29,7 +26,7 @@ const SimpleSearchFilterRuleField = ({
             dataOptions={selectedFilterColumn.comparators.map(
               sfcc => ({ value: sfcc, label: sfcc })
             )}
-            initialValue={get(initialValues, `${name}.comparator`) ?? selectedFilterColumn.comparators[0]}
+            defaultValue={selectedFilterColumn.comparators[0]}
             name={`${name}.comparator`}
           />
         </KeyValue>

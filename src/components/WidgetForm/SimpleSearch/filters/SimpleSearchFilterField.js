@@ -18,7 +18,7 @@ import {
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 
 const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
-  const { initialValues, values } = useFormState();
+  const { values } = useFormState();
   const { change } = useForm();
 
   // Create values for available filters. If label available use that, else use name
@@ -33,7 +33,7 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
       filterComponentProps = {
         dataOptions: selectedFilterColumn.enumValues.map(ev => ({ value: ev.value, label: ev.label ?? ev.value })),
         // Set an initialValue where none was set previously
-        initialValue: get(initialValues, `${name}.rules`) ?? selectedFilterColumn.enumValues[0].value
+        defaultValue: selectedFilterColumn.enumValues[0].value
       };
       FilterComponent = Select;
       break;
@@ -75,7 +75,6 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
           filterComponent={FilterComponent}
           filterComponentProps={filterComponentProps}
           id="simple-search-filter-rules"
-          initialValue={get(initialValues, `${name}.rules`) ?? [{}]}
           name={`${name}.rules`}
           selectedFilterColumn={selectedFilterColumn}
         />
