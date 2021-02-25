@@ -39,23 +39,11 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
-    const { filterColumns, ...restOfConf } = widgetConf;
 
-    // Flatten the filter columns we get from the form
-    let flattenedFilterColumns;
-    if (filterColumns) {
-      flattenedFilterColumns = [];
-      filterColumns.forEach(fc => {
-        fc.rules.forEach(rule => {
-          flattenedFilterColumns.push({ ...rule, name: fc.name });
-        });
-      });
-    }
-
-    // TODO this is just a mostly hard coded configuration for now
     const conf = JSON.stringify({
-      ...restOfConf,
-      filterColumns: flattenedFilterColumns,
+      ...widgetConf,
+
+      // TODO sortColumn is a hard coded configuration for now
       sortColumn:[
         {
           name:'agreementName',

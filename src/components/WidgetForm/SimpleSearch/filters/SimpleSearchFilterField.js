@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import { FormattedMessage } from 'react-intl';
+
 import { get } from 'lodash';
 
 import { Field, useForm, useFormState } from 'react-final-form';
@@ -8,12 +10,12 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Datepicker,
+  KeyValue,
   Select,
   TextField
 } from '@folio/stripes/components';
 
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
-import validators from '../validators';
 
 const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
   const { initialValues, values } = useFormState();
@@ -50,19 +52,23 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
 
   return (
     <>
-      <Field
-        component={Select}
-        dataOptions={selectifiedFilterNames}
-        name={`${name}.name`}
-        // Reset filter value when selecting different filter type
-        onChange={
-          e => {
-            change(`${name}.rules`, [{}]);
-            change(`${name}.name`, e.target.value);
+      <KeyValue
+        data-testid="simple-search-filter-field-filter-by"
+        label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterBy" />}
+      >
+        <Field
+          component={Select}
+          dataOptions={selectifiedFilterNames}
+          name={`${name}.name`}
+          // Reset filter value when selecting different filter type
+          onChange={
+            e => {
+              change(`${name}.rules`, [{}]);
+              change(`${name}.name`, e.target.value);
+            }
           }
-        }
-        validate={validators.filterPresent}
-      />
+        />
+      </KeyValue>
       {selectedFilter &&
         <FieldArray
           component={SimpleSearchFilterRuleArray}

@@ -11,6 +11,7 @@ import { useQuery } from 'react-query';
 import {
   Button,
   Col,
+  KeyValue,
   Pane,
   Paneset,
   PaneFooter,
@@ -117,18 +118,28 @@ const WidgetForm = ({
       >
         <Row>
           <Col xs={6}>
-            <Field
-              component={TextField}
-              name="name"
-            />
+            <KeyValue
+              data-testid="widget-form-name"
+              label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
+            >
+              <Field
+                component={TextField}
+                name="name"
+              />
+            </KeyValue>
           </Col>
           <Col xs={6}>
-            <Field
-              component={Select}
-              dataOptions={selectifiedWidgetDefs}
-              name="definition.id"
-              required
-            />
+            <KeyValue
+              data-testid="widget-form-definition"
+              label={<FormattedMessage id="ui-dashboard.widgetForm.widgetDefinition" />}
+            >
+              <Field
+                component={Select}
+                dataOptions={selectifiedWidgetDefs}
+                name="definition.id"
+                required
+              />
+            </KeyValue>
           </Col>
         </Row>
         {specificWidgetDefinition &&

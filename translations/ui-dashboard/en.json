@@ -6,11 +6,14 @@
   "dashboard.newWidget": "{label} widget",
 
   "widgetForm.createWidget": "Create widget",
+  "widgetForm.widgetName": "Widget name",
+  "widgetForm.widgetDefinition": "Widget definition",
 
   "simpleSearchForm.filters": "Filters",
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",
   "simpleSearchForm.filters.filter": "Filter {index}",
+  "simpleSearchForm.filters.filterBy": "Filter by",
   "simpleSearchForm.filters.filterAlreadyPresent": "Filter already present in the form",
   "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration",
   "simpleSearchForm.filters.filterField.comparator": "Comparator",
