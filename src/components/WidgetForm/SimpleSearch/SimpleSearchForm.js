@@ -46,7 +46,7 @@ const SimpleSearchForm = ({
         id="simple-search-form-results"
         name="resultColumns"
       />
-      <SimpleSearchSort 
+      <SimpleSearchSort
         data={{
           sortColumns
         }}
