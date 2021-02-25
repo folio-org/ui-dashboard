@@ -4,6 +4,7 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
 import SimpleSearchResultArray from './results/SimpleSearchResultArray';
+import SimpleSearchSort from './sort/SimpleSearchSort';
 
 const SimpleSearchForm = ({
   specificWidgetDefinition
@@ -14,9 +15,11 @@ const SimpleSearchForm = ({
     } = {},
     results: {
       columns: resultColumns = []
+    } = {},
+    sort: {
+      columns: sortColumns = []
     } = {}
   } = JSON.parse(specificWidgetDefinition?.definition);
-
   return (
     <>
       <FieldArray
@@ -42,6 +45,11 @@ const SimpleSearchForm = ({
         headerId="ui-dashboard.simpleSearchForm.results"
         id="simple-search-form-results"
         name="resultColumns"
+      />
+      <SimpleSearchSort 
+        data={{
+          sortColumns
+        }}
       />
     </>
   );

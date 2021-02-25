@@ -27,5 +27,9 @@
   "simpleSearchForm.results": "Result columns",
   "simpleSearchForm.results.addResult": "Add result column",
   "simpleSearchForm.results.removeResult": "Remove result column {index}",
-  "simpleSearchForm.results.result": "Result column {index}"
+  "simpleSearchForm.results.result": "Result column {index}",
+
+  "simpleSearchForm.sort": "Sort",
+  "simpleSearchForm.sort.sortBy": "Sort by",
+  "simpleSearchForm.sort.sortDirection": "Sort direction"
 }

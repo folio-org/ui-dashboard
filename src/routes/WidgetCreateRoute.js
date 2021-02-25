@@ -41,22 +41,12 @@ const WidgetCreateRoute = ({
   }) => {
     const conf = JSON.stringify({
       ...widgetConf,
-
-      // TODO sortColumn is a hard coded configuration for now
-      sortColumn:[
-        {
-          name:'agreementName',
-          sortType:'asc'
-        }
-      ]
     });
-
     const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)
       .then(handleClose);
   };
 
-  // TODO have this form move onto page 2 instead of submitting hardcoded widget
   return (
     <Form
       // initialValues={initialValues}

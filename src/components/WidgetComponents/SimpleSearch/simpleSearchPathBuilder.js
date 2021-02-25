@@ -17,7 +17,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     pathString = baseUrl.substring(1);
   }
 
-  const { filterColumns, sortColumn: { 0: sortColumn } = [] } = widgetConf;
+  const { filterColumns, sortColumn } = widgetConf;
   pathString += '?';
 
   /*
