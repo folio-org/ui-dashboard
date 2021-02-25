@@ -57,12 +57,12 @@ const simpleSearchColumnParser = ({
   // If they're not there it'll cause issues.
 
   // First combine the configured result column data with the widgetdef result column data
-  return resultColumns.map(rc => {
+  return resultColumns.map((rc, index) => {
     const drc = defResultColumns.find(c => c.name === rc.name);
 
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
     const headerText = (rc.label || drc.label || capitaliseText(drc.name));
-    const returnColumn = { Header: headerText, accessor: drc.accessPath };
+    const returnColumn = { Header: headerText, accessor: drc.accessPath, id: `${rc.name}-[${index}]` };
 
     // Add any custom column rendering in here
     // NOTE this is column-wide, not cell wide.
