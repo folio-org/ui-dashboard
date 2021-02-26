@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 
 import {
   Col,
+  Checkbox,
   KeyValue,
   Row,
   Select
 } from '@folio/stripes/components';
+import { get } from 'lodash';
 
 const SimpleSearchFilterRuleField = ({
   filterComponent,
@@ -17,16 +19,23 @@ const SimpleSearchFilterRuleField = ({
   input: { name },
   selectedFilterColumn
 }) => {
+  const { values } = useFormState();
+  const selectifiedComparators = selectedFilterColumn?.comparators.map(
+    sfcc => ({ value: sfcc, label: sfcc })
+  );
+
+  // Check if isNull is an option, because we have to deal with that differently
+  const hasIsNull = selectedFilterColumn?.comparators?.includes("isNull");
+
   return (
     <Row>
-      <Col xs={6}>
+      <Col xs={hasIsNull ? 4 : 6}>
         <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
           <Field
             component={Select}
-            dataOptions={selectedFilterColumn?.comparators.map(
-              sfcc => ({ value: sfcc, label: sfcc })
-            )}
+            dataOptions={selectifiedComparators}
             defaultValue={selectedFilterColumn?.comparators[0]}
+            disabled={get(values, `${name}.isNull`)}
             name={`${name}.comparator`}
           />
         </KeyValue>
@@ -36,10 +45,22 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
+            disabled={get(values, `${name}.isNull`)}
             name={`${name}.filterValue`}
           />
         </KeyValue>
       </Col>
+      { hasIsNull &&
+        <Col xs={2}>
+          <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.isNull" />}>
+            <Field
+              name={`${name}.isNull`}
+              component={Checkbox}
+              type="checkbox"
+            />
+          </KeyValue>
+        </Col>
+      }
     </Row>
   );
 };

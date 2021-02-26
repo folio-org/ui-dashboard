@@ -84,11 +84,18 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
       rules.forEach((r, ind) => {
-        specificFilterString += `${filterPath}${r.comparator}${r.filterValue}`;
+        if (r.isNull) {
+          // If we're allowing null the filterString is slightly different
+          specificFilterString += `${filterPath} isNull`;
+        } else {
+          specificFilterString += `${filterPath}${r.comparator}${r.filterValue}`;
+        }
+
         if (ind !== rules.length - 1) {
           // This doesn't work as "||", it needs encoded value
           specificFilterString += '%7C%7C';
         }
+
       });
       filterString += specificFilterString;
     });

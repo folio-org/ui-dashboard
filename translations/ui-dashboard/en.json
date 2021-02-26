@@ -21,6 +21,7 @@
   "simpleSearchForm.filters.addFilterTooltip": "Add a filter to your widget configuration",
   "simpleSearchForm.filters.filterField.comparator": "Comparator",
   "simpleSearchForm.filters.filterField.value": "Value",
+  "simpleSearchForm.filters.filterField.isNull": "Is null",
 
   "simpleSearchForm.filters.filterField.rule.addRule": "Add rule",
   "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
