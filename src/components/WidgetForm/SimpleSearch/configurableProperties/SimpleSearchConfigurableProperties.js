@@ -21,12 +21,11 @@ const SimpleSearchConfigurableProperties = ({
         name="configurableProperties.numberOfRows"
         defaultValue={numberOfRows.defValue}
       >
-        {({ input, meta }) => {
+        {({ input }) => {
           if (numberOfRows.configurable) {
             return (
               <TextField
                 {...input}
-                error={meta && meta.touched && meta.error}
                 data-testid="simple-search-configurable-properties-number-of-rows"
                 id="simple-search-configurable-properties-number-of-rows"
                 label={<FormattedMessage id="ui-dashboard.simpleSearchForm.configurableProperties.numberOfRows" />}
@@ -44,12 +43,11 @@ const SimpleSearchConfigurableProperties = ({
           name="configurableProperties.urlLink"
           defaultValue={urlLink.defValue}
         >
-          {({ input, meta }) => {
+          {({ input }) => {
             if (urlLink.configurable) {
               return (
                 <TextField
                   {...input}
-                  error={meta && meta.touched && meta.error}
                   data-testid="simple-search-configurable-properties-url-link"
                   id="simple-search-configurable-properties-url-link"
                   label={<FormattedMessage id="ui-dashboard.simpleSearchForm.configurableProperties.urlLink" />}
