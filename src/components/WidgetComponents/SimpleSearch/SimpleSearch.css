@@ -1,0 +1,6 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.countBadge {
+  display: flex;
+  justify-content: flex-end;
+}
