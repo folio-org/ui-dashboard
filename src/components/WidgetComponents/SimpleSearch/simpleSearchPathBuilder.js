@@ -17,7 +17,13 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     pathString = baseUrl.substring(1);
   }
 
-  const { filterColumns, sortColumn } = widgetConf;
+  const {
+    configurableProperties: {
+      numberOfRows
+    } = {},
+    filterColumns,
+    sortColumn
+  } = widgetConf;
   pathString += '?';
 
   /*
@@ -109,6 +115,10 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
     pathString += 'stats=true';
   }
 
+  if (numberOfRows) {
+    // We can assume always & because stats will be present
+    pathString += `&perPage=${numberOfRows}`
+  }
 
   return pathString;
 };

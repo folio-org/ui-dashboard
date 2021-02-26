@@ -135,7 +135,6 @@ const WidgetForm = ({
     { value: '', label: '' },
     ...widgetDefinitions.map(wd => ({ value: wd.id, label: wd.name }))
   ];
-  console.log("ND: %o", newDef)
 
   return (
     <>

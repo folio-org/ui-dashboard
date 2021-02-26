@@ -44,6 +44,9 @@ const SimpleSearchForm = ({
   
   return (
     <>
+      <SimpleSearchConfigurableProperties
+        configurableProperties={configurableProperties}
+      />
       <FieldArray
         addButtonId="simple-search-form-add-filter-button"
         addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
@@ -73,15 +76,14 @@ const SimpleSearchForm = ({
           sortColumns
         }}
       />
-      <SimpleSearchConfigurableProperties
-        configurableProperties={configurableProperties}
-      />
     </>
   );
 };
 
 SimpleSearchForm.propTypes = {
-  specificWidgetDefinition: PropTypes.object
+  defChanged: PropTypes.bool.isRequired,
+  specificWidgetDefinition: PropTypes.object,
+  toggleDefChange: PropTypes.func.isRequired
 };
 
 export default SimpleSearchForm;

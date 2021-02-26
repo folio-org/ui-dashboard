@@ -34,5 +34,9 @@
 
   "simpleSearchForm.sort": "Sort",
   "simpleSearchForm.sort.sortBy": "Sort by",
-  "simpleSearchForm.sort.sortDirection": "Sort direction"
+  "simpleSearchForm.sort.sortDirection": "Sort direction",
+
+  "simpleSearchForm.configurableProperties.numberOfRows": "Number of rows",
+  "simpleSearchForm.configurableProperties.urlLink": "Url link"
+
 }
