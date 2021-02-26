@@ -196,11 +196,11 @@ const WidgetForm = ({
       </Paneset>
       <ConfirmationModal
         buttonStyle="danger"
-        confirmLabel={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.continue" />}
+        confirmLabel={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.continue" />}
         data-test-delete-confirmation-modal
-        heading={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.heading" />}
+        heading={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.heading" />}
         id="wipe-widget-form-confirmation"
-        message={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.message" />}
+        message={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.message" />}
         onCancel={() => {
           setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
           setNewDef();
