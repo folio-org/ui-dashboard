@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { bool } from 'prop-types';
 
-import { FormattedUTCDate, NoValue } from '@folio/stripes/components';
+import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
@@ -39,7 +39,17 @@ const dateRenderer = ({ cell: { value } }) => (
     <NoValue />
 );
 
+const boolRenderer = ({ cell: { value } }) => (
+  value ?
+  <Icon icon="check-circle" /> :
+  <Icon icon="times-circle" />
+);
+
 dateRenderer.propTypes = {
+  cell: PropTypes.object
+};
+
+boolRenderer.propTypes = {
   cell: PropTypes.object
 };
 
@@ -69,6 +79,10 @@ const simpleSearchColumnParser = ({
     // That would need to happen in the SimpleTable component.
     if (drc.valueType === 'Date') {
       returnColumn.Cell = dateRenderer;
+    }
+    
+    if (drc.valueType === 'Boolean') {
+      returnColumn.Cell = boolRenderer;
     }
 
     return returnColumn;

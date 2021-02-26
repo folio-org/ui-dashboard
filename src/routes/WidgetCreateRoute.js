@@ -40,7 +40,7 @@ const WidgetCreateRoute = ({
     ...widgetConf
   }) => {
     const conf = JSON.stringify({
-      ...widgetConf,
+      ...widgetConf
     });
     const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
     postWidget(submitValue)

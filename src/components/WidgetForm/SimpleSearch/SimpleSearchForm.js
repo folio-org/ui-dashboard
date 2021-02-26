@@ -7,6 +7,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
 import SimpleSearchResultArray from './results/SimpleSearchResultArray';
 import SimpleSearchSort from './sort/SimpleSearchSort';
+import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
   defChanged,
@@ -14,6 +15,7 @@ const SimpleSearchForm = ({
   toggleDefChange
 }) => {
   const {
+    configurableProperties,
     filters: {
       columns: filterColumns = []
     } = {},
@@ -22,7 +24,7 @@ const SimpleSearchForm = ({
     } = {},
     sort: {
       columns: sortColumns = []
-    } = {}
+    } = {},
   } = JSON.parse(specificWidgetDefinition?.definition);
   const { change } = useForm();
 
@@ -70,6 +72,9 @@ const SimpleSearchForm = ({
         data={{
           sortColumns
         }}
+      />
+      <SimpleSearchConfigurableProperties
+        configurableProperties={configurableProperties}
       />
     </>
   );
