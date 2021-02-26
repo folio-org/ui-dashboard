@@ -5,6 +5,8 @@
 
   "dashboard.newWidget": "{label} widget",
 
+  "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
+
   "widgetForm.createWidget": "Create widget",
   "widgetForm.widgetName": "Widget name",
   "widgetForm.widgetDefinition": "Widget definition",

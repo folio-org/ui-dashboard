@@ -5,7 +5,7 @@ import Widget from './Widget';
 
 const widget = {
   name: 'Widget Test 1',
-  id: "12345"
+  id: '12345'
 };
 
 describe('Widget', () => {
@@ -30,6 +30,6 @@ describe('Widget', () => {
       </Widget>
     );
 
-    expect(getByText("Test body")).toBeInTheDocument();
+    expect(getByText('Test body')).toBeInTheDocument();
   });
 });

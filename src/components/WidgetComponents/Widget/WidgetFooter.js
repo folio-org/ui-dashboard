@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 
 import { IconButton } from '@folio/stripes/components';
 import css from './WidgetFooter.css';
 
 const WidgetFooter = ({
+  widgetName,
   onRefresh,
   rightContent,
   timestamp,
   widgetId
 }) => {
+  const intl = useIntl();
   return (
     <div
       className={css.footerContainer}
@@ -20,6 +23,12 @@ const WidgetFooter = ({
       >
         <IconButton
           key={`widget-footer-${widgetId}-refresh-icon`}
+          aria-label={
+            intl.formatMessage(
+              { id: 'ui-dashboard.widgetFooter.refreshButtonLabel' },
+              { widgetName }
+            )
+          }
           icon="replace"
           onClick={onRefresh}
         />
@@ -44,6 +53,7 @@ WidgetFooter.propTypes = {
   onRefresh: PropTypes.func.isRequired,
   rightContent: PropTypes.object,
   timestamp: PropTypes.string,
+  widgetName: PropTypes.string.isRequired,
   widgetId: PropTypes.string.isRequired
 };
 

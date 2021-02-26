@@ -78,6 +78,7 @@ const SimpleSearch = ({
         rightContent={urlLinkButton()}
         timestamp={timestamp}
         widgetId={widget.id}
+        widgetName={widget.name}
       />
     </>
   );
@@ -91,6 +92,7 @@ SimpleSearch.propTypes = {
     definition: PropTypes.shape({
       definition: PropTypes.string.isRequired
     }).isRequired,
-    id: PropTypes.string
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
   }).isRequired
 };
