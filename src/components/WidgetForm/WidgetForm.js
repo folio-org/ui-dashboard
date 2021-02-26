@@ -186,8 +186,6 @@ const WidgetForm = ({
           </Row>
           {specificWidgetDefinition &&
             // Get specific form component for the selected widgetDefinition
-            // TODO work out if changing to a definition of same type saves some inputted information
-            // If so, does it then get submitted by mistake when field is no longer present?
             getWidgetFormComponent(specificWidgetDefinition)
           }
         </Pane>

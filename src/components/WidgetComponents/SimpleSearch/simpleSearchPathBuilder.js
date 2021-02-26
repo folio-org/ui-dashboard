@@ -1,5 +1,4 @@
 const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
-  // TODO add sort column support
   const {
     baseUrl,
     filters: {
