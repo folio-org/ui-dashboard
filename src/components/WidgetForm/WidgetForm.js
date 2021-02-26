@@ -10,6 +10,7 @@ import { useQuery } from 'react-query';
 
 import {
   Button,
+  ConfirmationModal,
   Col,
   KeyValue,
   Pane,
@@ -53,8 +54,12 @@ const WidgetForm = ({
   const [defChanged, setDefChanged] = useState(false);
   const toggleDefChange = useCallback(() => setDefChanged(!defChanged))
 
+  // Simple true/false to show/hide modal and then wipe form
+  const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
+  const [ newDef, setNewDef] = useState();
+
   const ky = useOkapiKy();
-  const { values } = useFormState();
+  const { dirtyFields, values } = useFormState();
   const { change } = useForm();
 
   // Selected widget definition will be just an id, so fetch full definition again here
@@ -114,57 +119,99 @@ const WidgetForm = ({
     );
   };
 
+  const changeDefintionAndWipeForm = () => {
+    /*
+     * Read proposed definition change from state
+     * Update trigger mechanism for dynamic sub-forms
+     * Change field value
+     * Remove from state
+     */
+    toggleDefChange()
+    change('definition.id', newDef);
+    setNewDef();
+  }
+
   const selectifiedWidgetDefs = [
     { value: '', label: '' },
     ...widgetDefinitions.map(wd => ({ value: wd.id, label: wd.name }))
   ];
+  console.log("ND: %o", newDef)
 
   return (
-    <Paneset>
-      <Pane
-        defaultWidth="100%"
-        footer={renderPaneFooter()}
-        id="pane-widget-form"
-        paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
-      >
-        <Row>
-          <Col xs={6}>
-            <KeyValue
-              data-testid="widget-form-name"
-              label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
-            >
-              <Field
-                component={TextField}
-                name="name"
-              />
-            </KeyValue>
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              data-testid="widget-form-definition"
-              label={<FormattedMessage id="ui-dashboard.widgetForm.widgetDefinition" />}
-            >
-              <Field
-                component={Select}
-                dataOptions={selectifiedWidgetDefs}
-                name="definition.id"
-                onChange={e => {
-                  toggleDefChange()
-                  change('definition.id', e.target.value);
-                }}
-                required
-              />
-            </KeyValue>
-          </Col>
-        </Row>
-        {specificWidgetDefinition &&
-          // Get specific form component for the selected widgetDefinition
-          // TODO work out if changing to a definition of same type saves some inputted information
-          // If so, does it then get submitted by mistake when field is no longer present?
-          getWidgetFormComponent(specificWidgetDefinition)
-        }
-      </Pane>
-    </Paneset>
+    <>
+      <Paneset>
+        <Pane
+          defaultWidth="100%"
+          footer={renderPaneFooter()}
+          id="pane-widget-form"
+          paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
+        >
+          <Row>
+            <Col xs={6}>
+              <KeyValue
+                data-testid="widget-form-name"
+                label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
+              >
+                <Field
+                  component={TextField}
+                  name="name"
+                />
+              </KeyValue>
+            </Col>
+            <Col xs={6}>
+              <KeyValue
+                data-testid="widget-form-definition"
+                label={<FormattedMessage id="ui-dashboard.widgetForm.widgetDefinition" />}
+              >
+                <Field
+                  component={Select}
+                  dataOptions={selectifiedWidgetDefs}
+                  name="definition.id"
+                  onChange={e => {
+                    // Other than the name/def, are any of the fields dirty?
+                    delete dirtyFields.name
+                    delete dirtyFields['definition.id']
+                    const dirtyFieldsCount = Object.keys(dirtyFields)?.length
+
+                    // If we have dirty fields, set up confirmation modal
+                    if (dirtyFieldsCount > 0) {
+                      setNewDef(e.target.value);
+                      setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+                    } else {
+                      change('definition.id', e.target.value);
+                    }
+                  }}
+                  required
+                />
+              </KeyValue>
+            </Col>
+          </Row>
+          {specificWidgetDefinition &&
+            // Get specific form component for the selected widgetDefinition
+            // TODO work out if changing to a definition of same type saves some inputted information
+            // If so, does it then get submitted by mistake when field is no longer present?
+            getWidgetFormComponent(specificWidgetDefinition)
+          }
+        </Pane>
+      </Paneset>
+      <ConfirmationModal
+        buttonStyle="danger"
+        confirmLabel={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.continue" />}
+        data-test-delete-confirmation-modal
+        heading={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.heading" />}
+        id="wipe-widget-form-confirmation"
+        message={<FormattedMessage id="widgetForm.changeDefinitionWarningModal.message" />}
+        onCancel={() => {
+          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+          setNewDef();
+        }}
+        onConfirm={() => {
+          changeDefintionAndWipeForm();
+          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+        }}
+        open={confirmWipeFormModalOpen}
+      />
+    </>
   );
 };
 

@@ -8,6 +8,9 @@
   "widgetForm.createWidget": "Create widget",
   "widgetForm.widgetName": "Widget name",
   "widgetForm.widgetDefinition": "Widget definition",
+  "widgetForm.changeDefinitionWarningModal.heading": "Confirm change of definition",
+  "widgetForm.changeDefinitionWarningModal.message": "Changing definition will cause the form to reset, are you sure you want to continue?",
+  "widgetForm.changeDefinitionWarningModal.continue": "Continue",
 
   "simpleSearchForm.filters": "Filters",
   "simpleSearchForm.filters.addFilter": "Add filter",
