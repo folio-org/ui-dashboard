@@ -10,6 +10,7 @@ import columnParser from './simpleSearchColumnParser';
 
 import SimpleTable from '../SimpleTable';
 import { WidgetFooter } from '../Widget';
+import css from './SimpleSearch.css';
 
 const SimpleSearch = ({
   widget
@@ -36,6 +37,9 @@ const SimpleSearch = ({
 
   return (
     <>
+      <div className={css.countBadge}>
+        <p> Badge goes here </p> 
+      </div>
       <SimpleTable
         key={`simple-table-${widget.id}`}
         columns={columns}

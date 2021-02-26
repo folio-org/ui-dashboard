@@ -88,14 +88,13 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^5.8.1",
-    "react-router-dom": "^5.2.0",
     "react-query": "^3.9.0",
+    "react-router-dom": "^5.2.0",
     "sinon": "^9.0.2"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
-    "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.19",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.5",
@@ -113,7 +112,7 @@
     "react": "*",
     "react-dom": "*",
     "react-intl": "^5.8.1",
-    "react-router-dom": "^5.2.0",
-    "react-query": "^3.9.0"
+    "react-query": "^3.9.0",
+    "react-router-dom": "^5.2.0"
   }
 }
