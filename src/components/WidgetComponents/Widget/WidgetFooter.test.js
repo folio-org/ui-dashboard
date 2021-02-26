@@ -14,7 +14,7 @@ const widgetFooterProps = {
   rightContent: <div> Right content </div>,
   widgetName: 'Test widget 1',
   widgetId: '123456789'
-}
+};
 
 describe('WidgetFooter', () => {
   test('renders refresh button with correct aria-label', () => {
@@ -34,7 +34,7 @@ describe('WidgetFooter', () => {
       />,
       translationsProperties
     );
-    const refreshButton = getByRole('button', { name: `Refresh widget: ${widgetFooterProps.widgetName}` })
+    const refreshButton = getByRole('button', { name: `Refresh widget: ${widgetFooterProps.widgetName}` });
     userEvent.click(refreshButton);
     expect(widgetFooterProps.onRefresh.mock.calls.length).toBe(1);
   });
@@ -58,5 +58,4 @@ describe('WidgetFooter', () => {
     );
     expect(getByText(/right content/i)).toBeInTheDocument();
   });
-  
 });
