@@ -14,12 +14,11 @@ const SimpleSearchConfigurableProperties = ({
     urlLink = {}
   } = {}
 }) => {
-
   return (
     <>
       <Field
-        name="configurableProperties.numberOfRows"
         defaultValue={numberOfRows.defValue}
+        name="configurableProperties.numberOfRows"
       >
         {({ input }) => {
           if (numberOfRows.configurable) {
@@ -40,8 +39,8 @@ const SimpleSearchConfigurableProperties = ({
       { (urlLink.configurable || urlLink.defValue) &&
         // If urlLink is non configurable and has no defValue then we don't need it on the form
         <Field
-          name="configurableProperties.urlLink"
           defaultValue={urlLink.defValue}
+          name="configurableProperties.urlLink"
         >
           {({ input }) => {
             if (urlLink.configurable) {
@@ -62,6 +61,12 @@ const SimpleSearchConfigurableProperties = ({
       }
     </>
   );
-}
+};
+
+SimpleSearchConfigurableProperties.propTypes = {
+  configurableProperties: PropTypes.shape({
+    numberOfRows: PropTypes.object.isRequired
+  }).isRequired
+};
 
 export default SimpleSearchConfigurableProperties;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 /*
@@ -41,8 +41,8 @@ const dateRenderer = ({ cell: { value } }) => (
 
 const boolRenderer = ({ cell: { value } }) => (
   value ?
-  <Icon icon="check-circle" /> :
-  <Icon icon="times-circle" />
+    <Icon icon="check-circle" /> :
+    <Icon icon="times-circle" />
 );
 
 dateRenderer.propTypes = {
@@ -80,7 +80,7 @@ const simpleSearchColumnParser = ({
     if (drc.valueType === 'Date') {
       returnColumn.Cell = dateRenderer;
     }
-    
+
     if (drc.valueType === 'Boolean') {
       returnColumn.Cell = boolRenderer;
     }

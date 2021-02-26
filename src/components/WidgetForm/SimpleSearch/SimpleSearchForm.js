@@ -38,10 +38,10 @@ const SimpleSearchForm = ({
       change('filterColumns', undefined);
       change('resultColumns', undefined);
       change('sortColumns', undefined);
-      toggleDefChange()
+      toggleDefChange();
     }
-  }, [defChanged])
-  
+  }, [change, defChanged, toggleDefChange]);
+
   return (
     <>
       <SimpleSearchConfigurableProperties

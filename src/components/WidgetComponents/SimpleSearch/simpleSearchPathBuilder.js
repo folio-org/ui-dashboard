@@ -95,7 +95,6 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
           // This doesn't work as "||", it needs encoded value
           specificFilterString += '%7C%7C';
         }
-
       });
       filterString += specificFilterString;
     });
@@ -124,7 +123,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
 
   if (numberOfRows) {
     // We can assume always & because stats will be present
-    pathString += `&perPage=${numberOfRows}`
+    pathString += `&perPage=${numberOfRows}`;
   }
 
   return pathString;

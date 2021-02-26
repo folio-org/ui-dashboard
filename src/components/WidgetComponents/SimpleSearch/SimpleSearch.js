@@ -57,13 +57,13 @@ const SimpleSearch = ({
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
       </Link>
     );
-  }
+  };
 
   return (
     <>
       <div className={css.countBadge}>
         <Badge>
-          <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{total: data?.total}} />
+          <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{ total: data?.total }} />
         </Badge>
       </div>
       <SimpleTable

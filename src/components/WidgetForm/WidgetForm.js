@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -46,17 +46,16 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
-
   /*
    * Create a callback and trigger variable we can pass through to other forms.
    * These will be used to clear the relevant sub-forms when definition changes.
   */
   const [defChanged, setDefChanged] = useState(false);
-  const toggleDefChange = useCallback(() => setDefChanged(!defChanged))
+  const toggleDefChange = () => setDefChanged(!defChanged);
 
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
-  const [ newDef, setNewDef] = useState();
+  const [newDef, setNewDef] = useState();
 
   const ky = useOkapiKy();
   const { dirtyFields, values } = useFormState();
@@ -126,10 +125,10 @@ const WidgetForm = ({
      * Change field value
      * Remove from state
      */
-    toggleDefChange()
+    toggleDefChange();
     change('definition.id', newDef);
     setNewDef();
-  }
+  };
 
   const selectifiedWidgetDefs = [
     { value: '', label: '' },
@@ -168,9 +167,9 @@ const WidgetForm = ({
                   name="definition.id"
                   onChange={e => {
                     // Other than the name/def, are any of the fields dirty?
-                    delete dirtyFields.name
-                    delete dirtyFields['definition.id']
-                    const dirtyFieldsCount = Object.keys(dirtyFields)?.length
+                    delete dirtyFields.name;
+                    delete dirtyFields['definition.id'];
+                    const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
 
                     // If we have dirty fields, set up confirmation modal
                     if (dirtyFieldsCount > 0) {

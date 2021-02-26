@@ -25,7 +25,7 @@ const SimpleSearchFilterRuleField = ({
   );
 
   // Check if isNull is an option, because we have to deal with that differently
-  const hasIsNull = selectedFilterColumn?.comparators?.includes("isNull");
+  const hasIsNull = selectedFilterColumn?.comparators?.includes('isNull');
 
   return (
     <Row>
@@ -54,8 +54,8 @@ const SimpleSearchFilterRuleField = ({
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.isNull" />}>
             <Field
-              name={`${name}.isNull`}
               component={Checkbox}
+              name={`${name}.isNull`}
               type="checkbox"
             />
           </KeyValue>
