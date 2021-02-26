@@ -14,7 +14,11 @@ const Widget = ({
       <div
         className={css.card}
       >
-        <WidgetHeader key={`widget-header-${widget.id}`} name={widget.name} widgetId={widget.id} />
+        <WidgetHeader
+          key={`widget-header-${widget.id}`}
+          name={widget.name}
+          widgetId={widget.id}
+        />
         <div
           key={`widget-body-${widget.id}`}
           className={css.body}
