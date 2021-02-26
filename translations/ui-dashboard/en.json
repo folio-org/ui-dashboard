@@ -39,5 +39,6 @@
   "simpleSearchForm.configurableProperties.numberOfRows": "Number of rows",
   "simpleSearchForm.configurableProperties.urlLink": "Url link",
 
-  "simpleSearch.widget.nFoundBadge": "{total} found"
+  "simpleSearch.widget.nFoundBadge": "{total} found",
+  "simpleSearch.widget.linkText": "Link to app"
 }

@@ -42,7 +42,7 @@ const WidgetFooter = ({
 
 WidgetFooter.propTypes = {
   onRefresh: PropTypes.func.isRequired,
-  rightContent: PropTypes.oneOf([PropTypes.node, PropTypes.func]),
+  rightContent: PropTypes.object,
   timestamp: PropTypes.string,
   widgetId: PropTypes.string.isRequired
 };

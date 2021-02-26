@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -37,6 +39,26 @@ const SimpleSearch = ({
   );
 
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
+  const {
+    configurableProperties: {
+      urlLink
+    } = {}
+  } = widgetConf;
+
+  const urlLinkButton = () => {
+    if (!urlLink) {
+      return null;
+    }
+    return (
+      <Link
+        className={css.linkText}
+        to={urlLink}
+      >
+        <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
+      </Link>
+    );
+  }
+
   return (
     <>
       <div className={css.countBadge}>
@@ -53,6 +75,7 @@ const SimpleSearch = ({
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => refetch()}
+        rightContent={urlLinkButton()}
         timestamp={timestamp}
         widgetId={widget.id}
       />

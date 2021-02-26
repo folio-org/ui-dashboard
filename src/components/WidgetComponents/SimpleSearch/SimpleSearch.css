@@ -4,3 +4,7 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.linkText {
+  font-weight: var(--text-weight-bold);
+}
