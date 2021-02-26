@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import moment from 'moment';
 
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
+import { Badge } from '@folio/stripes/components';
 
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
@@ -34,11 +37,12 @@ const SimpleSearch = ({
   );
 
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
-
   return (
     <>
       <div className={css.countBadge}>
-        <p> Badge goes here </p> 
+        <Badge>
+          <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{total: data?.total}} />
+        </Badge>
       </div>
       <SimpleTable
         key={`simple-table-${widget.id}`}
