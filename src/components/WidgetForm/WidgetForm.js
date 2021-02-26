@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import { Field, useFormState } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
@@ -45,8 +45,17 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
+
+  /*
+   * Create a callback and trigger variable we can pass through to other forms.
+   * These will be used to clear the relevant sub-forms when definition changes.
+  */
+  const [defChanged, setDefChanged] = useState(false);
+  const toggleDefChange = useCallback(() => setDefChanged(!defChanged))
+
   const ky = useOkapiKy();
   const { values } = useFormState();
+  const { change } = useForm();
 
   // Selected widget definition will be just an id, so fetch full definition again here
   const { data: specificWidgetDefinition } = useQuery(
@@ -65,7 +74,9 @@ const WidgetForm = ({
       case 'SimpleSearch':
         return (
           <SimpleSearchForm
+            defChanged={defChanged}
             specificWidgetDefinition={specificWidgetDefinition}
+            toggleDefChange={toggleDefChange}
           />
         );
       default:
@@ -137,6 +148,10 @@ const WidgetForm = ({
                 component={Select}
                 dataOptions={selectifiedWidgetDefs}
                 name="definition.id"
+                onChange={e => {
+                  toggleDefChange()
+                  change('definition.id', e.target.value);
+                }}
                 required
               />
             </KeyValue>

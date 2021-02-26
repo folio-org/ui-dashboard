@@ -23,10 +23,10 @@ const SimpleSearchFilterRuleField = ({
         <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
           <Field
             component={Select}
-            dataOptions={selectedFilterColumn.comparators.map(
+            dataOptions={selectedFilterColumn?.comparators.map(
               sfcc => ({ value: sfcc, label: sfcc })
             )}
-            defaultValue={selectedFilterColumn.comparators[0]}
+            defaultValue={selectedFilterColumn?.comparators[0]}
             name={`${name}.comparator`}
           />
         </KeyValue>
