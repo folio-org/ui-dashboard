@@ -17,15 +17,22 @@ const SimpleSearchFilterRuleField = ({
   filterComponent,
   filterComponentProps,
   input: { name },
-  selectedFilterColumn
+  selectedFilterColumn: { comparators = [] } = {}
 }) => {
   const { values } = useFormState();
-  const selectifiedComparators = selectedFilterColumn?.comparators.map(
-    sfcc => ({ value: sfcc, label: sfcc })
-  );
+
 
   // Check if isNull is an option, because we have to deal with that differently
-  const hasIsNull = selectedFilterColumn?.comparators?.includes('isNull');
+  const hasIsNull = comparators?.includes('isNull');
+  const comparatorsWithoutIsNull = comparators;
+  if (hasIsNull) {
+    const indexOfIsNull = comparatorsWithoutIsNull.indexOf('isNull');
+    comparatorsWithoutIsNull.splice(indexOfIsNull, 1);
+  }
+
+  const selectifiedComparators = comparatorsWithoutIsNull.map(
+    sfcc => ({ value: sfcc, label: sfcc })
+  );
 
   return (
     <Row>
@@ -34,7 +41,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
-            defaultValue={selectedFilterColumn?.comparators[0]}
+            defaultValue={comparators[0]}
             disabled={get(values, `${name}.isNull`)}
             name={`${name}.comparator`}
           />
