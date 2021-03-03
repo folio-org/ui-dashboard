@@ -83,7 +83,8 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
       rules.forEach((r, ind) => {
-        if (r.isNull) {
+
+        if (r.comparator === 'isNull') {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} isNull`;
         } else {

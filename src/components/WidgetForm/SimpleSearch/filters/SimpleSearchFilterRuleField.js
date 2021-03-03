@@ -21,28 +21,18 @@ const SimpleSearchFilterRuleField = ({
 }) => {
   const { values } = useFormState();
 
-
-  // Check if isNull is an option, because we have to deal with that differently
-  const hasIsNull = comparators?.includes('isNull');
-  const comparatorsWithoutIsNull = comparators;
-  if (hasIsNull) {
-    const indexOfIsNull = comparatorsWithoutIsNull.indexOf('isNull');
-    comparatorsWithoutIsNull.splice(indexOfIsNull, 1);
-  }
-
-  const selectifiedComparators = comparatorsWithoutIsNull.map(
+  const selectifiedComparators = comparators.map(
     sfcc => ({ value: sfcc, label: sfcc })
   );
 
   return (
     <Row>
-      <Col xs={hasIsNull ? 4 : 6}>
+      <Col xs={6}>
         <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
             defaultValue={comparators[0]}
-            disabled={get(values, `${name}.isNull`)}
             name={`${name}.comparator`}
           />
         </KeyValue>
@@ -52,22 +42,11 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
-            disabled={get(values, `${name}.isNull`)}
+            disabled={get(values, `${name}.comparator`) === 'isNull'}
             name={`${name}.filterValue`}
           />
         </KeyValue>
       </Col>
-      { hasIsNull &&
-        <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.isNull" />}>
-            <Field
-              component={Checkbox}
-              name={`${name}.isNull`}
-              type="checkbox"
-            />
-          </KeyValue>
-        </Col>
-      }
     </Row>
   );
 };
