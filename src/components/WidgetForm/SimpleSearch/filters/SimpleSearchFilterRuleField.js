@@ -31,6 +31,8 @@ const SimpleSearchFilterRuleField = ({
     }) })
   );
 
+  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
+
   if (valueType === 'Date') {
     return (
       <SimpleSearchDateFilterField
@@ -61,7 +63,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
-            disabled={get(values, `${name}.comparator`) === 'isNull'}
+            disabled={isSetOrUnset}
             name={`${name}.filterValue`}
           />
         </KeyValue>
