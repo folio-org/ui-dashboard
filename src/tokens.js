@@ -6,6 +6,7 @@
 // So currentDate, optionally +- up to 3 digits, then optionally a 'd', 'w', 'm' or 'y'
 
 import moment from 'moment';
+
 function tokens(valueString, stripes, options = {}) {
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 

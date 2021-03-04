@@ -18,8 +18,6 @@ import SimpleTable from '../SimpleTable';
 import { WidgetFooter } from '../Widget';
 import css from './SimpleSearch.css';
 
-import useTokens from '../../../tokens';
-
 const SimpleSearch = ({
   widget
 }) => {

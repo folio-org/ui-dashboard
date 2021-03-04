@@ -43,7 +43,7 @@ const SimpleSearchDateFilterField = ({
     if (relOrAbsValue === undefined) {
       change(`${name}.relativeOrAbsolute`, 'relative');
     }
-  }, [change, name, values]);
+  }, [change, name, relOrAbsValue, values]);
 
   return (
     <Row>
@@ -140,7 +140,7 @@ const SimpleSearchDateFilterField = ({
               label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.add' })
             },
             {
-              value: 'subtract', 
+              value: 'subtract',
               label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
             }
           ]}
@@ -167,7 +167,11 @@ const SimpleSearchDateFilterField = ({
           }
           name={`${name}.offset`}
           type="number"
-          validate={value => parseInt(value) >= 0 ? undefined : <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMustBePositive" />}
+          validate={value => (
+            parseInt(value, 10) >= 0 ?
+              undefined :
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMustBePositive" />
+          )}
         />
       </Col>
       <Col xs={2}>

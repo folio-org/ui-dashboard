@@ -25,10 +25,11 @@ const SimpleSearchFilterRuleField = ({
   const intl = useIntl();
 
   const selectifiedComparators = comparators.map(
-    sfcc => ({ value: sfcc, label: intl.formatMessage({
-      id: `ui-dashboard.simpleSearchForm.filters.filterField.comparator.${valueType}.${sfcc}`,
-      defaultMessage: sfcc
-    }) })
+    sfcc => ({ value: sfcc,
+      label: intl.formatMessage({
+        id: `ui-dashboard.simpleSearchForm.filters.filterField.comparator.${valueType}.${sfcc}`,
+        defaultMessage: sfcc
+      }) })
   );
 
   const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';

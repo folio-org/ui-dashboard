@@ -43,6 +43,6 @@ const submitWithTokens = (widgetConf) => {
   // Set the filter columns to be the new ones including tokens
   tweakedWidgetConf.filterColumns = tweakedFilterColumns;
   return tweakedWidgetConf;
-}
+};
 
 export default submitWithTokens;

@@ -46,7 +46,7 @@ const WidgetCreateRoute = ({
      * actions to other submits.
      */
     const tweakedWidgetConf = submitWithTokens(widgetConf);
-    
+
     // Stringify the configuration
     const conf = JSON.stringify({
       ...tweakedWidgetConf
