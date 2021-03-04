@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Field, useFormState } from 'react-final-form';
 
@@ -22,9 +22,13 @@ const SimpleSearchFilterRuleField = ({
   selectedFilterColumn: { comparators = [], valueType } = {}
 }) => {
   const { values } = useFormState();
+  const intl = useIntl();
 
   const selectifiedComparators = comparators.map(
-    sfcc => ({ value: sfcc, label: sfcc })
+    sfcc => ({ value: sfcc, label: intl.formatMessage({
+      id: `ui-dashboard.simpleSearchForm.filters.filterField.comparator.${valueType}.${sfcc}`,
+      defaultMessage: sfcc
+    }) })
   );
 
   if (valueType === 'Date') {

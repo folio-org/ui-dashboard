@@ -59,6 +59,10 @@ const SimpleSearchDateFilterField = ({
               <div className={css.radioButton}>
                 <Field
                   defaultValue="absolute"
+                  disabled={
+                    get(values, `${name}.comparator`) === 'isNull' ||
+                    get(values, `${name}.comparator`) === 'isNotNull'
+                  }
                   name={`${name}.relativeOrAbsolute`}
                   render={({ input }) => {
                     return (
@@ -112,6 +116,7 @@ const SimpleSearchDateFilterField = ({
                   component={filterComponent}
                   disabled={
                     get(values, `${name}.comparator`) === 'isNull' ||
+                    get(values, `${name}.comparator`) === 'isNotNull' ||
                     get(values, `${name}.relativeOrAbsolute`) === 'relative'
                   }
                   name={`${name}.filterValue`}
@@ -126,15 +131,17 @@ const SimpleSearchDateFilterField = ({
           component={Select}
           dataOptions={[
             {
-              value: 'subtract', 
-              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
-            },
-            {
               value: 'add',
               label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.add' })
+            },
+            {
+              value: 'subtract', 
+              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
             }
           ]}
           disabled={
+            get(values, `${name}.comparator`) === 'isNull' ||
+            get(values, `${name}.comparator`) === 'isNotNull' ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
@@ -148,6 +155,8 @@ const SimpleSearchDateFilterField = ({
           component={TextField}
           defaultValue={0}
           disabled={
+            get(values, `${name}.comparator`) === 'isNull' ||
+            get(values, `${name}.comparator`) === 'isNotNull' ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
@@ -179,6 +188,8 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
+            get(values, `${name}.comparator`) === 'isNull' ||
+            get(values, `${name}.comparator`) === 'isNotNull' ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
