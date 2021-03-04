@@ -31,11 +31,17 @@ const SimpleSearchDateFilterField = ({
   const { change } = useForm();
 
   const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
+  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   useEffect(() => {
     // Ensure offset is always 0 rather than being unset
     if (get(values, `${name}.offset`) === undefined) {
       change(`${name}.offset`, 0);
+    }
+
+    // Ensure relative vs absolute is always set
+    if (relOrAbsValue === undefined) {
+      change(`${name}.relativeOrAbsolute`, 'relative');
     }
   }, [change, name, values]);
 
@@ -81,7 +87,7 @@ const SimpleSearchDateFilterField = ({
               <div className={
                 classnames(
                   css.item,
-                  { [css.absoluteSelected]: get(values, `${name}.relativeOrAbsolute`) === 'absolute' }
+                  { [css.absoluteSelected]: relOrAbsValue === 'absolute' }
                 )
               }
               >
@@ -116,7 +122,7 @@ const SimpleSearchDateFilterField = ({
                   component={filterComponent}
                   disabled={
                     isSetOrUnset ||
-                    get(values, `${name}.relativeOrAbsolute`) === 'relative'
+                    relOrAbsValue === 'relative'
                   }
                   name={`${name}.filterValue`}
                 />
@@ -140,7 +146,7 @@ const SimpleSearchDateFilterField = ({
           ]}
           disabled={
             isSetOrUnset ||
-            get(values, `${name}.relativeOrAbsolute`) !== 'relative'
+            relOrAbsValue !== 'relative'
           }
           label={
             <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMethod" />
@@ -154,13 +160,14 @@ const SimpleSearchDateFilterField = ({
           defaultValue={0}
           disabled={
             isSetOrUnset ||
-            get(values, `${name}.relativeOrAbsolute`) !== 'relative'
+            relOrAbsValue !== 'relative'
           }
           label={
             <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offset" />
           }
           name={`${name}.offset`}
           type="number"
+          validate={value => parseInt(value) >= 0 ? undefined : <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMustBePositive" />}
         />
       </Col>
       <Col xs={2}>
@@ -186,7 +193,7 @@ const SimpleSearchDateFilterField = ({
           ]}
           disabled={
             isSetOrUnset ||
-            get(values, `${name}.relativeOrAbsolute`) !== 'relative'
+            relOrAbsValue !== 'relative'
           }
           label={
             <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.timeUnit" />

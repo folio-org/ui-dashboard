@@ -28,6 +28,9 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
 
   let FilterComponent;
   let filterComponentProps = {};
+
+  // Keep the hidden form field up to date
+  change(`${name}.fieldType`, selectedFilterColumn?.valueType)
   switch (selectedFilterColumn?.valueType) {
     case 'Enum':
       filterComponentProps = {
@@ -67,6 +70,11 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
               change(`${name}.name`, e.target.value);
             }
           }
+        />
+        <Field
+          name={`${name}.fieldType`}
+          value={selectedFilterColumn?.valueType}
+          render={() => (null)}
         />
       </KeyValue>
       {selectedFilter &&
