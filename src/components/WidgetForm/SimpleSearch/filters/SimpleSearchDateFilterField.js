@@ -30,6 +30,8 @@ const SimpleSearchDateFilterField = ({
   const { values } = useFormState();
   const { change } = useForm();
 
+  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
+
   useEffect(() => {
     // Ensure offset is always 0 rather than being unset
     if (get(values, `${name}.offset`) === undefined) {
@@ -59,15 +61,12 @@ const SimpleSearchDateFilterField = ({
               <div className={css.radioButton}>
                 <Field
                   defaultValue="absolute"
-                  disabled={
-                    get(values, `${name}.comparator`) === 'isNull' ||
-                    get(values, `${name}.comparator`) === 'isNotNull'
-                  }
                   name={`${name}.relativeOrAbsolute`}
                   render={({ input }) => {
                     return (
                       <RadioButton
                         checked={input.checked}
+                        disabled={isSetOrUnset}
                         id="relative"
                         name={input.name}
                         onChange={input.onChange}
@@ -99,6 +98,7 @@ const SimpleSearchDateFilterField = ({
                     return (
                       <RadioButton
                         checked={input.checked}
+                        disabled={isSetOrUnset}
                         id="absolute"
                         name={input.name}
                         onChange={input.onChange}
@@ -115,8 +115,7 @@ const SimpleSearchDateFilterField = ({
                   {...filterComponentProps}
                   component={filterComponent}
                   disabled={
-                    get(values, `${name}.comparator`) === 'isNull' ||
-                    get(values, `${name}.comparator`) === 'isNotNull' ||
+                    isSetOrUnset ||
                     get(values, `${name}.relativeOrAbsolute`) === 'relative'
                   }
                   name={`${name}.filterValue`}
@@ -140,8 +139,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            get(values, `${name}.comparator`) === 'isNull' ||
-            get(values, `${name}.comparator`) === 'isNotNull' ||
+            isSetOrUnset ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
@@ -155,8 +153,7 @@ const SimpleSearchDateFilterField = ({
           component={TextField}
           defaultValue={0}
           disabled={
-            get(values, `${name}.comparator`) === 'isNull' ||
-            get(values, `${name}.comparator`) === 'isNotNull' ||
+            isSetOrUnset ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
@@ -188,8 +185,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            get(values, `${name}.comparator`) === 'isNull' ||
-            get(values, `${name}.comparator`) === 'isNotNull' ||
+            isSetOrUnset ||
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
