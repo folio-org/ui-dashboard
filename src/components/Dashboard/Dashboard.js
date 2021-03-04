@@ -8,7 +8,6 @@ import SimpleSearch from '../WidgetComponents/SimpleSearch/SimpleSearch';
 import { Widget } from '../WidgetComponents/Widget';
 
 import css from './Dashboard.css';
-import tokens from '../../tokens';
 
 const propTypes = {
   dashboard: PropTypes.object,

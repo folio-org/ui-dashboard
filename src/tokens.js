@@ -8,7 +8,7 @@
 import moment from 'moment';
 import { useStripes } from '@folio/stripes/core';
 
-const tokens = (valueString, options = {}) => {
+function useTokens(valueString, options = {}) {
   const stripes = useStripes();
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 
@@ -26,7 +26,7 @@ const tokens = (valueString, options = {}) => {
   }
 
   // MATCH CURRENT DATE +- DAYS
-  const dateMatch = tokenMatch.match(/(currentDate)((\#)(-?\d{1,3}))?((\#)([d,w,m,y]))?/);
+  const dateMatch = tokenMatch.match(/(currentDate)((#)(-?\d{1,3}))?((#)([d,w,m,y]))?/);
   if (dateMatch?.[1] === 'currentDate') {
     // We have matched the date pattern, do date logic
     const currentDate = moment(new Date()).startOf('day');
@@ -45,6 +45,6 @@ const tokens = (valueString, options = {}) => {
 
   // If all else fails, return an empty string
   return '';
-};
+}
 
-export default tokens;
+export default useTokens;

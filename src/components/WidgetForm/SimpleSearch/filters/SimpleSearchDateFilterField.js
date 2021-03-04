@@ -35,9 +35,7 @@ const SimpleSearchDateFilterField = ({
     if (get(values, `${name}.offset`) === undefined) {
       change(`${name}.offset`, 0);
     }
-  }, [change, values]);
-
-  console.log('VALUES: %o', values);
+  }, [change, name, values]);
 
   return (
     <Row>
@@ -191,6 +189,18 @@ const SimpleSearchDateFilterField = ({
       </Col>
     </Row>
   );
+};
+
+SimpleSearchDateFilterField.propTypes = {
+  filterComponent: PropTypes.object,
+  filterComponentProps: PropTypes.object,
+  input: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  selectifiedComparators: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string
+  }))
 };
 
 export default SimpleSearchDateFilterField;
