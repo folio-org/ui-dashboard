@@ -1,0 +1,22 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.item {
+  padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+  align-self: center;
+  margin: 0;
+  width: 100%;
+
+  &.absoluteSelected {
+    color: var(--color-text-p2);
+  }
+}
+
+.radioButton {
+  margin-bottom:0;
+  align-self: center;
+}
+
+.flexContainer {
+  display: flex;
+  width: 100%;
+}

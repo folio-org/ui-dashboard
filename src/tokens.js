@@ -10,9 +10,9 @@ import { useStripes } from '@folio/stripes/core';
 
 const tokens = (valueString, options = {}) => {
   const stripes = useStripes();
-  const dateFormat = options.dateFormat || 'YYYY-MM-DD'
+  const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 
-  const tokenMatch = valueString.match(/\{\{(.*)\}\}/)?.[1]
+  const tokenMatch = valueString.match(/\{\{(.*)\}\}/)?.[1];
 
   // ZERO TOKEN MATCH
   if (!tokenMatch) {
@@ -22,11 +22,11 @@ const tokens = (valueString, options = {}) => {
 
   // MATCH CURRENT USER
   if (tokenMatch === 'currentUser') {
-    return stripes.user.user.id
+    return stripes.user.user.id;
   }
 
   // MATCH CURRENT DATE +- DAYS
-  const dateMatch = tokenMatch.match(/(currentDate)((\#)(-?\d{1,3}))?((\#)([d,w,m,y]))?/)
+  const dateMatch = tokenMatch.match(/(currentDate)((\#)(-?\d{1,3}))?((\#)([d,w,m,y]))?/);
   if (dateMatch?.[1] === 'currentDate') {
     // We have matched the date pattern, do date logic
     const currentDate = moment(new Date()).startOf('day');
@@ -34,17 +34,17 @@ const tokens = (valueString, options = {}) => {
       // We have an integer to add to date
       if (dateMatch?.[7]) {
         // Add days, months or years
-        return currentDate.add(dateMatch?.[4], dateMatch?.[7]).format(dateFormat)
+        return currentDate.add(dateMatch?.[4], dateMatch?.[7]).format(dateFormat);
       }
       // Assume days if not
-      return currentDate.add(dateMatch?.[4], 'd').format(dateFormat)
+      return currentDate.add(dateMatch?.[4], 'd').format(dateFormat);
     }
 
-    return currentDate.format(dateFormat)
+    return currentDate.format(dateFormat);
   }
-  
+
   // If all else fails, return an empty string
   return '';
-}
+};
 
 export default tokens;

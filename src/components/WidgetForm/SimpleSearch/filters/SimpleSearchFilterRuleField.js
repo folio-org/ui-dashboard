@@ -6,24 +6,38 @@ import { Field, useFormState } from 'react-final-form';
 
 import {
   Col,
-  Checkbox,
   KeyValue,
   Row,
   Select
 } from '@folio/stripes/components';
 import { get } from 'lodash';
+import { requiredValidator } from '@folio/stripes-erm-components';
+import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
+
 
 const SimpleSearchFilterRuleField = ({
   filterComponent,
   filterComponentProps,
   input: { name },
-  selectedFilterColumn: { comparators = [] } = {}
+  selectedFilterColumn: { comparators = [], valueType } = {}
 }) => {
   const { values } = useFormState();
 
   const selectifiedComparators = comparators.map(
     sfcc => ({ value: sfcc, label: sfcc })
   );
+
+  if (valueType === 'Date') {
+    return (
+      <SimpleSearchDateFilterField
+        comparators={comparators}
+        filterComponent={filterComponent}
+        filterComponentProps={filterComponentProps}
+        input={{ name }}
+        selectifiedComparators={selectifiedComparators}
+      />
+    );
+  }
 
   return (
     <Row>
@@ -32,8 +46,9 @@ const SimpleSearchFilterRuleField = ({
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
-            defaultValue={comparators[0]}
             name={`${name}.comparator`}
+            required
+            validate={requiredValidator}
           />
         </KeyValue>
       </Col>
@@ -62,7 +77,6 @@ SimpleSearchFilterRuleField.propTypes = {
       PropTypes.string
     )
   })
-
 };
 
 export default SimpleSearchFilterRuleField;
