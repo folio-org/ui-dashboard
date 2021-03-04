@@ -6,10 +6,7 @@
 // So currentDate, optionally +- up to 3 digits, then optionally a 'd', 'w', 'm' or 'y'
 
 import moment from 'moment';
-import { useStripes } from '@folio/stripes/core';
-
-function useTokens(valueString, options = {}) {
-  const stripes = useStripes();
+function tokens(valueString, stripes, options = {}) {
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 
   const tokenMatch = valueString.match(/\{\{(.*)\}\}/)?.[1];
@@ -47,4 +44,4 @@ function useTokens(valueString, options = {}) {
   return '';
 }
 
-export default useTokens;
+export default tokens;

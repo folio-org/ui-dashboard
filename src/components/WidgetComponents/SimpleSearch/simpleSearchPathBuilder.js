@@ -1,4 +1,5 @@
-const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
+import tokens from '../../../tokens';
+const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   const {
     baseUrl,
     filters: {
@@ -87,7 +88,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf) => {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} ${r.comparator}`;
         } else {
-          specificFilterString += `${filterPath}${r.comparator}${r.filterValue}`;
+          specificFilterString += `${filterPath}${r.comparator}${tokens(r.filterValue, stripes)}`;
         }
 
         if (ind !== rules.length - 1) {

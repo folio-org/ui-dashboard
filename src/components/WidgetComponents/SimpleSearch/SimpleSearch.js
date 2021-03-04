@@ -7,7 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
 import { useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
+
 import { Badge } from '@folio/stripes/components';
 
 import pathBuilder from './simpleSearchPathBuilder';
@@ -16,6 +17,8 @@ import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../SimpleTable';
 import { WidgetFooter } from '../Widget';
 import css from './SimpleSearch.css';
+
+import useTokens from '../../../tokens';
 
 const SimpleSearch = ({
   widget
@@ -33,9 +36,11 @@ const SimpleSearch = ({
   const columns = columnParser({ widgetDef, widgetConf });
 
   const ky = useOkapiKy();
+  // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
+  const stripes = useStripes();
   const { data, dataUpdatedAt, refetch } = useQuery(
     ['ui-dashboard', 'simpleSearch', widget.id],
-    () => ky(pathBuilder(widgetDef, widgetConf)).json()
+    () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
   );
 
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
