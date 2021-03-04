@@ -96,6 +96,7 @@
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-erm-components": "^5.0.0",
     "@material-ui/data-grid": "^4.0.0-alpha.19",
+    "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.5",
     "final-form-arrays": "^3.0.1",
