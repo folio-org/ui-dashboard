@@ -39,6 +39,9 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
+    // Remove 
+    console.log("WidgetConf: %o", widgetConf)
+
     const conf = JSON.stringify({
       ...widgetConf
     });

@@ -126,21 +126,21 @@ const SimpleSearchDateFilterField = ({
           component={Select}
           dataOptions={[
             {
-              value: 'before',
-              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.before' })
+              value: 'subtract', 
+              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
             },
             {
-              value: 'after',
-              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.after' })
+              value: 'add',
+              label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.add' })
             }
           ]}
           disabled={
             get(values, `${name}.relativeOrAbsolute`) !== 'relative'
           }
           label={
-            <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.when" />
+            <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMethod" />
           }
-          name={`${name}.when`}
+          name={`${name}.offsetMethod`}
         />
       </Col>
       <Col xs={2}>
