@@ -13,6 +13,7 @@ import {
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
+import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
 
 
 const SimpleSearchFilterRuleField = ({
@@ -37,6 +38,18 @@ const SimpleSearchFilterRuleField = ({
   if (valueType === 'Date') {
     return (
       <SimpleSearchDateFilterField
+        comparators={comparators}
+        filterComponent={filterComponent}
+        filterComponentProps={filterComponentProps}
+        input={{ name }}
+        selectifiedComparators={selectifiedComparators}
+      />
+    );
+  }
+
+  if (valueType === 'UUID') {
+    return (
+      <SimpleSearchUUIDFilterField
         comparators={comparators}
         filterComponent={filterComponent}
         filterComponentProps={filterComponentProps}
