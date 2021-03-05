@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { Field, useForm, useFormState } from 'react-final-form';
 
@@ -11,8 +11,7 @@ import {
   KeyValue,
   RadioButton,
   Row,
-  Select,
-  TextField
+  Select
 } from '@folio/stripes/components';
 
 import { get } from 'lodash';
@@ -26,7 +25,6 @@ const SimpleSearchUUIDFilterField = ({
   input: { name },
   selectifiedComparators
 }) => {
-  const intl = useIntl();
   const { values } = useFormState();
   const { change } = useForm();
 
