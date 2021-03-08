@@ -14,7 +14,7 @@ const propTypes = {
   onCreate: PropTypes.func.isRequired
 };
 
-const Dashboard = ({ dashboard, onCreate }) => {
+const Dashboard = ({ dashboardId, onCreate, widgets }) => {
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
@@ -43,8 +43,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
   };
 
   const dashboardContents = () => {
-    const widgetList = dashboard?.widgets;
-    if (!widgetList?.length) {
+    if (!widgets?.length) {
       return <NoWidgets />;
     }
     return (
@@ -59,7 +58,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
           }
         ).
         */
-        widgetList.map(w => renderWidget(w))
+        widgets.map(w => renderWidget(w))
         }
       </div>
     );
@@ -67,7 +66,7 @@ const Dashboard = ({ dashboard, onCreate }) => {
   return (
     <div className={css.dashboard}>
       <DashboardHeader
-        key={`dashboard-header-${dashboard?.id}`}
+        key={`dashboard-header-${dashboardId}`}
         onCreate={onCreate}
       />
       <div className={css.dashboardContent}>
