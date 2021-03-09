@@ -12,9 +12,18 @@ const propTypes = {
   onCreate: PropTypes.func
 };
 
-export default function DashboardHeader({ onCreate }) {
+export default function DashboardHeader({ onCreate, onReorder }) {
   return (
     <div className={css.dashboardHeader}>
+      <Button
+        {...{
+          'buttonStyle': 'primary',
+          'marginBottom0': true,
+        }}
+        onClick={onReorder}
+      >
+        <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
+      </Button>
       <Button
         {...{
           'buttonStyle': 'primary',

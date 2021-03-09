@@ -53,7 +53,7 @@ const DashboardRoute = ({
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
   const { data: widgets = [], isLoading: widgetsLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'widgets'],
-    () => ky(`servint/widgets/instances?filters=owner.id=${dashboard?.id}`).json(),
+    () => ky(`servint/widgets/instances?filters=owner.id=${dashboard?.id}&sort=weight;asc`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it*/
       enabled: isDashboardSuccess
@@ -69,6 +69,10 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/create`);
   };
 
+  const handleReorder = () => {
+    history.push(`${location.pathname}/editOrder`);
+  };
+
   if (dashboardLoading || widgetsLoading) {
     // TODO Clean up this loading screen
     return <p> DASHBOARD LOADING </p>;
@@ -81,6 +85,7 @@ const DashboardRoute = ({
         dashboardId={dashboard.id}
         onChangeDash={setDashName}
         onCreate={handleCreate}
+        onReorder={handleReorder}
         widgets={widgets}
       />
     );

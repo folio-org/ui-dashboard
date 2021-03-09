@@ -2,6 +2,7 @@
   "meta.title": "Dashboard",
   "noWidgets": "Add a new widget to your dashboard",
   "dashboardHeader.new": "New",
+  "dashboardHeader.reorder": "Edit order",
 
   "dashboard.newWidget": "{label} widget",
 

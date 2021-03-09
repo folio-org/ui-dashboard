@@ -14,7 +14,7 @@ const propTypes = {
   onCreate: PropTypes.func.isRequired
 };
 
-const Dashboard = ({ dashboardId, onCreate, widgets }) => {
+const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
@@ -68,6 +68,7 @@ const Dashboard = ({ dashboardId, onCreate, widgets }) => {
       <DashboardHeader
         key={`dashboard-header-${dashboardId}`}
         onCreate={onCreate}
+        onReorder={onReorder}
       />
       <div className={css.dashboardContent}>
         {dashboardContents()}
