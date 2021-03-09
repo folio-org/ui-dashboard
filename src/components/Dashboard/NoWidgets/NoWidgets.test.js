@@ -10,10 +10,10 @@ import NoWidgets from './NoWidgets';
 describe('NoWidgets', () => {
   test('renders expected noWidget text', () => {
     const { getByText } = renderWithIntl(
-      <NoWidgets/>,
+      <NoWidgets />,
       translationsProperties
     );
 
-    expect(getByText("Add a new widget to your dashboard")).toBeInTheDocument();
+    expect(getByText('Add a new widget to your dashboard')).toBeInTheDocument();
   });
 });

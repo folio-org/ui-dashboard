@@ -9,7 +9,8 @@ import {
 import css from './DashboardHeader.css';
 
 const propTypes = {
-  onCreate: PropTypes.func
+  onCreate: PropTypes.func.isRequired,
+  onReorder: PropTypes.func.isRequired
 };
 
 export default function DashboardHeader({ onCreate, onReorder }) {

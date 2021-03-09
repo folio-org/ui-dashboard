@@ -49,13 +49,13 @@ const DashboardRoute = ({
       enabled: isDashboardsSuccess
     }
   );
-  
+
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
   const { data: widgets = [], isLoading: widgetsLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'widgets'],
     () => ky(`servint/widgets/instances?filters=owner.id=${dashboard?.id}&sort=weight;asc`).json(),
     {
-      /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it*/
+      /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
       enabled: isDashboardSuccess
     }
   );

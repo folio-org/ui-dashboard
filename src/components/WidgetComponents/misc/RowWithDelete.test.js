@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import RowWithDelete from './RowWithDelete';
 
-const onDelete =  jest.fn(() => null)
+const onDelete = jest.fn(() => null);
 
-const renderChildrenText = "Children of RowWithDelete";
+const renderChildrenText = 'Children of RowWithDelete';
 
 describe('RowWithDelete', () => {
   test('renders children with delete', () => {
@@ -30,7 +30,7 @@ describe('RowWithDelete', () => {
       </RowWithDelete>
     );
 
-    expect(getByRole('button', { name: "trash" })).toBeInTheDocument();
+    expect(getByRole('button', { name: 'trash' })).toBeInTheDocument();
   });
 
   test('clicking trash button fires onDelete', () => {
@@ -46,6 +46,4 @@ describe('RowWithDelete', () => {
     userEvent.click(trashButton);
     expect(onDelete.mock.calls.length).toBe(1);
   });
-
-
 });

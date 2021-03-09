@@ -10,8 +10,10 @@ import { Widget } from '../WidgetComponents/Widget';
 import css from './Dashboard.css';
 
 const propTypes = {
-  dashboard: PropTypes.object,
-  onCreate: PropTypes.func.isRequired
+  dashboardId: PropTypes.string.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onReorder: PropTypes.func.isRequired,
+  widgets: PropTypes.arrayOf(PropTypes.object)
 };
 
 const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
@@ -48,18 +50,7 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
     }
     return (
       <div className={css.widgetContainer}>
-        {
-          // TODO WEIGHT NOT YET IMPLEMENTED
-          /* .sort(
-          (a, b) => {
-            if (a.weight > b.weight) return 1;
-            else if (b.weight > a.weight) return -1;
-            return 0;
-          }
-        ).
-        */
-        widgets.map(w => renderWidget(w))
-        }
+        {widgets.map(w => renderWidget(w))}
       </div>
     );
   };

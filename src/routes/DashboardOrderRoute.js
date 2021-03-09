@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Form } from 'react-final-form';
-import arrayMutators from "final-form-arrays";
+import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -11,7 +11,6 @@ import ReorderForm from '../components/Dashboard/ReorderForm';
 
 const DashboardOrderRoute = ({
   history,
-  location,
   match: {
     params: {
       dashName
@@ -20,12 +19,12 @@ const DashboardOrderRoute = ({
 }) => {
   const ky = useOkapiKy();
 
-   // Load specific dashboard from name
-   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
+  // Load specific dashboard from name
+  const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
     ['ui-dashboard', 'dashboardOrderRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
   );
-  
+
   // The PUT for the dashboardOrdering
   const { mutateAsync: putDashOrder } = useMutation(
     ['ui-dashboard', 'dashboardOrderRoute', 'putDashboard'],
@@ -38,32 +37,33 @@ const DashboardOrderRoute = ({
     );
   }
 
-  const handleSubmit = (values) => (
-    putDashOrder(values).then(handleClose)
-  );
-
   const handleClose = () => {
     history.push(`dashboard/${dashName}`);
   };
 
+  const doTheSubmit = (values) => (
+    putDashOrder(values).then(handleClose)
+  );
+
   return (
     <Form
-      initialValues={{...dashboard, widgets: dashboard.widgets.sort(
-        function(a, b){return a.weight - b.weight}
-      )}}
       enableReinitialize
+      initialValues={{ ...dashboard,
+        widgets: dashboard.widgets.sort(
+          (a, b) => { return a.weight - b.weight; }
+        ) }}
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       navigationCheck
-      onSubmit={handleSubmit}
+      onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
-       {({ handleSubmit }) => (
+      {({ handleSubmit }) => (
         <form onSubmit={handleSubmit}>
           <ReorderForm
             dashboard={dashboard}
-            onSubmit={handleSubmit}
             onClose={handleClose}
+            onSubmit={handleSubmit}
           />
         </form>
       )}
