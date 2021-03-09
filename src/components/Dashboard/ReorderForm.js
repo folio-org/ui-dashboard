@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from "react-final-form-arrays";
@@ -9,18 +11,14 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import {
   Button,
-  Col,
-  KeyValue,
   Pane,
   Paneset,
   PaneFooter,
-  Row
 } from '@folio/stripes/components';
 
 import css from './ReorderForm.css';
 
 const ReorderForm = ({
-  dashboard,
   onClose,
   onSubmit,
   pristine,
@@ -96,29 +94,44 @@ const ReorderForm = ({
                   <div
                     ref={provided.innerRef}
                   >
-                  {fields.map((name, index) => (
-                    <Draggable
-                      key={name}
-                      draggableId={name}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          className={css.draggableBox}
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <Field name={`${name}.name`}>
-                            {({ input: { name, value } }) => (
-                              <label name={name}>{value}</label>
-                            )}
-                          </Field>
-                        </div>
-                      )}
-                      
-                    </Draggable>
-                  ))}
+                    {fields.map((name, index) => (
+                      <Draggable
+                        key={name}
+                        draggableId={name}
+                        index={index}
+                      >
+                        {(provided, snapshot) => {
+                          const usePortal = snapshot.isDragging;
+                          const DraggableField = (
+                            <div
+                              className={classnames(
+                                css.draggableBox,
+                                provided.draggableProps.style,
+                                { [css.pickedUp]: snapshot.isDragging }
+                              )}
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <Field name={`${name}.name`}>
+                                {({ input: { name, value } }) => (
+                                  <label name={name}>{value}</label>
+                                )}
+                              </Field>
+                            </div>
+                          );
+
+                          // Have to use portal if drgaging
+                          if (!usePortal) {
+                            return DraggableField
+                          }
+
+                          const container = document.getElementById('ModuleContainer');
+                          return ReactDOM.createPortal(DraggableField, container);
+                        }}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
                   </div>
                 )}
               </Droppable>
