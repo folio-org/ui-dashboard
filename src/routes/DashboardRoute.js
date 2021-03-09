@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
+import Loading from '../components/Dashboard/Loading'
 import Dashboard from '../components/Dashboard/Dashboard';
 
 const DashboardRoute = ({
@@ -74,8 +75,7 @@ const DashboardRoute = ({
   };
 
   if (dashboardLoading || widgetsLoading) {
-    // TODO Clean up this loading screen
-    return <p> DASHBOARD LOADING </p>;
+    return <Loading />;
   }
 
   if (dashboard) {

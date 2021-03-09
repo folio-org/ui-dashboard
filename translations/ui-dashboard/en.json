@@ -1,6 +1,8 @@
 {
   "meta.title": "Dashboard",
   "noWidgets": "Add a new widget to your dashboard",
+  "loading": "Loading",
+
   "dashboardHeader.new": "New",
   "dashboardHeader.reorder": "Edit order",
 
