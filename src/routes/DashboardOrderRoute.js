@@ -22,13 +22,13 @@ const DashboardOrderRoute = ({
 
    // Load specific dashboard from name
    const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
-    ['ui-dashboard', 'dashboardRoute', 'dashboard'],
+    ['ui-dashboard', 'dashboardOrderRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
   );
   
   // The PUT for the dashboardOrdering
   const { mutateAsync: putDashOrder } = useMutation(
-    ['ui-dashboard', 'widgetCreateRoute', 'putDashboard'],
+    ['ui-dashboard', 'dashboardOrderRoute', 'putDashboard'],
     (data) => ky.put(`servint/dashboard/${dashboard?.id}`, { json: data })
   );
 

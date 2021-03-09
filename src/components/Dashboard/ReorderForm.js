@@ -11,6 +11,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import {
   Button,
+  Icon,
   Pane,
   Paneset,
   PaneFooter,
@@ -81,18 +82,20 @@ const ReorderForm = ({
   return (
     <Paneset>
       <Pane
-        defaultWidth="100%"
+        centerContent
+        defaultWidth="100%"   
         footer={renderPaneFooter()}
         id="pane-reorder-form"
-        paneTitle={"THIS IS A TEST, CHANGE LATER"}
+        paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
       >
         <FieldArray name="widgets">
           {({ fields }) => (
             <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
               <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
+                {(provided) => (
                   <div
                     ref={provided.innerRef}
+                    {...provided.droppableProps}
                   >
                     {fields.map((name, index) => (
                       <Draggable
@@ -101,6 +104,7 @@ const ReorderForm = ({
                         index={index}
                       >
                         {(provided, snapshot) => {
+                          console.log("provided: %o", provided)
                           const usePortal = snapshot.isDragging;
                           const DraggableField = (
                             <div
@@ -113,11 +117,15 @@ const ReorderForm = ({
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <Field name={`${name}.name`}>
-                                {({ input: { name, value } }) => (
-                                  <label name={name}>{value}</label>
-                                )}
-                              </Field>
+                              <Icon
+                                icon="drag-drop"
+                              >
+                                <Field name={`${name}.name`}>
+                                  {({ input: { name, value } }) => (
+                                    <label name={name}>{value}</label>
+                                  )}
+                                </Field>
+                              </Icon>
                             </div>
                           );
 

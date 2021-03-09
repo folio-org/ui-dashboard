@@ -6,6 +6,9 @@
 
   "dashboard.newWidget": "{label} widget",
 
+  "dashboard.reorderForm.paneTitle": "Edit dashboard",
+  "dashboard.reorderForm.widget.widgetname": "Widget name",
+
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
   "widgetForm.createWidget": "Create widget",
