@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Form } from 'react-final-form';
-
+import arrayMutators from "final-form-arrays";
 
 import { useMutation, useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -38,9 +38,8 @@ const DashboardOrderRoute = ({
     );
   }
 
-  const handleSubmit = () => (
-    alert("Submit stuff"),
-    handleClose()
+  const handleSubmit = (values) => (
+    putDashOrder(values).then(handleClose)
   );
 
   const handleClose = () => {
@@ -49,9 +48,12 @@ const DashboardOrderRoute = ({
 
   return (
     <Form
-      // initialValues={initialValues}
+      initialValues={{...dashboard, widgets: dashboard.widgets.sort(
+        function(a, b){return a.weight - b.weight}
+      )}}
       enableReinitialize
       keepDirtyOnReinitialize
+      mutators={arrayMutators}
       navigationCheck
       onSubmit={handleSubmit}
       subscription={{ values: true }}
