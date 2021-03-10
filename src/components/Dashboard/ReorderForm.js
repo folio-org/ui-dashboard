@@ -19,6 +19,8 @@ import {
 
 import css from './ReorderForm.css';
 
+import DragAndDropFieldArray from '../DragAndDropFieldArray'
+
 const ReorderForm = ({
   onClose,
   onSubmit,
@@ -26,6 +28,7 @@ const ReorderForm = ({
   submitting,
 }) => {
   const { values } = useFormState();
+  console.log("Values: %o", values)
   const { change } = useForm();
 
   // Keep weights up to date with list index in form
@@ -87,57 +90,16 @@ const ReorderForm = ({
         id="pane-reorder-form"
         paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
       >
-        <FieldArray name="widgets">
-          {({ fields }) => (
-            <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
-              <Droppable droppableId="droppable">
-                {(droppableProvided) => (
-                  <div
-                    ref={droppableProvided.innerRef}
-                    {...droppableProvided.droppableProps}
-                  >
-                    {fields.map((name, index) => (
-                      <Draggable
-                        key={name}
-                        draggableId={name}
-                        index={index}
-                      >
-                        {(draggableProvided, snapshot) => {
-                          const usePortal = snapshot.isDragging;
-                          const DraggableField = (
-                            <div
-                              ref={draggableProvided.innerRef}
-                              className={classnames(
-                                css.draggableBox,
-                                draggableProvided.draggableProps.style,
-                                { [css.pickedUp]: snapshot.isDragging }
-                              )}
-                              {...draggableProvided.draggableProps}
-                              {...draggableProvided.dragHandleProps}
-                            >
-                              <Icon
-                                icon="drag-drop"
-                              >
-                                {get(values, `${name}.name`)}
-                              </Icon>
-                            </div>
-                          );
-
-                          // Have to use portal if drgaging
-                          if (!usePortal) {
-                            return DraggableField;
-                          }
-
-                          const container = document.getElementById('ModuleContainer');
-                          return ReactDOM.createPortal(DraggableField, container);
-                        }}
-                      </Draggable>
-                    ))}
-                    {droppableProvided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+        <FieldArray
+          name="widgets"
+          component={DragAndDropFieldArray}
+        >
+          {(name) => (
+            <Icon
+              icon="drag-drop"
+            >
+              {get(values, `${name}.name`)}
+            </Icon>
           )}
         </FieldArray>
       </Pane>
