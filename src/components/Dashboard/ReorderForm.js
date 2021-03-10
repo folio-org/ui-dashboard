@@ -84,7 +84,7 @@ const ReorderForm = ({
               >
                 {get(values, `${name}.name`)}
               </Icon>
-            )
+            );
           }}
         </FieldArray>
       </Pane>
