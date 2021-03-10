@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
@@ -14,6 +16,7 @@ import {
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
+import css from './ReorderForm.css';
 
 const ReorderForm = ({
   onClose,
@@ -77,13 +80,21 @@ const ReorderForm = ({
           component={DragAndDropFieldArray}
           name="widgets"
         >
-          {(name) => {
+          {(name, _i, _d, draggable) => {
             return (
-              <Icon
-                icon="drag-drop"
+              <div
+                className={classnames(
+                  css.draggableBox,
+                  draggable.draggableProvided.draggableProps.style,
+                  { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
+                )}
               >
-                {get(values, `${name}.name`)}
-              </Icon>
+                <Icon
+                  icon="drag-drop"
+                >
+                  {get(values, `${name}.name`)}
+                </Icon>
+              </div>
             );
           }}
         </FieldArray>

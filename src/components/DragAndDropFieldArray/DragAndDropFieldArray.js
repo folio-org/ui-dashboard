@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-import css from './DragAndDropFieldArray.css';
-
 
 /* This component provides a drag and drop list for any array.
  * Must be called as a component of a FieldArray,
@@ -43,11 +38,6 @@ const DragAndDropFieldArray = ({ fields, children }) => {
                   const DraggableField = (
                     <div
                       ref={draggableProvided.innerRef}
-                      className={classnames(
-                        css.draggableBox,
-                        draggableProvided.draggableProps.style,
-                        { [css.pickedUp]: draggableSnapshot.isDragging }
-                      )}
                       data-testid={name}
                       {...draggableProvided.draggableProps}
                       {...draggableProvided.dragHandleProps}

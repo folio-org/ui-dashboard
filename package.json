@@ -104,6 +104,7 @@
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
     "react-beautiful-dnd": "^13.0.0",
+    "react-beautiful-dnd-tester": "^0.0.10",
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.1",
     "react-table": "^7.6.3"
