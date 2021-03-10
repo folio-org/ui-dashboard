@@ -77,13 +77,15 @@ const ReorderForm = ({
           component={DragAndDropFieldArray}
           name="widgets"
         >
-          {(name) => (
-            <Icon
-              icon="drag-drop"
-            >
-              {get(values, `${name}.name`)}
-            </Icon>
-          )}
+          {(name) => {
+            return (
+              <Icon
+                icon="drag-drop"
+              >
+                {get(values, `${name}.name`)}
+              </Icon>
+            )
+          }}
         </FieldArray>
       </Pane>
     </Paneset>

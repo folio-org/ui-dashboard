@@ -10,7 +10,8 @@ import css from './DragAndDropFieldArray.css';
 
 /* This component provides a drag and drop list for any array.
  * Must be called as a component of a FieldArray,
- * Child function can access "name" and "index" from the fields.map
+ * Child function can access "name" and "index" from the fields.map,
+ * as well as draggable and droppable props
  * {(name, index) => {...}}
  */
 const DragAndDropFieldArray = ({ fields, children }) => {
@@ -26,7 +27,7 @@ const DragAndDropFieldArray = ({ fields, children }) => {
   return (
     <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
       <Droppable droppableId="droppable">
-        {(droppableProvided) => (
+        {(droppableProvided, droppableSnapshot) => (
           <div
             ref={droppableProvided.innerRef}
             {...droppableProvided.droppableProps}
@@ -37,20 +38,32 @@ const DragAndDropFieldArray = ({ fields, children }) => {
                 draggableId={name}
                 index={index}
               >
-                {(draggableProvided, snapshot) => {
-                  const usePortal = snapshot.isDragging;
+                {(draggableProvided, draggableSnapshot, draggableRubric) => {
+                  const usePortal = draggableSnapshot.isDragging;
                   const DraggableField = (
                     <div
                       ref={draggableProvided.innerRef}
                       className={classnames(
                         css.draggableBox,
                         draggableProvided.draggableProps.style,
-                        { [css.pickedUp]: snapshot.isDragging }
+                        { [css.pickedUp]: draggableSnapshot.isDragging }
                       )}
                       {...draggableProvided.draggableProps}
                       {...draggableProvided.dragHandleProps}
                     >
-                      {children(name, index)}
+                      {children(
+                        name,
+                        index,
+                        {
+                          droppableProvided,
+                          droppableSnapshot
+                        },
+                        {
+                          draggableProvided,
+                          draggableSnapshot,
+                          draggableRubric
+                        }
+                      )}
                     </div>
                   );
 
