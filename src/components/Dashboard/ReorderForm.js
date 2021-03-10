@@ -13,7 +13,7 @@ import {
   PaneFooter,
 } from '@folio/stripes/components';
 
-import DragAndDropFieldArray from '../DragAndDropFieldArray'
+import DragAndDropFieldArray from '../DragAndDropFieldArray';
 
 const ReorderForm = ({
   onClose,
@@ -22,7 +22,6 @@ const ReorderForm = ({
   submitting,
 }) => {
   const { values } = useFormState();
-  console.log("Values: %o", values)
   const { change } = useForm();
 
   // Keep weights up to date with list index in form
@@ -35,16 +34,6 @@ const ReorderForm = ({
       });
     }
   }, [values, change]);
-
-  const makeOnDragEndFunction = fields => result => {
-    // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
-    // Move field to correct place in the list
-    fields.move(result.source.index, result.destination.index);
-  };
-
 
   const renderPaneFooter = () => {
     return (
@@ -85,8 +74,8 @@ const ReorderForm = ({
         paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
       >
         <FieldArray
-          name="widgets"
           component={DragAndDropFieldArray}
+          name="widgets"
         >
           {(name) => (
             <Icon

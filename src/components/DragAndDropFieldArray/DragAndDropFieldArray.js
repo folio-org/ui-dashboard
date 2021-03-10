@@ -13,17 +13,15 @@ import css from './DragAndDropFieldArray.css';
  * Child function can access "name" and "index" from the fields.map
  * {(name, index) => {...}}
  */
-const DragAndDropFieldArray = ({fields, children}) => {
-
-  const makeOnDragEndFunction = fields => result => {
+const DragAndDropFieldArray = ({ fields, children }) => {
+  const makeOnDragEndFunction = passedFields => result => {
     // dropped outside the list
     if (!result.destination) {
       return;
     }
     // Move field to correct place in the list
-    fields.move(result.source.index, result.destination.index);
+    passedFields.move(result.source.index, result.destination.index);
   };
-
 
   return (
     <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
