@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, useForm } from 'react-final-form';
-
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import {
   Button,
@@ -16,8 +12,6 @@ import {
   Paneset,
   PaneFooter,
 } from '@folio/stripes/components';
-
-import css from './ReorderForm.css';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray'
 
