@@ -9,7 +9,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
  * as well as draggable and droppable props
  * {(name, index) => {...}}
  */
-const DragAndDropFieldArray = ({ fields, children }) => {
+const DragAndDropFieldArray = ({ draggableDivStyle = () => null, fields, children }) => {
   const makeOnDragEndFunction = passedFields => result => {
     // dropped outside the list
     if (!result.destination) {
@@ -34,9 +34,16 @@ const DragAndDropFieldArray = ({ fields, children }) => {
                 index={index}
               >
                 {(draggableProvided, draggableSnapshot, draggableRubric) => {
+                  // Condense draggable props into single object for ease of use
+                  const draggable = {
+                    draggableProvided,
+                    draggableSnapshot,
+                    draggableRubric
+                  };
                   const usePortal = draggableSnapshot.isDragging;
                   const DraggableField = (
                     <div
+                      {...draggableDivStyle(draggable)}
                       ref={draggableProvided.innerRef}
                       data-testid={name}
                       {...draggableProvided.draggableProps}
@@ -49,11 +56,7 @@ const DragAndDropFieldArray = ({ fields, children }) => {
                           droppableProvided,
                           droppableSnapshot
                         },
-                        {
-                          draggableProvided,
-                          draggableSnapshot,
-                          draggableRubric
-                        }
+                        draggable
                       )}
                     </div>
                   );
@@ -77,6 +80,7 @@ const DragAndDropFieldArray = ({ fields, children }) => {
 };
 
 DragAndDropFieldArray.propTypes = {
+  draggableDivStyle: PropTypes.func,
   fields: PropTypes.object.isRequired,
   children: PropTypes.func
 };

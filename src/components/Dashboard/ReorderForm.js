@@ -67,6 +67,16 @@ const ReorderForm = ({
     );
   };
 
+  const getDraggableDivProps = (draggable) => {
+    return ({
+      className: classnames(
+        css.draggableBox,
+        draggable.draggableProvided.draggableProps.style,
+        { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
+      )
+    });
+  };
+
   return (
     <Paneset>
       <Pane
@@ -78,23 +88,16 @@ const ReorderForm = ({
       >
         <FieldArray
           component={DragAndDropFieldArray}
+          draggableDivStyle={getDraggableDivProps}
           name="widgets"
         >
-          {(name, _i, _d, draggable) => {
+          {(name) => {
             return (
-              <div
-                className={classnames(
-                  css.draggableBox,
-                  draggable.draggableProvided.draggableProps.style,
-                  { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
-                )}
+              <Icon
+                icon="drag-drop"
               >
-                <Icon
-                  icon="drag-drop"
-                >
-                  {get(values, `${name}.name`)}
-                </Icon>
-              </div>
+                {get(values, `${name}.name`)}
+              </Icon>
             );
           }}
         </FieldArray>
