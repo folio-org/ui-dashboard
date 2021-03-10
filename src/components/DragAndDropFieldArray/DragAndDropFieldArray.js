@@ -48,6 +48,7 @@ const DragAndDropFieldArray = ({ fields, children }) => {
                         draggableProvided.draggableProps.style,
                         { [css.pickedUp]: draggableSnapshot.isDragging }
                       )}
+                      data-testid={name}
                       {...draggableProvided.draggableProps}
                       {...draggableProvided.dragHandleProps}
                     >
@@ -86,8 +87,8 @@ const DragAndDropFieldArray = ({ fields, children }) => {
 };
 
 DragAndDropFieldArray.propTypes = {
-  fields: PropTypes.object,
-  children: PropTypes.node
+  fields: PropTypes.object.isRequired,
+  children: PropTypes.func
 };
 
 export default DragAndDropFieldArray;
