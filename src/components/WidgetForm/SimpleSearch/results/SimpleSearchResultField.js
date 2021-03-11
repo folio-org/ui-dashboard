@@ -10,6 +10,8 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import css from './SimpleSearchResults.css';
+
 const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
   const { change } = useForm();
 
@@ -17,7 +19,9 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
   const selectifiedResultColumns = resultColumns.map(rc => ({ value: rc.name, label: rc.label || rc.name }));
 
   return (
-    <Row>
+    <Row
+      className={css.innerRow}
+    >
       <Col xs={6}>
         <Field
           component={Select}

@@ -6,7 +6,7 @@ import css from './RowWithDelete.css';
 
 const RowWithDelete = ({ children, onDelete }) => {
   return (
-    <div>
+    <div className={css.container}>
       <div className={css.children}>
         {children}
       </div>

@@ -139,6 +139,7 @@ const WidgetForm = ({
     <>
       <Paneset>
         <Pane
+          centerContent
           defaultWidth="100%"
           footer={renderPaneFooter()}
           id="pane-widget-form"

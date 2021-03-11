@@ -1,10 +1,16 @@
 @import '@folio/stripes-components/lib/variables.css';
 
 .children {
-  display:inline-block
+  display: flex;
+  align-self: flex-end;
+  flex-grow: 1;
 }
 
 .deleteIcon {
-  display: inline-block;
   padding: var(--gutter-static-two-thirds);
+  align-self: flex-end;
+}
+
+.container {
+  display: flex;
 }
