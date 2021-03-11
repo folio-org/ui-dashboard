@@ -5,7 +5,8 @@ import { useForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
-import SimpleSearchResultArray from './results/SimpleSearchResultArray';
+import SimpleSearchResults from './results/SimpleSearchResults';
+
 import SimpleSearchSort from './sort/SimpleSearchSort';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
@@ -59,17 +60,11 @@ const SimpleSearchForm = ({
         id="simple-search-form-filters"
         name="filterColumns"
       />
-      <FieldArray
-        addButtonId="simple-search-form-add-result-column-button"
-        addLabelId="ui-dashboard.simpleSearchForm.results.addResult"
-        component={SimpleSearchResultArray}
+      <SimpleSearchResults
         data={{
           resultColumns
         }}
-        deleteButtonTooltipId="ui-dashboard.simpleSearchForm.results.removeResult"
-        headerId="ui-dashboard.simpleSearchForm.results"
         id="simple-search-form-results"
-        name="resultColumns"
       />
       <SimpleSearchSort
         data={{

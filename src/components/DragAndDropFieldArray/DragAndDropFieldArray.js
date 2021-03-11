@@ -9,7 +9,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
  * as well as draggable and droppable props
  * {(name, index) => {...}}
  */
-const DragAndDropFieldArray = ({ draggableDivStyle = () => null, fields, children }) => {
+const DragAndDropFieldArray = ({
+  draggableDivStyle = () => null,
+  fields,
+  children,
+  underDragAndDrop
+}) => {
   const makeOnDragEndFunction = passedFields => result => {
     // dropped outside the list
     if (!result.destination) {
@@ -20,69 +25,74 @@ const DragAndDropFieldArray = ({ draggableDivStyle = () => null, fields, childre
   };
 
   return (
-    <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
-      <Droppable droppableId="droppable">
-        {(droppableProvided, droppableSnapshot) => (
-          <div
-            ref={droppableProvided.innerRef}
-            {...droppableProvided.droppableProps}
-          >
-            {fields.map((name, index) => (
-              <Draggable
-                key={name}
-                draggableId={name}
-                index={index}
-              >
-                {(draggableProvided, draggableSnapshot, draggableRubric) => {
-                  // Condense draggable props into single object for ease of use
-                  const draggable = {
-                    draggableProvided,
-                    draggableSnapshot,
-                    draggableRubric
-                  };
-                  const usePortal = draggableSnapshot.isDragging;
-                  const DraggableField = (
-                    <div
-                      {...draggableDivStyle(draggable)}
-                      ref={draggableProvided.innerRef}
-                      data-testid={name}
-                      {...draggableProvided.draggableProps}
-                      {...draggableProvided.dragHandleProps}
-                    >
-                      {children(
-                        name,
-                        index,
-                        {
-                          droppableProvided,
-                          droppableSnapshot
-                        },
-                        draggable
-                      )}
-                    </div>
-                  );
+    <>
+      <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
+        <Droppable droppableId="droppable">
+          {(droppableProvided, droppableSnapshot) => (
+            <div
+              ref={droppableProvided.innerRef}
+              {...droppableProvided.droppableProps}
+            >
+              {fields.map((name, index) => (
+                <Draggable
+                  key={name}
+                  draggableId={name}
+                  index={index}
+                >
+                  {(draggableProvided, draggableSnapshot, draggableRubric) => {
+                    // Condense draggable props into single object for ease of use
+                    const draggable = {
+                      draggableProvided,
+                      draggableSnapshot,
+                      draggableRubric
+                    };
+                    const usePortal = draggableSnapshot.isDragging;
+                    const DraggableField = (
+                      <div
+                        {...draggableDivStyle(draggable)}
+                        ref={draggableProvided.innerRef}
+                        data-testid={name}
+                        {...draggableProvided.draggableProps}
+                        {...draggableProvided.dragHandleProps}
+                      >
+                        {children(
+                          name,
+                          index,
+                          {
+                            droppableProvided,
+                            droppableSnapshot
+                          },
+                          draggable,
+                          fields
+                        )}
+                      </div>
+                    );
 
-                  // Have to use portal if drgaging
-                  if (!usePortal) {
-                    return DraggableField;
-                  }
+                    // Have to use portal if drgaging
+                    if (!usePortal) {
+                      return DraggableField;
+                    }
 
-                  const container = document.getElementById('ModuleContainer');
-                  return ReactDOM.createPortal(DraggableField, container);
-                }}
-              </Draggable>
-            ))}
-            {droppableProvided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+                    const container = document.getElementById('ModuleContainer');
+                    return ReactDOM.createPortal(DraggableField, container);
+                  }}
+                </Draggable>
+              ))}
+              {droppableProvided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      {underDragAndDrop && underDragAndDrop(fields)}
+    </>
   );
 };
 
 DragAndDropFieldArray.propTypes = {
   draggableDivStyle: PropTypes.func,
   fields: PropTypes.object.isRequired,
-  children: PropTypes.func
+  children: PropTypes.func,
+  underDragAndDrop: PropTypes.func
 };
 
 export default DragAndDropFieldArray;
