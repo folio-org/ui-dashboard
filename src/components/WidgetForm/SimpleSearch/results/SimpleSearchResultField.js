@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { Field, useForm } from 'react-final-form';
@@ -22,6 +23,7 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
           component={Select}
           dataOptions={selectifiedResultColumns}
           defaultValue={selectifiedResultColumns[0].value}
+          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
           name={`${name}.name`}
           onChange={
             e => {
@@ -38,6 +40,7 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
         <Field
           component={TextField}
           defaultValue={selectifiedResultColumns[0].label}
+          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.label" />}
           name={`${name}.label`}
         />
       </Col>

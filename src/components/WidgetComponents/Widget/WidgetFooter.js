@@ -29,7 +29,7 @@ const WidgetFooter = ({
               { widgetName }
             )
           }
-          icon="replace"
+          icon="refresh"
           onClick={onRefresh}
         />
         <div

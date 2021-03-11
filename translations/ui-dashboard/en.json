@@ -103,6 +103,9 @@
   "simpleSearchForm.filters.filterField.comparator.UUID.isNotNull": "is set",
 
   "simpleSearchForm.results": "Result columns",
+  "simpleSearchForm.results.column": "Column",
+  "simpleSearchForm.results.label": "Label",
+
   "simpleSearchForm.results.addResult": "Add result column",
   "simpleSearchForm.results.removeResult": "Remove result column {index}",
   "simpleSearchForm.results.result": "Result column {index}",
