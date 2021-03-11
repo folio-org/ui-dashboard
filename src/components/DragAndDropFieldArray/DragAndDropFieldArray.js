@@ -12,8 +12,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 const DragAndDropFieldArray = ({
   draggableDivStyle = () => null,
   fields,
-  children,
-  underDragAndDrop
+  children
 }) => {
   const makeOnDragEndFunction = passedFields => result => {
     // dropped outside the list
@@ -83,7 +82,6 @@ const DragAndDropFieldArray = ({
           )}
         </Droppable>
       </DragDropContext>
-      {underDragAndDrop && underDragAndDrop(fields)}
     </>
   );
 };
@@ -92,7 +90,6 @@ DragAndDropFieldArray.propTypes = {
   draggableDivStyle: PropTypes.func,
   fields: PropTypes.object.isRequired,
   children: PropTypes.func,
-  underDragAndDrop: PropTypes.func
 };
 
 export default DragAndDropFieldArray;
