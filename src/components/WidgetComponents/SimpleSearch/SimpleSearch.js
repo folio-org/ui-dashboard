@@ -55,7 +55,8 @@ const SimpleSearch = ({
     return (
       <Link
         className={css.linkText}
-        to={urlLink}
+        // Ensure we're sending to an explicit link
+        to={urlLink.charAt(0) === '/' ? urlLink : `/${urlLink}`}
       >
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
       </Link>
