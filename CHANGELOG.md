@@ -1,6 +1,9 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Made proper loading page
+* Fixes to form validation
+* ERM-1580 Added form to reorder widgets
 * Added the ability to tokenise currentDate and currentUser
 * ERM-1562 Dynamic form rendering for simpleSearch widgets
 * ERM-1561 App displays SimpleSearch results in formatted table
