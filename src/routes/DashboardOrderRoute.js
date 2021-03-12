@@ -53,7 +53,9 @@ const DashboardOrderRoute = ({
           (a, b) => { return a.weight - b.weight; }
         ) }}
       keepDirtyOnReinitialize
-      mutators={arrayMutators}
+      mutators={{
+        ...arrayMutators
+      }}
       navigationCheck
       onSubmit={doTheSubmit}
       subscription={{ values: true }}

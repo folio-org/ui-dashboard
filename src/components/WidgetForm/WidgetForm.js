@@ -20,9 +20,8 @@ import {
   Select,
   TextField
 } from '@folio/stripes/components';
-import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
-
 import { requiredValidator } from '@folio/stripes-erm-components';
+import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
 
 const propTypes = {
   data: PropTypes.shape({
