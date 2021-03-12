@@ -52,6 +52,7 @@ const SimpleSearchDateFilterField = ({
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
+            defaultValue={selectifiedComparators[0]?.value}
             name={`${name}.comparator`}
             required
             validate={requiredValidator}
@@ -81,6 +82,7 @@ const SimpleSearchDateFilterField = ({
                     );
                   }}
                   type="radio"
+                  validateFields={[`${name}.filterValue`]}
                   value="relative"
                 />
               </div>
@@ -113,6 +115,7 @@ const SimpleSearchDateFilterField = ({
                     );
                   }}
                   type="radio"
+                  validateFields={[`${name}.filterValue`]}
                   value="absolute"
                 />
               </div>
@@ -125,6 +128,12 @@ const SimpleSearchDateFilterField = ({
                     relOrAbsValue === 'relative'
                   }
                   name={`${name}.filterValue`}
+                  validate={(value, allValues) => {
+                    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+                      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
+                    }
+                    return undefined;
+                  }}
                 />
               </div>
             </div>

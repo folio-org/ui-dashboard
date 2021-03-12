@@ -45,6 +45,7 @@ const SimpleSearchUUIDFilterField = ({
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
+            defaultValue={selectifiedComparators[0]?.value}
             name={`${name}.comparator`}
             required
             validate={requiredValidator}
@@ -74,6 +75,7 @@ const SimpleSearchUUIDFilterField = ({
                     );
                   }}
                   type="radio"
+                  validateFields={[`${name}.filterValue`]}
                   value="relative"
                 />
               </div>
@@ -101,11 +103,13 @@ const SimpleSearchUUIDFilterField = ({
                         id="absolute"
                         name={input.name}
                         onChange={input.onChange}
+                        validateFields={[`${name}.filterValue`]}
                         value="absolute"
                       />
                     );
                   }}
                   type="radio"
+                  validateFields={[`${name}.filterValue`]}
                   value="absolute"
                 />
               </div>
@@ -118,6 +122,12 @@ const SimpleSearchUUIDFilterField = ({
                     relOrAbsValue === 'relative'
                   }
                   name={`${name}.filterValue`}
+                  validate={(value, allValues) => {
+                    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+                      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.absoluteValueWarning" />;
+                    }
+                    return undefined;
+                  }}
                 />
               </div>
             </div>

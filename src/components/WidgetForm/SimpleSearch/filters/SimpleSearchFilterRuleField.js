@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Field, useFormState } from 'react-final-form';
+import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
   Col,
@@ -23,6 +23,7 @@ const SimpleSearchFilterRuleField = ({
   selectedFilterColumn: { comparators = [], valueType } = {}
 }) => {
   const { values } = useFormState();
+  const { change } = useForm();
   const intl = useIntl();
 
   const selectifiedComparators = comparators.map(
@@ -33,8 +34,18 @@ const SimpleSearchFilterRuleField = ({
       }) })
   );
 
+  useEffect(() => {
+    // Ensure comparator is always set
+    // -- was an issue when changing between two filters of same valueType
+    if (get(values, `${name}.comparator`) === undefined) {
+      change(`${name}.comparator`, selectifiedComparators[0]?.value);
+    }
+  }, [change, name, selectifiedComparators, values]);
+
+
   const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
 
+  // If type is Date or UUID then we need to do some extra work, send to specific components
   if (valueType === 'Date') {
     return (
       <SimpleSearchDateFilterField
@@ -66,6 +77,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             component={Select}
             dataOptions={selectifiedComparators}
+            defaultValue={selectifiedComparators[0]?.value}
             name={`${name}.comparator`}
             required
             validate={requiredValidator}

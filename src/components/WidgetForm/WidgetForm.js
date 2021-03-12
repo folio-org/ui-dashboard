@@ -22,6 +22,8 @@ import {
 } from '@folio/stripes/components';
 import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
 
+import { requiredValidator } from '@folio/stripes-erm-components';
+
 const propTypes = {
   data: PropTypes.shape({
     widgetDefinitions: PropTypes.array
@@ -154,6 +156,8 @@ const WidgetForm = ({
                 <Field
                   component={TextField}
                   name="name"
+                  required
+                  validate={requiredValidator}
                 />
               </KeyValue>
             </Col>
@@ -181,6 +185,7 @@ const WidgetForm = ({
                     }
                   }}
                   required
+                  validate={requiredValidator}
                 />
               </KeyValue>
             </Col>
