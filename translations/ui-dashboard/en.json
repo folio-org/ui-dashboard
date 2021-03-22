@@ -50,9 +50,11 @@
   "simpleSearchForm.filters.dateFilterField.offsetMethod": "Offset method",
   "simpleSearchForm.filters.dateFilterField.timeUnit": "Time unit",
   "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",
+  "simpleSearchForm.filters.dateFilterField.date": "Date",
 
-  "simpleSearchForm.filters.uuidFilterField.currentUser": "Current user (variable)",
+  "simpleSearchForm.filters.uuidFilterField.currentUser": "Me (variable)",
   "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
+  "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
 
   "simpleSearchForm.filters.filterField.comparator.Date.==": "is",
   "simpleSearchForm.filters.filterField.comparator.Date.!=": "is not",

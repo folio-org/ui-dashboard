@@ -46,7 +46,7 @@
     "simpleSearchForm.filters.dateFilterField.offsetMustBePositive": "Offset must be greater than or equal to 0",
     "simpleSearchForm.filters.dateFilterField.offsetMethod": "Offset method",
     "simpleSearchForm.filters.dateFilterField.timeUnit": "Time unit",
-    "simpleSearchForm.filters.uuidFilterField.currentUser": "Current user (variable)",
+    "simpleSearchForm.filters.uuidFilterField.currentUser": "Me (variable)",
     "simpleSearchForm.filters.filterField.comparator.Date.==": "is",
     "simpleSearchForm.filters.filterField.comparator.Date.!=": "is not",
     "simpleSearchForm.filters.filterField.comparator.Date.>": "after",
