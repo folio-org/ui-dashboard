@@ -1,7 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+// We use this for the drag and drop icon.
+// I'd prefer to keep this stripes agnostic but it'll do for now
+import {
+  Icon,
+} from '@folio/stripes/components';
+
+import css from './DragAndDropFieldArray.css';
 
 /* This component provides a drag and drop list for any array.
  * Must be called as a component of a FieldArray,
@@ -47,23 +56,40 @@ const DragAndDropFieldArray = ({
                     };
                     const usePortal = draggableSnapshot.isDragging;
                     const DraggableField = (
+                      // Top level container, can be styled using draggableDivStyle
                       <div
-                        {...draggableDivStyle(draggable)}
                         ref={draggableProvided.innerRef}
-                        data-testid={name}
-                        {...draggableProvided.draggableProps}
-                        {...draggableProvided.dragHandleProps}
-                      >
-                        {children(
-                          name,
-                          index,
-                          {
-                            droppableProvided,
-                            droppableSnapshot
-                          },
-                          draggable,
-                          fields
+                        className={classnames(
+                          css.container,
+                          draggableDivStyle(draggable)
                         )}
+                        {...draggableProvided.draggableProps}
+                      >
+                        {/* Handle, uses stripes drag and drop icon */}
+                        <div
+                          className={css.handle}
+                          data-testid={name}
+                          {...draggableProvided.dragHandleProps}
+                        >
+                          <Icon
+                            icon="drag-drop"
+                          />
+                        </div>
+                        {/* Actual dnd content, passed a bunch of props as a function */}
+                        <div
+                          className={css.content}
+                        >
+                          {children(
+                            name,
+                            index,
+                            {
+                              droppableProvided,
+                              droppableSnapshot
+                            },
+                            draggable,
+                            fields
+                          )}
+                        </div>
                       </div>
                     );
 

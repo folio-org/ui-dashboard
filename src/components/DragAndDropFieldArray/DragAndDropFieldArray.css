@@ -1,0 +1,14 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.container {
+  display: flex;
+}
+
+.handle {
+  align-self: center;
+}
+
+.content {
+  width: 100%;
+  padding: 0 var(--gutter-static-one-third);
+}
