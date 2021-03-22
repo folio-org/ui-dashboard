@@ -9,6 +9,7 @@ import SimpleSearchResults from './results/SimpleSearchResults';
 
 import SimpleSearchSort from './sort/SimpleSearchSort';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
+import { AccordionSet } from '@folio/stripes-components';
 
 const SimpleSearchForm = ({
   defChanged,
@@ -43,34 +44,42 @@ const SimpleSearchForm = ({
     }
   }, [change, defChanged, toggleDefChange]);
 
+  const initialAccordionState = {
+    filters: true,
+    results: true,
+    sort: true
+  };
+
   return (
     <>
-      <SimpleSearchConfigurableProperties
-        configurableProperties={configurableProperties}
-      />
-      <FieldArray
-        addButtonId="simple-search-form-add-filter-button"
-        addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
-        component={SimpleSearchFilterArray}
-        data={{
-          filterColumns
-        }}
-        deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
-        headerId="ui-dashboard.simpleSearchForm.filters"
-        id="simple-search-form-filters"
-        name="filterColumns"
-      />
-      <SimpleSearchResults
-        data={{
-          resultColumns
-        }}
-        id="simple-search-form-results"
-      />
-      <SimpleSearchSort
-        data={{
-          sortColumns
-        }}
-      />
+      <AccordionSet initialStatus={initialAccordionState}>
+        <SimpleSearchConfigurableProperties
+          configurableProperties={configurableProperties}
+        />
+        <FieldArray
+          addButtonId="simple-search-form-add-filter-button"
+          addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
+          component={SimpleSearchFilterArray}
+          data={{
+            filterColumns
+          }}
+          deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
+          headerId="ui-dashboard.simpleSearchForm.filters"
+          id="simple-search-form-filters"
+          name="filterColumns"
+        />
+        <SimpleSearchResults
+          data={{
+            resultColumns
+          }}
+          id="simple-search-form-results"
+        />
+        <SimpleSearchSort
+          data={{
+            sortColumns
+          }}
+        />
+      </AccordionSet>
     </>
   );
 };

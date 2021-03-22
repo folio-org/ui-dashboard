@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button, Headline, KeyValue } from '@folio/stripes/components';
+import { Accordion, Button, Headline, KeyValue } from '@folio/stripes/components';
 
 import { EditCard } from '@folio/stripes-erm-components';
 import SimpleSearchFilterField from './SimpleSearchFilterField';
@@ -41,22 +41,19 @@ const SimpleSearchFilterArray = ({
   };
 
   return (
-    <div>
-      <KeyValue
-        data-testid="simpleSearchFilterArray"
-        id={id}
-        label={
-          <Headline margin="x-small" size="medium" tag="h2">
-            <FormattedMessage id={headerId} />
-          </Headline>
-        }
-      >
-        {renderFilterFields()}
-      </KeyValue>
+    <Accordion
+      id={id}
+      label={
+        <Headline margin="x-small" size="medium" tag="h2">
+          <FormattedMessage id={headerId} />
+        </Headline>
+      }
+    >
+      {renderFilterFields()}
       <Button id={addButtonId} onClick={() => fields.push({})}>
         <FormattedMessage id={addLabelId} />
       </Button>
-    </div>
+    </Accordion>
   );
 };
 
