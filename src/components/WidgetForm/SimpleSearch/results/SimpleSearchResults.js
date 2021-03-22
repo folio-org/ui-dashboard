@@ -5,13 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
-import { Accordion, Button, Headline, Icon, KeyValue } from '@folio/stripes/components';
+import { Accordion, Button, Headline } from '@folio/stripes/components';
 
 import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 import DragAndDropFieldArray from '../../../DragAndDropFieldArray';
-
-import css from './SimpleSearchResults.css';
 
 const SimpleSearchResults = ({
   data: {
@@ -25,10 +23,6 @@ const SimpleSearchResults = ({
         key={`simple-search-result-array-${fieldName}`}
         onDelete={() => fields.remove(index)}
       >
-        <Icon
-          icon="drag-drop"
-          iconRootClass={css.icon}
-        />
         <Field
           component={SimpleSearchResultField}
           name={fieldName}

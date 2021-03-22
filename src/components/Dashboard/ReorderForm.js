@@ -9,7 +9,6 @@ import { useFormState, useForm } from 'react-final-form';
 
 import {
   Button,
-  Icon,
   Pane,
   Paneset,
   PaneFooter,
@@ -67,14 +66,12 @@ const ReorderForm = ({
     );
   };
 
-  const getDraggableDivProps = (draggable) => {
-    return ({
-      className: classnames(
-        css.draggableBox,
-        draggable.draggableProvided.draggableProps.style,
-        { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
-      )
-    });
+  const getDraggableDivStyle = (draggable) => {
+    return (classnames(
+      css.draggableBox,
+      draggable.draggableProvided.draggableProps.style,
+      { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
+    ));
   };
 
   return (
@@ -88,17 +85,11 @@ const ReorderForm = ({
       >
         <FieldArray
           component={DragAndDropFieldArray}
-          draggableDivStyle={getDraggableDivProps}
+          draggableDivStyle={getDraggableDivStyle}
           name="widgets"
         >
           {(name) => {
-            return (
-              <Icon
-                icon="drag-drop"
-              >
-                {get(values, `${name}.name`)}
-              </Icon>
-            );
+            return get(values, `${name}.name`);
           }}
         </FieldArray>
       </Pane>

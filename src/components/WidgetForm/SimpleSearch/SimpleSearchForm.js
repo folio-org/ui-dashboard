@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
+import {
+  AccordionSet,
+} from '@folio/stripes/components';
+
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
 import SimpleSearchResults from './results/SimpleSearchResults';
 
 import SimpleSearchSort from './sort/SimpleSearchSort';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
-import { AccordionSet } from '@folio/stripes-components';
 
 const SimpleSearchForm = ({
   defChanged,
