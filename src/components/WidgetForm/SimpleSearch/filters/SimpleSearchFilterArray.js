@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Accordion, Button, Headline, KeyValue } from '@folio/stripes/components';
+import { Accordion, Button, Headline } from '@folio/stripes/components';
 
 import { EditCard } from '@folio/stripes-erm-components';
 import SimpleSearchFilterField from './SimpleSearchFilterField';
