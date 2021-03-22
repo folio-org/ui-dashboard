@@ -13,7 +13,7 @@
 
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
-  "widgetForm.createWidget": "Create widget",
+  "widgetForm.createWidget": "New widget",
   "widgetForm.widgetName": "Widget name",
   "widgetForm.widgetDefinition": "Widget definition",
   "widgetForm.changeDefinitionWarningModal.heading": "Confirm change of definition",

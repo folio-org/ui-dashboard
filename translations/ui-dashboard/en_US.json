@@ -3,7 +3,7 @@
     "noWidgets": "Add a new widget to your dashboard",
     "dashboardHeader.new": "New",
     "dashboard.newWidget": "{label} widget",
-    "widgetForm.createWidget": "Create widget",
+    "widgetForm.createWidget": "New widget",
     "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
     "widgetForm.widgetName": "Widget name",
     "widgetForm.widgetDefinition": "Widget definition",
