@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
-import { Button, Headline, Icon, KeyValue } from '@folio/stripes/components';
+import { Accordion, Button, Headline, Icon, KeyValue } from '@folio/stripes/components';
 
 import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
@@ -39,33 +39,30 @@ const SimpleSearchResults = ({
   };
 
   return (
-    <div>
-      <KeyValue
-        data-testid="simpleSearchResultArray"
-        id={id}
-        label={
-          <Headline margin="x-small" size="medium" tag="h2">
-            <FormattedMessage id="ui-dashboard.simpleSearchForm.results" />
-          </Headline>
-        }
-      >
-        <FieldArray
-          name="resultColumns"
-          render={({ fields }) => (
-            <>
-              <DragAndDropFieldArray
-                fields={fields}
-              >
-                {renderResultField}
-              </DragAndDropFieldArray>
-              <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
-                <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
-              </Button>
-            </>
-          )}
-        />
-      </KeyValue>
-    </div>
+    <Accordion
+      id={id}
+      label={
+        <Headline margin="x-small" size="medium" tag="h2">
+          <FormattedMessage id="ui-dashboard.simpleSearchForm.results" />
+        </Headline>
+      }
+    >
+      <FieldArray
+        name="resultColumns"
+        render={({ fields }) => (
+          <>
+            <DragAndDropFieldArray
+              fields={fields}
+            >
+              {renderResultField}
+            </DragAndDropFieldArray>
+            <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
+            </Button>
+          </>
+        )}
+      />
+    </Accordion>
   );
 };
 
