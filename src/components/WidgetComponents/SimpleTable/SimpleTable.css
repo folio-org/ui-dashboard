@@ -1,15 +1,15 @@
 @import '@folio/stripes-components/lib/variables.css';
  
 .tableContainer { 
-  height: 100%;
-  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
 }
 
 .table {
-  display: inline-block;
+  role: table;
   border-spacing: 0;
+  width: 100%;
+  min-width: max-content;
 }
 
 .oddRow {

@@ -2,19 +2,14 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { get } from 'lodash';
-import { useTable, useBlockLayout } from 'react-table';
+import { useTable, useFlexLayout } from 'react-table';
 import css from './SimpleTable.css';
 
 const getColumnWidth = (rows, accessor, headerText) => {
-  const maxWidth = 400;
-  const magicSpacing = 10;
-
-  const cellLength = Math.max(
-    ...rows.map(row => (get(row, accessor) || '').length),
+  return Math.max(
+    ...rows.map(row => (get(row, accessor) || '').length || 0),
     headerText.length,
   );
-
-  return Math.min(maxWidth, cellLength * magicSpacing);
 };
 
 const SimpleTable = ({ columns, data, widgetId }) => {
@@ -29,35 +24,33 @@ const SimpleTable = ({ columns, data, widgetId }) => {
 };
 
 const ResizedTable = ({ columns, data, widgetId }) => {
-  const defaultColumn = React.useMemo(
-    () => ({
-      minWidth: 30,
-      width: 150,
-      maxWidth: 400,
-    }),
-    []
-  );
-
   // Use the useTable Hook to send the columns and data to build the table
   const {
-    getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow
   } = useTable({
     columns,
-    data,
-    defaultColumn
-  }, useBlockLayout);
+    data
+  }, useFlexLayout);
 
   /*
     Render the UI for our table
     react-table doesn't have UI, it's headless.
   */
+
   return (
     <div className={css.tableContainer}>
-      <div {...getTableProps()} className={css.table}>
+      {
+        /*
+         * Avoided getTableProps here
+         * because it sets a min-width
+         * which ruins styling on overlap.
+         * Replaced with css.table
+         */
+      }
+      <div className={css.table}>
         <div>
           {headerGroups.map(headerGroup => (
             <div {...headerGroup.getHeaderGroupProps()}>
@@ -74,7 +67,10 @@ const ResizedTable = ({ columns, data, widgetId }) => {
             (row, i) => {
               prepareRow(row);
               return (
-                <div {...row.getRowProps()} className={i % 2 === 0 ? css.evenRow : css.oddRow}>
+                <div
+                  {...row.getRowProps()}
+                  className={i % 2 === 0 ? css.evenRow : css.oddRow}
+                >
                   {row.cells.map((cell, j) => {
                     return (
                       <div
