@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Accordion, Button, Headline } from '@folio/stripes/components';
+import { Accordion, Button } from '@folio/stripes/components';
 
 import { EditCard } from '@folio/stripes-erm-components';
 import SimpleSearchFilterField from './SimpleSearchFilterField';
@@ -43,11 +43,7 @@ const SimpleSearchFilterArray = ({
   return (
     <Accordion
       id={id}
-      label={
-        <Headline margin="x-small" size="medium" tag="h2">
-          <FormattedMessage id={headerId} />
-        </Headline>
-      }
+      label={<FormattedMessage id={headerId} />}
     >
       {renderFilterFields()}
       <Button id={addButtonId} onClick={() => fields.push({})}>
