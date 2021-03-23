@@ -11,6 +11,8 @@ import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 import DragAndDropFieldArray from '../../../DragAndDropFieldArray';
 
+import css from './SimpleSearchResults.css';
+
 const SimpleSearchResults = ({
   data: {
     resultColumns = []
@@ -19,32 +21,33 @@ const SimpleSearchResults = ({
 }) => {
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
-      <RowWithDelete
-        key={`simple-search-result-array-${fieldName}`}
-        onDelete={() => fields.remove(index)}
-      >
-        <Field
-          component={SimpleSearchResultField}
-          name={fieldName}
-          resultColumns={resultColumns}
-        />
-      </RowWithDelete>
+      <div className={css.resultLine}>
+        <RowWithDelete
+          key={`simple-search-result-array-${fieldName}`}
+          onDelete={() => fields.remove(index)}
+        >
+          <Field
+            component={SimpleSearchResultField}
+            name={fieldName}
+            resultColumns={resultColumns}
+          />
+        </RowWithDelete>
+      </div>
     );
   };
 
   return (
     <Accordion
       id={id}
-      label={
-        <Headline margin="x-small" size="medium" tag="h2">
-          <FormattedMessage id="ui-dashboard.simpleSearchForm.results" />
-        </Headline>
-      }
+      label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results" />}
     >
       <FieldArray
         name="resultColumns"
         render={({ fields }) => (
           <>
+            <Headline margin="x-small" size="medium" tag="h2">
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.results.columns" />
+            </Headline>
             <DragAndDropFieldArray
               fields={fields}
             >

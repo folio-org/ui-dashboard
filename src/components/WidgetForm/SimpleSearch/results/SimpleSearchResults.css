@@ -1,3 +1,7 @@
 .innerRow {
   flex-grow: 1;
 }
+
+.resultLine {
+  width: 50%;
+}

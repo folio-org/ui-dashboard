@@ -7,8 +7,8 @@
 }
 
 .deleteIcon {
-  padding: var(--gutter-static-two-thirds);
-  align-self: flex-end;
+  padding: 0 var(--gutter-static-one-third);
+  align-self: center;
 }
 
 .container {
