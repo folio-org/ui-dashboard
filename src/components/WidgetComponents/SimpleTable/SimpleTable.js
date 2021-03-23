@@ -6,10 +6,11 @@ import { useTable, useFlexLayout } from 'react-table';
 import css from './SimpleTable.css';
 
 const getColumnWidth = (rows, accessor, headerText) => {
-  return Math.max(
+  // Using log so that a column of 255 and two columns of 10 don't end up massively mismatched
+  return Math.log(Math.max(
     ...rows.map(row => (get(row, accessor) || '').length || 0),
     headerText.length,
-  );
+  ));
 };
 
 const SimpleTable = ({ columns, data, widgetId }) => {
@@ -32,13 +33,29 @@ const ResizedTable = ({ columns, data, widgetId }) => {
     prepareRow
   } = useTable({
     columns,
-    data
+    data,
   }, useFlexLayout);
 
   /*
     Render the UI for our table
     react-table doesn't have UI, it's headless.
   */
+
+  const destructuredWidthFunction = (getPropFunc) => {
+    // Destructure out styling props so we can use width as flex-basis
+    // Abstracted out because logic is same for col header and cell
+    const { style: { width, ...otherStyles }, ...otherProps } = getPropFunc();
+    return (
+      {
+        ...otherProps,
+        style: {
+          ...otherStyles,
+          'flex-basis': width,
+          'max-width': '400px'
+        }
+      }
+    );
+  };
 
   return (
     <div className={css.tableContainer}>
@@ -54,11 +71,17 @@ const ResizedTable = ({ columns, data, widgetId }) => {
         <div>
           {headerGroups.map(headerGroup => (
             <div {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <div {...column.getHeaderProps()} className={css.headerCell}>
-                  {column.render('Header')}
-                </div>
-              ))}
+              {headerGroup.headers.map(column => {
+                const columnHeaderProps = destructuredWidthFunction(column.getHeaderProps);
+                return (
+                  <div
+                    {...columnHeaderProps}
+                    className={css.headerCell}
+                  >
+                    {column.render('Header')}
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>
@@ -72,9 +95,10 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                   className={i % 2 === 0 ? css.evenRow : css.oddRow}
                 >
                   {row.cells.map((cell, j) => {
+                    const cellProps = destructuredWidthFunction(cell.getCellProps);
                     return (
                       <div
-                        {...cell.getCellProps()}
+                        {...cellProps}
                         className={css.td}
                       >
                         {cell.render(
