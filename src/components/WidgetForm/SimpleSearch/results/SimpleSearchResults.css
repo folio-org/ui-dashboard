@@ -1,7 +1,10 @@
+@import '@folio/stripes-components/lib/variables.css';
+
 .innerRow {
   flex-grow: 1;
 }
 
 .resultLine {
   width: 50%;
+  @media (--small) { width: 100%; }
 }
