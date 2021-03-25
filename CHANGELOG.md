@@ -1,6 +1,8 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Fixes to fetch ordering issues
+* split routing of all dashboards and specific dashboards
 * Form changes and UX improvements
 * SimpleTable css tweaks and fixes
 * Changed DragAndDropFieldArray to have proper handle

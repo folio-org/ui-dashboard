@@ -21,12 +21,6 @@ const DashboardRoute = ({
   const ky = useOkapiKy();
   const [dashName, setDashName] = useState(params.dashName);
 
-  useEffect(() => {
-    if (location.pathname !== `/dashboard/${dashName}`) {
-      history.push(`/dashboard/${dashName}`);
-    }
-  }, [history, location.pathname, dashName]);
-
   // Load specific dashboard -- for now will only be DEFAULT
   const [isInitialCallFinished, setInitialCallFinished] = useState(false);
   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
