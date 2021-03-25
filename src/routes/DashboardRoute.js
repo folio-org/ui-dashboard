@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
+
+import ErrorPage from '../components/Dashboard/ErrorPage';
+
 
 const DashboardRoute = ({
   history,
@@ -23,9 +27,15 @@ const DashboardRoute = ({
 
   const ky = useOkapiKy();
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
-  const { data: dashboards = [], isLoading: dashboardsLoading, isSuccess: isDashboardsSuccess } = useQuery(
+  const [isInitialDashFinished, setInitialDashFinished] = useState(false);
+  const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboards'],
-    () => ky('servint/dashboard/my-dashboards').json()
+    async () => {
+      // Actually wait for the data to come back.
+      const dashData = await ky('servint/dashboard/my-dashboards').json();
+      setInitialDashFinished(true);
+      return dashData;
+    }
   );
 
   const [dashName, setDashName] = useState(params.dashName || 'DEFAULT');
@@ -37,7 +47,7 @@ const DashboardRoute = ({
   }, [history, location.pathname, dashName]);
 
   // Load specific dashboard -- for now will only be DEFAULT
-  const { data: { 0: dashboard = {} } = [], isLoading: dashboardLoading, isSuccess: isDashboardSuccess } = useQuery(
+  const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
     {
@@ -47,19 +57,17 @@ const DashboardRoute = ({
        * We need to know that is complete before we make a second call,
        * to ensure we're not attempting to create the same userRecord again
       */
-      enabled: isDashboardsSuccess &&
-        !dashboardsLoading
+      enabled: isInitialDashFinished
     }
   );
 
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
-  const { data: widgets = [], isLoading: widgetsLoading } = useQuery(
+  const { data: widgets, isLoading: widgetsLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'widgets'],
     () => ky(`servint/widgets/instances/my-widgets?filters=owner.id=${dashboard?.id}&sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
-      enabled: isDashboardSuccess &&
-        !dashboardLoading
+      enabled: isInitialDashFinished
     }
   );
 
@@ -98,7 +106,12 @@ const DashboardRoute = ({
     );
   }
   // TODO Clean up this error screen
-  return <p> No dash with that name </p>;
+  return (
+    // <p> No dash with that name </p>
+    <ErrorPage>
+      <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashName }} />
+    </ErrorPage>
+  );
 };
 
 export default DashboardRoute;

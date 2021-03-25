@@ -1,6 +1,9 @@
 {
   "meta.title": "Dashboard",
   "noWidgets": "Add a new widget to your dashboard",
+  "error": "An error occurred.",
+  "error.noDashWithThatName": "No dashboards with the name {name} exist for this user.",
+
   "loading": "Loading",
 
   "dashboardHeader.new": "New",
