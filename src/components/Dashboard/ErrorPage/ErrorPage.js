@@ -8,8 +8,12 @@ export default function ErrorPage({ children }) {
   return (
     <div className={css.errorMessage}>
       <span className={css.errorMessageLabel}>
-        <FormattedMessage id="ui-dashboard.error" />
-        {children}
+        <div>
+          <FormattedMessage id="ui-dashboard.error" />
+        </div>
+        <div>
+          {children}
+        </div>
       </span>
     </div>
   );
