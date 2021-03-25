@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import css from './ErrorPage.css';
@@ -13,3 +14,7 @@ export default function ErrorPage({ children }) {
     </div>
   );
 }
+
+ErrorPage.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+};
