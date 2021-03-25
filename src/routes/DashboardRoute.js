@@ -18,27 +18,8 @@ const DashboardRoute = ({
     params
   }
 }) => {
-  /*
-   * IMPORTANT this code uses react-query.
-   * At some point after Stripes' Iris release there is a possibility this will be removed in favour of SWR.
-   * A decision has not been made either way yet, so for now I've gone with react-query.
-   * Should that happen, the APIs seem quite similar so porting won't be too difficult.
-   */
-
   const ky = useOkapiKy();
-  // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
-  const [isInitialDashFinished, setInitialDashFinished] = useState(false);
-  const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
-    ['ui-dashboard', 'dashboardRoute', 'dashboards'],
-    async () => {
-      // Actually wait for the data to come back.
-      const dashData = await ky('servint/dashboard/my-dashboards').json();
-      setInitialDashFinished(true);
-      return dashData;
-    }
-  );
-
-  const [dashName, setDashName] = useState(params.dashName || 'DEFAULT');
+  const [dashName, setDashName] = useState(params.dashName);
 
   useEffect(() => {
     if (location.pathname !== `/dashboard/${dashName}`) {
@@ -47,17 +28,14 @@ const DashboardRoute = ({
   }, [history, location.pathname, dashName]);
 
   // Load specific dashboard -- for now will only be DEFAULT
+  const [isInitialCallFinished, setInitialCallFinished] = useState(false);
   const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboard'],
-    () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
-    {
-      /* Only run this query if the dashboards query has already run.
-       * This is for the first fetch, where the backend will create the user record
-       * (after this it can resolve to that entity)
-       * We need to know that is complete before we make a second call,
-       * to ensure we're not attempting to create the same userRecord again
-      */
-      enabled: isInitialDashFinished
+    async () => {
+      // Actually wait for the data to come back.
+      const dashData = await ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json();
+      setInitialCallFinished(true);
+      return dashData;
     }
   );
 
@@ -67,19 +45,14 @@ const DashboardRoute = ({
     () => ky(`servint/widgets/instances/my-widgets?filters=owner.id=${dashboard?.id}&sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
-      enabled: isInitialDashFinished
+      enabled: (
+        isInitialCallFinished &&
+        dashboardLoading !== true &&
+        dashboard?.id !== null
+      )
     }
   );
 
-  console.log("Dashboards: %o", dashboards)
-  console.log("Dashboard: %o", dashboard)
-  console.log("Widgets: %o", widgets)
-
-
-  // DASHBOARD DEFAULT SHOULD BE CREATED AUTOMATICALLY BUT MIGHT TAKE MORE THAN ONE RENDER CYCLE
-  if (dashboardsLoading || !dashboards.length) {
-    return null;
-  }
 
   const handleCreate = () => {
     history.push(`${location.pathname}/create`);
