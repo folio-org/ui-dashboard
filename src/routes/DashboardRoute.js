@@ -37,7 +37,7 @@ const DashboardRoute = ({
   }, [history, location.pathname, dashName]);
 
   // Load specific dashboard -- for now will only be DEFAULT
-  const { data: { 0: dashboard } = [], isLoading: dashboardLoading, isSuccess: isDashboardSuccess } = useQuery(
+  const { data: { 0: dashboard = {} } = [], isLoading: dashboardLoading, isSuccess: isDashboardSuccess } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboard'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
     {
@@ -47,7 +47,8 @@ const DashboardRoute = ({
        * We need to know that is complete before we make a second call,
        * to ensure we're not attempting to create the same userRecord again
       */
-      enabled: isDashboardsSuccess
+      enabled: isDashboardsSuccess &&
+        !dashboardsLoading
     }
   );
 
@@ -57,9 +58,15 @@ const DashboardRoute = ({
     () => ky(`servint/widgets/instances/my-widgets?filters=owner.id=${dashboard?.id}&sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
-      enabled: isDashboardSuccess
+      enabled: isDashboardSuccess &&
+        !dashboardLoading
     }
   );
+
+  console.log("Dashboards: %o", dashboards)
+  console.log("Dashboard: %o", dashboard)
+  console.log("Widgets: %o", widgets)
+
 
   // DASHBOARD DEFAULT SHOULD BE CREATED AUTOMATICALLY BUT MIGHT TAKE MORE THAN ONE RENDER CYCLE
   if (dashboardsLoading || !dashboards.length) {
