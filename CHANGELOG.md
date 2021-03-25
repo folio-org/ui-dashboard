@@ -1,6 +1,9 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Form changes and UX improvements
+* SimpleTable css tweaks and fixes
+* Changed DragAndDropFieldArray to have proper handle
 * Made proper loading page
 * Fixes to form validation
 * ERM-1580 Added form to reorder widgets
