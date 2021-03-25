@@ -32,7 +32,7 @@ const WidgetCreateRoute = ({
   );
 
   const handleClose = () => {
-    history.push(`dashboard/${params.dashName}`);
+    history.push(`/dashboard/${params.dashName}`);
   };
 
   const doTheSubmit = ({

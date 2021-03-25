@@ -38,7 +38,7 @@ const DashboardOrderRoute = ({
   }
 
   const handleClose = () => {
-    history.push(`dashboard/${dashName}`);
+    history.push(`/dashboard/${dashName}`);
   };
 
   const doTheSubmit = (values) => (
