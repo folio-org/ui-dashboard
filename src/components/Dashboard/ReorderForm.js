@@ -9,6 +9,7 @@ import { useFormState, useForm } from 'react-final-form';
 
 import {
   Button,
+  Icon,
   Pane,
   Paneset,
   PaneFooter,
@@ -87,6 +88,11 @@ const ReorderForm = ({
           component={DragAndDropFieldArray}
           draggableDivStyle={getDraggableDivStyle}
           name="widgets"
+          renderHandle={() => (
+            <Icon
+              icon="drag-drop"
+            />
+          )}
         >
           {(name) => {
             return get(values, `${name}.name`);

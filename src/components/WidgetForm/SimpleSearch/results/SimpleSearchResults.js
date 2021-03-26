@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
-import { Accordion, Button, Headline } from '@folio/stripes/components';
+import { Accordion, Button, Headline, Icon } from '@folio/stripes/components';
 
 import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
@@ -50,6 +50,11 @@ const SimpleSearchResults = ({
             </Headline>
             <DragAndDropFieldArray
               fields={fields}
+              renderHandle={() => (
+                <Icon
+                  icon="drag-drop"
+                />
+              )}
             >
               {renderResultField}
             </DragAndDropFieldArray>
