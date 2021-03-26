@@ -14,10 +14,12 @@
 
 .oddRow {
   background-color: var(--color-fill-table-row-odd);
+  padding: 0 6px 3px;
 }
 
 .evenRow {
   background-color: var(--color-fill-table-row-even);
+  padding: 0 6px 3px;
 }
 
 .td {
