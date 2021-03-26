@@ -114,7 +114,7 @@
   "simpleSearchForm.results": "Results display",
   "simpleSearchForm.results.columns": "Columns",
   "simpleSearchForm.results.column": "Column",
-  "simpleSearchForm.resultDeleteAria": "Remove column {index}",
+  "simpleSearchForm.results.resultDeleteAria": "Remove column {index}",
   "simpleSearchForm.results.label": "Label",
   "simpleSearchForm.results.addResult": "Add column",
 

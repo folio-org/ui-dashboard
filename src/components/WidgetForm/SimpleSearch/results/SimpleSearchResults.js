@@ -32,7 +32,7 @@ const SimpleSearchResults = ({
           key={`simple-search-result-array-${fieldName}`}
           ariaLabel={
             intl.formatMessage(
-              { id: 'ui-dashboard.simpleSearchForm..results.resultDeleteAria' },
+              { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
               { index: index + 1 }
             )
           }
