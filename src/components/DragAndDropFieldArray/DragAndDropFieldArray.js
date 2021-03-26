@@ -76,7 +76,7 @@ const DragAndDropFieldArray = ({
                             data-testid={name}
                             {...draggableProvided.dragHandleProps}
                           >
-                            {renderHandle()}
+                            {renderHandle(name, index)}
                           </div>
                         }
                         {/* Actual dnd content, passed a bunch of props as a function */}

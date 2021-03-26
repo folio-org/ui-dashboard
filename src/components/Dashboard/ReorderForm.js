@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import { get } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, useForm } from 'react-final-form';
 
@@ -26,6 +26,8 @@ const ReorderForm = ({
 }) => {
   const { values } = useFormState();
   const { change } = useForm();
+
+  const intl = useIntl();
 
   // Keep weights up to date with list index in form
   useEffect(() => {
@@ -75,6 +77,10 @@ const ReorderForm = ({
     ));
   };
 
+  const widgetNameFromName = (name) => {
+    return get(values, `${name}.name`);
+  };
+
   return (
     <Paneset>
       <Pane
@@ -88,14 +94,20 @@ const ReorderForm = ({
           component={DragAndDropFieldArray}
           draggableDivStyle={getDraggableDivStyle}
           name="widgets"
-          renderHandle={() => (
+          renderHandle={(name, index) => (
             <Icon
+              ariaLabel={ 
+                intl.formatMessage(
+                  { id: 'ui-dashboard.dashboard.reorderForm.dragAndDropHandleAria' },
+                  { index: index + 1, widgetName: widgetNameFromName(name) }
+                )
+              }
               icon="drag-drop"
             />
           )}
         >
           {(name) => {
-            return get(values, `${name}.name`);
+            return widgetNameFromName(name);
           }}
         </FieldArray>
       </Pane>

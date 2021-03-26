@@ -74,12 +74,12 @@ const ResizedTable = ({ columns, data, widgetId }) => {
               {headerGroup.headers.map(column => {
                 const columnHeaderProps = destructuredWidthFunction(column.getHeaderProps);
                 return (
-                  <div
+                  <th
                     {...columnHeaderProps}
                     className={css.headerCell}
                   >
                     {column.render('Header')}
-                  </div>
+                  </th>
                 );
               })}
             </div>
@@ -97,7 +97,7 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                   {row.cells.map((cell, j) => {
                     const cellProps = destructuredWidthFunction(cell.getCellProps);
                     return (
-                      <div
+                      <td
                         {...cellProps}
                         className={css.td}
                       >
@@ -105,7 +105,7 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                           'Cell',
                           { key: `simple-table-${widgetId}-row-${i}-col-${j}` }
                         )}
-                      </div>
+                      </td>
                     );
                   })}
                 </div>
