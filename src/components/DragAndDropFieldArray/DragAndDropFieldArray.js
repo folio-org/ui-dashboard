@@ -4,12 +4,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-// We use this for the drag and drop icon.
-// I'd prefer to keep this stripes agnostic but it'll do for now
-import {
-  Icon,
-} from '@folio/stripes/components';
-
 import css from './DragAndDropFieldArray.css';
 
 /* This component provides a drag and drop list for any array.
@@ -21,7 +15,8 @@ import css from './DragAndDropFieldArray.css';
 const DragAndDropFieldArray = ({
   draggableDivStyle = () => null,
   fields,
-  children
+  children,
+  renderHandle
 }) => {
   const makeOnDragEndFunction = passedFields => result => {
     // dropped outside the list
@@ -31,6 +26,8 @@ const DragAndDropFieldArray = ({
     // Move field to correct place in the list
     passedFields.move(result.source.index, result.destination.index);
   };
+
+  const isRenderHandle = !!renderHandle;
 
   return (
     <>
@@ -64,17 +61,24 @@ const DragAndDropFieldArray = ({
                           draggableDivStyle(draggable)
                         )}
                         {...draggableProvided.draggableProps}
+                        // If renderHandle not passed, make whole row handle
+                        {
+                          ...(!isRenderHandle ?
+                            { ...draggableProvided.dragHandleProps } :
+                            undefined
+                          )
+                        }
                       >
-                        {/* Handle, uses stripes drag and drop icon */}
-                        <div
-                          className={css.handle}
-                          data-testid={name}
-                          {...draggableProvided.dragHandleProps}
-                        >
-                          <Icon
-                            icon="drag-drop"
-                          />
-                        </div>
+                        {/* Handle, only render if renderHandle prop passed */}
+                        {isRenderHandle &&
+                          <div
+                            className={css.handle}
+                            data-testid={name}
+                            {...draggableProvided.dragHandleProps}
+                          >
+                            {renderHandle()}
+                          </div>
+                        }
                         {/* Actual dnd content, passed a bunch of props as a function */}
                         <div
                           className={css.content}
@@ -116,6 +120,7 @@ DragAndDropFieldArray.propTypes = {
   draggableDivStyle: PropTypes.func,
   fields: PropTypes.object.isRequired,
   children: PropTypes.func,
+  renderHandle: PropTypes.func
 };
 
 export default DragAndDropFieldArray;
