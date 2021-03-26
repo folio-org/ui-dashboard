@@ -94,7 +94,7 @@
     "dashboard.reorderForm.paneTitle": "Modifier le tableau de bord",
     "dashboard.reorderForm.widget.widgetname": "Nom du widget",
     "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",
-    "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
+    "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "Un UUID utilisateur ou un jeton utilisateur actuel doit être entré",
     "simpleSearchForm.results.column": "Colonne",
     "simpleSearchForm.results.label": "Intitulé"
 }
