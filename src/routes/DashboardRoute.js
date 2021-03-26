@@ -8,7 +8,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
 
-import ErrorPage from '../components/Dashboard/ErrorPage';
+import { ErrorPage } from '../components/Dashboard/ErrorPage';
 
 
 const DashboardRoute = ({
@@ -72,9 +72,7 @@ const DashboardRoute = ({
       />
     );
   }
-  // TODO Clean up this error screen
   return (
-    // <p> No dash with that name </p>
     <ErrorPage>
       <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashName }} />
     </ErrorPage>

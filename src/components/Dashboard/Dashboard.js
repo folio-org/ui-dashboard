@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import DashboardHeader from './DashboardHeader';
 import NoWidgets from './NoWidgets';
+import { ErrorComponent } from './ErrorPage';
 
 import SimpleSearch from '../WidgetComponents/SimpleSearch/SimpleSearch';
 import { Widget } from '../WidgetComponents/Widget';
@@ -28,8 +30,11 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
           />
         );
       default:
-        // TODO add real error here
-        return `No widget component for type: ${widgetType}`;
+        return (
+          <ErrorComponent>
+            <FormattedMessage id="ui-dashboard.error.noWidgetComponentForType" values={{ widgetType }} />
+          </ErrorComponent>
+        );
     }
   };
 
