@@ -10,8 +10,6 @@ import {
 
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
 import SimpleSearchResults from './results/SimpleSearchResults';
-
-import SimpleSearchSort from './sort/SimpleSearchSort';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
