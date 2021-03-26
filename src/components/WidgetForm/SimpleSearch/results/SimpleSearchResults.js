@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
@@ -24,11 +24,18 @@ const SimpleSearchResults = ({
   } = {},
   id
 }) => {
+  const intl = useIntl();
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>
         <RowWithDelete
           key={`simple-search-result-array-${fieldName}`}
+          ariaLabel={
+            intl.formatMessage(
+              { id: 'ui-dashboard.simpleSearchForm..results.resultDeleteAria' },
+              { index }
+            )
+          }
           onDelete={() => fields.remove(index)}
         >
           <Field

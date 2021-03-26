@@ -96,7 +96,7 @@ const ReorderForm = ({
           name="widgets"
           renderHandle={(name, index) => (
             <Icon
-              ariaLabel={ 
+              ariaLabel={
                 intl.formatMessage(
                   { id: 'ui-dashboard.dashboard.reorderForm.dragAndDropHandleAria' },
                   { index: index + 1, widgetName: widgetNameFromName(name) }

@@ -4,7 +4,7 @@ import { IconButton } from '@folio/stripes/components';
 
 import css from './RowWithDelete.css';
 
-const RowWithDelete = ({ children, onDelete }) => {
+const RowWithDelete = ({ ariaLabel = undefined, children, onDelete }) => {
   return (
     <div className={css.container}>
       <div className={css.children}>
@@ -12,6 +12,7 @@ const RowWithDelete = ({ children, onDelete }) => {
       </div>
       <div className={css.deleteIcon}>
         <IconButton
+          ariaLabel={ariaLabel}
           icon="trash"
           onClick={onDelete}
         />
@@ -21,6 +22,7 @@ const RowWithDelete = ({ children, onDelete }) => {
 };
 
 RowWithDelete.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.node,
   onDelete: PropTypes.func.isRequired
 };
