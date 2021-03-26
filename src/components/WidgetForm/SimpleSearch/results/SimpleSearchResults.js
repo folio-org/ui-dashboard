@@ -5,17 +5,22 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
-import { Accordion, Button, Headline, Icon } from '@folio/stripes/components';
+import { Accordion, Button, Col, Headline, Icon, Row, TextField } from '@folio/stripes/components';
 
 import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
+import SimpleSearchSort from '../sort/SimpleSearchSort';
 import DragAndDropFieldArray from '../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';
 
 const SimpleSearchResults = ({
   data: {
-    resultColumns = []
+    resultColumns,
+    configurableProperties: {
+      numberOfRows = {},
+    } = {},
+    sortColumns
   } = {},
   id
 }) => {
@@ -41,6 +46,35 @@ const SimpleSearchResults = ({
       id={id}
       label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results" />}
     >
+      <Row>
+        <Col xs={numberOfRows.configurable ? 3 : 0}>
+          <Field
+            defaultValue={numberOfRows.defValue}
+            name="configurableProperties.numberOfRows"
+          >
+            {({ input }) => {
+              if (numberOfRows.configurable) {
+                return (
+                  <TextField
+                    {...input}
+                    data-testid="simple-search-configurable-properties-number-of-rows"
+                    id="simple-search-configurable-properties-number-of-rows"
+                    label={<FormattedMessage id="ui-dashboard.simpleSearchForm.configurableProperties.numberOfRows" />}
+                  />
+                );
+              }
+              // We know that if numberOfRows is non-configurable then it MUST have a defValue (FROM TYPE SCHEMA)
+              // We still want that to be submitted, but no field to render on the form
+              return null;
+            }}
+          </Field>
+        </Col>
+        <SimpleSearchSort
+          data={{
+            sortColumns
+          }}
+        />
+      </Row>
       <FieldArray
         name="resultColumns"
         render={({ fields }) => (

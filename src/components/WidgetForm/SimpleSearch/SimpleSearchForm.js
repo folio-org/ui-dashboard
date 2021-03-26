@@ -56,6 +56,7 @@ const SimpleSearchForm = ({
   return (
     <>
       <AccordionSet initialStatus={initialAccordionState}>
+        {/* This component now only displays url link stuff, consider renaming */}
         <SimpleSearchConfigurableProperties
           configurableProperties={configurableProperties}
         />
@@ -73,14 +74,11 @@ const SimpleSearchForm = ({
         />
         <SimpleSearchResults
           data={{
-            resultColumns
-          }}
-          id="simple-search-form-results"
-        />
-        <SimpleSearchSort
-          data={{
+            resultColumns,
+            configurableProperties,
             sortColumns
           }}
+          id="simple-search-form-results"
         />
       </AccordionSet>
     </>
