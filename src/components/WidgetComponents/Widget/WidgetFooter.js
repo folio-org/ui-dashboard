@@ -30,6 +30,7 @@ const WidgetFooter = ({
             )
           }
           icon="refresh"
+          iconSize="small"
           onClick={onRefresh}
         />
         <div

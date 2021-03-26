@@ -13,18 +13,22 @@
 }
 
 .oddRow {
-  background-color: var(--color-fill-table-row-odd);
-  padding: 0 6px 3px;
+  background-color: var(--color-fill-table-row-even);
 }
 
 .evenRow {
-  background-color: var(--color-fill-table-row-even);
-  padding: 0 6px 3px;
+  
+  background-color: var(--color-fill-table-row-odd);
 }
 
 .td {
   margin: 0;
-  padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
+  /*
+    Here 5px was a little too small, and 10 too large,
+    so we went for eight, but if gutter size changes
+    this will adapt in the same ratio
+  */
+  padding: calc(var(--gutter-static-one-third) * (8/5)) var(--gutter-static-two-thirds);
   border-right: 1px solid var(--color-border-p2);
   /* hopefully unnecessary, but allows data to break if stupidly long*/
   word-wrap: break-word;
