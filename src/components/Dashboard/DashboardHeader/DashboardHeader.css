@@ -2,12 +2,10 @@
 
 .dashboardHeader {
   display: flex;
-  justify-content: space-between;
-
+  justify-content: flex-end;
+  align-items: flex-end;
   width: 100%;
-  align-items: center;
   position: relative;
-  will-change: transform;
   padding: 0 var(--gutter-static);
   min-height: var(--control-min-size-touch);
   
