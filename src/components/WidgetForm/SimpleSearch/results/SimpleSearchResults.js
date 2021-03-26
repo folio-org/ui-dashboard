@@ -33,7 +33,7 @@ const SimpleSearchResults = ({
           ariaLabel={
             intl.formatMessage(
               { id: 'ui-dashboard.simpleSearchForm..results.resultDeleteAria' },
-              { index }
+              { index: index + 1 }
             )
           }
           onDelete={() => fields.remove(index)}
