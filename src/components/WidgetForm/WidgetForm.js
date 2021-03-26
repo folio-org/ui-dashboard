@@ -22,6 +22,8 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
+import { ErrorComponent } from '../Dashboard/ErrorPage';
+
 
 const propTypes = {
   data: PropTypes.shape({
@@ -85,8 +87,11 @@ const WidgetForm = ({
           />
         );
       default:
-        // TODO add real error here
-        return `No widget form component for type: ${widgetDef?.type?.name}`;
+        return (
+          <ErrorComponent>
+            <FormattedMessage id="ui-dashboard.error.noWidgetFormComponentForType" values={{ widgetType: widgetDef?.type?.name }} />
+          </ErrorComponent>
+        );
     }
   };
 
