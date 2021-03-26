@@ -4,11 +4,12 @@
   "error": "An error occurred.",
   "error.noDashWithThatName": "No dashboards with the name {name} exist for this user.",
   "error.noDashboardsForUser": "No dashboards exist for this user.",
+  "canvas.actions": "Actions",
 
   "loading": "Loading",
 
   "dashboardHeader.new": "New",
-  "dashboardHeader.reorder": "Edit order",
+  "dashboardHeader.reorder": "Edit widget display order",
 
   "dashboard.newWidget": "{label} widget",
 

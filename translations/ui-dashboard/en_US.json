@@ -90,7 +90,7 @@
     "simpleSearchForm.filters.filterField.comparator.UUID.isNull": "is not set",
     "simpleSearchForm.filters.filterField.comparator.UUID.isNotNull": "is set",
     "loading": "Loading",
-    "dashboardHeader.reorder": "Edit order",
+    "dashboardHeader.reorder": "Edit widget display order",
     "dashboard.reorderForm.paneTitle": "Edit dashboard",
     "dashboard.reorderForm.widget.widgetname": "Widget name",
     "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",

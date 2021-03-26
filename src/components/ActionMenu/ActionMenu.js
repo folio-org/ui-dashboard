@@ -26,7 +26,7 @@ const ActionMenu = ({ actionMenu }) => {
       {...ariaProps}
     >
       <Icon icon={open ? 'triangle-up' : 'triangle-down'} iconPosition="end">
-        <FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />
+        <FormattedMessage id="ui-dashboard.canvas.actions" />
       </Icon>
     </Button>
   );
