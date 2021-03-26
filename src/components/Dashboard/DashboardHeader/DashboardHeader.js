@@ -4,11 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
-  Dropdown,
-  DropdownMenu,
-  Icon
 } from '@folio/stripes/components';
 
+import ActionMenu from '../../ActionMenu/ActionMenu';
 import css from './DashboardHeader.css';
 
 const propTypes = {
@@ -17,7 +15,7 @@ const propTypes = {
 };
 
 export default function DashboardHeader({ onCreate, onReorder }) {
-  const actionMenu = () => (
+  const getActionMenu = () => (
     <>
       <Button
         buttonStyle="dropdownItem"
@@ -36,46 +34,9 @@ export default function DashboardHeader({ onCreate, onReorder }) {
     </>
   );
 
-  // eslint-disable-next-line react/prop-types
-  const renderActionMenuToggle = ({ onToggle, triggerRef, keyHandler, open, ariaProps, getTriggerProps }) => (
-    <Button
-      ref={triggerRef}
-      buttonClass={css.actionMenuToggle}
-      buttonStyle="primary"
-      marginBottom0
-      onClick={onToggle}
-      onKeyDown={keyHandler}
-      type="button"
-      {...getTriggerProps()}
-      {...ariaProps}
-    >
-      <Icon icon={open ? 'triangle-up' : 'triangle-down'} iconPosition="end">
-        <FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />
-      </Icon>
-    </Button>
-  );
-
-  // eslint-disable-next-line react/prop-types
-  const renderActionMenuContent = ({ onToggle, open, keyHandler }) => (
-    <DropdownMenu>
-      {actionMenu({ onToggle, open, keyHandler })}
-    </DropdownMenu>
-  );
-
-  const renderActionMenu = () => (
-    <Dropdown
-      key="action-menu-toggle"
-      hasPadding
-      renderMenu={renderActionMenuContent}
-      renderTrigger={renderActionMenuToggle}
-    />
-  );
-
-
-
   return (
     <div className={css.dashboardHeader}>
-      {renderActionMenu()}
+      <ActionMenu actionMenu={getActionMenu} />
     </div>
   );
 }
