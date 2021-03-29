@@ -1,3 +1,11 @@
+/*
+  This file contains functions to parse out incoming data
+  in order to pass in as initialValues,
+  as well as interpret incoming form data
+  to deal with SimpleSearch specific tweaks
+*/
+
+
 const submitWithTokens = (widgetConf) => {
   const tweakedWidgetConf = { ...widgetConf };
   // Remove tokens, for each filterColumn map the existing rules onto a comparator/value pair

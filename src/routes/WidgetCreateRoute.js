@@ -38,8 +38,12 @@ const WidgetCreateRoute = ({
   const doTheSubmit = ({
     definition,
     name,
+    specificDef,
     ...widgetConf
   }) => {
+    console.log("DEFINITION: %o", definition)
+    console.log("Spec Def: %o", specificDef)
+    console.log("WidgetConf: %o", widgetConf)
     /* This is a simpleSearch specific action,
      * this will need to be on a switch,
      * so that we can perform other widgetType-specifc
@@ -54,8 +58,8 @@ const WidgetCreateRoute = ({
     // Include other necessary metadata
     const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
     // Post and close
-    postWidget(submitValue)
-      .then(handleClose);
+    /* postWidget(submitValue)
+      .then(handleClose); */
   };
 
   return (

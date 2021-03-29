@@ -75,6 +75,11 @@ const WidgetForm = ({
     }
   );
 
+  // TODO On submit we need to know the actual definition,
+  // not just the id, so that we can do specific parsing on it.
+  // Potentially move the "specific definition" up to route and pass down?
+
+
   // This may be (probably will be) versioned in future, keep an eye out for that
   const getWidgetFormComponent = (widgetDef) => {
     switch (widgetDef?.type?.name) {
