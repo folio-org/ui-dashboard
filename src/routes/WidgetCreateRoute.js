@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -31,6 +31,23 @@ const WidgetCreateRoute = ({
     (data) => ky.post('servint/widgets/instances', { json: data })
   );
 
+  /*
+   * When the user selects a widgetDefinition it'll just be an id.
+   * We will want to know the specific details for the definition (both in form and for submit)
+   * so we fetch them again by way of a callback when the user makes their selection
+   */
+  const [defId, setDefId] = useState(null);
+  const { data: specificWidgetDefinition } = useQuery(
+    // Ensure we get a fresh fetch per CREATE/EDIT with values.definition?.id
+    ['ui-dashboard', 'widgetCreateRoute', 'getSpecificWidgetDef', defId],
+    () => ky(`servint/widgets/definitions/${defId}`).json(),
+    {
+      /* Only run this query if the user has selected a widgetDefinition */
+      enabled: !!defId
+    }
+  );
+  console.log("Spec Def: %o", specificWidgetDefinition);
+
   const handleClose = () => {
     history.push(`/dashboard/${params.dashName}`);
   };
@@ -38,12 +55,8 @@ const WidgetCreateRoute = ({
   const doTheSubmit = ({
     definition,
     name,
-    specificDef,
     ...widgetConf
   }) => {
-    console.log("DEFINITION: %o", definition)
-    console.log("Spec Def: %o", specificDef)
-    console.log("WidgetConf: %o", widgetConf)
     /* This is a simpleSearch specific action,
      * this will need to be on a switch,
      * so that we can perform other widgetType-specifc
@@ -76,11 +89,14 @@ const WidgetCreateRoute = ({
         <form onSubmit={handleSubmit}>
           <WidgetForm
             data={{
+              defId,
+              specificWidgetDefinition,
               widgetDefinitions
             }}
             handlers={{
               onClose: handleClose,
-              onSubmit: handleSubmit
+              onSubmit: handleSubmit,
+              setDefId
             }}
           />
         </form>

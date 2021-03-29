@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
@@ -13,9 +12,7 @@ import SimpleSearchResults from './results/SimpleSearchResults';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
-  defChanged,
   specificWidgetDefinition,
-  toggleDefChange
 }) => {
   const {
     configurableProperties,
@@ -29,21 +26,6 @@ const SimpleSearchForm = ({
       columns: sortColumns = []
     } = {},
   } = JSON.parse(specificWidgetDefinition?.definition);
-  const { change } = useForm();
-
-  /*
-   * Here we can reset individual dynamic form elements when definition changes
-   * Doing it this way because "reset" and "restart" at the form level
-   * seem to leave fields behind when dirtied, even with destroyOnUnregister
-  */
-  useEffect(() => {
-    if (defChanged) {
-      change('filterColumns', undefined);
-      change('resultColumns', undefined);
-      change('sortColumns', undefined);
-      toggleDefChange();
-    }
-  }, [change, defChanged, toggleDefChange]);
 
   const initialAccordionState = {
     filters: true,
@@ -84,9 +66,7 @@ const SimpleSearchForm = ({
 };
 
 SimpleSearchForm.propTypes = {
-  defChanged: PropTypes.bool.isRequired,
-  specificWidgetDefinition: PropTypes.object,
-  toggleDefChange: PropTypes.func.isRequired
+  specificWidgetDefinition: PropTypes.object
 };
 
 export default SimpleSearchForm;
