@@ -67,20 +67,10 @@ const SimpleSearchDateFilterField = ({
             <div className={css.flexContainer}>
               <div className={css.radioButton}>
                 <Field
+                  component={RadioButton}
                   defaultValue="absolute"
+                  disabled={isSetOrUnset}
                   name={`${name}.relativeOrAbsolute`}
-                  render={({ input }) => {
-                    return (
-                      <RadioButton
-                        checked={input.checked}
-                        disabled={isSetOrUnset}
-                        id="relative"
-                        name={input.name}
-                        onChange={input.onChange}
-                        value="relative"
-                      />
-                    );
-                  }}
                   type="radio"
                   validateFields={[`${name}.filterValue`]}
                   value="relative"
@@ -101,19 +91,9 @@ const SimpleSearchDateFilterField = ({
             <div className={css.flexContainer}>
               <div className={css.radioButton}>
                 <Field
+                  component={RadioButton}
+                  disabled={isSetOrUnset}
                   name={`${name}.relativeOrAbsolute`}
-                  render={({ input }) => {
-                    return (
-                      <RadioButton
-                        checked={input.checked}
-                        disabled={isSetOrUnset}
-                        id="absolute"
-                        name={input.name}
-                        onChange={input.onChange}
-                        value="absolute"
-                      />
-                    );
-                  }}
                   type="radio"
                   validateFields={[`${name}.filterValue`]}
                   value="absolute"

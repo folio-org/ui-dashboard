@@ -44,4 +44,5 @@
     font-weight: var(--text-weight-bold);
     font-size: var(--font-size-medium);
     word-wrap: break-word;
+    text-align: start;
   }

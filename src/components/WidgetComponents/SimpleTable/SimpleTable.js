@@ -50,8 +50,8 @@ const ResizedTable = ({ columns, data, widgetId }) => {
         ...otherProps,
         style: {
           ...otherStyles,
-          'flex-basis': width,
-          'max-width': '400px'
+          'flexBasis': width,
+          'maxWidth': '400px'
         }
       }
     );
@@ -67,10 +67,10 @@ const ResizedTable = ({ columns, data, widgetId }) => {
          * Replaced with css.table
          */
       }
-      <div className={css.table}>
-        <div>
+      <table className={css.table}>
+        <thead>
           {headerGroups.map(headerGroup => (
-            <div {...headerGroup.getHeaderGroupProps()}>
+            <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => {
                 const columnHeaderProps = destructuredWidthFunction(column.getHeaderProps);
                 return (
@@ -82,15 +82,15 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                   </th>
                 );
               })}
-            </div>
+            </tr>
           ))}
-        </div>
-        <div {...getTableBodyProps()}>
+        </thead>
+        <tbody {...getTableBodyProps()}>
           {rows.map(
             (row, i) => {
               prepareRow(row);
               return (
-                <div
+                <tr
                   {...row.getRowProps()}
                   className={i % 2 === 0 ? css.evenRow : css.oddRow}
                 >
@@ -108,12 +108,12 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                       </td>
                     );
                   })}
-                </div>
+                </tr>
               );
             }
           )}
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 };
