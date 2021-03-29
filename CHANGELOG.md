@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Fixed filter issue in date filter field. ERM-1614
 * Fixes to fetch ordering issues
 * split routing of all dashboards and specific dashboards
 * Form changes and UX improvements
