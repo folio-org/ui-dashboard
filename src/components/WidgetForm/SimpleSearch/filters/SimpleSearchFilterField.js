@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -23,14 +23,15 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
 
   // Create values for available filters. If label available use that, else use name
   const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];
+
+  // Get currently selectedFilter and then find the full filterColumn from that value
+  // TODO is there a better way to pass extra values on selects and get that data back?
   const selectedFilter = useMemo(() => get(values, `${name}.name`), [name, values]);
   const selectedFilterColumn = useMemo(() => filterColumns.find(fc => fc.name === selectedFilter), [filterColumns, selectedFilter]);
 
   let FilterComponent;
   let filterComponentProps = {};
 
-  // Keep the hidden form field up to date
-  change(`${name}.fieldType`, selectedFilterColumn?.valueType);
   switch (selectedFilterColumn?.valueType) {
     case 'Enum':
       filterComponentProps = {
@@ -52,6 +53,11 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
       FilterComponent = TextField;
       break;
   }
+
+  // Keep the hidden form field up to date
+  useEffect(() => {
+    change(`${name}.fieldType`, selectedFilterColumn?.valueType);
+  }, [change, name, selectedFilterColumn]);
 
   return (
     <>

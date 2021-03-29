@@ -54,6 +54,7 @@ const WidgetCreateRoute = ({
     // Include other necessary metadata
     const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
     // Post and close
+
     postWidget(submitValue)
       .then(handleClose);
   };
