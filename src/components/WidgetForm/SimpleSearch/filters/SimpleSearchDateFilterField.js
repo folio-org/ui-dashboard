@@ -157,9 +157,9 @@ const SimpleSearchDateFilterField = ({
           name={`${name}.offset`}
           type="number"
           validate={value => (
-            parseInt(value, 10) >= 0 ?
-              undefined :
-              <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetMustBePositive" />
+            parseInt(value, 10) < 0 || parseInt(value, 10) > 999 ?
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetValidation" /> :
+              undefined
           )}
         />
       </Col>
