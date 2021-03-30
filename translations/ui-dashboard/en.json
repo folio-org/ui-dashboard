@@ -133,7 +133,7 @@
   "simpleSearchForm.configurableProperties.urlLink": "Url link",
 
   "simpleSearch.widget.nFoundBadge": "{total} found",
-  "simpleSearch.widget.linkTextForWidget": "Link to app",
-  "simpleSearch.widget.linkText": "{linkText} for widget: {widgetName}"
+  "simpleSearch.widget.linkText": "Link to app",
+  "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}"
 
 }
