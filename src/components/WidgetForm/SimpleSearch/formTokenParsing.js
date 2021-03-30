@@ -57,10 +57,8 @@ const submitWithTokens = (widgetConf) => {
 // This must reflect any manipulations happening above
 const widgetToInitialValues = (widget) => {
   const widgetConf = JSON.parse(widget.configuration);
-  console.log("WidgetConf: %o", widgetConf);
   // We need to deal with tokens
   const { filterColumns } = widgetConf;
-  console.log("filterColumns: %o", filterColumns);
 
   const tweakedFilterColumns = filterColumns?.map(fc => {
     switch (fc.fieldType) {
@@ -92,9 +90,24 @@ const widgetToInitialValues = (widget) => {
       }
       case 'UUID': {
         // Check for currentUser tokens in each rule
+        const tweakedRules = [...fc.rules]?.map(fcr => {
+          const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
+          if (!tokenMatch) {
+            // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
+            return ({
+              ...fcr,
+              relativeOrAbsolute: 'absolute'
+            });
+          }
+          // At this point, we have a token, no need to parse for currentUser
+          return ({
+            comparator: fcr.comparator,
+            relativeOrAbsolute: 'relative'
+          });
+        });
         return ({
           ...fc,
-          rules: fc.rules
+          rules: tweakedRules
         });
       }
       default:
