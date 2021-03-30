@@ -75,12 +75,13 @@ const widgetToInitialValues = (widget) => {
             });
           }
           // At this point, we have a token, so we need to parse it out to work out the other fields
-          const dateMatch = tokenMatch.match(/(currentDate)((#)(-?\d{1,3}))?((#)([d,w,m,y]))?/);
+          const dateMatch = tokenMatch.match(/(currentDate)((#)(-?)(\d{1,3}))?((#)([d,w,m,y]))?/);
           return ({
             comparator: fcr.comparator,
             relativeOrAbsolute: 'relative',
-            offset: dateMatch?.[4] || 0,
-            timeUnit: dateMatch?.[7] || 'd',
+            offsetMethod: dateMatch?.[4] ? 'subtract' : 'add',
+            offset: dateMatch?.[5] || 0,
+            timeUnit: dateMatch?.[8] || 'd',
           });
         });
         return ({
