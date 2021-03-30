@@ -7,8 +7,10 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm/WidgetForm';
-import submitWithTokens from '../components/WidgetForm/SimpleSearch/formTokenParsing';
+import { submitWithTokens, widgetToInitialValues } from '../components/WidgetForm/SimpleSearch/formTokenParsing';
 
+
+/* This name may be a bit of a misnomer, as the route is used for both create AND edit */
 const WidgetCreateRoute = ({
   history,
   match: {
@@ -16,6 +18,8 @@ const WidgetCreateRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
+
+  // Query setup for the dashboard/definitions/POST/PUT
   const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
@@ -30,6 +34,27 @@ const WidgetCreateRoute = ({
     ['ui-dashboard', 'widgetCreateRoute', 'postWidget'],
     (data) => ky.post('servint/widgets/instances', { json: data })
   );
+
+  const { mutateAsync: putWidget } = useMutation(
+    ['ui-dashboard', 'widgetCreateRoute', 'putWidget'],
+    (data) => ky.put(`servint/widgets/instances/${params.widgetId}`, { json: data })
+  );
+
+  // If we have a widgetId then fetch that widget
+  const { data: widget } = useQuery(
+    // Ensure we refetch widget if widgetId changes
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidget', params.widgetId],
+    () => ky(`servint/widgets/instances/${params.widgetId}`).json(),
+    {
+      /* Only run this query if the user has selected a widgetDefinition */
+      enabled: !!params.widgetId
+    }
+  );
+  let initialValues;
+  if (widget) {
+    initialValues = widgetToInitialValues(widget);
+    console.log("InitialValues: %o", initialValues)
+  }
 
   /*
    * When the user selects a widgetDefinition it'll just be an id.
@@ -46,7 +71,6 @@ const WidgetCreateRoute = ({
       enabled: !!defId
     }
   );
-  console.log("Spec Def: %o", specificWidgetDefinition);
 
   const handleClose = () => {
     history.push(`/dashboard/${params.dashName}`);
@@ -70,37 +94,47 @@ const WidgetCreateRoute = ({
     });
     // Include other necessary metadata
     const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
-    // Post and close
-    /* postWidget(submitValue)
-      .then(handleClose); */
+
+    if (params.widgetId) {
+      // Widget already exists, PUT and close
+      putWidget(submitValue)
+        .then(handleClose);
+    } else {
+      // New widget, POST and close
+      postWidget(submitValue)
+        .then(handleClose);
+    }
   };
 
   return (
     <Form
-      // initialValues={initialValues}
       enableReinitialize
+      initialValues={initialValues}
       keepDirtyOnReinitialize
       mutators={arrayMutators}
       navigationCheck
       onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <WidgetForm
-            data={{
-              defId,
-              specificWidgetDefinition,
-              widgetDefinitions
-            }}
-            handlers={{
-              onClose: handleClose,
-              onSubmit: handleSubmit,
-              setDefId
-            }}
-          />
-        </form>
-      )}
+      {({ handleSubmit }) => {
+        return (
+          <form onSubmit={handleSubmit}>
+            <WidgetForm
+              data={{
+                defId,
+                params,
+                specificWidgetDefinition,
+                widgetDefinitions
+              }}
+              handlers={{
+                onClose: handleClose,
+                onSubmit: handleSubmit,
+                setDefId
+              }}
+            />
+          </form>
+        );
+      }}
     </Form>
   );
 };
@@ -117,7 +151,8 @@ WidgetCreateRoute.propTypes = {
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      dashName: PropTypes.string
+      dashName: PropTypes.string,
+      widgetId: PropTypes.string,
     })
   }).isRequired
 };

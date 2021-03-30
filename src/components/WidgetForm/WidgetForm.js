@@ -22,7 +22,6 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
 import { ErrorComponent } from '../Dashboard/ErrorPage';
 
-
 const propTypes = {
   data: PropTypes.shape({
     defId: PropTypes.string,
@@ -34,6 +33,9 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     setDefId: PropTypes.func.isRequired
   }),
+  params: PropTypes.shape({
+    widgetId: PropTypes.string,
+  }).isRequired,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };
@@ -42,6 +44,7 @@ const propTypes = {
 const WidgetForm = ({
   data: {
     defId,
+    params,
     specificWidgetDefinition,
     widgetDefinitions = []
   } = {},
@@ -54,6 +57,7 @@ const WidgetForm = ({
   submitting,
 }) => {
   const { dirtyFields, values } = useFormState();
+  console.log("Values: %o", values)
   const { change } = useForm();
 
   /*
@@ -171,6 +175,7 @@ const WidgetForm = ({
                 <Field
                   component={Select}
                   dataOptions={selectifiedWidgetDefs}
+                  disabled={!!params.widgetId}
                   name="definition.id"
                   onChange={e => {
                     // Other than the name/def, are any of the fields dirty?

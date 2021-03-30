@@ -31,6 +31,7 @@ class App extends React.Component {
       <Suspense fallback={null}>
         <Switch>
           <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
+          <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
           <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
           <Route component={DashboardRoute} path={`${path}/:dashName`} />
           <Route component={DashboardsRoute} path={path} />

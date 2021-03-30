@@ -45,7 +45,8 @@ const submitWithTokens = (widgetConf) => {
     });
     return ({
       name: fc.name,
-      rules: tweakedRules
+      rules: tweakedRules,
+      fieldType: fc.fieldType
     });
   });
   // Set the filter columns to be the new ones including tokens
@@ -53,4 +54,68 @@ const submitWithTokens = (widgetConf) => {
   return tweakedWidgetConf;
 };
 
-export default submitWithTokens;
+// This must reflect any manipulations happening above
+const widgetToInitialValues = (widget) => {
+  const widgetConf = JSON.parse(widget.configuration);
+  console.log("WidgetConf: %o", widgetConf);
+  // We need to deal with tokens
+  const { filterColumns } = widgetConf;
+  console.log("filterColumns: %o", filterColumns);
+
+  const tweakedFilterColumns = filterColumns?.map(fc => {
+    switch (fc.fieldType) {
+      // For dates we build something of the form {{currentDate#23#w}}
+      case 'Date': {
+        // Check for date tokens in each rule
+        const tweakedRules = [...fc.rules]?.map(fcr => {
+          const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
+          if (!tokenMatch) {
+            // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
+            return ({
+              ...fcr,
+              relativeOrAbsolute: 'absolute'
+            });
+          }
+          // At this point, we have a token, so we need to parse it out to work out the other fields
+          const dateMatch = tokenMatch.match(/(currentDate)((#)(-?\d{1,3}))?((#)([d,w,m,y]))?/);
+          return ({
+            comparator: fcr.comparator,
+            relativeOrAbsolute: 'relative',
+            offset: dateMatch?.[4] || 0,
+            timeUnit: dateMatch?.[7] || 'd',
+          });
+        });
+        return ({
+          ...fc,
+          rules: tweakedRules
+        });
+      }
+      case 'UUID': {
+        // Check for currentUser tokens in each rule
+        return ({
+          ...fc,
+          rules: fc.rules
+        });
+      }
+      default:
+        // We don't use tokens for any other fields currently, so just pass fc as is
+        return fc;
+    }
+  });
+
+  // Set filterColumns to include token tweaks we just made
+  widgetConf.filterColumns = tweakedFilterColumns;
+
+  return {
+    name: widget.name,
+    definition: {
+      id: widget.definition.id
+    },
+    ...widgetConf
+  };
+};
+
+export {
+  submitWithTokens,
+  widgetToInitialValues
+};
