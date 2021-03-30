@@ -37,7 +37,8 @@ const SimpleSearch = ({
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
   const { data, dataUpdatedAt, refetch } = useQuery(
-    ['ui-dashboard', 'simpleSearch', widget.id],
+    // If widget.configuration changes, this should refetch
+    ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
     () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
   );
 
