@@ -22,8 +22,8 @@
   "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
   "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
   "widgetHeader.editButton": "Edit",
-  "widgetHeader.deleteButtonLabel": "Delete widget: {widgetName}",
-  "widgetHeader.deleteButton": "Delete",
+  "widgetHeader.deleteButtonLabel": "Remove widget: {widgetName}",
+  "widgetHeader.deleteButton": "Remove",
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
   "widgetForm.createWidget": "New widget",
