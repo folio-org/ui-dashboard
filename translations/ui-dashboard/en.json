@@ -19,6 +19,11 @@
   "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
   "dashboard.reorderForm.widget.widgetname": "Widget name",
 
+  "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
+  "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
+  "widgetHeader.editButton": "Edit",
+  "widgetHeader.deleteButtonLabel": "Delete widget: {widgetName}",
+  "widgetHeader.deleteButton": "Delete",
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
   "widgetForm.createWidget": "New widget",
@@ -128,5 +133,7 @@
   "simpleSearchForm.configurableProperties.urlLink": "Url link",
 
   "simpleSearch.widget.nFoundBadge": "{total} found",
-  "simpleSearch.widget.linkText": "Link to app"
+  "simpleSearch.widget.linkTextForWidget": "Link to app",
+  "simpleSearch.widget.linkText": "{linkText} for widget: {widgetName}"
+
 }
