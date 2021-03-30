@@ -48,16 +48,15 @@ const SimpleSearchDateFilterField = ({
   return (
     <Row>
       <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
-          <Field
-            component={Select}
-            dataOptions={selectifiedComparators}
-            defaultValue={selectifiedComparators[0]?.value}
-            name={`${name}.comparator`}
-            required
-            validate={requiredValidator}
-          />
-        </KeyValue>
+        <Field
+          component={Select}
+          dataOptions={selectifiedComparators}
+          defaultValue={selectifiedComparators[0]?.value}
+          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}
+          name={`${name}.comparator`}
+          required
+          validate={requiredValidator}
+        />
       </Col>
       <Col xs={3}>
         <KeyValue
@@ -70,6 +69,7 @@ const SimpleSearchDateFilterField = ({
                   component={RadioButton}
                   defaultValue="absolute"
                   disabled={isSetOrUnset}
+                  label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />}
                   name={`${name}.relativeOrAbsolute`}
                   type="radio"
                   validateFields={[`${name}.filterValue`]}

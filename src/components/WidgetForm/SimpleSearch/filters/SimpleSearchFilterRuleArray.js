@@ -32,6 +32,7 @@ const SimpleSearchFilterRuleArray = ({
             }
             <EditCard
               data-test-filter-rule-number={index}
+              data-testid={`simple-search-filter-rule-array[${index}]`}
               deleteButtonTooltipText={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.rule.removeRule" values={{ index: index + 1 }} />}
               header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.rule" values={{ index: index + 1 }} />}
               onDelete={

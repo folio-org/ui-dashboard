@@ -20,23 +20,26 @@ const SimpleSearchFilterArray = ({
 }) => {
   const renderFilterFields = () => {
     return (
-      fields.map((fieldName, index) => (
-        <EditCard
-          key={`simple-search-filter-array-${fieldName}`}
-          data-test-filter-number={index}
-          deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
-          header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
-          onDelete={() => fields.remove(index)}
-        >
-          <>
-            <Field
-              component={SimpleSearchFilterField}
-              filterColumns={filterColumns}
-              name={fieldName}
-            />
-          </>
-        </EditCard>
-      ))
+      <div data-testid="simple-search-filter-array">
+        {fields.map((fieldName, index) => (
+          <EditCard
+            key={`simple-search-filter-array-${fieldName}`}
+            data-test-filter-number={index}
+            data-testid={`simple-search-field-array[${index}]`}
+            deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}
+            header={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filter" values={{ index: index + 1 }} />}
+            onDelete={() => fields.remove(index)}
+          >
+            <>
+              <Field
+                component={SimpleSearchFilterField}
+                filterColumns={filterColumns}
+                name={fieldName}
+              />
+            </>
+          </EditCard>
+        ))}
+      </div>
     );
   };
 

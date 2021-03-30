@@ -68,6 +68,7 @@ const WidgetCreateRoute = ({
   if (widget) {
     const { widgetToInitialValues } = getWidgetTypeSpecificFunctions();
     initialValues = widgetToInitialValues(widget);
+    console.log("initialValues: %o", initialValues)
   }
 
   /*
