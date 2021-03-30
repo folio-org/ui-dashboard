@@ -53,7 +53,6 @@ const WidgetCreateRoute = ({
   let initialValues;
   if (widget) {
     initialValues = widgetToInitialValues(widget);
-    console.log("InitialValues: %o", initialValues)
   }
 
   /*

@@ -57,7 +57,6 @@ const WidgetForm = ({
   submitting,
 }) => {
   const { dirtyFields, values } = useFormState();
-  console.log("Values: %o", values)
   const { change } = useForm();
 
   /*
