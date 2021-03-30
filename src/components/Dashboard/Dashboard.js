@@ -15,10 +15,12 @@ const propTypes = {
   dashboardId: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired,
   onReorder: PropTypes.func.isRequired,
+  onWidgetDelete: PropTypes.func.isRequired,
+  onWidgetEdit: PropTypes.func.isRequired,
   widgets: PropTypes.arrayOf(PropTypes.object)
 };
 
-const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
+const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetEdit, widgets }) => {
   const getWidgetComponent = (widget) => {
     const widgetType = widget.definition.type.name;
     switch (widgetType) {
@@ -42,6 +44,8 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, widgets }) => {
     return (
       <Widget
         key={`widget-${widget.id}`}
+        onWidgetDelete={onWidgetDelete}
+        onWidgetEdit={onWidgetEdit}
         widget={widget}
       >
         {getWidgetComponent(widget)}

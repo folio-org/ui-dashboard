@@ -14,10 +14,11 @@ import css from './WidgetHeader.css';
 
 const WidgetHeader = ({
   name,
+  onWidgetDelete,
+  onWidgetEdit,
   widgetId,
 }) => {
   const intl = useIntl();
-  console.log("WIDGET NAME: %o", name)
   // eslint-disable-next-line react/prop-types
   const renderActionMenuToggle = ({ onToggle, triggerRef, keyHandler, ariaProps, getTriggerProps }) => (
     <IconButton
@@ -48,7 +49,7 @@ const WidgetHeader = ({
         }
         buttonStyle="dropdownItem"
         id="clickable-new-widget"
-        onClick={() => alert("EDIT")}
+        onClick={() => onWidgetEdit(widgetId)}
       >
         <FormattedMessage id="ui-dashboard.widgetHeader.editButton" />
       </Button>
@@ -61,7 +62,7 @@ const WidgetHeader = ({
         }
         buttonStyle="dropdownItem"
         id="clickable-reorderdashboard"
-        onClick={() => alert("DELETE")}
+        onClick={() => onWidgetDelete(widgetId)}
       >
         <FormattedMessage id="ui-dashboard.widgetHeader.deleteButton" />
       </Button>
@@ -98,6 +99,8 @@ const WidgetHeader = ({
 
 WidgetHeader.propTypes = {
   name: PropTypes.string.isRequired,
+  onWidgetDelete: PropTypes.func.isRequired,
+  onWidgetEdit: PropTypes.func.isRequired,
   widgetId: PropTypes.string.isRequired
 };
 

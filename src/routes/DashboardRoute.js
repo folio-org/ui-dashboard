@@ -56,6 +56,14 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/editOrder`);
   };
 
+  const handleWidgetEdit = (id) => {
+    history.push(`${location.pathname}/${id}/edit`);
+  };
+
+  const handleWidgetDelete = (id) => {
+    alert(`Widget (${id}) would have been deleted`)
+  };
+
   if (dashboardLoading || widgetsLoading) {
     return <Loading />;
   }
@@ -68,6 +76,8 @@ const DashboardRoute = ({
         onChangeDash={setDashName}
         onCreate={handleCreate}
         onReorder={handleReorder}
+        onWidgetDelete={handleWidgetDelete}
+        onWidgetEdit={handleWidgetEdit}
         widgets={widgets}
       />
     );

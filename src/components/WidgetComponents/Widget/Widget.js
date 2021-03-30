@@ -7,6 +7,8 @@ import css from './Widget.css';
 
 const Widget = ({
   children,
+  onWidgetDelete,
+  onWidgetEdit,
   widget
 }) => {
   return (
@@ -17,6 +19,8 @@ const Widget = ({
         <WidgetHeader
           key={`widget-header-${widget.id}`}
           name={widget.name}
+          onWidgetDelete={onWidgetDelete}
+          onWidgetEdit={onWidgetEdit}
           widgetId={widget.id}
         />
         <div
@@ -35,6 +39,8 @@ Widget.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
+  onWidgetDelete: PropTypes.func.isRequired,
+  onWidgetEdit: PropTypes.func.isRequired,
   widget: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
