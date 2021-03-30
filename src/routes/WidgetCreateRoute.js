@@ -7,7 +7,10 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm/WidgetForm';
-import { submitWithTokens, widgetToInitialValues } from '../components/WidgetForm/SimpleSearch/formTokenParsing';
+
+// Import the type-specific functions necessary for submit manipulation/initialValue manipulation
+// I've renamed them to keep clear which functions belong to which type
+import { submitWithTokens as SWTSimpleSearch, widgetToInitialValues as WTIVSimpleSearch } from '../components/WidgetForm/SimpleSearch/formTokenParsing';
 
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */
@@ -17,8 +20,17 @@ const WidgetCreateRoute = ({
     params
   }
 }) => {
-  const ky = useOkapiKy();
+  const getWidgetTypeSpecificFunctions = () => {
+    // This will eventually need to switch on type
+    // and return the submitManipulation and widgetToInitialValues for any/all types
+    return ({
+      submitManipulation: SWTSimpleSearch,
+      widgetToInitialValues: WTIVSimpleSearch
+    });
+  };
 
+
+  const ky = useOkapiKy();
   // Query setup for the dashboard/definitions/POST/PUT
   const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
@@ -50,8 +62,11 @@ const WidgetCreateRoute = ({
       enabled: !!params.widgetId
     }
   );
+
+  // Set up initialValues for whichever type the edited widget is (or undefined for new widget)
   let initialValues;
   if (widget) {
+    const { widgetToInitialValues } = getWidgetTypeSpecificFunctions();
     initialValues = widgetToInitialValues(widget);
   }
 
@@ -80,12 +95,8 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
-    /* This is a simpleSearch specific action,
-     * this will need to be on a switch,
-     * so that we can perform other widgetType-specifc
-     * actions to other submits.
-     */
-    const tweakedWidgetConf = submitWithTokens(widgetConf);
+    const { submitManipulation } = getWidgetTypeSpecificFunctions();
+    const tweakedWidgetConf = submitManipulation(widgetConf);
 
     // Stringify the configuration
     const conf = JSON.stringify({
