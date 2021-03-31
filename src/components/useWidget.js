@@ -14,6 +14,7 @@ const simpleSearcSubmitManipulation = React.lazy(() => import('./WidgetForm/Simp
 const simpleSearchWidgetToInitialValues = React.lazy(() => import('./WidgetForm/SimpleSearch/formParsing/widgetToInitialValues'));
 
 const useWidget = (widgetType) => {
+  // TODO potentially rewrite to expose components directly rather than via a context
   const providerProps = {};
 
   const WidgetComponentError = () => (

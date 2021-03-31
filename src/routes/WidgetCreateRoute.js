@@ -20,6 +20,7 @@ const WidgetCreateRoute = ({
     params
   }
 }) => {
+  // TODO is there a way to get this information from Context and useWidget?
   const getWidgetTypeSpecificFunctions = () => {
     // This will eventually need to switch on type
     // and return the submitManipulation and widgetToInitialValues for any/all types
