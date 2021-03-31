@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import DashboardHeader from './DashboardHeader';
 import NoWidgets from './NoWidgets';
-import { ErrorComponent } from './ErrorPage';
-
-import SimpleSearch from '../WidgetComponents/SimpleSearch/SimpleSearch';
-import { Widget } from '../WidgetComponents/Widget';
 
 import css from './Dashboard.css';
+
+import ContextualWidget from '../WidgetComponents/ContextualWidget/ContextualWidget';
 
 const propTypes = {
   dashboardId: PropTypes.string.isRequired,
@@ -21,37 +18,22 @@ const propTypes = {
 };
 
 const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetEdit, widgets }) => {
-  const getWidgetComponent = (widget) => {
-    const widgetType = widget.definition.type.name;
-    switch (widgetType) {
-      case 'SimpleSearch':
-        return (
-          <SimpleSearch
-            key={`simple-search-${widget.id}`}
-            widget={widget}
-          />
-        );
-      default:
-        return (
-          <ErrorComponent>
-            <FormattedMessage id="ui-dashboard.error.noWidgetComponentForType" values={{ widgetType }} />
-          </ErrorComponent>
-        );
-    }
-  };
+  const renderWidget = (widget) => (
+    <ContextualWidget
+      widget={widget}
+      widgetComponentProps={{
+        key: `${widget.definition.type.name}-${widget.id}`,
+        widget
+      }}
+      widgetProps={{
+        key: `widget-${widget.id}`,
+        onWidgetDelete,
+        onWidgetEdit,
+        widget
+      }}
+    />
+  );
 
-  const renderWidget = (widget) => {
-    return (
-      <Widget
-        key={`widget-${widget.id}`}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widget={widget}
-      >
-        {getWidgetComponent(widget)}
-      </Widget>
-    );
-  };
 
   const dashboardContents = () => {
     if (!widgets?.length) {

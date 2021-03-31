@@ -27,6 +27,9 @@ class App extends React.Component {
       );
     }
 
+    // TODO Figure out how to include context-based widget stuff in routes.
+    // It's likely that the definition control logic needs to be at the same level as the context
+
     return (
       <Suspense fallback={null}>
         <Switch>
