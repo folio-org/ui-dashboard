@@ -69,7 +69,6 @@ const SimpleSearchDateFilterField = ({
                   component={RadioButton}
                   defaultValue="absolute"
                   disabled={isSetOrUnset}
-                  label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />}
                   name={`${name}.relativeOrAbsolute`}
                   type="radio"
                   validateFields={[`${name}.filterValue`]}

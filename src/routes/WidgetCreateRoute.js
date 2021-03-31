@@ -10,8 +10,8 @@ import WidgetForm from '../components/WidgetForm/WidgetForm';
 
 // Import the type-specific functions necessary for submit manipulation/initialValue manipulation
 // I've renamed them to keep clear which functions belong to which type
-import { submitWithTokens as SWTSimpleSearch, widgetToInitialValues as WTIVSimpleSearch } from '../components/WidgetForm/SimpleSearch/formTokenParsing';
-
+import SWTSimpleSearch from '../components/WidgetForm/SimpleSearch/formParsing/submitWithTokens';
+import WTIVSimpleSearch from '../components/WidgetForm/SimpleSearch/formParsing/widgetToInitialValues';
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */
 const WidgetCreateRoute = ({
