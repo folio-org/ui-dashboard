@@ -100,10 +100,10 @@
     "error.noDashboardsForUser": "No dashboards exist for this user.",
     "error.noWidgetComponentForType": "No widget component for type: {widgetType}",
     "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
-    "canvas.actions": "Actions",
+    "canvas.actions": "Acciones",
     "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
-    "simpleSearchForm.filters.dateFilterField.date": "Date",
+    "simpleSearchForm.filters.dateFilterField.date": "Fecha",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
-    "simpleSearchForm.results.columns": "Columns",
+    "simpleSearchForm.results.columns": "Columnas",
     "simpleSearchForm.results.resultDeleteAria": "Remove column {index}"
 }
