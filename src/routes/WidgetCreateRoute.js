@@ -7,11 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm/WidgetForm';
-
-// Import the type-specific functions necessary for submit manipulation/initialValue manipulation
-// I've renamed them to keep clear which functions belong to which type
-import SWTSimpleSearch from '../components/WidgetForm/SimpleSearch/formParsing/submitWithTokens';
-import WTIVSimpleSearch from '../components/WidgetForm/SimpleSearch/formParsing/widgetToInitialValues';
+import useWidgetDefinition from '../components/useWidgetDefinition';
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */
 const WidgetCreateRoute = ({
@@ -20,17 +16,6 @@ const WidgetCreateRoute = ({
     params
   }
 }) => {
-  // TODO is there a way to get this information from Context and useWidget?
-  const getWidgetTypeSpecificFunctions = () => {
-    // This will eventually need to switch on type
-    // and return the submitManipulation and widgetToInitialValues for any/all types
-    return ({
-      submitManipulation: SWTSimpleSearch,
-      widgetToInitialValues: WTIVSimpleSearch
-    });
-  };
-
-
   const ky = useOkapiKy();
   // Query setup for the dashboard/definitions/POST/PUT
   const { data: { 0: dashboard = {} } = [] } = useQuery(
@@ -64,28 +49,25 @@ const WidgetCreateRoute = ({
     }
   );
 
-  // Set up initialValues for whichever type the edited widget is (or undefined for new widget)
-  let initialValues;
-  if (widget) {
-    const { widgetToInitialValues } = getWidgetTypeSpecificFunctions();
-    initialValues = widgetToInitialValues(widget);
-  }
-
   /*
    * When the user selects a widgetDefinition it'll just be an id.
    * We will want to know the specific details for the definition (both in form and for submit)
    * so we fetch them again by way of a callback when the user makes their selection
    */
-  const [defId, setDefId] = useState(null);
-  const { data: specificWidgetDefinition } = useQuery(
-    // Ensure we get a fresh fetch per CREATE/EDIT with values.definition?.id
-    ['ui-dashboard', 'widgetCreateRoute', 'getSpecificWidgetDef', defId],
-    () => ky(`servint/widgets/definitions/${defId}`).json(),
-    {
-      /* Only run this query if the user has selected a widgetDefinition */
-      enabled: !!defId
+  const [defId, setDefId] = useState(widget?.definition?.id);
+  const {
+    // Get the type specific functions from useWidgetDef
+    componentBundle: {
+      submitManipulation,
+      widgetToInitialValues
     }
-  );
+  } = useWidgetDefinition(defId);
+
+  // Set up initialValues for whichever type the edited widget is (or undefined for new widget)
+  let initialValues;
+  if (widget) {
+    initialValues = widgetToInitialValues(widget);
+  }
 
   const handleClose = () => {
     history.push(`/dashboard/${params.dashName}`);
@@ -96,7 +78,6 @@ const WidgetCreateRoute = ({
     name,
     ...widgetConf
   }) => {
-    const { submitManipulation } = getWidgetTypeSpecificFunctions();
     const tweakedWidgetConf = submitManipulation(widgetConf);
 
     // Stringify the configuration
@@ -134,7 +115,6 @@ const WidgetCreateRoute = ({
               data={{
                 defId,
                 params,
-                specificWidgetDefinition,
                 widgetDefinitions
               }}
               handlers={{

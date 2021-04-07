@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -19,8 +19,8 @@ import {
   TextField
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import SimpleSearchForm from './SimpleSearch/SimpleSearchForm';
-import { ErrorComponent } from '../Dashboard/ErrorPage';
+
+import useWidgetDefinition from '../useWidgetDefinition';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -45,7 +45,6 @@ const WidgetForm = ({
   data: {
     defId,
     params,
-    specificWidgetDefinition,
     widgetDefinitions = []
   } = {},
   handlers:{
@@ -74,23 +73,10 @@ const WidgetForm = ({
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
   const [newDef, setNewDef] = useState();
 
-  // This may be (probably will be) versioned in future, keep an eye out for that
-  const getWidgetFormComponent = (widgetDef) => {
-    switch (widgetDef?.type?.name) {
-      case 'SimpleSearch':
-        return (
-          <SimpleSearchForm
-            specificWidgetDefinition={specificWidgetDefinition}
-          />
-        );
-      default:
-        return (
-          <ErrorComponent>
-            <FormattedMessage id="ui-dashboard.error.noWidgetFormComponentForType" values={{ widgetType: widgetDef?.type?.name }} />
-          </ErrorComponent>
-        );
-    }
-  };
+  const {
+    specificWidgetDefinition,
+    componentBundle: { WidgetFormComponent }
+  } = useWidgetDefinition(defId);
 
   const renderPaneFooter = () => {
     return (
@@ -198,7 +184,9 @@ const WidgetForm = ({
           </Row>
           {specificWidgetDefinition &&
             // Get specific form component for the selected widgetDefinition
-            getWidgetFormComponent(specificWidgetDefinition)
+            <WidgetFormComponent
+              specificWidgetDefinition={specificWidgetDefinition}
+            />
           }
         </Pane>
       </Paneset>
