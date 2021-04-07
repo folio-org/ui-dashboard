@@ -9,6 +9,7 @@ const SimpleSearchForm = React.lazy(() => import('./WidgetForm/SimpleSearch/Simp
 
 // dynamically importing functions is slightly different to rendered components
 // We can't do this with a shared function because it statically analyses at build time -- see https://github.com/webpack/webpack/issues/6680#issuecomment-370800037
+// TODO -- is this actually lazy loading the functions, or just loading them normally?
 
 let simpleSearchSubmitManipulation;
 import('./WidgetForm/SimpleSearch/formParsing/submitWithTokens')
