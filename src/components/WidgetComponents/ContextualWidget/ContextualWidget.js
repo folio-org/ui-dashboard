@@ -3,6 +3,7 @@ import useWidget from '../../useWidget';
 import WidgetContext from '../../widgetContext';
 import { Widget } from '../Widget';
 
+// TODO probably discard this in favour of useWidget directly exposing WidgetComponent
 const ContextualWidget = ({ widget, widgetProps, widgetComponentProps }) => {
   const { WidgetProvider } = useWidget(widget.definition.type.name);
 
