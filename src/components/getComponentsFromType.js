@@ -9,19 +9,8 @@ const SimpleSearchForm = React.lazy(() => import('./WidgetForm/SimpleSearch/Simp
 
 // dynamically importing functions is slightly different to rendered components
 // We can't do this with a shared function because it statically analyses at build time -- see https://github.com/webpack/webpack/issues/6680#issuecomment-370800037
-// TODO -- is this actually lazy loading the functions, or just loading them normally?
-
 let simpleSearchSubmitManipulation;
-import('./WidgetForm/SimpleSearch/formParsing/submitWithTokens')
-  .then((module) => {
-    simpleSearchSubmitManipulation = module.default;
-  });
-
 let simpleSearchWidgetToInitialValues;
-import('./WidgetForm/SimpleSearch/formParsing/widgetToInitialValues')
-  .then((module) => {
-    simpleSearchWidgetToInitialValues = module.default;
-  });
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
@@ -41,12 +30,24 @@ const getComponentsFromType = (widgetType) => {
   );
 
   switch (widgetType) {
-    case 'SimpleSearch':
+    case 'SimpleSearch': {
+      // TODO -- is this actually lazy loading the functions, or just loading them normally?
+      import('./WidgetForm/SimpleSearch/formParsing/submitWithTokens')
+        .then((module) => {
+          simpleSearchSubmitManipulation = module.default;
+        });
+
+      import('./WidgetForm/SimpleSearch/formParsing/widgetToInitialValues')
+        .then((module) => {
+          simpleSearchWidgetToInitialValues = module.default;
+        });
+
       componentBundle.WidgetComponent = SimpleSearch;
       componentBundle.WidgetFormComponent = SimpleSearchForm;
       componentBundle.submitManipulation = simpleSearchSubmitManipulation;
       componentBundle.widgetToInitialValues = simpleSearchWidgetToInitialValues;
       break;
+    }
     default:
       componentBundle.WidgetComponent = WidgetComponentError;
       componentBundle.WidgetFormComponent = WidgetFormComponentError;
