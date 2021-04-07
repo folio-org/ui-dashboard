@@ -4,6 +4,11 @@ import { useQuery } from 'react-query';
 
 import getComponentsFromType from './getComponentsFromType';
 
+
+/* Hook to expose the definition and consequently
+ * the components relevant to that def's type
+ * from the definition id
+ */
 const useWidgetDefinition = (defId) => {
   const ky = useOkapiKy();
   /*
