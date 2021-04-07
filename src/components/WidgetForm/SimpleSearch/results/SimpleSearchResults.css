@@ -8,3 +8,7 @@
   width: 50%;
   @media (--small) { width: 100%; }
 }
+
+.warningBanner {
+  margin-bottom: var(--gutter-static-two-thirds);
+}

@@ -5,7 +5,16 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
-import { Accordion, Button, Col, Headline, Icon, Row, TextField } from '@folio/stripes/components';
+import {
+  Accordion,
+  Button,
+  Col,
+  Headline,
+  Icon,
+  MessageBanner,
+  Row,
+  TextField
+} from '@folio/stripes/components';
 
 import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
@@ -25,6 +34,8 @@ const SimpleSearchResults = ({
   id
 }) => {
   const intl = useIntl();
+
+
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>
@@ -84,26 +95,44 @@ const SimpleSearchResults = ({
       </Row>
       <FieldArray
         name="resultColumns"
-        render={({ fields }) => (
-          <>
-            <Headline margin="x-small" size="medium" tag="h2">
-              <FormattedMessage id="ui-dashboard.simpleSearchForm.results.columns" />
-            </Headline>
-            <DragAndDropFieldArray
-              fields={fields}
-              renderHandle={() => (
-                <Icon
-                  icon="drag-drop"
-                />
-              )}
-            >
-              {renderResultField}
-            </DragAndDropFieldArray>
-            <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
-              <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
-            </Button>
-          </>
-        )}
+        render={({ fields, meta: { valid } }) => {
+          return (
+            <>
+              <Headline margin="x-small" size="medium" tag="h2">
+                <FormattedMessage id="ui-dashboard.simpleSearchForm.results.columns" />
+              </Headline>
+              <DragAndDropFieldArray
+                fields={fields}
+                renderHandle={() => (
+                  <Icon
+                    icon="drag-drop"
+                  />
+                )}
+              >
+                {renderResultField}
+              </DragAndDropFieldArray>
+              {!valid &&
+                <MessageBanner
+                  className={css.warningBanner}
+                  tabindex={0}
+                  type="error"
+                >
+                  <FormattedMessage id="ui-dashboard.simpleSearchForm.results.minimumWarning" />
+                </MessageBanner>
+              }
+              <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
+                <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
+              </Button>
+            </>
+          );
+        }}
+        validate={(value) => {
+          if (!value?.length) {
+            // This validation does not render, but changes the valid prop in the render above
+            return 'this should not display';
+          }
+          return undefined;
+        }}
       />
     </Accordion>
   );

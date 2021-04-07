@@ -128,6 +128,7 @@
   "simpleSearchForm.results.resultDeleteAria": "Remove column {index}",
   "simpleSearchForm.results.label": "Label",
   "simpleSearchForm.results.addResult": "Add column",
+  "simpleSearchForm.results.minimumWarning": "Error: Results display must contain at least one column.",
 
   "simpleSearchForm.sort": "Sort",
   "simpleSearchForm.sort.sortBy": "Sort by",
