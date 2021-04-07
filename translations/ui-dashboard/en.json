@@ -19,6 +19,10 @@
   "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
   "dashboard.reorderForm.widget.widgetname": "Widget name",
 
+  "dashboard.removeWidget": "Remove widget",
+  "dashboard.remove": "Remove",
+  "dashboard.removeWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>removed</strong>.",
+
   "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
   "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
   "widgetHeader.editButton": "Edit",

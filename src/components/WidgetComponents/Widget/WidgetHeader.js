@@ -62,7 +62,8 @@ const WidgetHeader = ({
         }
         buttonStyle="dropdownItem"
         id="clickable-reorderdashboard"
-        onClick={() => onWidgetDelete(widgetId)}
+        // We have to feed the widgetDelete the name as well for the confirmation modal
+        onClick={() => onWidgetDelete(widgetId, name)}
       >
         <FormattedMessage id="ui-dashboard.widgetHeader.deleteButton" />
       </Button>
