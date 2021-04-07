@@ -1,9 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { FormattedMessage } from 'react-intl';
-
-import { WidgetProvider } from './widgetContext';
 
 const ErrorComponent = React.lazy(() => import('./Dashboard/ErrorPage/ErrorComponent'));
 
@@ -13,9 +9,10 @@ const SimpleSearchForm = React.lazy(() => import('./WidgetForm/SimpleSearch/Simp
 const simpleSearcSubmitManipulation = React.lazy(() => import('./WidgetForm/SimpleSearch/formParsing/submitWithTokens'));
 const simpleSearchWidgetToInitialValues = React.lazy(() => import('./WidgetForm/SimpleSearch/formParsing/widgetToInitialValues'));
 
-const useWidget = (widgetType) => {
-  // TODO potentially rewrite to expose components directly rather than via a context
-  const providerProps = {};
+// This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
+// and then passes the relevant components in a bundled object.
+const getComponentsFromType = (widgetType) => {
+  const componentBundle = {};
 
   const WidgetComponentError = () => (
     <ErrorComponent>
@@ -31,33 +28,20 @@ const useWidget = (widgetType) => {
 
   switch (widgetType) {
     case 'SimpleSearch':
-      providerProps.WidgetComponent = SimpleSearch;
-      providerProps.WidgetFormComponent = SimpleSearchForm;
-      providerProps.submitManipulation = simpleSearcSubmitManipulation;
-      providerProps.widgetToInitialValues = simpleSearchWidgetToInitialValues;
+      componentBundle.WidgetComponent = SimpleSearch;
+      componentBundle.WidgetFormComponent = SimpleSearchForm;
+      componentBundle.submitManipulation = simpleSearcSubmitManipulation;
+      componentBundle.widgetToInitialValues = simpleSearchWidgetToInitialValues;
       break;
     default:
-      providerProps.WidgetComponent = WidgetComponentError;
-      providerProps.WidgetFormComponent = WidgetFormComponentError;
-      providerProps.submitManipulation = (props) => (props);
-      providerProps.widgetToInitialValues = (props) => (props);
+      componentBundle.WidgetComponent = WidgetComponentError;
+      componentBundle.WidgetFormComponent = WidgetFormComponentError;
+      componentBundle.submitManipulation = (props) => (props);
+      componentBundle.widgetToInitialValues = (props) => (props);
   }
 
-  const WidgetContextProvider = ({ children }) => {
-    return (
-      <WidgetProvider value={providerProps}>
-        {children}
-      </WidgetProvider>
-    );
-  };
-
-  WidgetContextProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  };
-
-  return {
-    WidgetProvider: WidgetContextProvider
-  };
+  return componentBundle;
 };
 
-export default useWidget;
+export default getComponentsFromType;
+

@@ -10,7 +10,8 @@ import NoWidgets from './NoWidgets';
 
 import css from './Dashboard.css';
 
-import ContextualWidget from '../WidgetComponents/ContextualWidget/ContextualWidget';
+import { Widget } from '../WidgetComponents/Widget';
+import getComponentsFromType from '../getComponentsFromType';
 
 const propTypes = {
   dashboardId: PropTypes.string.isRequired,
@@ -34,22 +35,22 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
 
-  const renderWidget = (widget) => (
-    <ContextualWidget
-      widget={widget}
-      widgetComponentProps={{
-        key: `${widget.definition.type.name}-${widget.id}`,
-        widget
-      }}
-      widgetProps={{
-        key: `widget-${widget.id}`,
-        onWidgetDelete: setupConfirmationModal,
-        onWidgetEdit,
-        widget
-      }}
-    />
-  );
-
+  const renderWidget = (widget) => {
+    const { WidgetComponent } = getComponentsFromType(widget.definition.type.name);
+    return (
+      <Widget
+        key={`widget-${widget.id}`}
+        onWidgetDelete={setupConfirmationModal}
+        onWidgetEdit={onWidgetEdit}
+        widget={widget}
+      >
+        <WidgetComponent
+          key={`${widget.definition.type.name}-${widget.id}`}
+          widget={widget}
+        />
+      </Widget>
+    );
+  };
 
   const dashboardContents = () => {
     if (!widgets?.length) {
