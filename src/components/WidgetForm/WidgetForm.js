@@ -58,8 +58,6 @@ const WidgetForm = ({
   const { dirtyFields, values } = useFormState();
   const { change } = useForm();
 
-  console.log("VALUES: %o", values)
-
   /*
    * Keep the defId up to date, this allows us to keep track of the definition beyond the id
   */
