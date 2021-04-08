@@ -17,8 +17,12 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   const [selectedSortCol, setSSC] = useState({});
   // Keep selectedSortCol in line with selected value, obeying initial values
   useEffect(() => {
-    if (!values?.sortColumn.name) {
+    if (!values?.sortColumn?.name) {
       setSSC(sortColumns[0]);
+      // No initial value, set to be the first in the list
+      // Doing this in a useEffect because defaultValue has some screwy behaviour where no initialValue exists at first
+      change('sortColumn.name', sortColumns[0].name);
+      change('sortColumn.sortType', sortColumns[0].sortTypes[0]);
     } else {
       // We have an existing sort column in values, filter incoming sort columns to just the selected one
       const filteredSortColumn = sortColumns.filter(sc => sc.name === values.sortColumn.name)[0];
@@ -26,7 +30,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         setSSC(filteredSortColumn);
       }
     }
-  }, [selectedSortCol, setSSC, sortColumns, values]);
+  }, [change, selectedSortCol, setSSC, sortColumns, values]);
 
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {
@@ -73,7 +77,6 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
           <Field
             component={Select}
             dataOptions={selectifiedSortColumns}
-            defaultValue={sortColumns[0].name}
             name="sortColumn.name"
             onChange={e => {
               setSSC(sortColumns.find(sc => sc.name === e.target.value));
@@ -95,7 +98,6 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
           <Field
             component={Select}
             dataOptions={selectifiedSortDirs}
-            defaultValue={sortColumns[0].sortTypes[0]}
             disabled={selectifiedSortDirs.length <= 1}
             name="sortColumn.sortType"
           />

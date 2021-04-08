@@ -67,7 +67,6 @@ const WidgetCreateRoute = ({
   let initialValues;
   if (widget) {
     initialValues = widgetToInitialValues(widget);
-    console.log("IV: %o", initialValues)
   }
 
   const handleClose = () => {
@@ -80,7 +79,6 @@ const WidgetCreateRoute = ({
     ...widgetConf
   }) => {
     const tweakedWidgetConf = submitManipulation(widgetConf);
-    console.log("TWC: %o", tweakedWidgetConf)
     // Stringify the configuration
     const conf = JSON.stringify({
       ...tweakedWidgetConf
