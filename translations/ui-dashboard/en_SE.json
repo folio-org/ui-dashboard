@@ -26,8 +26,6 @@
     "simpleSearchForm.filters.filterField.rule.or": "OR",
     "simpleSearchForm.results": "Result columns",
     "simpleSearchForm.results.addResult": "Add result column",
-    "simpleSearchForm.results.removeResult": "Remove result column {index}",
-    "simpleSearchForm.results.result": "Result column {index}",
     "simpleSearchForm.sort": "Sort",
     "simpleSearchForm.sort.sortBy": "Sort by",
     "simpleSearchForm.sort.sortDirection": "Sort direction",
@@ -96,5 +94,16 @@
     "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
     "simpleSearchForm.results.column": "Column",
-    "simpleSearchForm.results.label": "Label"
+    "simpleSearchForm.results.label": "Label",
+    "error": "An error occurred.",
+    "error.noDashWithThatName": "No dashboards with the name {name} exist for this user.",
+    "error.noDashboardsForUser": "No dashboards exist for this user.",
+    "error.noWidgetComponentForType": "No widget component for type: {widgetType}",
+    "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
+    "canvas.actions": "Actions",
+    "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
+    "simpleSearchForm.filters.dateFilterField.date": "Date",
+    "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
+    "simpleSearchForm.results.columns": "Columns",
+    "simpleSearchForm.results.resultDeleteAria": "Remove column {index}"
 }

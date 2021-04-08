@@ -26,8 +26,6 @@
     "simpleSearchForm.filters.filterField.rule.or": "أو",
     "simpleSearchForm.results": "أعمدة النتائج",
     "simpleSearchForm.results.addResult": "إضافة عمود نتائج",
-    "simpleSearchForm.results.removeResult": "إزالة عمود النتائج {index}",
-    "simpleSearchForm.results.result": "عمود النتائج {index}",
     "simpleSearchForm.sort": "فرز",
     "simpleSearchForm.sort.sortBy": "الفرز حسب",
     "simpleSearchForm.sort.sortDirection": "اتجاه الفرز",
@@ -96,5 +94,16 @@
     "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "يجب أن يكون التاريخ المطلق أو رمز التاريخ إدخالاً",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "يجب أن يكون معرف المستخدم الفريد UUID أو رمز المستخدم الحالي إدخالاً",
     "simpleSearchForm.results.column": "العمود",
-    "simpleSearchForm.results.label": "ملصق تسمية"
+    "simpleSearchForm.results.label": "ملصق تسمية",
+    "error": "لقد حدث خطأ.",
+    "error.noDashWithThatName": "لا توجد أي لوحة رئيسية باسم {name} لهذا المستخدم.",
+    "error.noDashboardsForUser": "لا توجد لوحات رئيسية لهذا المستخدم.",
+    "error.noWidgetComponentForType": "لا يوجد مكون ودجة للنوع: {widgetType}",
+    "error.noWidgetFormComponentForType": "لا يوجد مكون نموذج ودجة للنوع: {widgetType}",
+    "canvas.actions": "الإجراءات",
+    "dashboard.reorderForm.dragAndDropHandleAria": "تغيير ترتيب {widgetName} ({index})",
+    "simpleSearchForm.filters.dateFilterField.date": "التاريخ",
+    "simpleSearchForm.filters.dateFilterField.uuid": "المعرّف الفريد العمومي",
+    "simpleSearchForm.results.columns": "الأعمدة",
+    "simpleSearchForm.results.resultDeleteAria": "إزالة عمود {index}"
 }
