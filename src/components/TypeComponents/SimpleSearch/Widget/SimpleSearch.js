@@ -13,8 +13,9 @@ import { Badge } from '@folio/stripes/components';
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
 
-import SimpleTable from '../SimpleTable';
-import { WidgetFooter } from '../Widget';
+import SimpleTable from '../../../SimpleTable';
+import { WidgetFooter } from '../../../Widget';
+
 import css from './SimpleSearch.css';
 
 const SimpleSearch = ({

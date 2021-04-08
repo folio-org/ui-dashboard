@@ -10,7 +10,7 @@ import NoWidgets from './NoWidgets';
 
 import css from './Dashboard.css';
 
-import { Widget } from '../WidgetComponents/Widget';
+import { Widget } from '../Widget';
 import getComponentsFromType from '../getComponentsFromType';
 
 const propTypes = {

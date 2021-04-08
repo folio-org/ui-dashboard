@@ -2,14 +2,14 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 // TODO figure out lazy loading of functions
-import simpleSearchSubmitManipulation from './WidgetForm/SimpleSearch/formParsing/submitWithTokens';
-import simpleSearchWidgetToInitialValues from './WidgetForm/SimpleSearch/formParsing/widgetToInitialValues';
+import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWithTokens';
+import simpleSearchWidgetToInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/widgetToInitialValues';
 
 const ErrorComponent = React.lazy(() => import('./Dashboard/ErrorPage/ErrorComponent'));
 
 // Lazy-load SimpleSearch components/functions
-const SimpleSearch = React.lazy(() => import('./WidgetComponents/SimpleSearch/SimpleSearch'));
-const SimpleSearchForm = React.lazy(() => import('./WidgetForm/SimpleSearch/SimpleSearchForm'));
+const SimpleSearch = React.lazy(() => import('./TypeComponents/SimpleSearch/Widget/SimpleSearch'));
+const SimpleSearchForm = React.lazy(() => import('./TypeComponents/SimpleSearch/Form/SimpleSearchForm'));
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.

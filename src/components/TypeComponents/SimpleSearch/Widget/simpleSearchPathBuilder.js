@@ -1,4 +1,4 @@
-import tokens from '../../../tokens';
+import tokens from '../../../../tokens';
 
 const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   const {

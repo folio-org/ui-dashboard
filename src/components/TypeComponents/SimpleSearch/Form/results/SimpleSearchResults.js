@@ -16,10 +16,10 @@ import {
   TextField
 } from '@folio/stripes/components';
 
-import RowWithDelete from '../../../WidgetComponents/misc/RowWithDelete';
+import RowWithDelete from '../../../../RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 import SimpleSearchSort from '../sort/SimpleSearchSort';
-import DragAndDropFieldArray from '../../../DragAndDropFieldArray';
+import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';
 
