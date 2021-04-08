@@ -64,7 +64,7 @@ const WidgetCreateRoute = ({
   } = useWidgetDefinition(defId);
 
   // Set up initialValues for whichever type the edited widget is (or undefined for new widget)
-  let initialValues;
+  let initialValues = {};
   if (widget) {
     initialValues = widgetToInitialValues(widget);
   }
