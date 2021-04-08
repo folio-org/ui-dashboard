@@ -58,8 +58,8 @@ const WidgetCreateRoute = ({
   const {
     // Get the type specific functions from useWidgetDef
     componentBundle: {
-      submitManipulation = v => v,
-      widgetToInitialValues = v => v
+      submitManipulation,
+      widgetToInitialValues
     }
   } = useWidgetDefinition(defId);
 

@@ -114,7 +114,7 @@ const SimpleSearchResults = ({
               {!valid &&
                 <MessageBanner
                   className={css.warningBanner}
-                  tabindex={0}
+                  tabIndex={0}
                   type="error"
                 >
                   <FormattedMessage id="ui-dashboard.simpleSearchForm.results.minimumWarning" />

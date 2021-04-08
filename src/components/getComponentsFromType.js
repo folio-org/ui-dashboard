@@ -1,16 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+// TODO figure out lazy loading of functions
+import simpleSearchSubmitManipulation from './WidgetForm/SimpleSearch/formParsing/submitWithTokens';
+import simpleSearchWidgetToInitialValues from './WidgetForm/SimpleSearch/formParsing/widgetToInitialValues';
+
 const ErrorComponent = React.lazy(() => import('./Dashboard/ErrorPage/ErrorComponent'));
 
 // Lazy-load SimpleSearch components/functions
 const SimpleSearch = React.lazy(() => import('./WidgetComponents/SimpleSearch/SimpleSearch'));
 const SimpleSearchForm = React.lazy(() => import('./WidgetForm/SimpleSearch/SimpleSearchForm'));
-
-// dynamically importing functions is slightly different to rendered components
-// We can't do this with a shared function because it statically analyses at build time -- see https://github.com/webpack/webpack/issues/6680#issuecomment-370800037
-let simpleSearchSubmitManipulation;
-let simpleSearchWidgetToInitialValues;
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
@@ -31,19 +30,9 @@ const getComponentsFromType = (widgetType) => {
 
   switch (widgetType) {
     case 'SimpleSearch': {
-      // TODO -- is this actually lazy loading the functions, or just loading them normally?
-      import('./WidgetForm/SimpleSearch/formParsing/submitWithTokens')
-        .then((module) => {
-          simpleSearchSubmitManipulation = module.default;
-        });
-
-      import('./WidgetForm/SimpleSearch/formParsing/widgetToInitialValues')
-        .then((module) => {
-          simpleSearchWidgetToInitialValues = module.default;
-        });
-
       componentBundle.WidgetComponent = SimpleSearch;
       componentBundle.WidgetFormComponent = SimpleSearchForm;
+
       componentBundle.submitManipulation = simpleSearchSubmitManipulation;
       componentBundle.widgetToInitialValues = simpleSearchWidgetToInitialValues;
       break;

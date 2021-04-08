@@ -24,7 +24,6 @@ const useWidgetDefinition = (defId) => {
     }
   );
   const componentBundle = getComponentsFromType(specificWidgetDefinition?.type?.name);
-
   return { specificWidgetDefinition, componentBundle };
 };
 
