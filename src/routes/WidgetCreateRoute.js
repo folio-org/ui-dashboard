@@ -6,7 +6,7 @@ import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery } from 'react-query';
 
-import WidgetForm from '../components/WidgetForm/WidgetForm';
+import WidgetForm from '../components/WidgetForm';
 import useWidgetDefinition from '../components/useWidgetDefinition';
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */

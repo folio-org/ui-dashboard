@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWithTokens';
 import simpleSearchWidgetToInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/widgetToInitialValues';
 
-const ErrorComponent = React.lazy(() => import('./Dashboard/ErrorPage/ErrorComponent'));
+const ErrorComponent = React.lazy(() => import('./ErrorComponents/ErrorComponent'));
 
 // Lazy-load SimpleSearch components/functions
 const SimpleSearch = React.lazy(() => import('./TypeComponents/SimpleSearch/Widget/SimpleSearch'));
