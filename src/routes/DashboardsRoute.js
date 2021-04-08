@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
-import { ErrorPage } from '../components/Dashboard/ErrorPage';
+import { ErrorPage } from '../components/ErrorComponents';
 
 const DashboardsRoute = ({
   history,
