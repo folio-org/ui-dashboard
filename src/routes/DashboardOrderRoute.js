@@ -7,7 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 import Loading from '../components/Dashboard/Loading';
-import ReorderForm from '../components/Dashboard/ReorderForm';
+import ReorderForm from '../components/ReorderForm';
 
 const DashboardOrderRoute = ({
   history,
