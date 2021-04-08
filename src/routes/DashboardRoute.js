@@ -67,9 +67,10 @@ const DashboardRoute = ({
   };
 
   const handleWidgetDelete = (id) => {
-    deleteWidget(id);
-    // Make sure to refetch dashboard when we delete a widget
-    refetchDashboard();
+    deleteWidget(id).then(() => (
+      // Make sure to refetch dashboard when we delete a widget
+      refetchDashboard()
+    ));
   };
 
   if (dashboardLoading || widgetsLoading) {
