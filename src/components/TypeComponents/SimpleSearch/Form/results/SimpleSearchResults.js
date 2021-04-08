@@ -18,7 +18,7 @@ import {
 
 import RowWithDelete from '../../../../RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
-import SimpleSearchSort from '../sort/SimpleSearchSort';
+import SimpleSearchSort from '../sort';
 import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';

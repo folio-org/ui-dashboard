@@ -35,7 +35,7 @@ const propTypes = {
   }),
   params: PropTypes.shape({
     widgetId: PropTypes.string,
-  }).isRequired,
+  }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };

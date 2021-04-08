@@ -21,11 +21,11 @@ const SimpleSearchConfigurableProperties = ({
           defaultValue={urlLink.defValue}
           name="configurableProperties.urlLink"
         >
-          {({ input }) => {
+          {({ ...fieldRenderProps }) => {
             if (urlLink.configurable) {
               return (
                 <TextField
-                  {...input}
+                  {...fieldRenderProps}
                   data-testid="simple-search-configurable-properties-url-link"
                   id="simple-search-configurable-properties-url-link"
                   label={<FormattedMessage id="ui-dashboard.simpleSearchForm.configurableProperties.urlLink" />}
