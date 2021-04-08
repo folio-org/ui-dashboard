@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Field, useForm } from 'react-final-form';
+import { Field, useForm, useFormState } from 'react-final-form';
 import {
   Col,
   KeyValue,
@@ -11,9 +11,22 @@ import {
 
 const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   const { change } = useForm();
+  const { values } = useFormState();
 
   // Do this at the top of the form unconditionally for hook reasons
-  const [selectedSortCol, setSSC] = useState(sortColumns[0]);
+  const [selectedSortCol, setSSC] = useState({});
+  // Keep selectedSortCol in line with selected value, obeying initial values
+  useEffect(() => {
+    if (!values?.sortColumn.name) {
+      setSSC(sortColumns[0]);
+    } else {
+      // We have an existing sort column in values, filter incoming sort columns to just the selected one
+      const filteredSortColumn = sortColumns.filter(sc => sc.name === values.sortColumn.name)[0];
+      if (filteredSortColumn !== selectedSortCol) {
+        setSSC(filteredSortColumn);
+      }
+    }
+  }, [selectedSortCol, setSSC, sortColumns, values]);
 
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {

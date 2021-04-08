@@ -69,12 +69,13 @@ const SimpleSearchResults = ({
           <Field
             defaultValue={numberOfRows.defValue}
             name="configurableProperties.numberOfRows"
+            type="number"
           >
-            {({ input }) => {
+            {({ ...fieldRenderProps }) => {
               if (numberOfRows.configurable) {
                 return (
                   <TextField
-                    {...input}
+                    {...fieldRenderProps}
                     data-testid="simple-search-configurable-properties-number-of-rows"
                     id="simple-search-configurable-properties-number-of-rows"
                     label={<FormattedMessage id="ui-dashboard.simpleSearchForm.configurableProperties.numberOfRows" />}
