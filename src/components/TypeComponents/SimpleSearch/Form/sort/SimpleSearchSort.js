@@ -7,18 +7,21 @@ import {
   Col,
   Select
 } from '@folio/stripes/components';
+import { requiredValidator } from '@folio/stripes-erm-components';
 
 const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   const { change } = useForm();
-  const { initialValues } = useFormState();
+  const { initialValues, values } = useFormState();
 
   // Do this at the top of the form unconditionally for hook reasons
   const [selectedSortCol, setSSC] = useState();
   useEffect(() => {
-    if (!selectedSortCol && initialValues?.sortColumn?.name) {
-      setSSC(sortColumns.find(sc => sc.name === initialValues?.sortColumn?.name));
+    if (!selectedSortCol) {
+      if (initialValues?.sortColumn?.name) {
+        setSSC(sortColumns.find(sc => sc.name === initialValues?.sortColumn?.name));
+      }
     }
-  }, [initialValues, selectedSortCol, sortColumns]);
+  }, [initialValues, selectedSortCol, sortColumns, values]);
 
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {
@@ -51,8 +54,9 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
       </>
     );
   }
+
   // We have multiple options
-  const selectifiedSortColumns = sortColumns.map(sc => ({ value: sc.name, label: sc.label || sc.name }));
+  const selectifiedSortColumns = [{ value: '', label: '', disabled: true }, ...sortColumns].map(sc => ({ value: sc.name, label: sc.label || sc.name }));
   const selectifiedSortDirs = selectedSortCol?.sortTypes?.map(st => ({ value: st, label: st })) || [];
 
   return (
@@ -61,6 +65,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         <Field
           component={Select}
           dataOptions={selectifiedSortColumns}
+          defaultValue={selectedSortCol?.name}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortBy" />}
           name="sortColumn.name"
           onChange={e => {
@@ -73,12 +78,15 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
             change('sortColumn.name', e.target.value);
             change('sortColumn.sortType', newSortColumn.sortTypes[0]);
           }}
+          required
+          validate={requiredValidator}
         />
       </Col>
       <Col xs={3}>
         <Field
           component={Select}
           dataOptions={selectifiedSortDirs}
+          defaultValue={selectedSortCol?.sortTypes[0]}
           disabled={selectifiedSortDirs.length <= 1}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortDirection" />}
           name="sortColumn.sortType"
