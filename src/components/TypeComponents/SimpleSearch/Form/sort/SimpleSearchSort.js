@@ -10,26 +10,15 @@ import {
 
 const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   const { change } = useForm();
-  const { values } = useFormState();
+  const { initialValues } = useFormState();
 
   // Do this at the top of the form unconditionally for hook reasons
-  const [selectedSortCol, setSSC] = useState({});
-  // Keep selectedSortCol in line with selected value, obeying initial values
+  const [selectedSortCol, setSSC] = useState();
   useEffect(() => {
-    if (!values?.sortColumn?.name) {
-      setSSC(sortColumns[0]);
-      // No initial value, set to be the first in the list
-      // Doing this in a useEffect because defaultValue has some screwy behaviour where no initialValue exists at first
-      change('sortColumn.name', sortColumns[0].name);
-      change('sortColumn.sortType', sortColumns[0].sortTypes[0]);
-    } else {
-      // We have an existing sort column in values, filter incoming sort columns to just the selected one
-      const filteredSortColumn = sortColumns.filter(sc => sc.name === values.sortColumn.name)[0];
-      if (filteredSortColumn !== selectedSortCol) {
-        setSSC(filteredSortColumn);
-      }
+    if (!selectedSortCol && initialValues?.sortColumn?.name) {
+      setSSC(sortColumns.find(sc => sc.name === initialValues?.sortColumn?.name));
     }
-  }, [change, selectedSortCol, setSSC, sortColumns, values]);
+  }, [initialValues, selectedSortCol, sortColumns]);
 
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {
@@ -46,12 +35,14 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
     return (
       <>
         <Field
+          defaultValue={sortColumns[0].name}
           name="sortColumn.name"
           render={() => {
             return null;
           }}
         />
         <Field
+          defaultValue={sortColumns[0].sortTypes[0]}
           name="sortColumn.sortType"
           render={() => {
             return null;
@@ -73,13 +64,14 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortBy" />}
           name="sortColumn.name"
           onChange={e => {
-            setSSC(sortColumns.find(sc => sc.name === e.target.value));
+            const newSortColumn = sortColumns.find(sc => sc.name === e.target.value);
+            setSSC(newSortColumn);
             /*
               * This means you can't set sort order THEN sortBy,
               * but this is because in the definition sort direction belongs to the sortBy
             */
-            change('sortColumn.sortType', selectedSortCol.sortTypes[0]);
             change('sortColumn.name', e.target.value);
+            change('sortColumn.sortType', newSortColumn.sortTypes[0]);
           }}
         />
       </Col>
