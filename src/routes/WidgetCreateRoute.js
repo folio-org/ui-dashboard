@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -63,7 +63,6 @@ const WidgetCreateRoute = ({
     }
   } = useWidgetDefinition(defId);
 
-  // Set up initialValues for whichever type the edited widget is (or undefined for new widget)
   let initialValues = {};
   if (widget) {
     initialValues = widgetToInitialValues(widget);
@@ -113,6 +112,8 @@ const WidgetCreateRoute = ({
             <WidgetForm
               data={{
                 defId,
+                // Pass initialValues in here so we can manually initialize when they're fetched
+                initialValues,
                 params,
                 widgetDefinitions
               }}

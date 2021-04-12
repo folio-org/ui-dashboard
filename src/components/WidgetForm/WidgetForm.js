@@ -44,6 +44,7 @@ const propTypes = {
 const WidgetForm = ({
   data: {
     defId,
+    initialValues,
     params,
     widgetDefinitions = []
   } = {},
