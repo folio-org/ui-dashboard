@@ -41,7 +41,6 @@
     "simpleSearchForm.filters.dateFilterField.months": "Months",
     "simpleSearchForm.filters.dateFilterField.years": "Years",
     "simpleSearchForm.filters.dateFilterField.offset": "Offset",
-    "simpleSearchForm.filters.dateFilterField.offsetMustBePositive": "Offset must be greater than or equal to 0",
     "simpleSearchForm.filters.dateFilterField.offsetMethod": "Offset method",
     "simpleSearchForm.filters.dateFilterField.timeUnit": "Time unit",
     "simpleSearchForm.filters.uuidFilterField.currentUser": "Current user (variable)",
@@ -105,5 +104,16 @@
     "simpleSearchForm.filters.dateFilterField.date": "Date",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "Columns",
-    "simpleSearchForm.results.resultDeleteAria": "Remove column {index}"
+    "simpleSearchForm.results.resultDeleteAria": "Remove column {index}",
+    "dashboard.removeWidget": "Remove widget",
+    "dashboard.remove": "Remove",
+    "dashboard.removeWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>removed</strong>.",
+    "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
+    "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
+    "widgetHeader.editButton": "Edit",
+    "widgetHeader.deleteButtonLabel": "Remove widget: {widgetName}",
+    "widgetHeader.deleteButton": "Remove",
+    "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
+    "simpleSearchForm.results.minimumWarning": "Error: Results display must contain at least one column.",
+    "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}"
 }

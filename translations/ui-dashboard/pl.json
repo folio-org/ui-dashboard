@@ -41,7 +41,6 @@
     "simpleSearchForm.filters.dateFilterField.months": "Miesiące",
     "simpleSearchForm.filters.dateFilterField.years": "Lata",
     "simpleSearchForm.filters.dateFilterField.offset": "Przesunięcie",
-    "simpleSearchForm.filters.dateFilterField.offsetMustBePositive": "Przesunięcie musi być większe lub równe 0",
     "simpleSearchForm.filters.dateFilterField.offsetMethod": "Metoda przesunięcia",
     "simpleSearchForm.filters.dateFilterField.timeUnit": "Jednostka czasu",
     "simpleSearchForm.filters.uuidFilterField.currentUser": "Bieżący użytkownik (zmienna)",
@@ -105,5 +104,16 @@
     "simpleSearchForm.filters.dateFilterField.date": "Date",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "Columns",
-    "simpleSearchForm.results.resultDeleteAria": "Remove column {index}"
+    "simpleSearchForm.results.resultDeleteAria": "Remove column {index}",
+    "dashboard.removeWidget": "Remove widget",
+    "dashboard.remove": "Remove",
+    "dashboard.removeWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>removed</strong>.",
+    "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
+    "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
+    "widgetHeader.editButton": "Edit",
+    "widgetHeader.deleteButtonLabel": "Remove widget: {widgetName}",
+    "widgetHeader.deleteButton": "Remove",
+    "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
+    "simpleSearchForm.results.minimumWarning": "Error: Results display must contain at least one column.",
+    "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}"
 }

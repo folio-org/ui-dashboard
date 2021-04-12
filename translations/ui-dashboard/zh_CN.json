@@ -41,7 +41,6 @@
     "simpleSearchForm.filters.dateFilterField.months": "月",
     "simpleSearchForm.filters.dateFilterField.years": "年",
     "simpleSearchForm.filters.dateFilterField.offset": "偏移",
-    "simpleSearchForm.filters.dateFilterField.offsetMustBePositive": "偏移量必须大于等于0",
     "simpleSearchForm.filters.dateFilterField.offsetMethod": "偏移方式",
     "simpleSearchForm.filters.dateFilterField.timeUnit": "时间单位",
     "simpleSearchForm.filters.uuidFilterField.currentUser": "我（可变）",
@@ -105,5 +104,16 @@
     "simpleSearchForm.filters.dateFilterField.date": "日期",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "列",
-    "simpleSearchForm.results.resultDeleteAria": "移除列{index}"
+    "simpleSearchForm.results.resultDeleteAria": "移除列{index}",
+    "dashboard.removeWidget": "Remove widget",
+    "dashboard.remove": "Remove",
+    "dashboard.removeWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>removed</strong>.",
+    "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
+    "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
+    "widgetHeader.editButton": "Edit",
+    "widgetHeader.deleteButtonLabel": "Remove widget: {widgetName}",
+    "widgetHeader.deleteButton": "Remove",
+    "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
+    "simpleSearchForm.results.minimumWarning": "Error: Results display must contain at least one column.",
+    "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}"
 }

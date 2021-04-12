@@ -41,7 +41,6 @@
     "simpleSearchForm.filters.dateFilterField.months": "Mois",
     "simpleSearchForm.filters.dateFilterField.years": "Années",
     "simpleSearchForm.filters.dateFilterField.offset": "Décalage",
-    "simpleSearchForm.filters.dateFilterField.offsetMustBePositive": "Le décalage doit être supérieur ou égal à 0",
     "simpleSearchForm.filters.dateFilterField.offsetMethod": "Méthode de décalage",
     "simpleSearchForm.filters.dateFilterField.timeUnit": "Unité de temps",
     "simpleSearchForm.filters.uuidFilterField.currentUser": "Utilisateur actuel (variable)",
@@ -105,5 +104,16 @@
     "simpleSearchForm.filters.dateFilterField.date": "Date",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "Colonnes",
-    "simpleSearchForm.results.resultDeleteAria": "Supprimer la colonne {index}"
+    "simpleSearchForm.results.resultDeleteAria": "Supprimer la colonne {index}",
+    "dashboard.removeWidget": "Supprimer le widget",
+    "dashboard.remove": "Retirer",
+    "dashboard.removeWidgetConfirmMessage": "Le widget <strong> {name} </strong> sera <strong> supprimé </strong> .",
+    "widgetHeader.actionsButtonLabel": "Actions pour le widget: {widgetName}",
+    "widgetHeader.editButtonLabel": "Modifier le widget: {widgetName}",
+    "widgetHeader.editButton": "Modifier",
+    "widgetHeader.deleteButtonLabel": "Supprimer le widget: {widgetName}",
+    "widgetHeader.deleteButton": "Retirer",
+    "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
+    "simpleSearchForm.results.minimumWarning": "Erreur: l'affichage des résultats doit contenir au moins une colonne.",
+    "simpleSearch.widget.linkTextForWidget": "{linkText} pour le widget: {widgetName}"
 }
