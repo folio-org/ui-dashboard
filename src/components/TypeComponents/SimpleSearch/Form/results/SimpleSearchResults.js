@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
-import { Field, useForm, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -34,17 +34,6 @@ const SimpleSearchResults = ({
   id
 }) => {
   const intl = useIntl();
-  const { initialValues } = useFormState();
-  const { change } = useForm();
-
-  useEffect(() => {
-    // If and when initialValues change, we have to reset those fields we set a default on
-    if (initialValues?.configurableProperties?.numberOfRows) {
-      /* Is there a better way to reset field to initialValue when that changes? */
-      change('configurableProperties.numberOfRows', initialValues?.configurableProperties?.numberOfRows);
-    }
-  }, [change, initialValues, numberOfRows]);
-
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Field, useForm, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   TextField
@@ -13,17 +13,6 @@ const SimpleSearchConfigurableProperties = ({
     urlLink = {}
   } = {}
 }) => {
-  const { initialValues } = useFormState();
-  const { change } = useForm();
-
-  useEffect(() => {
-    // If and when initialValues change, we have to reset those fields we set a default on
-    if (initialValues?.configurableProperties?.urlLink) {
-      /* Is there a better way to reset field to initialValue when that changes? */
-      change('configurableProperties.urlLink', initialValues?.configurableProperties?.urlLink);
-    }
-  }, [change, initialValues]);
-
   return (
     <>
       { (urlLink.configurable || urlLink.defValue) &&

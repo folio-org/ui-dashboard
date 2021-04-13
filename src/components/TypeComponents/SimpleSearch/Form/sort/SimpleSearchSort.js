@@ -16,12 +16,9 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   // Do this at the top of the form unconditionally for hook reasons
   const [selectedSortCol, setSSC] = useState(sortColumns[0]);
   useEffect(() => {
-    // If and when initialValues change, we have to reset those fields we set a default on
+    // If we have initialValues make sure the SSC gets set properly
     if (initialValues?.sortColumn?.name) {
-      /* Is there a better way to reset field to initialValue when that changes? */
       setSSC(sortColumns.find(sc => sc.name === initialValues.sortColumn.name));
-      change('sortColumn.name', initialValues.sortColumn.name);
-      change('sortColumn.sortType', initialValues.sortColumn.sortType);
     }
   }, [change, initialValues, sortColumns]);
 

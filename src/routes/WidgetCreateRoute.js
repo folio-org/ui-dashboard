@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -97,10 +97,16 @@ const WidgetCreateRoute = ({
   };
 
   return (
+    /*
+     * IMPORTANT
+     * DO NOT ENABLE keepDirtyOnReinitialize
+     * This code works by fetching a function which will parse the data
+     * and work out initialValues. Sometimes that function does not load for the first render,
+     * and in those cases we want a refresh of initialValues to wipe the form, not remain as dirty values.
+     */
     <Form
       enableReinitialize
       initialValues={initialValues}
-      keepDirtyOnReinitialize
       mutators={arrayMutators}
       navigationCheck
       onSubmit={doTheSubmit}
