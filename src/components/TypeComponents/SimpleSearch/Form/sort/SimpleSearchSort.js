@@ -11,25 +11,19 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   const { change } = useForm();
-  const { initialValues, values } = useFormState();
+  const { initialValues } = useFormState();
 
   // Do this at the top of the form unconditionally for hook reasons
-  const [selectedSortCol, setSSC] = useState();
+  const [selectedSortCol, setSSC] = useState(sortColumns[0]);
   useEffect(() => {
-    if (!selectedSortCol) {
-      if (initialValues?.sortColumn?.name) {
-        setSSC(sortColumns.find(sc => sc.name === initialValues?.sortColumn?.name));
-      }
-    }
-  }, [initialValues, selectedSortCol, sortColumns, values]);
-
-  /* useEffect(() => {
     // If and when initialValues change, we have to reset those fields we set a default on
-    if (initialValues?.configurableProperties?.numberOfRows) {
-      /* Is there a better way to reset field to initialValue when that changes?
-      change('configurableProperties.numberOfRows', initialValues?.configurableProperties?.numberOfRows);
+    if (initialValues?.sortColumn?.name) {
+      /* Is there a better way to reset field to initialValue when that changes? */
+      setSSC(sortColumns.find(sc => sc.name === initialValues.sortColumn.name));
+      change('sortColumn.name', initialValues.sortColumn.name);
+      change('sortColumn.sortType', initialValues.sortColumn.sortType);
     }
-  }, [change, initialValues, numberOfRows]); */
+  }, [change, initialValues, sortColumns]);
 
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {
@@ -73,7 +67,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         <Field
           component={Select}
           dataOptions={selectifiedSortColumns}
-          defaultValue={selectedSortCol?.name}
+          defaultValue={sortColumns[0]?.name}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortBy" />}
           name="sortColumn.name"
           onChange={e => {
@@ -94,7 +88,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         <Field
           component={Select}
           dataOptions={selectifiedSortDirs}
-          defaultValue={selectedSortCol?.sortTypes[0]}
+          defaultValue={selectedSortCol.sortTypes[0]}
           disabled={selectifiedSortDirs.length <= 1}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortDirection" />}
           name="sortColumn.sortType"
