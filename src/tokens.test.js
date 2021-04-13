@@ -57,8 +57,8 @@ describe('tokens', () => {
 
   test('token function recognises current date and can deal with adding months', () => {
     const currentDate = moment(new Date()).startOf('day');
-    const output = tokens('{{currentDate#7#m}}', stripes);
-    expect(output).toBe(currentDate.add(7, 'm').format(dateFormat1));
+    const output = tokens('{{currentDate#7#M}}', stripes);
+    expect(output).toBe(currentDate.add(7, 'M').format(dateFormat1));
   });
 
   test('token function recognises current date and can deal with adding weeks', () => {

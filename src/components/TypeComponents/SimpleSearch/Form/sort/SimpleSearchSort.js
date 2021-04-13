@@ -23,6 +23,14 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
     }
   }, [initialValues, selectedSortCol, sortColumns, values]);
 
+  /* useEffect(() => {
+    // If and when initialValues change, we have to reset those fields we set a default on
+    if (initialValues?.configurableProperties?.numberOfRows) {
+      /* Is there a better way to reset field to initialValue when that changes?
+      change('configurableProperties.numberOfRows', initialValues?.configurableProperties?.numberOfRows);
+    }
+  }, [change, initialValues, numberOfRows]); */
+
   // Check if there are >1 sortOptions
   const sortCount = sortColumns.reduce((acc, cur) => {
     return acc + cur.sortTypes?.length ?? 0;

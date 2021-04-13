@@ -175,7 +175,7 @@ const SimpleSearchDateFilterField = ({
               label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.weeks' })
             },
             {
-              value: 'm',
+              value: 'M',
               label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.months' })
             },
             {
