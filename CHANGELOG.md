@@ -1,6 +1,13 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Code Cleanup. ERM-1625
+  * final-form config changes and form bug fixes
+  * Overhauled file structure
+  * Fixed moment dependency
+  * Fixes to how dashboard fetches widget components per Type
+* Add basic Widget Actions. ERM-1613
+* Edit existing dashboard widgetInstance. ERM-1612
 * Fixed filter issue in date filter field. ERM-1614
 * Fixes to fetch ordering issues
 * split routing of all dashboards and specific dashboards
