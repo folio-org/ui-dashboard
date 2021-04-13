@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Field, useForm, useFormState } from 'react-final-form';
@@ -9,7 +7,6 @@ import { Field, useForm, useFormState } from 'react-final-form';
 import {
   Col,
   KeyValue,
-  RadioButton,
   Row,
   Select,
   TextField
@@ -17,7 +14,9 @@ import {
 
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import css from './SimpleSearchDateFilterField.css';
+
+import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
+import css from './SimpleSearchFilterFields.css';
 
 
 const SimpleSearchDateFilterField = ({
@@ -62,61 +61,33 @@ const SimpleSearchDateFilterField = ({
         <KeyValue
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />}
         >
-          <Row className={css.innerRow}>
-            <div className={css.flexContainer}>
-              <div className={css.radioButton}>
-                <Field
-                  component={RadioButton}
-                  defaultValue="absolute"
-                  disabled={isSetOrUnset}
-                  name={`${name}.relativeOrAbsolute`}
-                  type="radio"
-                  validateFields={[`${name}.filterValue`]}
-                  value="relative"
-                />
-              </div>
-              <div className={
-                classnames(
-                  css.item,
-                  { [css.absoluteSelected]: relOrAbsValue === 'absolute' }
-                )
-              }
-              >
+          <RelativeOrAbsolute
+            absoluteComponent={
+              <div className={relOrAbsValue === 'absolute' ? css.absoluteSelected : null}>
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.today" />
               </div>
-            </div>
-          </Row>
-          <Row className={css.innerRow}>
-            <div className={css.flexContainer}>
-              <div className={css.radioButton}>
-                <Field
-                  component={RadioButton}
-                  disabled={isSetOrUnset}
-                  name={`${name}.relativeOrAbsolute`}
-                  type="radio"
-                  validateFields={[`${name}.filterValue`]}
-                  value="absolute"
-                />
-              </div>
-              <div className={css.item}>
-                <Field
-                  {...filterComponentProps}
-                  component={filterComponent}
-                  disabled={
-                    isSetOrUnset ||
-                    relOrAbsValue === 'relative'
+            }
+            disabled={isSetOrUnset}
+            name={name}
+            relativeComponent={
+              <Field
+                {...filterComponentProps}
+                component={filterComponent}
+                disabled={
+                  isSetOrUnset ||
+                  relOrAbsValue === 'relative'
+                }
+                name={`${name}.filterValue`}
+                validate={(value, allValues) => {
+                  if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+                    return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
                   }
-                  name={`${name}.filterValue`}
-                  validate={(value, allValues) => {
-                    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
-                    }
-                    return undefined;
-                  }}
-                />
-              </div>
-            </div>
-          </Row>
+                  return undefined;
+                }}
+              />
+            }
+            validateFields={[`${name}.filterValue`]}
+          />
         </KeyValue>
       </Col>
       <Col xs={2}>

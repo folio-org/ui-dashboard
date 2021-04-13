@@ -5,10 +5,6 @@
   align-self: center;
   margin: 0;
   width: 100%;
-
-  &.absoluteSelected {
-    color: var(--color-text-p2);
-  }
 }
 
 .radioButton {
