@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Registry from '@folio/plugin-resource-registry';
+
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
+
+import getDefaultRenderFunction from './getDefaultRenderFunction';
 /*
   Takes in the fetched data, and returns an object of the shape:
   [
@@ -32,32 +36,12 @@ const capitaliseText = (str) => {
   return `${str[0].toUpperCase()}${str.slice(1)}`;
 };
 
-// Render dates in FOLIO standard
-const dateRenderer = ({ cell: { value } }) => (
-  value ?
-    <FormattedUTCDate value={value} /> :
-    <NoValue />
-);
-
-const boolRenderer = ({ cell: { value } }) => (
-  value ?
-    <Icon icon="check-circle" /> :
-    <Icon icon="times-circle" />
-);
-
-dateRenderer.propTypes = {
-  cell: PropTypes.object
-};
-
-boolRenderer.propTypes = {
-  cell: PropTypes.object
-};
-
 const simpleSearchColumnParser = ({
   widgetConf: {
     resultColumns = []
   } = {},
   widgetDef: {
+    resource,
     results: {
       columns: defResultColumns = []
     } = {}
@@ -77,13 +61,23 @@ const simpleSearchColumnParser = ({
     // Add any custom column rendering in here
     // NOTE this is column-wide, not cell wide.
     // That would need to happen in the SimpleTable component.
-    if (drc.valueType === 'Date') {
+
+    // Use registry to check if there is a custom render property for this value
+    let render = Registry.getRenderFunction(resource, drc.name);
+    if (!render) {
+      // If not, use default renderFunction
+      render = getDefaultRenderFunction(drc);
+    }
+
+    returnColumn.Cell = ({ row: { original } }) => render(original);
+
+    /* if (drc.valueType === 'Date') {
       returnColumn.Cell = dateRenderer;
     }
 
     if (drc.valueType === 'Boolean') {
       returnColumn.Cell = boolRenderer;
-    }
+    } */
 
     return returnColumn;
   });

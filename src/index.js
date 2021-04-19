@@ -38,7 +38,6 @@ const App = (appProps) => {
   };
 
   const agreementReg = registry.getResource('agreement');
-  console.log('Agreement getAllTemplate: %o', agreementReg.performViewAllTemplate(agreementFilterParams));
   console.log('Agreement resource by id: %o', agreementReg.performViewTemplate({ id: '12345' }));
 
   const alReg = registry.getResource('agreementLine');
