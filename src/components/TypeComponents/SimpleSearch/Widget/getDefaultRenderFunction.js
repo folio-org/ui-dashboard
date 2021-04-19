@@ -3,7 +3,11 @@ import { get } from 'lodash';
 
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 
-// Takes in a simpleSearch result->column shape and returns a default renderFunction for that shape.
+/*
+  Takes in a simpleSearch result->column shape
+  and returns a default renderFunction for that shape, of the form
+  (entireRecord) => instructions_to_render_specific_field
+*/
 const getDefaultRenderFunction = ({ accessPath, valueType }) => {
   if (accessPath) {
     switch (valueType.toLowerCase()) {
@@ -28,7 +32,7 @@ const getDefaultRenderFunction = ({ accessPath, valueType }) => {
       }
     }
   } else {
-    // No accessPath, just return full data as string
+    // No accessPath, just return full data as string (Will probably show as "[Object object]")
     return (data) => data.toString();
   }
 };
