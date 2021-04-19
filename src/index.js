@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 import { Route } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
-import Registry from '@folio/plugin-resource-registry';
+import setUpRegistry from './setUpRegistry';
 
 const Settings = lazy(() => import('./settings'));
 const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
@@ -10,8 +10,8 @@ const DashboardRoute = lazy(() => import('./routes/DashboardRoute'));
 const DashboardOrderRoute = lazy(() => import('./routes/DashboardOrderRoute'));
 const WidgetCreateRoute = lazy(() => import('./routes/WidgetCreateRoute'));
 
-const registry = Registry;
-registry.registerResource('widget');
+// DO THIS BEFORE APP
+setUpRegistry();
 
 const App = (appProps) => {
   const { actAs, match: { path } } = appProps;
@@ -22,26 +22,6 @@ const App = (appProps) => {
       </Suspense>
     );
   }
-
-  const agreementFilterParams = {
-    filters: [
-      {
-        filter: 'agremeentStatus',
-        value: 'active'
-      },
-      {
-        filter: 'agreementStatus',
-        value: 'draft'
-      }
-    ],
-    sort: 'name'
-  };
-
-  const agreementReg = registry.getResource('agreement');
-  console.log('Agreement resource by id: %o', agreementReg.performViewTemplate({ id: '12345' }));
-
-  const alReg = registry.getResource('agreementLine');
-  console.log('Agreement line resource by id', alReg.performViewTemplate({ id: "54321", owner: { id: "abcde" } }))
 
   return (
     <Suspense fallback={null}>

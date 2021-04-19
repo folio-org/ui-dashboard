@@ -1,9 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import Registry from '@folio/plugin-resource-registry';
-
-import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 
 import getDefaultRenderFunction from './getDefaultRenderFunction';
 /*
@@ -68,16 +64,8 @@ const simpleSearchColumnParser = ({
       // If not, use default renderFunction
       render = getDefaultRenderFunction(drc);
     }
-
+    // Pass render function entire object, not just cell value
     returnColumn.Cell = ({ row: { original } }) => render(original);
-
-    /* if (drc.valueType === 'Date') {
-      returnColumn.Cell = dateRenderer;
-    }
-
-    if (drc.valueType === 'Boolean') {
-      returnColumn.Cell = boolRenderer;
-    } */
 
     return returnColumn;
   });
