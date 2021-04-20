@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -124,6 +124,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
 
 SimpleSearchFilterField.propTypes = {
   filterColumns: PropTypes.arrayOf(PropTypes.object),
+  id: PropTypes.string,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,

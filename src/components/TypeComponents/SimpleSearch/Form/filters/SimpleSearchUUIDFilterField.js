@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -155,7 +155,6 @@ const SimpleSearchUUIDFilterField = ({
       />
     </>
   );
-
 };
 
 SimpleSearchUUIDFilterField.propTypes = {
@@ -164,6 +163,7 @@ SimpleSearchUUIDFilterField.propTypes = {
   input: PropTypes.shape({
     name: PropTypes.string.isRequired
   }).isRequired,
+  resourceType: PropTypes.string,
   selectifiedComparators: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string
