@@ -19,9 +19,15 @@ const submitWithTokens = (widgetConf) => {
             }
             outputValue += '}}';
             break;
-          case 'UUID':
-            outputValue = '{{currentUser}}';
+          case 'UUID': {
+            if (fc.resourceType === 'user') {
+              outputValue = '{{currentUser}}';
+            } else {
+              // Unknown, try to pass an existing filterValue
+              outputValue = fcr.filterValue;
+            }
             break;
+          }
           default:
             // Unknown, try to pass an existing filterValue
             outputValue = fcr.filterValue;
@@ -38,7 +44,9 @@ const submitWithTokens = (widgetConf) => {
     return ({
       name: fc.name,
       rules: tweakedRules,
-      fieldType: fc.fieldType
+      fieldType: fc.fieldType,
+      resourceType: fc.resourceType,
+      resource: fc.resource
     });
   });
   // Set the filter columns to be the new ones including tokens

@@ -24,8 +24,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
   console.log("VALUES: %o", values);
   const { change } = useForm();
 
-  // Resource variable for UUID case
-  const [resource, setResource] = useState({});
+  
 
   // Create values for available filters. If label available use that, else use name
   const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];
@@ -64,13 +63,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       if (LookupComponent) {
         filterComponentProps = {
           id,
-          onResourceSelected: r => {
-            setResource(r);
-            change(`${name}.filterValue`, r.id);
-          },
           resourceName: get(values, `${name}.resourceType`),
-          resource,
-          setResource
         };
         FilterComponent = LookupComponent;
       } else {

@@ -34,26 +34,31 @@ const widgetToInitialValues = (widget) => {
         });
       }
       case 'UUID': {
-        // Check for currentUser tokens in each rule
-        const tweakedRules = [...fc.rules]?.map(fcr => {
-          const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
-          if (!tokenMatch) {
-            // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
+        if (fc.resourceType === 'user') {
+          // Check for currentUser tokens in each rule
+          const tweakedRules = [...fc.rules]?.map(fcr => {
+            const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
+            if (!tokenMatch) {
+              // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
+              return ({
+                ...fcr,
+                relativeOrAbsolute: 'absolute'
+              });
+            }
+            // At this point, we have a token, no need to parse for currentUser
             return ({
-              ...fcr,
-              relativeOrAbsolute: 'absolute'
+              comparator: fcr.comparator,
+              relativeOrAbsolute: 'relative'
             });
-          }
-          // At this point, we have a token, no need to parse for currentUser
-          return ({
-            comparator: fcr.comparator,
-            relativeOrAbsolute: 'relative'
           });
-        });
-        return ({
-          ...fc,
-          rules: tweakedRules
-        });
+          return ({
+            ...fc,
+            rules: tweakedRules
+          });
+        } else {
+          // We don't have tokens for UUID fields outside of 'user'
+          return fc;
+        }
       }
       default:
         // We don't use tokens for any other fields currently, so just pass fc as is
