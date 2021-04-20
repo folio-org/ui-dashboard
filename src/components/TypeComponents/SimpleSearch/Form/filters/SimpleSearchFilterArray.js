@@ -34,6 +34,7 @@ const SimpleSearchFilterArray = ({
               <Field
                 component={SimpleSearchFilterField}
                 filterColumns={filterColumns}
+                id={`simple-search-filter-field-card[${index}]`}
                 name={fieldName}
               />
             </>

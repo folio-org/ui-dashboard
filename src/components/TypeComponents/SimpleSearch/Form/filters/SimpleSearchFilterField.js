@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -15,11 +15,17 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import Registry from '@folio/plugin-resource-registry';
+
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 
-const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
+const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
   const { values } = useFormState();
+  console.log("VALUES: %o", values);
   const { change } = useForm();
+
+  // Resource variable for UUID case
+  const [resource, setResource] = useState({});
 
   // Create values for available filters. If label available use that, else use name
   const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];
@@ -37,18 +43,41 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
       filterComponentProps = {
         dataOptions: selectedFilterColumn.enumValues.map(ev => ({ value: ev.value, label: ev.label ?? ev.value })),
         // Set an initialValue where none was set previously
-        defaultValue: selectedFilterColumn.enumValues[0].value
+        defaultValue: selectedFilterColumn.enumValues[0].value,
+        id
       };
       FilterComponent = Select;
       break;
     case 'Date':
       filterComponentProps = {
         backendDateStandard: 'YYYY-MM-DD',
+        id,
         timeZone:'UTC',
         usePortal: true
       };
       FilterComponent = Datepicker;
       break;
+
+    case 'UUID': {
+      const resourceReg = Registry.getResource(selectedFilterColumn.resource);
+      const LookupComponent = resourceReg?.getLookupComponent();
+      if (LookupComponent) {
+        filterComponentProps = {
+          id,
+          onResourceSelected: r => {
+            setResource(r);
+            change(`${name}.filterValue`, r.id);
+          },
+          resourceName: get(values, `${name}.resourceType`),
+          resource,
+          setResource
+        };
+        FilterComponent = LookupComponent;
+      } else {
+        FilterComponent = TextField;
+      }
+      break;
+    }
     default:
       FilterComponent = TextField;
       break;
@@ -57,6 +86,7 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
   // Keep the hidden form field up to date
   useEffect(() => {
     change(`${name}.fieldType`, selectedFilterColumn?.valueType);
+    change(`${name}.resourceType`, selectedFilterColumn?.resource);
   }, [change, name, selectedFilterColumn]);
 
   return (
@@ -81,6 +111,11 @@ const SimpleSearchFilterField = ({ filterColumns, input: { name } }) => {
           name={`${name}.fieldType`}
           render={() => (null)}
           value={selectedFilterColumn?.valueType}
+        />
+        <Field
+          name={`${name}.resourceType`}
+          render={() => (null)}
+          value={selectedFilterColumn?.resource}
         />
       </KeyValue>
       {selectedFilter &&
