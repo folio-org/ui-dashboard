@@ -21,10 +21,7 @@ import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 
 const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
   const { values } = useFormState();
-  console.log("VALUES: %o", values);
   const { change } = useForm();
-
-  
 
   // Create values for available filters. If label available use that, else use name
   const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];

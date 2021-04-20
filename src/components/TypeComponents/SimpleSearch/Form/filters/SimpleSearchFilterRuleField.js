@@ -20,7 +20,7 @@ const SimpleSearchFilterRuleField = ({
   filterComponent,
   filterComponentProps,
   input: { name },
-  selectedFilterColumn: { comparators = [], valueType } = {}
+  selectedFilterColumn: { comparators = [], resource, valueType } = {}
 }) => {
   const { values } = useFormState();
   const { change } = useForm();
@@ -53,6 +53,7 @@ const SimpleSearchFilterRuleField = ({
         filterComponent={filterComponent}
         filterComponentProps={filterComponentProps}
         input={{ name }}
+        resourceType={resource}
         selectifiedComparators={selectifiedComparators}
       />
     );

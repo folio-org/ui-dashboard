@@ -23,6 +23,7 @@ const SimpleSearchUUIDFilterField = ({
   filterComponent,
   filterComponentProps,
   input: { name },
+  resourceType,
   selectifiedComparators
 }) => {
   const { initialValues, values } = useFormState();
@@ -38,22 +39,23 @@ const SimpleSearchUUIDFilterField = ({
   // This field is used when editing the widget, to display existing resource data
   useEffect(() => {
     change(`${name}.resource`, resource);
-  }, [change, resource]);
+  }, [change, name, resource]);
 
   useEffect(() => {
     // Ensure relative vs absolute is always  in the case resource is user
-    if (resource === 'user' && relOrAbsValue === undefined) {
+    if (resourceType === 'user' && relOrAbsValue === undefined) {
       change(`${name}.relativeOrAbsolute`, 'relative');
     }
-  }, [change, name, relOrAbsValue, resource, values]);
+  }, [change, name, relOrAbsValue, resourceType, values]);
 
-  // Set up onResourceSelected using setResource passed down
+  // Set up onResourceSelected and resource for the plugin to handle
   filterComponentProps.onResourceSelected = r => {
     setResource(r);
     change(`${name}.filterValue`, r.id);
   };
+  filterComponentProps.resource = resource;
 
-  if (resource === 'user') {
+  if (resourceType === 'user') {
     return (
       <>
         <Row>
