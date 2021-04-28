@@ -15,9 +15,9 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import Registry from '@folio/plugin-resource-registry';
 import UserLookup from '../../../../UserLookup';
 
-import Registry from '@folio/plugin-resource-registry';
 
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 

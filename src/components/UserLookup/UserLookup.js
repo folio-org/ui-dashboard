@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
-import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -20,6 +19,16 @@ import { AppIcon, Pluggable } from '@folio/stripes/core';
 import { renderUserName } from '@folio/stripes-erm-components';
 
 // This must return a function to render a link button
+const propTypes = {
+  disabled: PropTypes.bool,
+  id: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string
+  }),
+  onResourceSelected: PropTypes.func,
+  resource: PropTypes.object
+}
 
 const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
@@ -110,7 +119,7 @@ const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceS
         </Row>
       </div>
     );
-  }
+  };
 
   const renderEmpty = () => (
     <div data-test-user-empty>
@@ -123,7 +132,7 @@ const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceS
         <FormattedMessage id="stripes-erm-components.contacts.linkUserToStart" />
       </Layout>
     </div>
-  )
+  );
 
   return (
     <Card
