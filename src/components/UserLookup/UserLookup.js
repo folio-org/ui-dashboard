@@ -6,7 +6,6 @@ import {
   Button,
   Card,
   Col,
-  FormattedUTCDate,
   KeyValue,
   Layout,
   NoValue,
@@ -28,12 +27,12 @@ const propTypes = {
   }),
   onResourceSelected: PropTypes.func,
   resource: PropTypes.object
-}
+};
 
 const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
 
-  const renderLinkUserButton = value => (
+  const renderLinkUserButton = v => (
     <Pluggable
       dataKey="user"
       disableRecordCreation
@@ -42,7 +41,7 @@ const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceS
 
         const buttonProps = {
           'aria-haspopup': 'true',
-          'buttonStyle': value ? 'default' : 'primary',
+          'buttonStyle': v ? 'default' : 'primary',
           'id': `${id}-search-button`,
           'name': name,
           'onClick': pluggableRenderProps.onClick,
@@ -50,7 +49,7 @@ const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceS
           'marginBottom0': true
         };
 
-        if (value) {
+        if (v) {
           return (
             <Tooltip
               id={`${pluggableRenderProps.id}-user-button-tooltip`}
@@ -152,5 +151,7 @@ const UserLookupComponent = ({ disabled, id, input: { name, value }, onResourceS
     </Card>
   );
 };
+
+UserLookupComponent.propTypes = propTypes;
 
 export default UserLookupComponent;
