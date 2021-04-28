@@ -15,6 +15,8 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import UserLookup from '../../../../UserLookup';
+
 import Registry from '@folio/plugin-resource-registry';
 
 import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
@@ -56,7 +58,14 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
 
     case 'UUID': {
       const resourceReg = Registry.getResource(selectedFilterColumn.resource);
-      const LookupComponent = resourceReg?.getLookupComponent();
+
+      let LookupComponent = resourceReg?.getLookupComponent();
+
+      if (selectedFilterColumn.resource === 'user' && !LookupComponent) {
+        // USER does not have a lookup component in the registry, fallback to known user lookup for now
+        LookupComponent = UserLookup;
+      }
+
       if (LookupComponent) {
         filterComponentProps = {
           id,
