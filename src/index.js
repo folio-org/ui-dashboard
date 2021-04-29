@@ -1,8 +1,10 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
-import { Route } from '@folio/stripes/core';
+import { Route, coreEvents, useModules, useStripes } from '@folio/stripes/core';
+
 import PropTypes from 'prop-types';
 import setUpRegistry from './setUpRegistry';
+import Registry from './Registry/Registry';
 
 const Settings = lazy(() => import('./settings'));
 const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
@@ -23,6 +25,8 @@ const App = (appProps) => {
     );
   }
 
+  console.log("REGISTRY: %o", Registry)
+
   return (
     <Suspense fallback={null}>
       <Switch>
@@ -35,6 +39,36 @@ const App = (appProps) => {
     </Suspense>
   );
 };
+
+// Small functional component to load registry stuff
+const DashLoad = () => {
+  const modules = useModules();
+  const stripes = useStripes();
+
+  // For each module, publish event `ui-dashboard-registry-load`
+  modules.handler.forEach(mod => {
+    const m = mod.getModule();
+    console.log("M: %o", m)
+    const handler = m[mod.handlerName]
+    console.log ("handler: %o", handler)
+    handler('ui-dashboard-registry-load', stripes, Registry)
+  });
+
+  return null;
+}
+
+App.eventHandler = (event, stripes, data) => {
+  if (event === coreEvents.LOGIN) {
+    return DashLoad;
+  }
+
+  if (event === 'ui-dashboard-registry-load') {
+    // DATA should contain registry singleton
+    data.registerResource('widget');
+    return null;
+  }
+  return null;
+}
 
 App.propTypes = {
   actAs: PropTypes.string.isRequired,

@@ -18,8 +18,10 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-dashboard.meta.title",
     "route": "/dashboard",
     "home": "/dashboard",
