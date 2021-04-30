@@ -1,10 +1,10 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
-import { Route, coreEvents, useModules, useStripes } from '@folio/stripes/core';
+import { Route, coreEvents, HandlerManager, useModules, useStripes } from '@folio/stripes/core';
 
 import PropTypes from 'prop-types';
 import setUpRegistry from './setUpRegistry';
-import Registry from './Registry/Registry';
+import Registry from './Registry';
 
 const Settings = lazy(() => import('./settings'));
 const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
@@ -13,7 +13,7 @@ const DashboardOrderRoute = lazy(() => import('./routes/DashboardOrderRoute'));
 const WidgetCreateRoute = lazy(() => import('./routes/WidgetCreateRoute'));
 
 // DO THIS BEFORE APP
-setUpRegistry();
+//setUpRegistry();
 
 const App = (appProps) => {
   const { actAs, match: { path } } = appProps;
@@ -25,7 +25,7 @@ const App = (appProps) => {
     );
   }
 
-  console.log("REGISTRY: %o", Registry)
+  console.log("Registry: %o", Registry.getRegistry());
 
   return (
     <Suspense fallback={null}>
@@ -40,26 +40,24 @@ const App = (appProps) => {
   );
 };
 
-// Small functional component to load registry stuff
-const DashLoad = () => {
-  const modules = useModules();
-  const stripes = useStripes();
-
-  // For each module, publish event `ui-dashboard-registry-load`
-  modules.handler.forEach(mod => {
+// TODO if we can figure out how to obtain modules object outside of a component, use the following directly
+/*   modules.handler.forEach(mod => {
     const m = mod.getModule();
     console.log("M: %o", m)
     const handler = m[mod.handlerName]
     console.log ("handler: %o", handler)
     handler('ui-dashboard-registry-load', stripes, Registry)
-  });
-
-  return null;
-}
+  }); */
 
 App.eventHandler = (event, stripes, data) => {
-  if (event === coreEvents.LOGIN) {
-    return DashLoad;
+  if (event === coreEvents.LOGIN && Registry.getRegistryCount() === 0) {
+    return (() => (
+      <HandlerManager
+        data={Registry}
+        event="ui-dashboard-registry-load"
+        stripes={stripes}
+      />
+    ));
   }
 
   if (event === 'ui-dashboard-registry-load') {
