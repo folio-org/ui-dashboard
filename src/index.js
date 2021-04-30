@@ -60,7 +60,7 @@ App.eventHandler = (event, stripes, data) => {
     return null;
   }
   return null;
-}
+};
 
 App.propTypes = {
   actAs: PropTypes.string.isRequired,

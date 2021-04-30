@@ -7,7 +7,7 @@ const resourceMap = new Map();
 const Registry = {
 
   getRegistryCount: () => {
-    return resourceMap.size
+    return resourceMap.size;
   },
 
   registerResource: (resourceName) => {
@@ -47,7 +47,7 @@ const Registry = {
     }
     return resource.getRenderFunction(fieldName);
   }
-}
+};
 
 Object.freeze(Registry);
 
