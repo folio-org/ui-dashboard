@@ -44,7 +44,7 @@ const App = (appProps) => {
   }); */
 
 App.eventHandler = (event, stripes, data) => {
-  if (event === coreEvents.LOGIN && Registry.getRegistryCount() === 0) {
+  if (event === coreEvents.LOGIN) {
     return (() => (
       <HandlerManager
         data={Registry}
