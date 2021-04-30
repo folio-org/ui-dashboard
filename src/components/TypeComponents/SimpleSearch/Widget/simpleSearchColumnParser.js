@@ -1,5 +1,5 @@
 import React from 'react';
-import Registry from '@folio/plugin-resource-registry';
+import Registry from '../../../../Registry';
 
 import getDefaultRenderFunction from './getDefaultRenderFunction';
 /*

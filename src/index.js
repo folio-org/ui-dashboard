@@ -1,9 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
-import { Route, coreEvents, HandlerManager, useModules, useStripes } from '@folio/stripes/core';
+import { Route, coreEvents, HandlerManager } from '@folio/stripes/core';
 
 import PropTypes from 'prop-types';
-import setUpRegistry from './setUpRegistry';
 import Registry from './Registry';
 
 const Settings = lazy(() => import('./settings'));
@@ -11,9 +10,6 @@ const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
 const DashboardRoute = lazy(() => import('./routes/DashboardRoute'));
 const DashboardOrderRoute = lazy(() => import('./routes/DashboardOrderRoute'));
 const WidgetCreateRoute = lazy(() => import('./routes/WidgetCreateRoute'));
-
-// DO THIS BEFORE APP
-//setUpRegistry();
 
 const App = (appProps) => {
   const { actAs, match: { path } } = appProps;
@@ -24,8 +20,6 @@ const App = (appProps) => {
       </Suspense>
     );
   }
-
-  console.log("Registry: %o", Registry.getRegistry());
 
   return (
     <Suspense fallback={null}>
