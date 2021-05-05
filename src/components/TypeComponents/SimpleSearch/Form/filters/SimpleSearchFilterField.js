@@ -8,6 +8,8 @@ import { get } from 'lodash';
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
+import { useModules, useStripes } from '@folio/stripes/core';
+
 import {
   Datepicker,
   KeyValue,
@@ -24,6 +26,9 @@ import SimpleSearchFilterRuleArray from './SimpleSearchFilterRuleArray';
 const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
   const { values } = useFormState();
   const { change } = useForm();
+
+  const stripes = useStripes();
+  const { plugin: modulePlugins } = useModules();
 
   // Create values for available filters. If label available use that, else use name
   const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];
@@ -61,7 +66,11 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
 
       let LookupComponent = resourceReg?.getLookupComponent();
 
-      if (selectedFilterColumn.resource === 'user' && !LookupComponent) {
+      // TODO isEnabled for plugins/modules is something that should be exposed, perhaps via the registry
+      const findUserPluginAvailable = !!modulePlugins?.find(p => p.pluginType === 'find-user') &&
+        stripes.hasPerm('module.ui-plugin-find-user.enabled');
+
+      if (selectedFilterColumn.resource === 'user' && !LookupComponent && findUserPluginAvailable) {
         // USER does not have a lookup component in the registry, fallback to known user lookup for now
         LookupComponent = UserLookup;
       }
