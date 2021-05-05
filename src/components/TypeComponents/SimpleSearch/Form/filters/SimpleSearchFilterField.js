@@ -82,7 +82,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       break;
   }
 
-  // Keep the hidden form field up to date
+  // Keep the hidden form fields up to date
   useEffect(() => {
     change(`${name}.fieldType`, selectedFilterColumn?.valueType);
     change(`${name}.resourceType`, selectedFilterColumn?.resource);

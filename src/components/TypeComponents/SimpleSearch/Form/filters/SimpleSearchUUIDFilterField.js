@@ -35,7 +35,6 @@ const SimpleSearchUUIDFilterField = ({
 
   // Resource variable for UUID case
   const [resource, setResource] = useState(get(initialValues, `${name}.resource`) ?? {});
-  // Keep hidden field up to date
   // This field is used when editing the widget, to display existing resource data
   useEffect(() => {
     change(`${name}.resource`, resource);
