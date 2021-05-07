@@ -39,7 +39,7 @@ const WidgetCreateRoute = ({
   );
 
   // If we have a widgetId then fetch that widget
-  const { data: widget } = useQuery(
+  const { data: widget, refetch: refetchWidgetInstance } = useQuery(
     // Ensure we refetch widget if widgetId changes
     ['ui-dashboard', 'widgetCreateRoute', 'getWidget', params.widgetId],
     () => ky(`servint/widgets/instances/${params.widgetId}`).json(),
@@ -88,11 +88,17 @@ const WidgetCreateRoute = ({
     if (params.widgetId) {
       // Widget already exists, PUT and close
       putWidget(submitValue)
-        .then(handleClose);
+        .then(handleClose)
+        // Ensure we refetch the widgetInstance after submit.
+        // This ensures we aren't initially getting a memoized version on next edit.
+        .then(refetchWidgetInstance);
     } else {
       // New widget, POST and close
       postWidget(submitValue)
-        .then(handleClose);
+        .then(handleClose)
+        // Ensure we refetch the widgetInstance after submit.
+        // This ensures we aren't initially getting a memoized version on next edit.
+        .then(refetchWidgetInstance);
     }
   };
 
