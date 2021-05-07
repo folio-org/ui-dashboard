@@ -8,10 +8,15 @@ const widget = {
   id: '12345'
 };
 
+const onWidgetEdit = jest.fn(() => null);
+const onWidgetDelete = jest.fn(() => null);
+
 describe('Widget', () => {
   test('renders expected widget name', () => {
     const { getByText } = renderWithIntl(
       <Widget
+        onWidgetDelete={onWidgetDelete}
+        onWidgetEdit={onWidgetEdit}
         widget={widget}
       >
         <div> Test body </div>
@@ -24,6 +29,8 @@ describe('Widget', () => {
   test('renders expected widget content', () => {
     const { getByText } = renderWithIntl(
       <Widget
+        onWidgetDelete={onWidgetDelete}
+        onWidgetEdit={onWidgetEdit}
         widget={widget}
       >
         <div> Test body </div>
