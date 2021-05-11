@@ -1,9 +1,11 @@
 import React, { lazy, Suspense } from 'react';
+import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom';
-import { Route, coreEvents, HandlerManager } from '@folio/stripes/core';
+import { Route, coreEvents, HandlerManager, useModules } from '@folio/stripes/core';
 
 import PropTypes from 'prop-types';
 import Registry from './Registry';
+import { render } from 'react-dom';
 
 const Settings = lazy(() => import('./settings'));
 const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
@@ -43,27 +45,28 @@ const App = (appProps) => {
     handler('ui-dashboard-registry-load', stripes, Registry)
   }); */
 
-let theManager;
+// Track whether we've already fired the dash event with a boolean
+let registryEventFired = false;
 App.eventHandler = (event, stripes, data) => {
   if (event === coreEvents.LOGIN) {
-    // This event must only run once, so force HandlerManager to only render once
-    if (typeof theManager === 'undefined') {
-      theManager = () => (
+    // Ensure event only fired once
+    if (registryEventFired === false) {
+      registryEventFired = true;
+      return () => (
         <HandlerManager
           data={Registry}
           event="ui-dashboard-registry-load"
           stripes={stripes}
         />
       );
-      return theManager;
     }
   }
 
   if (event === 'ui-dashboard-registry-load') {
     // DATA should contain registry singleton
     data.registerResource('widget');
-    return null;
   }
+
   return null;
 };
 
