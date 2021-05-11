@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Registry setup event now only fires once
 * Added URI encoding to filter strings to deal with special characters.
 * Added framework for Registry. ERM-1611
 * Code Cleanup. ERM-1625

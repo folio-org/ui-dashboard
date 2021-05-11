@@ -1,11 +1,9 @@
 import React, { lazy, Suspense } from 'react';
-import ReactDOM from 'react-dom';
 import { Switch } from 'react-router-dom';
-import { Route, coreEvents, HandlerManager, useModules } from '@folio/stripes/core';
+import { Route, coreEvents, HandlerManager } from '@folio/stripes/core';
 
 import PropTypes from 'prop-types';
 import Registry from './Registry';
-import { render } from 'react-dom';
 
 const Settings = lazy(() => import('./settings'));
 const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
