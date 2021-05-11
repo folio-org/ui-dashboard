@@ -43,15 +43,20 @@ const App = (appProps) => {
     handler('ui-dashboard-registry-load', stripes, Registry)
   }); */
 
+let theManager;
 App.eventHandler = (event, stripes, data) => {
   if (event === coreEvents.LOGIN) {
-    return (() => (
-      <HandlerManager
-        data={Registry}
-        event="ui-dashboard-registry-load"
-        stripes={stripes}
-      />
-    ));
+    // This event must only run once, so force HandlerManager to only render once
+    if (typeof theManager === 'undefined') {
+      theManager = () => (
+        <HandlerManager
+          data={Registry}
+          event="ui-dashboard-registry-load"
+          stripes={stripes}
+        />
+      );
+      return theManager;
+    }
   }
 
   if (event === 'ui-dashboard-registry-load') {
