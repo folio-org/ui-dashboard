@@ -89,9 +89,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} ${r.comparator}`;
         } else {
-          // Ensure we're safely encoding all special characters into the filters path
-          const encodedFilterValue = encodeURI(r.filterValue);
-          specificFilterString += `${filterPath}${r.comparator}${tokens(encodedFilterValue, stripes)}`;
+          // Ensure we're safely encoding all special characters into the filters path, after applying tokens
+          const encodedFilterValue = encodeURI(tokens(r.filterValue, stripes));
+          specificFilterString += `${filterPath}${r.comparator}${encodedFilterValue}`;
         }
 
         if (ind !== rules.length - 1) {
