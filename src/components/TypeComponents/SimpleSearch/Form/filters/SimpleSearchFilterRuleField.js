@@ -42,8 +42,12 @@ const SimpleSearchFilterRuleField = ({
     }
   }, [change, name, selectifiedComparators, values]);
 
+  const noValueNeeded = get(values, `${name}.comparator`) === 'isNull' 
+  || get(values, `${name}.comparator`) === 'isNotNull' 
+  || get(values, `${name}.comparator`) === 'isSet' 
+  || get(values, `${name}.comparator`) === 'isNotSet';
+  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
-  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
   if (valueType === 'Date') {
@@ -90,7 +94,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
-            disabled={isSetOrUnset}
+            disabled={noValueNeeded}
             name={`${name}.filterValue`}
           />
         </KeyValue>

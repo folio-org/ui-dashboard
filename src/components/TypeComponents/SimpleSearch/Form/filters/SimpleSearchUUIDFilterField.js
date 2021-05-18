@@ -29,7 +29,10 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
+  const noValueNeeded = get(values, `${name}.comparator`) === 'isNull' 
+  || get(values, `${name}.comparator`) === 'isNotNull' 
+  || get(values, `${name}.comparator`) === 'isSet' 
+  || get(values, `${name}.comparator`) === 'isNotSet';
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
 
@@ -80,14 +83,14 @@ const SimpleSearchUUIDFilterField = ({
                     <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
                   </div>
                 }
-                disabled={isSetOrUnset}
+                disabled={noValueNeeded}
                 name={name}
                 relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
                     disabled={
-                      isSetOrUnset ||
+                      noValueNeeded ||
                       relOrAbsValue === 'relative'
                     }
                     name={`${name}.filterValue`}
@@ -135,7 +138,7 @@ const SimpleSearchUUIDFilterField = ({
             <Field
               {...filterComponentProps}
               component={filterComponent}
-              disabled={isSetOrUnset}
+              disabled={noValueNeeded}
               name={`${name}.filterValue`}
               validate={(value) => {
                 if (!value) {

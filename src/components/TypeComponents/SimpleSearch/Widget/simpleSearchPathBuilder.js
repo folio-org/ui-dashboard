@@ -84,16 +84,21 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
 
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
+      // const comp = r.comparator;
+
       rules.forEach((r, ind) => {
-        if (r.comparator === 'isNull' || r.comparator === 'isNotNull') {
+        if (r.comparator === 'isNull' 
+        || r.comparator === 'isNotNull' 
+        || r.comparator === 'isSet' 
+        || r.comparator === 'isNotSet') {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} ${r.comparator}`;
-        } else {
-          // Ensure we're safely encoding all special characters into the filters path
-          const encodedFilterValue = encodeURI(r.filterValue);
-          specificFilterString += `${filterPath}${r.comparator}${tokens(encodedFilterValue, stripes)}`;
-        }
 
+        } else {
+         // Ensure we're safely encoding all special characters into the filters path, after applying tokens
+         const encodedFilterValue = encodeURI(tokens(r.filterValue, stripes));
+         specificFilterString += `${filterPath}${r.comparator}${encodedFilterValue}`;
+        }
         if (ind !== rules.length - 1) {
           // This doesn't work as "||", it needs encoded value
           specificFilterString += '%7C%7C';
