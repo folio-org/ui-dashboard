@@ -84,7 +84,6 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
 
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
-      // const comp = r.comparator;
 
       rules.forEach((r, ind) => {
         if (r.comparator === 'isNull' 

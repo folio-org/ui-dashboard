@@ -46,8 +46,6 @@ const SimpleSearchFilterRuleField = ({
   || get(values, `${name}.comparator`) === 'isNotNull' 
   || get(values, `${name}.comparator`) === 'isSet' 
   || get(values, `${name}.comparator`) === 'isNotSet';
-  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
-
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
   if (valueType === 'Date') {
