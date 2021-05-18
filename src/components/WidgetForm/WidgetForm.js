@@ -20,18 +20,14 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import useWidgetDefinition from '../useWidgetDefinition';
-
 const propTypes = {
   data: PropTypes.shape({
-    defId: PropTypes.string,
     specificWidgetDefinition: PropTypes.object,
     widgetDefinitions: PropTypes.array
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    setDefId: PropTypes.func.isRequired
   }),
   params: PropTypes.shape({
     widgetId: PropTypes.string,
@@ -43,7 +39,6 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
-    defId,
     params,
     selectedDefinition,
     widgetDefinitions = [],
@@ -52,7 +47,6 @@ const WidgetForm = ({
   handlers:{
     onClose,
     onSubmit,
-    setDefId,
     setSelectedDef
   },
   pristine,
@@ -61,27 +55,11 @@ const WidgetForm = ({
   const { dirtyFields, values } = useFormState();
   const { change } = useForm();
 
-  /*
-   * Keep the defId up to date, this allows us to keep track of the definition beyond the id
-  */
-  useEffect(() => {
-    const currentDefId = get(values, 'definition.id');
-    if (currentDefId !== defId) {
-      // Definition has changed at this point
-      setDefId(currentDefId);
-    }
-  }, [defId, setDefId, values]);
-
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
   // Need to keep track of "next" widgetDef index for use in the modal.
   // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
-
- /*  const {
-    specificWidgetDefinition,
-    componentBundle: { WidgetFormComponent }
-  } = useWidgetDefinition(defId); */
 
   const renderPaneFooter = () => {
     return (

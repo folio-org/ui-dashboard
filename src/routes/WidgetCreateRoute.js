@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -7,7 +7,6 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm';
-import useWidgetDefinition from '../components/useWidgetDefinition';
 import getComponentsFromType from '../components/getComponentsFromType';
 
 
@@ -23,11 +22,6 @@ const WidgetCreateRoute = ({
   const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
-  );
-
-  const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
-    () => ky('servint/widgets/definitions/global').json()
   );
 
   const { mutateAsync: postWidget } = useMutation(
@@ -50,26 +44,20 @@ const WidgetCreateRoute = ({
       enabled: !!params.widgetId
     }
   );
-
-  /*
-   * When the user selects a widgetDefinition it'll just be an id.
-   * We will want to know the specific details for the definition (both in form and for submit)
-   * so we fetch them again by way of a callback when the user makes their selection
-   */
-  const [defId, setDefId] = useState(widget?.definition?.id);
-
-  const { data: existingWidgetDefinition } = useQuery(
-    // Ensure we refetch widget if widgetId changes
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefinition', params.widgetId],
-    () => ky(`servint/widgets/definitions/global?name=${widget.definition?.name}&version=${widget.definition?.version}`).json(),
-    {
-      /* Only run this query if we have fetched the widget itself successfully */
-      enabled: !!widget
-    }
+  
+  // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
+  const { data: widgetDefinitions } = useQuery(
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
+    () => ky(`servint/widgets/definitions/global${widget ? `?name=${widget.definition?.name}&version=${widget.definition?.version}` : ''}`).json()
   );
+  const [selectedDefinition, setSelectedDef] = useState();
 
-  const [selectedDefinition, setSelectedDef] = useState(existingWidgetDefinition);
-  console.log("selectedDefinition: %o", selectedDefinition)
+  useEffect(() => {
+    // Widget may need a render cycle to be fetched, if and when it does get fetched set selectedDef to it
+    if (widget) {
+      setSelectedDef(widgetDefinitions?.[0])
+    }
+  }, [widget, widgetDefinitions])
 
   const {
     submitManipulation,
@@ -77,17 +65,12 @@ const WidgetCreateRoute = ({
     WidgetFormComponent
   } = getComponentsFromType(selectedDefinition?.type?.name)
 
-/*   const {
-    // Get the type specific functions from useWidgetDef
-    componentBundle: {
-      submitManipulation,
-      widgetToInitialValues
-    }
-  } = useWidgetDefinition(defId); */
-
   let initialValues = {};
   if (widget) {
-    initialValues = widgetToInitialValues(widget);
+    initialValues = {
+      definition: 0,
+      ...widgetToInitialValues(widget)
+   };
   }
 
   const handleClose = () => {
@@ -153,7 +136,6 @@ const WidgetCreateRoute = ({
           <form onSubmit={handleSubmit}>
             <WidgetForm
               data={{
-                defId,
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
                 params,
@@ -164,7 +146,6 @@ const WidgetCreateRoute = ({
               handlers={{
                 onClose: handleClose,
                 onSubmit: handleSubmit,
-                setDefId,
                 setSelectedDef
               }}
             />

@@ -13,6 +13,8 @@ import css from './Dashboard.css';
 import { Widget } from '../Widget';
 import getComponentsFromType from '../getComponentsFromType';
 
+import useWidgetDefinition from '../useWidgetDefinition';
+
 const propTypes = {
   dashboardId: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired,
@@ -36,7 +38,13 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
   };
 
   const renderWidget = (widget) => {
-    const { WidgetComponent } = getComponentsFromType(widget.definition.type.name);
+    const {
+      specificWidgetDefinition,
+      componentBundle: {
+        WidgetComponent
+      }
+    } = useWidgetDefinition(widget.definition?.name, widget.definition?.version);
+
     return (
       <Widget
         key={`widget-${widget.id}`}
@@ -45,8 +53,9 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
         widget={widget}
       >
         <WidgetComponent
-          key={`${widget.definition.type.name}-${widget.id}`}
+          key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
           widget={widget}
+          widgetDef={specificWidgetDefinition?.definition}
         />
       </Widget>
     );

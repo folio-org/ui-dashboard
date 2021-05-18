@@ -19,7 +19,8 @@ import { WidgetFooter } from '../../../Widget';
 import css from './SimpleSearch.css';
 
 const SimpleSearch = ({
-  widget
+  widget,
+  widgetDef
 }) => {
   const intl = useIntl();
   /*
@@ -30,7 +31,6 @@ const SimpleSearch = ({
    */
 
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
-  const widgetDef = JSON.parse(widget.definition.definition);
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
 
@@ -105,10 +105,8 @@ export default SimpleSearch;
 SimpleSearch.propTypes = {
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
-    definition: PropTypes.shape({
-      definition: PropTypes.string.isRequired
-    }).isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  widgetDef: PropTypes.object.isRequired
 };
