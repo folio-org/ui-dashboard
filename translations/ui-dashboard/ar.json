@@ -105,15 +105,15 @@
     "simpleSearchForm.filters.dateFilterField.uuid": "المعرّف الفريد العمومي",
     "simpleSearchForm.results.columns": "الأعمدة",
     "simpleSearchForm.results.resultDeleteAria": "إزالة عمود {index}",
-    "dashboard.removeWidget": "إزالة الودجة",
-    "dashboard.remove": "إزالة",
-    "dashboard.removeWidgetConfirmMessage": "ستتم <strong>إزالة</strong> الودجة <strong>{name}</strong>",
     "widgetHeader.actionsButtonLabel": "إجراءات للودجة: {widgetName}",
     "widgetHeader.editButtonLabel": "تحرير الودجة: {widgetName}",
     "widgetHeader.editButton": "تحرير",
-    "widgetHeader.deleteButtonLabel": "إزالة الودجة: {widgetName}",
-    "widgetHeader.deleteButton": "إزالة",
+    "widgetHeader.deleteButtonLabel": "حذف الودجة: {widgetName}",
+    "widgetHeader.deleteButton": "حذف",
     "simpleSearchForm.filters.dateFilterField.offsetValidation": "يجب أن يكون الأوفسيت أكبر من أو يساوي 0 ولا يزيد عن 999",
     "simpleSearchForm.results.minimumWarning": "خطأ: يجب أن يحتوي عرض النتائج على عمود واحد على الأقل.",
-    "simpleSearch.widget.linkTextForWidget": "{linkText} للودجة: {widgetName}"
+    "simpleSearch.widget.linkTextForWidget": "{linkText} للودجة: {widgetName}",
+    "dashboard.deleteWidget": "حذف الودجة",
+    "dashboard.delete": "حذف",
+    "dashboard.deleteWidgetConfirmMessage": "سيتم <strong>حذف</strong> الودجة <strong>{name}</strong>"
 }
