@@ -45,12 +45,15 @@ const WidgetForm = ({
   data: {
     defId,
     params,
-    widgetDefinitions = []
+    selectedDefinition,
+    widgetDefinitions = [],
+    WidgetFormComponent
   } = {},
   handlers:{
     onClose,
     onSubmit,
-    setDefId
+    setDefId,
+    setSelectedDef
   },
   pristine,
   submitting,
@@ -71,12 +74,14 @@ const WidgetForm = ({
 
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
+  // Need to keep track of "next" widgetDef index for use in the modal.
+  // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
 
-  const {
+ /*  const {
     specificWidgetDefinition,
     componentBundle: { WidgetFormComponent }
-  } = useWidgetDefinition(defId);
+  } = useWidgetDefinition(defId); */
 
   const renderPaneFooter = () => {
     return (
@@ -119,13 +124,14 @@ const WidgetForm = ({
       }
     });
 
-    change('definition.id', newDef);
+    change('definition', newDef);
+    setSelectedDef(widgetDefinitions[newDef])
     setNewDef();
   };
 
   const selectifiedWidgetDefs = [
     { value: '', label: '' },
-    ...widgetDefinitions.map(wd => ({ value: wd.id, label: wd.name }))
+    ...widgetDefinitions.map((wd, index) => ({ value: index, label: wd.name }))
   ];
 
   return (
@@ -161,11 +167,11 @@ const WidgetForm = ({
                   component={Select}
                   dataOptions={selectifiedWidgetDefs}
                   disabled={!!params.widgetId}
-                  name="definition.id"
+                  name="definition"
                   onChange={e => {
                     // Other than the name/def, are any of the fields dirty?
                     delete dirtyFields.name;
-                    delete dirtyFields['definition.id'];
+                    delete dirtyFields['definition'];
                     const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
 
                     // If we have dirty fields, set up confirmation modal
@@ -173,7 +179,8 @@ const WidgetForm = ({
                       setNewDef(e.target.value);
                       setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
                     } else {
-                      change('definition.id', e.target.value);
+                      change('definition', e.target.value);
+                      setSelectedDef(widgetDefinitions[e.target.value])
                     }
                   }}
                   required
@@ -182,10 +189,10 @@ const WidgetForm = ({
               </KeyValue>
             </Col>
           </Row>
-          {specificWidgetDefinition &&
+          {selectedDefinition &&
             // Get specific form component for the selected widgetDefinition
             <WidgetFormComponent
-              specificWidgetDefinition={specificWidgetDefinition}
+              specificWidgetDefinition={selectedDefinition}
             />
           }
         </Pane>

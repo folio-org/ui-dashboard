@@ -8,6 +8,8 @@ import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm';
 import useWidgetDefinition from '../components/useWidgetDefinition';
+import getComponentsFromType from '../components/getComponentsFromType';
+
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */
 const WidgetCreateRoute = ({
@@ -25,7 +27,7 @@ const WidgetCreateRoute = ({
 
   const { data: widgetDefinitions } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
-    () => ky('servint/widgets/definitions').json()
+    () => ky('servint/widgets/definitions/global').json()
   );
 
   const { mutateAsync: postWidget } = useMutation(
@@ -44,7 +46,7 @@ const WidgetCreateRoute = ({
     ['ui-dashboard', 'widgetCreateRoute', 'getWidget', params.widgetId],
     () => ky(`servint/widgets/instances/${params.widgetId}`).json(),
     {
-      /* Only run this query if the user has selected a widgetDefinition */
+      /* Only run this query if we have an existing widgetInstance */
       enabled: !!params.widgetId
     }
   );
@@ -55,13 +57,33 @@ const WidgetCreateRoute = ({
    * so we fetch them again by way of a callback when the user makes their selection
    */
   const [defId, setDefId] = useState(widget?.definition?.id);
+
+  const { data: existingWidgetDefinition } = useQuery(
+    // Ensure we refetch widget if widgetId changes
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefinition', params.widgetId],
+    () => ky(`servint/widgets/definitions/global?name=${widget.definition?.name}&version=${widget.definition?.version}`).json(),
+    {
+      /* Only run this query if we have fetched the widget itself successfully */
+      enabled: !!widget
+    }
+  );
+
+  const [selectedDefinition, setSelectedDef] = useState(existingWidgetDefinition);
+  console.log("selectedDefinition: %o", selectedDefinition)
+
   const {
+    submitManipulation,
+    widgetToInitialValues,
+    WidgetFormComponent
+  } = getComponentsFromType(selectedDefinition?.type?.name)
+
+/*   const {
     // Get the type specific functions from useWidgetDef
     componentBundle: {
       submitManipulation,
       widgetToInitialValues
     }
-  } = useWidgetDefinition(defId);
+  } = useWidgetDefinition(defId); */
 
   let initialValues = {};
   if (widget) {
@@ -83,7 +105,13 @@ const WidgetCreateRoute = ({
       ...tweakedWidgetConf
     });
     // Include other necessary metadata
-    const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
+    const submitValue = {
+      definitionName: selectedDefinition.name,
+      definitionVersion: selectedDefinition.version,
+      name,
+      owner: { id: dashboard.id },
+      configuration: conf
+    };
 
     if (params.widgetId) {
       // Widget already exists, PUT and close
@@ -129,12 +157,15 @@ const WidgetCreateRoute = ({
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
                 params,
-                widgetDefinitions
+                selectedDefinition,
+                widgetDefinitions,
+                WidgetFormComponent
               }}
               handlers={{
                 onClose: handleClose,
                 onSubmit: handleSubmit,
-                setDefId
+                setDefId,
+                setSelectedDef
               }}
             />
           </form>
