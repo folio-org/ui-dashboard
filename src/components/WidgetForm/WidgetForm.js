@@ -103,7 +103,7 @@ const WidgetForm = ({
     });
 
     change('definition', newDef);
-    setSelectedDef(widgetDefinitions[newDef])
+    setSelectedDef(widgetDefinitions[newDef]);
     setNewDef();
   };
 
@@ -149,7 +149,7 @@ const WidgetForm = ({
                   onChange={e => {
                     // Other than the name/def, are any of the fields dirty?
                     delete dirtyFields.name;
-                    delete dirtyFields['definition'];
+                    delete dirtyFields.definition;
                     const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
 
                     // If we have dirty fields, set up confirmation modal
@@ -158,7 +158,7 @@ const WidgetForm = ({
                       setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
                     } else {
                       change('definition', e.target.value);
-                      setSelectedDef(widgetDefinitions[e.target.value])
+                      setSelectedDef(widgetDefinitions[e.target.value]);
                     }
                   }}
                   required

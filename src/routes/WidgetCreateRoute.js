@@ -44,7 +44,7 @@ const WidgetCreateRoute = ({
       enabled: !!params.widgetId
     }
   );
-  
+
   // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
   const { data: widgetDefinitions } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
@@ -55,22 +55,22 @@ const WidgetCreateRoute = ({
   useEffect(() => {
     // Widget may need a render cycle to be fetched, if and when it does get fetched set selectedDef to it
     if (widget) {
-      setSelectedDef(widgetDefinitions?.[0])
+      setSelectedDef(widgetDefinitions?.[0]);
     }
-  }, [widget, widgetDefinitions])
+  }, [widget, widgetDefinitions]);
 
   const {
     submitManipulation,
     widgetToInitialValues,
     WidgetFormComponent
-  } = getComponentsFromType(selectedDefinition?.type?.name)
+  } = getComponentsFromType(selectedDefinition?.type?.name);
 
   let initialValues = {};
   if (widget) {
     initialValues = {
       definition: 0,
       ...widgetToInitialValues(widget)
-   };
+    };
   }
 
   const handleClose = () => {
