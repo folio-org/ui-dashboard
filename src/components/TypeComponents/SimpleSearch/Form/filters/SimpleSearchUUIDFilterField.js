@@ -29,12 +29,15 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const noValueNeeded = get(values, `${name}.comparator`) === 'isNull' 
-  || get(values, `${name}.comparator`) === 'isNotNull' 
-  || get(values, `${name}.comparator`) === 'isSet' 
-  || get(values, `${name}.comparator`) === 'isNotSet';
+  const comp = values?.[name?.comparator];
+  const comparatorSufficient =
+    comp === 'isNull' ||
+    comp === 'isNotNull' ||
+    comp === 'isSet' ||
+    comp === 'isNotSet' ||
+    comp === 'isEmpty' ||
+    comp === 'isNotEmpty';
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
-
 
   // Resource variable for UUID case
   const [resource, setResource] = useState(get(initialValues, `${name}.resource`) ?? {});
@@ -83,14 +86,14 @@ const SimpleSearchUUIDFilterField = ({
                     <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
                   </div>
                 }
-                disabled={noValueNeeded}
+                disabled={comparatorSufficient}
                 name={name}
                 relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
                     disabled={
-                      noValueNeeded ||
+                      comparatorSufficient ||
                       relOrAbsValue === 'relative'
                     }
                     name={`${name}.filterValue`}
@@ -138,7 +141,7 @@ const SimpleSearchUUIDFilterField = ({
             <Field
               {...filterComponentProps}
               component={filterComponent}
-              disabled={noValueNeeded}
+              disabled={comparatorSufficient}
               name={`${name}.filterValue`}
               validate={(value) => {
                 if (!value) {

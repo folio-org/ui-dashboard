@@ -29,10 +29,14 @@ const SimpleSearchDateFilterField = ({
   const { values } = useFormState();
   const { change } = useForm();
 
-  const noValueNeeded = get(values, `${name}.comparator`) === 'isNull' 
-  || get(values, `${name}.comparator`) === 'isNotNull' 
-  || get(values, `${name}.comparator`) === 'isSet' 
-  || get(values, `${name}.comparator`) === 'isNotSet';
+  const comp = values?.[name?.comparator];
+  const comparatorSufficient =
+    comp === 'isNull' ||
+    comp === 'isNotNull' ||
+    comp === 'isSet' ||
+    comp === 'isNotSet' ||
+    comp === 'isEmpty' ||
+    comp === 'isNotEmpty';
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   useEffect(() => {
@@ -70,14 +74,14 @@ const SimpleSearchDateFilterField = ({
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.today" />
               </div>
             }
-            disabled={noValueNeeded}
+            disabled={comparatorSufficient}
             name={name}
             relativeComponent={
               <Field
                 {...filterComponentProps}
                 component={filterComponent}
                 disabled={
-                  noValueNeeded ||
+                  comparatorSufficient ||
                   relOrAbsValue === 'relative'
                 }
                 name={`${name}.filterValue`}
@@ -107,7 +111,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            noValueNeeded ||
+            comparatorSufficient ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -121,7 +125,7 @@ const SimpleSearchDateFilterField = ({
           component={TextField}
           defaultValue={0}
           disabled={
-            noValueNeeded ||
+            comparatorSufficient ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -158,7 +162,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            noValueNeeded ||
+            comparatorSufficient ||
             relOrAbsValue !== 'relative'
           }
           label={
