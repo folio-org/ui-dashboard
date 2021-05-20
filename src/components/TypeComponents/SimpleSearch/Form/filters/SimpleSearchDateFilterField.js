@@ -17,7 +17,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './SimpleSearchFilterFields.css';
-
+import isComparatorPresent from '../../../Helper/isComparatorPresent';
 
 const SimpleSearchDateFilterField = ({
   filterComponent,
@@ -29,14 +29,7 @@ const SimpleSearchDateFilterField = ({
   const { values } = useFormState();
   const { change } = useForm();
 
-  const comp = values?.[name?.comparator];
-  const comparatorSufficient =
-    comp === 'isNull' ||
-    comp === 'isNotNull' ||
-    comp === 'isSet' ||
-    comp === 'isNotSet' ||
-    comp === 'isEmpty' ||
-    comp === 'isNotEmpty';
+  const comparatorPresent = isComparatorPresent(values?.[name?.comparator]);
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   useEffect(() => {
@@ -74,14 +67,14 @@ const SimpleSearchDateFilterField = ({
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.today" />
               </div>
             }
-            disabled={comparatorSufficient}
+            disabled={comparatorPresent}
             name={name}
             relativeComponent={
               <Field
                 {...filterComponentProps}
                 component={filterComponent}
                 disabled={
-                  comparatorSufficient ||
+                  comparatorPresent ||
                   relOrAbsValue === 'relative'
                 }
                 name={`${name}.filterValue`}
@@ -111,7 +104,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            comparatorSufficient ||
+            comparatorPresent ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -125,7 +118,7 @@ const SimpleSearchDateFilterField = ({
           component={TextField}
           defaultValue={0}
           disabled={
-            comparatorSufficient ||
+            comparatorPresent ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -162,7 +155,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            comparatorSufficient ||
+            comparatorPresent ||
             relOrAbsValue !== 'relative'
           }
           label={

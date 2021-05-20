@@ -14,9 +14,9 @@ import {
 
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
-
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './SimpleSearchFilterFields.css';
+import isComparatorPresent from '../../../Helper/isComparatorPresent';
 
 
 const SimpleSearchUUIDFilterField = ({
@@ -29,14 +29,8 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const comp = values?.[name?.comparator];
-  const comparatorSufficient =
-    comp === 'isNull' ||
-    comp === 'isNotNull' ||
-    comp === 'isSet' ||
-    comp === 'isNotSet' ||
-    comp === 'isEmpty' ||
-    comp === 'isNotEmpty';
+  const comparatorPresent = isComparatorPresent(values?.[name?.comparator]);
+
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   // Resource variable for UUID case
@@ -86,14 +80,14 @@ const SimpleSearchUUIDFilterField = ({
                     <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
                   </div>
                 }
-                disabled={comparatorSufficient}
+                disabled={comparatorPresent}
                 name={name}
                 relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
                     disabled={
-                      comparatorSufficient ||
+                      comparatorPresent ||
                       relOrAbsValue === 'relative'
                     }
                     name={`${name}.filterValue`}
@@ -141,7 +135,7 @@ const SimpleSearchUUIDFilterField = ({
             <Field
               {...filterComponentProps}
               component={filterComponent}
-              disabled={comparatorSufficient}
+              disabled={comparatorPresent}
               name={`${name}.filterValue`}
               validate={(value) => {
                 if (!value) {
