@@ -6,6 +6,6 @@ const comparatorList = [
   'isEmpty',
   'isNotEmpty',
 ];
-export default function isComparatorPresent(comparator) {
+export default function isComparatorSpecialCase(comparator) {
   return comparatorList.includes(comparator);
 }

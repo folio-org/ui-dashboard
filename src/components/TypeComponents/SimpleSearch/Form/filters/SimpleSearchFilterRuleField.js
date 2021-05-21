@@ -14,7 +14,7 @@ import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
-import isComparatorPresent from '../../../utilities';
+import isComparatorSpecialCase from '../../../utilities';
 
 
 const SimpleSearchFilterRuleField = ({
@@ -43,7 +43,7 @@ const SimpleSearchFilterRuleField = ({
     }
   }, [change, name, selectifiedComparators, values]);
 
-  const comparatorPresent = isComparatorPresent(values?.[name?.comparator]);
+  const comparatorPresent = isComparatorSpecialCase(values?.[name?.comparator]);
 
 
   // If type is Date or UUID then we need to do some extra work, send to specific components

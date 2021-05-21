@@ -16,7 +16,7 @@ import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './SimpleSearchFilterFields.css';
-import isComparatorPresent from '../../../utilities';
+import isComparatorSpecialCase from '../../../utilities';
 
 
 const SimpleSearchUUIDFilterField = ({
@@ -29,7 +29,7 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const comparatorPresent = isComparatorPresent(values?.[name?.comparator]);
+  const comparatorPresent = isComparatorSpecialCase(values?.[name?.comparator]);
 
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 

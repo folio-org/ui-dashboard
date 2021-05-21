@@ -1,5 +1,5 @@
 import tokens from '../../../../tokens';
-import isComparatorPresent from '../../utilities';
+import isComparatorSpecialCase from '../../utilities';
 
 const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   const {
@@ -86,7 +86,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
       rules.forEach((r, ind) => {
-        if (isComparatorPresent(r.comparator)) {
+        if (isComparatorSpecialCase(r.comparator)) {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} ${r.comparator}`;
         } else {
