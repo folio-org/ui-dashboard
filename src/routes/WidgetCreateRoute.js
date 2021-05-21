@@ -63,7 +63,7 @@ const WidgetCreateRoute = ({
     submitManipulation,
     widgetToInitialValues,
     WidgetFormComponent
-  } = getComponentsFromType(selectedDefinition?.type?.name);
+  } = getComponentsFromType(selectedDefinition?.type?.name ?? "");
 
   let initialValues = {};
   if (widget) {
