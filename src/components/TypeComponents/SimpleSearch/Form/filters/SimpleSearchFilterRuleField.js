@@ -14,7 +14,7 @@ import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
-import isComparatorPresent from '../../../Helper/isComparatorPresent';
+import isComparatorPresent from '../../../utilities';
 
 
 const SimpleSearchFilterRuleField = ({

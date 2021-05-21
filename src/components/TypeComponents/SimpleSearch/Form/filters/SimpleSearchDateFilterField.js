@@ -17,7 +17,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './SimpleSearchFilterFields.css';
-import isComparatorPresent from '../../../Helper/isComparatorPresent';
+import isComparatorPresent from '../../../utilities';
 
 const SimpleSearchDateFilterField = ({
   filterComponent,
