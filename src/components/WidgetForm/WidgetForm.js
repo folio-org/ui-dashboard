@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 
 import { Field, useFormState, useForm } from 'react-final-form';
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 
@@ -17,7 +17,7 @@ const useWidgetDefinition = (defName, defVersion = undefined) => {
   const { data: { 0: specificWidgetDefinition } = [] } = useQuery(
     // Ensure we get a fresh fetch per definition
     ['ui-dashboard', 'useWidgetDefinition', 'getSpecificWidgetDef', defName, defVersion],
-    () => ky(`servint/widgets/definitions/global?name=${defName}${defVersion ? `&version=${defVersion}` : ''}`).json()
+    () => ky(`servint/widgets/definitions/global?name=${defName}${defVersion ? '&version='+defVersion : ''}`).json()
   );
 
   const componentBundle = getComponentsFromType(specificWidgetDefinition?.type?.name);

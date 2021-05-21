@@ -11,7 +11,6 @@ import NoWidgets from './NoWidgets';
 import css from './Dashboard.css';
 
 import { Widget } from '../Widget';
-import getComponentsFromType from '../getComponentsFromType';
 
 import useWidgetDefinition from '../useWidgetDefinition';
 
