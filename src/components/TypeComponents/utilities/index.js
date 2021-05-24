@@ -1,1 +1,1 @@
-export { default } from './isComparatorPresent';
+export { default } from './isComparatorSpecialCase';

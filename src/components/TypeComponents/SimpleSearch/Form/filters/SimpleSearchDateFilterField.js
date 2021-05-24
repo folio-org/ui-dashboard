@@ -12,7 +12,6 @@ import {
   TextField
 } from '@folio/stripes/components';
 
-import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
@@ -29,12 +28,12 @@ const SimpleSearchDateFilterField = ({
   const { values } = useFormState();
   const { change } = useForm();
 
-  const comparatorPresent = isComparatorSpecialCase(values?.[name?.comparator]);
-  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
+  const relOrAbsValue = values?.[name?.relativeOrAbsolute];
 
   useEffect(() => {
     // Ensure offset is always 0 rather than being unset
-    if (get(values, `${name}.offset`) === undefined) {
+    if (values?.[name?.offset] === undefined) {
       change(`${name}.offset`, 0);
     }
 
@@ -67,19 +66,19 @@ const SimpleSearchDateFilterField = ({
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.today" />
               </div>
             }
-            disabled={comparatorPresent}
+            disabled={comparatorIsSpecialCase}
             name={name}
             relativeComponent={
               <Field
                 {...filterComponentProps}
                 component={filterComponent}
                 disabled={
-                  comparatorPresent ||
+                  comparatorIsSpecialCase ||
                   relOrAbsValue === 'relative'
                 }
                 name={`${name}.filterValue`}
                 validate={(value, allValues) => {
-                  if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+                  if (allValues?.[name?.relativeOrAbsolute] === 'absolute' && !value) {
                     return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
                   }
                   return undefined;
@@ -104,7 +103,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            comparatorPresent ||
+            comparatorIsSpecialCase ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -118,7 +117,7 @@ const SimpleSearchDateFilterField = ({
           component={TextField}
           defaultValue={0}
           disabled={
-            comparatorPresent ||
+            comparatorIsSpecialCase ||
             relOrAbsValue !== 'relative'
           }
           label={
@@ -155,7 +154,7 @@ const SimpleSearchDateFilterField = ({
             }
           ]}
           disabled={
-            comparatorPresent ||
+            comparatorIsSpecialCase ||
             relOrAbsValue !== 'relative'
           }
           label={

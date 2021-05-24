@@ -43,7 +43,7 @@ const SimpleSearchFilterRuleField = ({
     }
   }, [change, name, selectifiedComparators, values]);
 
-  const comparatorPresent = isComparatorSpecialCase(values?.[name?.comparator]);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
 
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
@@ -91,7 +91,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
-            disabled={comparatorPresent}
+            disabled={comparatorIsSpecialCase}
             name={`${name}.filterValue`}
           />
         </KeyValue>

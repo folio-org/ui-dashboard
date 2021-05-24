@@ -29,7 +29,7 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const comparatorPresent = isComparatorSpecialCase(values?.[name?.comparator]);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
 
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
@@ -80,14 +80,14 @@ const SimpleSearchUUIDFilterField = ({
                     <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
                   </div>
                 }
-                disabled={comparatorPresent}
+                disabled={comparatorIsSpecialCase}
                 name={name}
                 relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
                     disabled={
-                      comparatorPresent ||
+                      comparatorIsSpecialCase ||
                       relOrAbsValue === 'relative'
                     }
                     name={`${name}.filterValue`}
@@ -135,7 +135,7 @@ const SimpleSearchUUIDFilterField = ({
             <Field
               {...filterComponentProps}
               component={filterComponent}
-              disabled={comparatorPresent}
+              disabled={comparatorIsSpecialCase}
               name={`${name}.filterValue`}
               validate={(value) => {
                 if (!value) {
