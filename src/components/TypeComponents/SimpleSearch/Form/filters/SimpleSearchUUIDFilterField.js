@@ -29,7 +29,8 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
+  const comparator = get(values, `${name}.comparator`);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
 
   const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
