@@ -9,7 +9,7 @@ import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
   (entireRecord) => instructions_to_render_specific_field
 */
 const getDefaultRenderFunction = ({ accessPath, valueType }) => {
-  if (accessPath) {
+  if (accessPath && valueType) {
     switch (valueType.toLowerCase()) {
       case 'date': {
         return (data) => {
