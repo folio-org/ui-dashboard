@@ -1,4 +1,5 @@
 import tokens from '../../../../tokens';
+import isComparatorSpecialCase from '../../utilities';
 
 const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   const {
@@ -85,15 +86,17 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
       // Then take each of the rules within the filter, and OR them together with the correct comparators
       const { rules } = f;
       rules.forEach((r, ind) => {
-        if (r.comparator === 'isNull' || r.comparator === 'isNotNull') {
+        if (isComparatorSpecialCase(r.comparator)) {
           // If we're allowing null the filterString is slightly different
           specificFilterString += `${filterPath} ${r.comparator}`;
         } else {
           // Ensure we're safely encoding all special characters into the filters path
           const encodedFilterValue = encodeURI(r.filterValue);
-          specificFilterString += `${filterPath}${r.comparator}${tokens(encodedFilterValue, stripes)}`;
+          specificFilterString += `${filterPath}${r.comparator}${tokens(
+            encodedFilterValue,
+            stripes
+          )}`;
         }
-
         if (ind !== rules.length - 1) {
           // This doesn't work as "||", it needs encoded value
           specificFilterString += '%7C%7C';

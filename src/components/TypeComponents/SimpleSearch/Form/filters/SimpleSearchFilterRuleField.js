@@ -14,6 +14,7 @@ import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
+import isComparatorSpecialCase from '../../../utilities';
 
 
 const SimpleSearchFilterRuleField = ({
@@ -42,8 +43,8 @@ const SimpleSearchFilterRuleField = ({
     }
   }, [change, name, selectifiedComparators, values]);
 
+  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
 
-  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
   if (valueType === 'Date') {
@@ -90,7 +91,7 @@ const SimpleSearchFilterRuleField = ({
           <Field
             {...filterComponentProps}
             component={filterComponent}
-            disabled={isSetOrUnset}
+            disabled={comparatorIsSpecialCase}
             name={`${name}.filterValue`}
           />
         </KeyValue>

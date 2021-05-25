@@ -14,9 +14,9 @@ import {
 
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
-
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './SimpleSearchFilterFields.css';
+import isComparatorSpecialCase from '../../../utilities';
 
 
 const SimpleSearchUUIDFilterField = ({
@@ -29,9 +29,9 @@ const SimpleSearchUUIDFilterField = ({
   const { initialValues, values } = useFormState();
   const { change } = useForm();
 
-  const isSetOrUnset = get(values, `${name}.comparator`) === 'isNull' || get(values, `${name}.comparator`) === 'isNotNull';
-  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
 
+  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   // Resource variable for UUID case
   const [resource, setResource] = useState(get(initialValues, `${name}.resource`) ?? {});
@@ -80,14 +80,14 @@ const SimpleSearchUUIDFilterField = ({
                     <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
                   </div>
                 }
-                disabled={isSetOrUnset}
+                disabled={comparatorIsSpecialCase}
                 name={name}
                 relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
                     disabled={
-                      isSetOrUnset ||
+                      comparatorIsSpecialCase ||
                       relOrAbsValue === 'relative'
                     }
                     name={`${name}.filterValue`}
@@ -135,7 +135,7 @@ const SimpleSearchUUIDFilterField = ({
             <Field
               {...filterComponentProps}
               component={filterComponent}
-              disabled={isSetOrUnset}
+              disabled={comparatorIsSpecialCase}
               name={`${name}.filterValue`}
               validate={(value) => {
                 if (!value) {
