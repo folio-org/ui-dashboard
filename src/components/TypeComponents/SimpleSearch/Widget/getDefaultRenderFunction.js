@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { get } from 'lodash';
 
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 
@@ -22,21 +23,21 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
     switch (valueType.toLowerCase()) {
       case 'date': {
         return (data) => {
-          const date = data[accessPath];
+          const date = get(data, accessPath);
           return date ? <FormattedUTCDate value={date} /> :
           <NoValue />;
         };
       }
       case 'boolean': {
         return (data) => {
-          const bool = data[accessPath];
+          const bool = get(data, accessPath);
           return bool ? <Icon icon="check-circle" /> :
           <Icon icon="times-circle" />;
         };
       }
       case 'link': {
         return (data) => {
-          const linkText = data[accessPath];
+          const linkText = get(data, accessPath);
           const viewTemplate = Registry.getResource(resource)?.getViewTemplate()
           if (!viewTemplate) {
             return linkText;
@@ -53,8 +54,8 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       }
       case 'array': {
         return (data) => {
-          const array = data[accessPath];
-          
+          const array = get(data, accessPath);
+
           if (arrayDisplayPath) {
             return array.map(a => a[arrayDisplayPath]).join(", ")
           }
@@ -62,7 +63,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
         };
       }
       default: {
-        return (data) => data[accessPath];
+        return (data) => get(data, accessPath);
       }
     }
   } else {
