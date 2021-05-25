@@ -43,8 +43,8 @@ const SimpleSearchFilterRuleField = ({
     }
   }, [change, name, selectifiedComparators, values]);
 
-  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
-
+  const comparator = get(values, `${name}.comparator`);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
   if (valueType === 'Date') {

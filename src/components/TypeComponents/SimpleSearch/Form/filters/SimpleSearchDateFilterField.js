@@ -4,6 +4,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Field, useForm, useFormState } from 'react-final-form';
 
+import { get } from 'lodash';
+
 import {
   Col,
   KeyValue,
@@ -28,7 +30,8 @@ const SimpleSearchDateFilterField = ({
   const { values } = useFormState();
   const { change } = useForm();
 
-  const comparatorIsSpecialCase = isComparatorSpecialCase(values?.[name?.comparator]);
+  const comparator = get(values, `${name}.comparator`);
+  const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
   const relOrAbsValue = values?.[name?.relativeOrAbsolute];
 
   useEffect(() => {
