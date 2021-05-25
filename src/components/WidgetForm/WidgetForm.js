@@ -108,7 +108,7 @@ const WidgetForm = ({
 
   const selectifiedWidgetDefs = [
     { value: '', label: '' },
-    ...widgetDefinitions.map((wd, index) => ({ value: index, label: `${wd.name} (v${wd.version})` }))
+    ...widgetDefinitions.map((wd, index) => ({ value: index, label: wd.name }))
   ];
 
   return (

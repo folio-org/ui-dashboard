@@ -10,16 +10,15 @@ import Registry from '../../../../Registry'
   and returns a default renderFunction for that shape, of the form
   (entireRecord) => instructions_to_render_specific_field
 */
-const getDefaultRenderFunction = ({ accessPath, name: drcName, valueType }, resource) => {
+const getDefaultRenderFunction = ({ accessPath, name, valueType }, resource) => {
   // First attempt to get Registry render function
-  const regFunc = Registry.getRenderFunction(resource, drcName);
+  const regFunc = Registry.getRenderFunction(resource, name);
   if (regFunc) {
     return regFunc;
   }
 
   // If that does not exist, create default render function
   if (accessPath && valueType) {
-    console.log(`accessPath: ${accessPath}, valueType: ${valueType}`)
     switch (valueType.toLowerCase()) {
       case 'date': {
         return (data) => {
