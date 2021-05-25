@@ -10,7 +10,7 @@ import Registry from '../../../../Registry'
   and returns a default renderFunction for that shape, of the form
   (entireRecord) => instructions_to_render_specific_field
 */
-const getDefaultRenderFunction = ({ accessPath, name, valueType }, resource) => {
+const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueType }, resource) => {
   // First attempt to get Registry render function
   const regFunc = Registry.getRenderFunction(resource, name);
   if (regFunc) {
@@ -38,8 +38,6 @@ const getDefaultRenderFunction = ({ accessPath, name, valueType }, resource) => 
         return (data) => {
           const linkText = data[accessPath];
           const viewTemplate = Registry.getResource(resource)?.getViewTemplate()
-          console.log(`ViewTemplate for ${resource}: ${viewTemplate}`)
-          
           if (!viewTemplate) {
             return linkText;
           }
@@ -51,6 +49,16 @@ const getDefaultRenderFunction = ({ accessPath, name, valueType }, resource) => 
               {linkText}
             </Link>
           );
+        };
+      }
+      case 'array': {
+        return (data) => {
+          const array = data[accessPath];
+          
+          if (arrayDisplayPath) {
+            return array.map(a => a[arrayDisplayPath]).join(", ")
+          }
+          return array.join(", ")
         };
       }
       default: {
