@@ -56,7 +56,6 @@ const simpleSearchColumnParser = ({
     // NOTE this is column-wide, not cell wide.
     // That would need to happen in the SimpleTable component.
     const render = getDefaultRenderFunction(drc, resource);
-    console.log("Render: %o", render)
     // Pass render function entire object, not just cell value
     returnColumn.Cell = ({ row: { original } }) => render(original);
 
