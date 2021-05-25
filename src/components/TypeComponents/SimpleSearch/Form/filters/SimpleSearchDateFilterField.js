@@ -32,7 +32,7 @@ const SimpleSearchDateFilterField = ({
 
   const comparator = get(values, `${name}.comparator`);
   const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
-  const relOrAbsValue = values?.[name?.relativeOrAbsolute];
+  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
 
   useEffect(() => {
     // Ensure offset is always 0 rather than being unset
