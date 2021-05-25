@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 
 import { Field, useFormState, useForm } from 'react-final-form';
 
@@ -20,18 +19,14 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import useWidgetDefinition from '../useWidgetDefinition';
-
 const propTypes = {
   data: PropTypes.shape({
-    defId: PropTypes.string,
     specificWidgetDefinition: PropTypes.object,
     widgetDefinitions: PropTypes.array
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    setDefId: PropTypes.func.isRequired
   }),
   params: PropTypes.shape({
     widgetId: PropTypes.string,
@@ -43,14 +38,15 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
-    defId,
     params,
-    widgetDefinitions = []
+    selectedDefinition,
+    widgetDefinitions = [],
+    WidgetFormComponent
   } = {},
   handlers:{
     onClose,
     onSubmit,
-    setDefId
+    setSelectedDef
   },
   pristine,
   submitting,
@@ -58,25 +54,11 @@ const WidgetForm = ({
   const { dirtyFields, values } = useFormState();
   const { change } = useForm();
 
-  /*
-   * Keep the defId up to date, this allows us to keep track of the definition beyond the id
-  */
-  useEffect(() => {
-    const currentDefId = get(values, 'definition.id');
-    if (currentDefId !== defId) {
-      // Definition has changed at this point
-      setDefId(currentDefId);
-    }
-  }, [defId, setDefId, values]);
-
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
+  // Need to keep track of "next" widgetDef index for use in the modal.
+  // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
-
-  const {
-    specificWidgetDefinition,
-    componentBundle: { WidgetFormComponent }
-  } = useWidgetDefinition(defId);
 
   const renderPaneFooter = () => {
     return (
@@ -119,13 +101,14 @@ const WidgetForm = ({
       }
     });
 
-    change('definition.id', newDef);
+    change('definition', newDef);
+    setSelectedDef(widgetDefinitions[newDef]);
     setNewDef();
   };
 
   const selectifiedWidgetDefs = [
     { value: '', label: '' },
-    ...widgetDefinitions.map(wd => ({ value: wd.id, label: wd.name }))
+    ...widgetDefinitions.map((wd, index) => ({ value: index, label: `${wd.name} (v${wd.version})` }))
   ];
 
   return (
@@ -161,11 +144,11 @@ const WidgetForm = ({
                   component={Select}
                   dataOptions={selectifiedWidgetDefs}
                   disabled={!!params.widgetId}
-                  name="definition.id"
+                  name="definition"
                   onChange={e => {
                     // Other than the name/def, are any of the fields dirty?
                     delete dirtyFields.name;
-                    delete dirtyFields['definition.id'];
+                    delete dirtyFields.definition;
                     const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
 
                     // If we have dirty fields, set up confirmation modal
@@ -173,7 +156,8 @@ const WidgetForm = ({
                       setNewDef(e.target.value);
                       setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
                     } else {
-                      change('definition.id', e.target.value);
+                      change('definition', e.target.value);
+                      setSelectedDef(widgetDefinitions[e.target.value]);
                     }
                   }}
                   required
@@ -182,10 +166,10 @@ const WidgetForm = ({
               </KeyValue>
             </Col>
           </Row>
-          {specificWidgetDefinition &&
+          {selectedDefinition &&
             // Get specific form component for the selected widgetDefinition
             <WidgetFormComponent
-              specificWidgetDefinition={specificWidgetDefinition}
+              specificWidgetDefinition={selectedDefinition}
             />
           }
         </Pane>

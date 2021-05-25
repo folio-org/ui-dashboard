@@ -44,13 +44,23 @@
       {
         "permissionName": "module.dashboard.enabled",
         "displayName": "UI: Dashboard module is enabled",
-        "visible": true
+        "visible": false
       },
       {
         "permissionName": "settings.dashboard.enabled",
         "displayName": "Settings (dashboard): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
+        ],
+        "visible": false
+      },
+      {
+        "permissionName": "ui-dashboard.dashboards.manage",
+        "displayName": "Dashboard: Manage dashboard",
+        "description": "A user with this permission can create a dashboard and add, edit, remove and re-order widgets on their dashboard",
+        "subPermissions": [
+          "module.dashboard.enabled",
+          "servint.dashboards.manage"
         ],
         "visible": true
       }

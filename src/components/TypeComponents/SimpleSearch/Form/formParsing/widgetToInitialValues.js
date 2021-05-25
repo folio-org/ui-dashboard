@@ -71,9 +71,6 @@ const widgetToInitialValues = (widget) => {
 
   return {
     name: widget.name,
-    definition: {
-      id: widget.definition.id
-    },
     ...widgetConf
   };
 };

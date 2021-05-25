@@ -25,7 +25,7 @@ const SimpleSearchForm = ({
     sort: {
       columns: sortColumns = []
     } = {},
-  } = JSON.parse(specificWidgetDefinition?.definition);
+  } = specificWidgetDefinition?.definition;
 
   const initialAccordionState = {
     filters: true,
