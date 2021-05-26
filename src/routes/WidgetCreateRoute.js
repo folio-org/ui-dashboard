@@ -69,7 +69,7 @@ const WidgetCreateRoute = ({
   if (widget) {
     initialValues = {
       definition: 0,
-      ...widgetToInitialValues(widget)
+      ...widgetToInitialValues(widget, selectedDefinition)
     };
   }
 
