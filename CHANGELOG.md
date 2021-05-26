@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Fixed incorrect token parsing, added path builder test. ERM-1658
 * Changes to WidgetDefinition, WidgetInstance and WidgetType shape. Other code tweaks. ERM-1643
 * Registry setup event now only fires once
 * Added URI encoding to filter strings to deal with special characters.
