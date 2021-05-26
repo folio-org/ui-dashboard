@@ -36,7 +36,7 @@ const SimpleSearchDateFilterField = ({
 
   useEffect(() => {
     // Ensure offset is always 0 rather than being unset
-    if (values?.[name?.offset] === undefined) {
+    if (get(values, `${name}.offset`) === undefined) {
       change(`${name}.offset`, 0);
     }
 
