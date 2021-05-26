@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 
-import Registry from '../../../../Registry'
+import Registry from '../../../../Registry';
 
 /*
   Takes in a simpleSearch result->column shape
@@ -38,7 +38,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'link': {
         return (data) => {
           const linkText = get(data, accessPath);
-          const viewTemplate = Registry.getResource(resource)?.getViewTemplate()
+          const viewTemplate = Registry.getResource(resource)?.getViewTemplate();
           if (!viewTemplate) {
             return linkText;
           }
@@ -57,9 +57,9 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
           const array = get(data, accessPath);
 
           if (arrayDisplayPath) {
-            return array.map(a => get(a, arrayDisplayPath)).join(", ")
+            return array.map(a => get(a, arrayDisplayPath)).join(', ');
           }
-          return array.join(", ")
+          return array.join(', ');
         };
       }
       default: {
@@ -70,7 +70,6 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
     // No accessPath, just return full data as string (Will probably show as "[Object object]")
     return (data) => data.toString();
   }
-
 };
 
 export default getDefaultRenderFunction;

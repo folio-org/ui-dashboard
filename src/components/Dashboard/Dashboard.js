@@ -36,7 +36,7 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
 
-  const renderWidget = (widget) => {
+  const RenderWidget = ({ widget }) => {
     const {
       specificWidgetDefinition,
       componentBundle: {
@@ -60,13 +60,23 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
     );
   };
 
+  RenderWidget.propTypes = {
+    widget: PropTypes.shape({
+      definition: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        version: PropTypes.string.isRequired
+      }).isRequired,
+      id: PropTypes.string.isRequired
+    }).isRequired
+  };
+
   const dashboardContents = () => {
     if (!widgets?.length) {
       return <NoWidgets />;
     }
     return (
       <div className={css.widgetContainer}>
-        {widgets.map(w => renderWidget(w))}
+        {widgets.map(w => <RenderWidget widget={w} />)}
       </div>
     );
   };

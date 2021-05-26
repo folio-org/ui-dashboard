@@ -27,6 +27,7 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    setSelectedDef: PropTypes.func.isRequired
   }),
   params: PropTypes.shape({
     widgetId: PropTypes.string,

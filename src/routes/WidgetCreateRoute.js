@@ -78,7 +78,7 @@ const WidgetCreateRoute = ({
   };
 
   const doTheSubmit = ({
-    definition,
+    definition: _d,
     name,
     ...widgetConf
   }) => {
