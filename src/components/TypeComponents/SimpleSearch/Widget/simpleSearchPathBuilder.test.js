@@ -1,5 +1,5 @@
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import moment from 'moment';
+import tokens from '../../../../tokens';
 import simpleSearchPathBuilder from './simpleSearchPathBuilder';
 
 // Mock the stripes object we use for tokens
@@ -210,6 +210,26 @@ const widgetConfSpecialComparator = {
   }]
 }
 
+const widgetConfToday = {
+  "filterColumns": [{
+    "name": "startDate",
+    "rules": [{
+      "comparator": "==",
+      "filterValue": "{{currentDate}}"
+    }]
+  }]
+}
+
+const widgetConfMe = {
+  "filterColumns": [{
+    "name": "internalContact",
+    "rules": [{
+      "comparator": "!=",
+      "filterValue": "{{currentUser}}"
+    }]
+  }]
+}
+
 describe('simpleSearchPathBuilder', () => {
   test('simpleSearchPathBuilder function works as expected for just sort', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfSort, stripes);
@@ -233,6 +253,18 @@ describe('simpleSearchPathBuilder', () => {
 
   test('simpleSearchPathBuilder function works as expected with special comparators', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfSpecialComparator, stripes);
-    expect(output).toBe('erm/sas?filters=agreementStatus.value==draft&filters=name==wibble&sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?filters=cancellationDeadline%20isNotSet&stats=true');
+  });
+
+  test('simpleSearchPathBuilder function works as expected with date tokens', () => {
+    const today = tokens("{{currentDate}}", stripes)
+    const output = simpleSearchPathBuilder(widgetDef, widgetConfToday, stripes);
+    expect(output).toBe(`erm/sas?filters=startDate==${today}&stats=true`);
+  });
+
+  test('simpleSearchPathBuilder function works as expected with user tokens', () => {
+    const me = tokens("{{currentUser}}", stripes)
+    const output = simpleSearchPathBuilder(widgetDef, widgetConfMe, stripes);
+    expect(output).toBe(`erm/sas?filters=contacts.user.id!=${me}&stats=true`);
   });
 });

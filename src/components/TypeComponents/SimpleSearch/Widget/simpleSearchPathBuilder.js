@@ -88,14 +88,11 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
       rules.forEach((r, ind) => {
         if (isComparatorSpecialCase(r.comparator)) {
           // If we're allowing null the filterString is slightly different
-          specificFilterString += `${filterPath} ${r.comparator}`;
+          specificFilterString += `${filterPath}%20${r.comparator}`;
         } else {
-          // Ensure we're safely encoding all special characters into the filters path
-          const encodedFilterValue = encodeURI(r.filterValue);
-          specificFilterString += `${filterPath}${r.comparator}${tokens(
-            encodedFilterValue,
-            stripes
-          )}`;
+          // Ensure we're safely encoding all special characters into the filters path, after applying tokens
+          const encodedFilterValue = encodeURI(tokens(r.filterValue, stripes));
+          specificFilterString += `${filterPath}${r.comparator}${encodedFilterValue}`;
         }
         if (ind !== rules.length - 1) {
           // This doesn't work as "||", it needs encoded value
