@@ -7,7 +7,7 @@
 
 import moment from 'moment';
 
-function tokens(valueString, stripes, options = {}) {
+function tokens(valueString = '', stripes, options = {}) {
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 
   const tokenMatch = valueString.match(/\{\{(.*)\}\}/)?.[1];

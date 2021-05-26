@@ -105,9 +105,6 @@
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "Colonnes",
     "simpleSearchForm.results.resultDeleteAria": "Supprimer la colonne {index}",
-    "dashboard.removeWidget": "Supprimer le widget",
-    "dashboard.remove": "Retirer",
-    "dashboard.removeWidgetConfirmMessage": "Le widget <strong> {name} </strong> sera <strong> supprimé </strong> .",
     "widgetHeader.actionsButtonLabel": "Actions pour le widget: {widgetName}",
     "widgetHeader.editButtonLabel": "Modifier le widget: {widgetName}",
     "widgetHeader.editButton": "Modifier",
@@ -115,5 +112,8 @@
     "widgetHeader.deleteButton": "Retirer",
     "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
     "simpleSearchForm.results.minimumWarning": "Erreur: l'affichage des résultats doit contenir au moins une colonne.",
-    "simpleSearch.widget.linkTextForWidget": "{linkText} pour le widget: {widgetName}"
+    "simpleSearch.widget.linkTextForWidget": "{linkText} pour le widget: {widgetName}",
+    "dashboard.deleteWidget": "Supprimer le widget",
+    "dashboard.delete": "Supprimer",
+    "dashboard.deleteWidgetConfirmMessage": "Le widget <strong> {name} </strong> sera <strong> supprimé </strong> ."
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -7,7 +7,8 @@ import arrayMutators from 'final-form-arrays';
 import { useMutation, useQuery } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm';
-import useWidgetDefinition from '../components/useWidgetDefinition';
+import getComponentsFromType from '../components/getComponentsFromType';
+
 
 /* This name may be a bit of a misnomer, as the route is used for both create AND edit */
 const WidgetCreateRoute = ({
@@ -21,11 +22,6 @@ const WidgetCreateRoute = ({
   const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
-  );
-
-  const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
-    () => ky('servint/widgets/definitions').json()
   );
 
   const { mutateAsync: postWidget } = useMutation(
@@ -44,28 +40,37 @@ const WidgetCreateRoute = ({
     ['ui-dashboard', 'widgetCreateRoute', 'getWidget', params.widgetId],
     () => ky(`servint/widgets/instances/${params.widgetId}`).json(),
     {
-      /* Only run this query if the user has selected a widgetDefinition */
+      /* Only run this query if we have an existing widgetInstance */
       enabled: !!params.widgetId
     }
   );
 
-  /*
-   * When the user selects a widgetDefinition it'll just be an id.
-   * We will want to know the specific details for the definition (both in form and for submit)
-   * so we fetch them again by way of a callback when the user makes their selection
-   */
-  const [defId, setDefId] = useState(widget?.definition?.id);
-  const {
-    // Get the type specific functions from useWidgetDef
-    componentBundle: {
-      submitManipulation,
-      widgetToInitialValues
+  // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
+  const { data: widgetDefinitions } = useQuery(
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
+    () => ky(`servint/widgets/definitions/global${widget ? '?name='+widget.definition?.name + '&version='+widget.definition?.version : ''}`).json()
+  );
+  const [selectedDefinition, setSelectedDef] = useState();
+
+  useEffect(() => {
+    // Widget may need a render cycle to be fetched, if and when it does get fetched set selectedDef to it
+    if (widget) {
+      setSelectedDef(widgetDefinitions?.[0]);
     }
-  } = useWidgetDefinition(defId);
+  }, [widget, widgetDefinitions]);
+
+  const {
+    submitManipulation,
+    widgetToInitialValues,
+    WidgetFormComponent
+  } = getComponentsFromType(selectedDefinition?.type?.name ?? "");
 
   let initialValues = {};
   if (widget) {
-    initialValues = widgetToInitialValues(widget);
+    initialValues = {
+      definition: 0,
+      ...widgetToInitialValues(widget)
+    };
   }
 
   const handleClose = () => {
@@ -83,7 +88,13 @@ const WidgetCreateRoute = ({
       ...tweakedWidgetConf
     });
     // Include other necessary metadata
-    const submitValue = { definition, name, owner: { id: dashboard.id }, configuration: conf };
+    const submitValue = {
+      definitionName: selectedDefinition.name,
+      definitionVersion: selectedDefinition.version,
+      name,
+      owner: { id: dashboard.id },
+      configuration: conf
+    };
 
     if (params.widgetId) {
       // Widget already exists, PUT and close
@@ -125,16 +136,17 @@ const WidgetCreateRoute = ({
           <form onSubmit={handleSubmit}>
             <WidgetForm
               data={{
-                defId,
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
                 params,
-                widgetDefinitions
+                selectedDefinition,
+                widgetDefinitions,
+                WidgetFormComponent
               }}
               handlers={{
                 onClose: handleClose,
                 onSubmit: handleSubmit,
-                setDefId
+                setSelectedDef
               }}
             />
           </form>

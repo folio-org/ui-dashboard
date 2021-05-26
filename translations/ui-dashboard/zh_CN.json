@@ -105,9 +105,6 @@
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "列",
     "simpleSearchForm.results.resultDeleteAria": "移除列{index}",
-    "dashboard.removeWidget": "移除小工具",
-    "dashboard.remove": "移除",
-    "dashboard.removeWidgetConfirmMessage": "小工具 <strong>{name} </strong>将被<strong>移除</strong> 。",
     "widgetHeader.actionsButtonLabel": "小工具的操作： {widgetName}",
     "widgetHeader.editButtonLabel": "编辑小工具： {widgetName}",
     "widgetHeader.editButton": "编辑",
@@ -115,5 +112,8 @@
     "widgetHeader.deleteButton": "移除",
     "simpleSearchForm.filters.dateFilterField.offsetValidation": "偏移量必须大于或等于0且不大于999",
     "simpleSearchForm.results.minimumWarning": "错误：结果显示必须至少包含一列。",
-    "simpleSearch.widget.linkTextForWidget": "小工具{linkText}： {widgetName}"
+    "simpleSearch.widget.linkTextForWidget": "小工具{linkText}： {widgetName}",
+    "dashboard.deleteWidget": "Delete widget",
+    "dashboard.delete": "Delete",
+    "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>."
 }
