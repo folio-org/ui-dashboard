@@ -48,7 +48,7 @@ const WidgetCreateRoute = ({
   // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
   const { data: widgetDefinitions } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
-    () => ky(`servint/widgets/definitions/global${widget ? '?name='+widget.definition?.name + '&version='+widget.definition?.version : ''}`).json()
+    () => ky(`servint/widgets/definitions/global${widget ? '?name=' + widget.definition?.name + '&version=' + widget.definition?.version : ''}`).json()
   );
   const [selectedDefinition, setSelectedDef] = useState();
 
@@ -63,7 +63,7 @@ const WidgetCreateRoute = ({
     submitManipulation,
     widgetToInitialValues,
     WidgetFormComponent
-  } = getComponentsFromType(selectedDefinition?.type?.name ?? "");
+  } = getComponentsFromType(selectedDefinition?.type?.name ?? '');
 
   let initialValues = {};
   if (widget) {
