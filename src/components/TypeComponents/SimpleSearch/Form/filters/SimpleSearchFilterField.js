@@ -11,6 +11,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { useModules, useStripes } from '@folio/stripes/core';
 
 import {
+  Checkbox,
   Datepicker,
   KeyValue,
   Select,
@@ -86,6 +87,13 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       }
       break;
     }
+    case 'Boolean':
+      filterComponentProps = {
+        type: 'checkbox',
+        defaultValue: false
+      }
+      FilterComponent = Checkbox;
+      break;
     default:
       FilterComponent = TextField;
       break;

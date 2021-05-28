@@ -27,6 +27,8 @@ const SimpleSearchFilterRuleField = ({
   const { change } = useForm();
   const intl = useIntl();
 
+  console.log("Values: %o", values)
+
   const selectifiedComparators = comparators.map(
     sfcc => ({ value: sfcc,
       label: intl.formatMessage({
@@ -74,18 +76,20 @@ const SimpleSearchFilterRuleField = ({
 
   return (
     <Row>
-      <Col xs={6}>
-        <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
-          <Field
-            component={Select}
-            dataOptions={selectifiedComparators}
-            defaultValue={selectifiedComparators[0]?.value}
-            name={`${name}.comparator`}
-            required
-            validate={requiredValidator}
-          />
-        </KeyValue>
-      </Col>
+      {selectifiedComparators.length > 0 &&
+        <Col xs={6}>
+          <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
+            <Field
+              component={Select}
+              dataOptions={selectifiedComparators}
+              defaultValue={selectifiedComparators[0]?.value}
+              name={`${name}.comparator`}
+              required
+              validate={requiredValidator}
+            />
+          </KeyValue>
+        </Col>
+      }
       <Col xs={6}>
         <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.value" />}>
           <Field
