@@ -61,7 +61,17 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       };
       FilterComponent = Datepicker;
       break;
-
+      case 'DateTime':
+        filterComponentProps = {
+          dateFieldProps: {
+            backendDateStandard: 'YYYY-MM-DD',
+            id,
+            timeZone:'UTC',
+            usePortal: true
+          }
+        };
+        FilterComponent = Datepicker;
+        break;
     case 'UUID': {
       const resourceReg = Registry.getResource(selectedFilterColumn.resource);
 

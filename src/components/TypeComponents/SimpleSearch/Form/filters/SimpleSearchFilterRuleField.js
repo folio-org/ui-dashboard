@@ -16,7 +16,6 @@ import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
 import isComparatorSpecialCase from '../../../utilities';
 
-
 const SimpleSearchFilterRuleField = ({
   filterComponent,
   filterComponentProps,
@@ -26,8 +25,6 @@ const SimpleSearchFilterRuleField = ({
   const { values } = useFormState();
   const { change } = useForm();
   const intl = useIntl();
-
-  console.log("Values: %o", values)
 
   const selectifiedComparators = comparators.map(
     sfcc => ({ value: sfcc,
@@ -49,7 +46,7 @@ const SimpleSearchFilterRuleField = ({
   const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
-  if (valueType === 'Date') {
+  if (valueType === 'Date' || valueType === 'DateTime') {
     return (
       <SimpleSearchDateFilterField
         comparators={comparators}
@@ -57,6 +54,7 @@ const SimpleSearchFilterRuleField = ({
         filterComponentProps={filterComponentProps}
         input={{ name }}
         selectifiedComparators={selectifiedComparators}
+        dateTime={valueType === 'DateTime'}
       />
     );
   }

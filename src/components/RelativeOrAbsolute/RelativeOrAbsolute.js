@@ -41,7 +41,7 @@ const RelativeOrAbsolute = ({
             />
           </div>
           <div className={css.item}>
-            {absoluteComponent}
+            {relativeComponent}
           </div>
         </div>
       </Row>
@@ -58,7 +58,7 @@ const RelativeOrAbsolute = ({
             />
           </div>
           <div className={css.item}>
-            {relativeComponent}
+            {absoluteComponent}
           </div>
         </div>
       </Row>
