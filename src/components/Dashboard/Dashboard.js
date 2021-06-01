@@ -46,7 +46,6 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
 
     return (
       <Widget
-        key={`widget-${widget.id}`}
         onWidgetDelete={setupConfirmationModal}
         onWidgetEdit={onWidgetEdit}
         widget={widget}
@@ -76,7 +75,12 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
     }
     return (
       <div className={css.widgetContainer}>
-        {widgets.map(w => <RenderWidget widget={w} />)}
+        {widgets.map(w => (
+          <RenderWidget
+            key={`widget-${w.id}`}
+            widget={w}
+          />
+        ))}
       </div>
     );
   };
