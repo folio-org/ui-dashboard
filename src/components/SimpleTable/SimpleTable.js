@@ -1,9 +1,34 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { get } from 'lodash';
 import { useTable, useFlexLayout } from 'react-table';
+
 import css from './SimpleTable.css';
+
+const RenderWithSize = ({ children, name, sizeMap, setSizeMap }) => {
+  const [width, setWidth] = useState(0)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    setWidth(ref.current.clientWidth)
+
+    const currentMaxWidth = sizeMap[name]
+    if (!currentMaxWidth || width > currentMaxWidth) {
+      const newSizeMap = {...sizeMap};
+      newSizeMap[name] = width
+      setSizeMap(newSizeMap);
+    }
+  }, [ref, sizeMap, setSizeMap, width])
+
+  return (
+    <div className={css.measuredDivContainer}>
+      <div className={css.measuredDiv} ref={ref}>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 const getColumnWidth = (rows, accessor, headerText) => {
   // Using log so that a column of 255 and two columns of 10 don't end up massively mismatched
@@ -13,18 +38,36 @@ const getColumnWidth = (rows, accessor, headerText) => {
   ));
 };
 
+
 const SimpleTable = ({ columns, data, widgetId }) => {
+  const [colWidths, setColWidths] = useState({});
+  console.log("ColWidths: %o", colWidths)
+
   const resizedCols = useMemo(
     () => columns.map(
-      c => ({ ...c, width: getColumnWidth(data, c.accessor, c.Header) })
-    ), [columns, data]
+      (c, i) => {
+        return (
+          {
+            ...c,
+            width: colWidths[i] ?? 150,
+          }
+        );
+      }
+    ), [columns, colWidths, data]
   );
   return (
-    <ResizedTable columns={resizedCols} data={data} widgetId={widgetId} />
+    <ResizedTable
+      columns={resizedCols}
+      colWidths={colWidths}
+      data={data}
+      setColWidths={setColWidths}
+      widgetId={widgetId}
+    />
   );
 };
 
-const ResizedTable = ({ columns, data, widgetId }) => {
+const ResizedTable = ({ columns, colWidths, data, setColWidths, widgetId }) => {
+
   // Use the useTable Hook to send the columns and data to build the table
   const {
     getTableBodyProps,
@@ -71,14 +114,20 @@ const ResizedTable = ({ columns, data, widgetId }) => {
         <thead>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => {
+              {headerGroup.headers.map((column, i) => {
                 const columnHeaderProps = destructuredWidthFunction(column.getHeaderProps);
                 return (
                   <th
                     {...columnHeaderProps}
                     className={css.headerCell}
                   >
-                    {column.render('Header')}
+                    <RenderWithSize
+                      name={i}
+                      sizeMap={colWidths}
+                      setSizeMap={setColWidths}
+                    >
+                      {column.render('Header')}
+                    </RenderWithSize>
                   </th>
                 );
               })}
@@ -101,10 +150,18 @@ const ResizedTable = ({ columns, data, widgetId }) => {
                         {...cellProps}
                         className={css.td}
                       >
-                        {cell.render(
-                          'Cell',
-                          { key: `simple-table-${widgetId}-row-${i}-col-${j}` }
-                        )}
+                        <RenderWithSize
+                          name={j}
+                          sizeMap={colWidths}
+                          setSizeMap={setColWidths}
+                        >
+                          {cell.render(
+                            'Cell',
+                            {
+                              key: `simple-table-${widgetId}-row-${i}-col-${j}`,
+                            }
+                          )}
+                        </RenderWithSize>
                       </td>
                     );
                   })}

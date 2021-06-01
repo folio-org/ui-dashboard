@@ -30,8 +30,7 @@
   */
   padding: calc(var(--gutter-static-one-third) * (8/5)) var(--gutter-static-two-thirds);
   border-right: 1px solid var(--color-border-p2);
-  /* hopefully unnecessary, but allows data to break if stupidly long*/
-  word-wrap: break-word;
+  width: min-content;
 
   &:last-child {
     border-right: 0;
@@ -43,6 +42,13 @@
     padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
     font-weight: var(--text-weight-bold);
     font-size: var(--font-size-medium);
-    word-wrap: break-word;
     text-align: start;
+  }
+
+  .measuredDiv {
+    flex-shrink: 1;
+  }
+  
+  .measuredDivContainer {
+    display: flex;
   }
