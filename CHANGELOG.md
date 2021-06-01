@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
 ## 1.0.0 In progress
+* Fixes to RelativeOrAbsolute, changes to RenderWidget, DateTime (WIP) and Boolean filter support. Link/Array display support. ERM-1651/ERM-1652/ERM-1653.
 * Fixed incorrect token parsing, added path builder test. ERM-1658
 * Changes to WidgetDefinition, WidgetInstance and WidgetType shape. Other code tweaks. ERM-1643
 * Registry setup event now only fires once
