@@ -116,6 +116,6 @@
     "dashboard.deleteWidget": "Delete widget",
     "dashboard.delete": "Delete",
     "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>.",
-    "simpleSearch.widget.noResultFound": "No: results found"
+    "simpleSearch.widget.noResultFound": "No results found"
 
 }
