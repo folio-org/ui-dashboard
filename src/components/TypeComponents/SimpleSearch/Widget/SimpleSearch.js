@@ -79,10 +79,7 @@ const SimpleSearch = ({
     <>
       <div className={css.countBadge}>
         <Badge>
-          <FormattedMessage
-            id="ui-dashboard.simpleSearch.widget.nFoundBadge"
-            values={{ total: data?.total }}
-          />
+          <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{ total: data?.total }} />
         </Badge>
       </div>
       {data?.results?.length === 0 ? (
