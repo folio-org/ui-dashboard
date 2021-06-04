@@ -55,7 +55,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   }
 
   // We have multiple options
-  const selectifiedSortColumns = [{ value: '', label: '', disabled: true }, ...sortColumns].map(sc => ({ value: sc.name, label: sc.label || sc.name }));
+  const selectifiedSortColumns = sortColumns.map(sc => ({ value: sc.name, label: sc.label || sc.name }));
   const selectifiedSortDirs = selectedSortCol?.sortTypes?.map(st => ({ value: st, label: st })) || [];
 
   return (

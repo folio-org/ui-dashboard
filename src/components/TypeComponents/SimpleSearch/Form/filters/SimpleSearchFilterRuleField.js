@@ -16,7 +16,6 @@ import SimpleSearchDateFilterField from './SimpleSearchDateFilterField';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
 import isComparatorSpecialCase from '../../../utilities';
 
-
 const SimpleSearchFilterRuleField = ({
   filterComponent,
   filterComponentProps,
@@ -47,10 +46,11 @@ const SimpleSearchFilterRuleField = ({
   const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
 
   // If type is Date or UUID then we need to do some extra work, send to specific components
-  if (valueType === 'Date') {
+  if (valueType === 'Date' || valueType === 'DateTime') {
     return (
       <SimpleSearchDateFilterField
         comparators={comparators}
+        dateTime={valueType === 'DateTime'}
         filterComponent={filterComponent}
         filterComponentProps={filterComponentProps}
         input={{ name }}
@@ -74,18 +74,20 @@ const SimpleSearchFilterRuleField = ({
 
   return (
     <Row>
-      <Col xs={6}>
-        <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
-          <Field
-            component={Select}
-            dataOptions={selectifiedComparators}
-            defaultValue={selectifiedComparators[0]?.value}
-            name={`${name}.comparator`}
-            required
-            validate={requiredValidator}
-          />
-        </KeyValue>
-      </Col>
+      {selectifiedComparators.length > 0 &&
+        <Col xs={6}>
+          <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
+            <Field
+              component={Select}
+              dataOptions={selectifiedComparators}
+              defaultValue={selectifiedComparators[0]?.value}
+              name={`${name}.comparator`}
+              required
+              validate={requiredValidator}
+            />
+          </KeyValue>
+        </Col>
+      }
       <Col xs={6}>
         <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.value" />}>
           <Field
