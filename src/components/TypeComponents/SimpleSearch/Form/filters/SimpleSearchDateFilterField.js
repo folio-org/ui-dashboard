@@ -52,6 +52,13 @@ const SimpleSearchDateFilterField = ({
     }
   }, [change, name, relOrAbsValue, values]);
 
+  const dateValidator = (value, allValues) => {
+    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
+    }
+    return undefined;
+  };
+
   return (
     <Row>
       <Col xs={3}>
@@ -81,12 +88,7 @@ const SimpleSearchDateFilterField = ({
                       relOrAbsValue === 'relative'
                     }
                     name={dateTime ? `${name}.filterValue.date` : `${name}.filterValue`}
-                    validate={(value, allValues) => {
-                      if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                        return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
-                      }
-                      return undefined;
-                    }}
+                    validate={dateValidator}
                   />
                 </Col>
                 {dateTime &&
@@ -98,12 +100,7 @@ const SimpleSearchDateFilterField = ({
                         relOrAbsValue === 'relative'
                       }
                       name={`${name}.filterValue.time`}
-                      validate={(value, allValues) => {
-                        if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                          return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
-                        }
-                        return undefined;
-                      }}
+                      validate={dateValidator}
                     />
                   </Col>
                 }
