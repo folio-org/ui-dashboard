@@ -82,16 +82,15 @@ const SimpleSearch = ({
           <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{ total: data?.total }} />
         </Badge>
       </div>
-      {data?.results?.length === 0 ? (
-        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
-      ) : (
+      {!data?.results?.length ?
+        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" /> :
         <SimpleTable
           key={`simple-table-${widget.id}`}
           columns={columns}
           data={simpleTableData}
           widgetId={widget.id}
         />
-      )}
+      }
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => refetch()}
