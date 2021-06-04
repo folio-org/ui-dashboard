@@ -101,7 +101,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       filterComponentProps = {
         type: 'checkbox',
         defaultValue: false
-      }
+      };
       FilterComponent = Checkbox;
       break;
     default:

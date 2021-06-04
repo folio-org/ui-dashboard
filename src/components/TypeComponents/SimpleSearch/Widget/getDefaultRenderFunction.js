@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
-import { FormattedDateTime } from '@folio/stripes-erm-components'
+import { FormattedDateTime } from '@folio/stripes-erm-components';
 import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
 
 import Registry from '../../../../Registry';

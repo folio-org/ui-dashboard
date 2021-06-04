@@ -27,7 +27,6 @@ import isComparatorSpecialCase from '../../../utilities';
  */
 // TODO once we make DateTime an available field we should check this component works as expected
 const SimpleSearchDateFilterField = ({
-  filterComponent,
   filterComponentProps,
   input: { name },
   selectifiedComparators,
@@ -199,6 +198,7 @@ const SimpleSearchDateFilterField = ({
 };
 
 SimpleSearchDateFilterField.propTypes = {
+  dateTime: PropTypes.bool,
   filterComponent: PropTypes.object,
   filterComponentProps: PropTypes.object,
   input: PropTypes.shape({
