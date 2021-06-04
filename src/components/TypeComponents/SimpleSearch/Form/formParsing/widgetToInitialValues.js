@@ -1,11 +1,15 @@
 // This must reflect any manipulations happening in submitWithTokens
-const widgetToInitialValues = (widget) => {
+// These components accept the widget, and the passed definition
+const widgetToInitialValues = (widget, widgetDef) => {
   const widgetConf = JSON.parse(widget.configuration);
   // We need to deal with tokens
   const { filterColumns } = widgetConf;
+  const { definition } = widgetDef;
 
   const tweakedFilterColumns = filterColumns?.map(fc => {
-    switch (fc.fieldType) {
+    // Get the fieldType for the filterColumn from the definition
+    const fieldType = definition?.filters?.columns?.find(col => col.name === fc.name)?.valueType;
+    switch (fieldType) {
       // For dates we build something of the form {{currentDate#23#w}}
       case 'Date': {
         // Check for date tokens in each rule
@@ -30,6 +34,7 @@ const widgetToInitialValues = (widget) => {
         });
         return ({
           ...fc,
+          fieldType,
           rules: tweakedRules
         });
       }

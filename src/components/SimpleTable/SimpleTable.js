@@ -123,7 +123,7 @@ export default SimpleTable;
 const propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
     Header: PropTypes.string.isRequired,
-    accessor: PropTypes.string.isRequired
+    accessor: PropTypes.string
   })),
   data: PropTypes.arrayOf(PropTypes.object),
   widgetId: PropTypes.string.isRequired

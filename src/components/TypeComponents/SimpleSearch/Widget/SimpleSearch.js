@@ -42,7 +42,7 @@ const SimpleSearch = ({
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
     () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
   );
-
+  const simpleTableData = useMemo(() => data?.results || [], [data]);
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
   const {
     configurableProperties: {
@@ -82,12 +82,15 @@ const SimpleSearch = ({
           <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{ total: data?.total }} />
         </Badge>
       </div>
-      <SimpleTable
-        key={`simple-table-${widget.id}`}
-        columns={columns}
-        data={useMemo(() => data?.results || [], [data])}
-        widgetId={widget.id}
-      />
+      {!data?.results?.length ?
+        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" /> :
+        <SimpleTable
+          key={`simple-table-${widget.id}`}
+          columns={columns}
+          data={simpleTableData}
+          widgetId={widget.id}
+        />
+      }
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => refetch()}

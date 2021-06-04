@@ -44,7 +44,6 @@ const submitWithTokens = (widgetConf) => {
     return ({
       name: fc.name,
       rules: tweakedRules,
-      fieldType: fc.fieldType,
       resourceType: fc.resourceType,
       resource: fc.resource
     });
