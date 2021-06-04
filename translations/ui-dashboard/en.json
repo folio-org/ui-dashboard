@@ -179,6 +179,6 @@
 
   "simpleSearch.widget.nFoundBadge": "{total} found",
   "simpleSearch.widget.linkText": "Link to app",
-  "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}"
-
+  "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}",
+  "simpleSearch.widget.noResultFound": "No results found"
 }
