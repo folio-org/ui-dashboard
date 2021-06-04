@@ -162,6 +162,8 @@
   "simpleSearchForm.filters.filterField.comparator.UUID.isSet": "is set",
   "simpleSearchForm.filters.filterField.comparator.UUID.isNotSet": "is not set",
 
+  "simpleSearchForm.matches": "Search",
+
   "simpleSearchForm.results": "Results display",
   "simpleSearchForm.results.columns": "Columns",
   "simpleSearchForm.results.column": "Column",
