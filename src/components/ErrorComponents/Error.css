@@ -10,7 +10,6 @@
    left: 0;
    right: 0;
    background: var(--color-fill);
-   background: var();
    display: flex;
    align-items: center;
    justify-content: center;
