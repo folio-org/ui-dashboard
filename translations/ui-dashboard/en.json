@@ -54,8 +54,8 @@
   "simpleSearchForm.filters.filterField.rule.or": "OR",
   "simpleSearchForm.filters.dateFilterField.today": "Today (variable)",
 
-  "simpleSearchForm.filters.dateFilterField.subtract": "Subtract",
-  "simpleSearchForm.filters.dateFilterField.add": "Add",
+  "simpleSearchForm.filters.dateFilterField.subtract": "Before",
+  "simpleSearchForm.filters.dateFilterField.add": "After",
 
   "simpleSearchForm.filters.dateFilterField.days": "Days",
   "simpleSearchForm.filters.dateFilterField.weeks": "Weeks",
@@ -84,6 +84,17 @@
   "simpleSearchForm.filters.filterField.comparator.Date.isNotNull": "is not null",
   "simpleSearchForm.filters.filterField.comparator.Date.isSet": "is set",
   "simpleSearchForm.filters.filterField.comparator.Date.isNotSet": "is not set",
+
+  "simpleSearchForm.filters.filterField.comparator.DateTime.==": "is",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.!=": "is not",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.>": "after",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.>=": "on or after",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.<": "before",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.<=": "on or before",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.isNull": "is null",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "is not null",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "is set",
+  "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "is not set",
 
   "simpleSearchForm.filters.filterField.comparator.String.==": "is",
   "simpleSearchForm.filters.filterField.comparator.String.!=": "is not",

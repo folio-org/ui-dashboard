@@ -77,13 +77,6 @@ const SimpleSearchUUIDFilterField = ({
             >
               <RelativeOrAbsolute
                 absoluteComponent={
-                  <div className={relOrAbsValue === 'absolute' ? css.absoluteSelected : null}>
-                    <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
-                  </div>
-                }
-                disabled={comparatorIsSpecialCase}
-                name={name}
-                relativeComponent={
                   <Field
                     {...filterComponentProps}
                     component={filterComponent}
@@ -99,6 +92,13 @@ const SimpleSearchUUIDFilterField = ({
                       return undefined;
                     }}
                   />
+                }
+                disabled={comparatorIsSpecialCase}
+                name={name}
+                relativeComponent={
+                  <div className={relOrAbsValue === 'absolute' ? css.absoluteSelected : null}>
+                    <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
+                  </div>
                 }
                 validateFields={[`${name}.filterValue`]}
               />

@@ -92,7 +92,7 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
         } else {
           // Ensure we're safely encoding all special characters into the filters path, after applying tokens
           const encodedFilterValue = encodeURI(tokens(r.filterValue, stripes));
-          specificFilterString += `${filterPath}${r.comparator}${encodedFilterValue}`;
+          specificFilterString += `${filterPath}${r.comparator ?? '=='}${encodedFilterValue}`;
         }
         if (ind !== rules.length - 1) {
           // This doesn't work as "||", it needs encoded value
