@@ -27,7 +27,6 @@ import isComparatorSpecialCase from '../../../utilities';
  */
 // TODO once we make DateTime an available field we should check this component works as expected
 const SimpleSearchDateFilterField = ({
-  filterComponent,
   filterComponentProps,
   input: { name },
   selectifiedComparators,
@@ -52,6 +51,13 @@ const SimpleSearchDateFilterField = ({
       change(`${name}.relativeOrAbsolute`, 'relative');
     }
   }, [change, name, relOrAbsValue, values]);
+
+  const dateValidator = (value, allValues) => {
+    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
+      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
+    }
+    return undefined;
+  };
 
   return (
     <Row>
@@ -82,12 +88,7 @@ const SimpleSearchDateFilterField = ({
                       relOrAbsValue === 'relative'
                     }
                     name={dateTime ? `${name}.filterValue.date` : `${name}.filterValue`}
-                    validate={(value, allValues) => {
-                      if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                        return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
-                      }
-                      return undefined;
-                    }}
+                    validate={dateValidator}
                   />
                 </Col>
                 {dateTime &&
@@ -99,12 +100,7 @@ const SimpleSearchDateFilterField = ({
                         relOrAbsValue === 'relative'
                       }
                       name={`${name}.filterValue.time`}
-                      validate={(value, allValues) => {
-                        if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                          return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
-                        }
-                        return undefined;
-                      }}
+                      validate={dateValidator}
                     />
                   </Col>
                 }
@@ -199,6 +195,7 @@ const SimpleSearchDateFilterField = ({
 };
 
 SimpleSearchDateFilterField.propTypes = {
+  dateTime: PropTypes.bool,
   filterComponent: PropTypes.object,
   filterComponentProps: PropTypes.object,
   input: PropTypes.shape({

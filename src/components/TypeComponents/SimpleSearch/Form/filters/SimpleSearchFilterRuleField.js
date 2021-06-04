@@ -50,6 +50,7 @@ const SimpleSearchFilterRuleField = ({
     return (
       <SimpleSearchDateFilterField
         comparators={comparators}
+        dateTime={valueType === 'DateTime'}
         filterComponent={filterComponent}
         filterComponentProps={filterComponentProps}
         input={{ name }}
