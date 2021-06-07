@@ -9,7 +9,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-   background: var(--error-fill);
+   background: var(--color-fill);
    display: flex;
    align-items: center;
    justify-content: center;
