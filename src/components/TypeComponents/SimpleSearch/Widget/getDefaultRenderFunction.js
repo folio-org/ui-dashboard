@@ -71,7 +71,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
         };
       }
       default: {
-        return (data) => get(data, accessPath);
+        return (data) => get(data, accessPath) ?? null;
       }
     }
   } else {

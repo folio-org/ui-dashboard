@@ -114,8 +114,8 @@
   "simpleSearchForm.filters.filterField.comparator.Link.isSet": "is set",
   "simpleSearchForm.filters.filterField.comparator.Link.isNotSet": "is not set",
 
-  "simpleSearchForm.filters.filterField.comparator.Array.isEmpty": "is empty",
-  "simpleSearchForm.filters.filterField.comparator.Array.isNotEmpty": "is not empty",
+  "simpleSearchForm.filters.filterField.comparator.Array.isEmpty": "No",
+  "simpleSearchForm.filters.filterField.comparator.Array.isNotEmpty": "Yes",
 
   "simpleSearchForm.filters.filterField.comparator.Float.==": "equals",
   "simpleSearchForm.filters.filterField.comparator.Float.!=": "does not equal",
