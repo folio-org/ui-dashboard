@@ -24,10 +24,13 @@ const SimpleSearchMatches = ({
       id={id}
       label={<FormattedMessage id="ui-dashboard.simpleSearchForm.matches" />}
     >
-      <SearchField
+      <Field
+        component={SearchField}
         defaultValue={match.defaultTerm}
         name="matches"
       />
+
+
     </Accordion>
   );
 };
