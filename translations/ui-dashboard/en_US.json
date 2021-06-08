@@ -139,5 +139,16 @@
     "simpleSearchForm.filters.filterField.comparator.Enum.isSet": "is set",
     "simpleSearchForm.filters.filterField.comparator.Enum.isNotSet": "is not set",
     "simpleSearchForm.filters.filterField.comparator.UUID.isSet": "is set",
-    "simpleSearchForm.filters.filterField.comparator.UUID.isNotSet": "is not set"
+    "simpleSearchForm.filters.filterField.comparator.UUID.isNotSet": "is not set",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.==": "is",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.!=": "is not",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.>": "after",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.>=": "on or after",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.<": "before",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.<=": "on or before",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.isNull": "is null",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "is not null",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "is set",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "is not set",
+    "simpleSearch.widget.noResultFound": "No results found"
 }
