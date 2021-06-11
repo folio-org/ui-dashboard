@@ -13,7 +13,8 @@ import SimpleSearchMatches from './matches/SimpleSearchMatches';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
-  specificWidgetDefinition,
+  isEdit,
+  specificWidgetDefinition
 }) => {
   const {
     configurableProperties,
@@ -28,7 +29,6 @@ const SimpleSearchForm = ({
       columns: sortColumns = []
     } = {},
   } = specificWidgetDefinition?.definition;
-
   const initialAccordionState = {
     filters: true,
     results: true,
@@ -44,6 +44,7 @@ const SimpleSearchForm = ({
         />
         <SimpleSearchMatches
           data={{
+            isEdit,
             matches,
           }}
           id="simple-search-form-matches"

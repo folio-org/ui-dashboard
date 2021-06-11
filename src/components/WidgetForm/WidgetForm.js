@@ -170,6 +170,7 @@ const WidgetForm = ({
           {selectedDefinition &&
             // Get specific form component for the selected widgetDefinition
             <WidgetFormComponent
+              isEdit={!!params.widgetId}
               specificWidgetDefinition={selectedDefinition}
             />
           }

@@ -12,9 +12,11 @@ import css from './SimpleSearchMatches.css';
 
 const SimpleSearchMatches = ({
   data: {
+    isEdit,
     matches
   },
-  id
+  id,
+  ...rest
 }) => {
   const { values } = useFormState();
   console.log('Matches: %o', matches);
@@ -60,7 +62,7 @@ const SimpleSearchMatches = ({
     >
       <Field
         component={SimpleSearchField}
-        defaultValue={defaultTerm}
+        defaultValue={isEdit ? undefined : defaultTerm}
         name="matches.term"
       />
       <div className={css.checkboxContainer}>

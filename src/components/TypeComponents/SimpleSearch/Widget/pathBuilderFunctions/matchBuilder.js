@@ -37,7 +37,7 @@ const matchBuilder = (matches, defMatchColumns) => {
 
       // Don't bother adding match if there are no match columns
       if (matchString.length) {
-        matchString += `&term=${term}`;
+        matchString += `&term=${encodeURI(term)}`;
       }
     }
   }

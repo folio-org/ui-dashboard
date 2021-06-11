@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import { Icon, TextField } from '@folio/stripes/components';
 
 import css from './SimpleSearchField.css';
@@ -32,6 +31,7 @@ const SimpleSearchField = (props) => {
       aria-label={rest['aria-label'] || ariaLabel}
       focussedClass={css.isFocused}
       hasClearIcon
+      parse={v => v} // Lets us send an empty string instead of `undefined`
       startControl={searchIcon}
       type="search"
     />
