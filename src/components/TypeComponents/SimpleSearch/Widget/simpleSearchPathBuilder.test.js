@@ -13,6 +13,64 @@ const stripes = {
 
 const widgetDef = {
   'baseUrl':'/erm/sas',
+  'resource': 'agreement',
+  'results': {
+    'columns': [
+      {
+        'name':'agreementName',
+        'label': 'Agreement name',
+        'accessPath':'name',
+        'valueType': 'Link'
+      },
+      {
+        'name':'startDate',
+        'label': 'Start date',
+        'accessPath':'startDate',
+        'valueType': 'Date'
+      },
+      {
+        'name':'endDate',
+        'label': 'End date',
+        'accessPath':'endDate',
+        'valueType': 'Date'
+      },
+      {
+        'name':'cancellationDeadline',
+        'label': 'Cancellation deadline',
+        'accessPath':'cancellationDeadline',
+        'valueType': 'Date'
+      },
+      {
+        'name':'agreementStatus',
+        'label': 'Status',
+        'accessPath':'agreementStatus.label',
+        'valueType': 'String'
+      },
+      {
+        'name':'renewalPriority',
+        'label': 'Renewal priority',
+        'accessPath':'renewalPriority.label',
+        'valueType': 'String'
+      },
+      {
+        'name': 'internalContacts',
+        'label': 'Internal contact(s)'
+      },
+      {
+        'name': 'tags',
+        'label': 'Tags',
+        'accessPath': 'tags',
+        'valueType': 'Array',
+        'arrayDisplayPath': 'value'
+      },
+      {
+        'name': 'isPerpetual',
+        'label': 'Is perpetual',
+        'accessPath': 'isPerpetual.label',
+        'valueType': 'String'
+      }
+    ]
+  },
   'filters': {
     'columns': [
       {
@@ -36,11 +94,11 @@ const widgetDef = {
         'filterPath':'agreementStatus.value',
         'valueType': 'Enum',
         'enumValues': [
-          { 'value': 'active', 'label': 'Active' },
-          { 'value': 'closed', 'label': 'Closed' },
-          { 'value': 'draft', 'label': 'Draft' },
-          { 'value': 'in_negotiation', 'label': 'In negotiation' },
-          { 'value': 'requested', 'label': 'Requested' }
+          {'value': 'active'},
+          {'value': 'closed'},
+          {'value': 'draft'},
+          {'value': 'in_negotiation'},
+          {'value': 'requested'}
         ],
         'comparators': ['==', '!=']
       },
@@ -49,7 +107,7 @@ const widgetDef = {
         'label': 'Start date',
         'filterPath':'startDate',
         'valueType': 'Date',
-        'comparators': ['==', '!=', '>=', '<=', 'isSet', 'isNotSet']
+        'comparators': ['==', '!=', '>=', '<=']
       },
       {
         'name':'endDate',
@@ -66,19 +124,26 @@ const widgetDef = {
         'comparators': ['==', '!=', '>=', '<=', 'isSet', 'isNotSet']
       },
       {
+        'name':'renewalPriority',
+        'label': 'Renewal priority',
+        'filterPath':'renewalPriority.value',
+        'valueType': 'String',
+        'comparators': ['==', '!=']
+      },
+      {
         'name':'internalContact',
         'label': 'Internal contact',
-        'filterPath':'contacts.user.id',
+        'filterPath':'contacts.user',
         'valueType': 'UUID',
         'resource': 'user',
-        'comparators': ['==', '!=']
+        'comparators': ['==']
       },
       {
         'name':'tags',
         'label': 'Tags',
         'filterPath':'tags.value',
         'valueType': 'String',
-        'comparators': ['==', '!=', '=~', '!~']
+        'comparators': ['==', '=~']
       },
       {
         'name':'isPerpetual',
@@ -86,8 +151,8 @@ const widgetDef = {
         'filterPath':'isPerpetual.value',
         'valueType': 'Enum',
         'enumValues': [
-          { 'value': 'yes', 'label': 'Yes' },
-          { 'value': 'no', 'label': 'No' }
+          {'value': 'yes', 'label': 'Yes'},
+          {'value': 'no', 'label': 'No'}
         ],
         'comparators': ['==', '!=']
       },
@@ -99,6 +164,29 @@ const widgetDef = {
         'comparators': ['isEmpty', 'isNotEmpty']
       }
     ]
+  },
+  'matches': {
+    'columns': [
+      {
+        'name': 'agreementName',
+        'label': 'Name',
+        'accessPath': 'name',
+        'default': true
+      },
+      {
+        'name': 'alternativeName',
+        'label': 'Alternative name',
+        'accessPath': 'alternateNames.name',
+        'default': false
+      },
+      {
+        'name': 'description',
+        'label': 'Description',
+        'accessPath': 'description',
+        'default': false
+      }
+    ],
+    'termConfigurable': true
   },
   'sort': {
     'columns': [
@@ -137,8 +225,24 @@ const widgetDef = {
         'sortPath':'cancellationDeadline',
         'label': 'Cancellation deadline',
         'sortTypes': ['asc', 'desc']
+      },
+      {
+        'name':'renewalPriority',
+        'label':'Renewal priority',
+        'sortPath':'renewalPriority.value',
+        'sortTypes': ['asc', 'desc'] 
       }
     ]
+  },
+  'configurableProperties': {
+    'urlLink': {
+      'configurable': true,
+      'defValue': '/erm/agreements'
+    },
+    'numberOfRows': {
+      'configurable': true,
+      'defValue': 10
+    }
   }
 };
 
@@ -180,6 +284,25 @@ const widgetConfStatusTwoValues = {
   }]
 };
 
+const widgetConfMatch = {
+  'matches': {
+    'term': '"%wibble"',
+    'matches': {
+      'agreementName': false,
+      'alternativeName': true
+    }
+  }
+};
+
+const widgetConfMatchNoTerm = {
+  'matches': {
+    'matches': {
+      'agreementName': true,
+      'alternativeName': true
+    }
+  }
+};
+
 const widgetConfStatusAndName = {
   'sortColumn': {
     'name': 'id',
@@ -197,6 +320,28 @@ const widgetConfStatusAndName = {
     'rules': [{
       'comparator': '==',
       'filterValue': 'wibble'
+    }]
+  }]
+};
+
+const widgetConfStatusNameAndMatch = {
+  'sortColumn': {
+    'name': 'id',
+    'sortType': 'asc'
+  },
+  'matches': {
+    'term': 'abc',
+    'matches': {
+      'agreementName': true,
+      'alternativeName': false,
+      'description': true
+    }
+  },
+  'filterColumns': [{
+    'name': 'agreementStatus',
+    'rules': [{
+      'comparator': '==',
+      'filterValue': 'draft'
     }]
   }]
 };
@@ -236,6 +381,16 @@ describe('simpleSearchPathBuilder', () => {
     expect(output).toBe('erm/sas?sort=id;asc&stats=true');
   });
 
+  test('simpleSearchPathBuilder function works as expected for just match', () => {
+    const output = simpleSearchPathBuilder(widgetDef, widgetConfMatch, stripes);
+    expect(output).toBe('erm/sas?match=alternateNames.name&term=%22%25wibble%22&stats=true');
+  });
+
+  test('simpleSearchPathBuilder function works as expected for match without term defined', () => {
+    const output = simpleSearchPathBuilder(widgetDef, widgetConfMatchNoTerm, stripes);
+    expect(output).toBe('erm/sas?stats=true');
+  });
+
   test('simpleSearchPathBuilder function works as expected for a single value', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatus, stripes);
     expect(output).toBe('erm/sas?filters=agreementStatus.value==draft&sort=id;asc&stats=true');
@@ -249,6 +404,11 @@ describe('simpleSearchPathBuilder', () => {
   test('simpleSearchPathBuilder function works as expected for one values on two filters', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatusAndName, stripes);
     expect(output).toBe('erm/sas?filters=agreementStatus.value==draft&filters=name==wibble&sort=id;asc&stats=true');
+  });
+
+  test('simpleSearchPathBuilder function works as expected for match, filters and sort', () => {
+    const output = simpleSearchPathBuilder(widgetDef, widgetConfStatusNameAndMatch, stripes);
+    expect(output).toBe('erm/sas?match=name&match=description&term=abc&filters=agreementStatus.value==draft&sort=id;asc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected with special comparators', () => {
@@ -265,6 +425,6 @@ describe('simpleSearchPathBuilder', () => {
   test('simpleSearchPathBuilder function works as expected with user tokens', () => {
     const me = tokens('{{currentUser}}', stripes);
     const output = simpleSearchPathBuilder(widgetDef, widgetConfMe, stripes);
-    expect(output).toBe(`erm/sas?filters=contacts.user.id!=${me}&stats=true`);
+    expect(output).toBe(`erm/sas?filters=contacts.user!=${me}&stats=true`);
   });
 });
