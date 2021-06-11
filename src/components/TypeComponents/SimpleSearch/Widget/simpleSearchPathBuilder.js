@@ -7,6 +7,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
     filters: {
       columns: defFilterColumns = []
     } = {},
+    matches: {
+      columns: defMatchColumns = []
+    } = {},
     sort: {
       columns: defSortColumns = [],
     } = {},
@@ -24,9 +27,54 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
       numberOfRows
     } = {},
     filterColumns,
+    matches,
     sortColumn
   } = widgetConf;
   pathString += '?';
+
+  /*
+    matches will be an obvject of the form:
+      {
+        term: "abcde",
+        matches: {
+          <matchColName>: true,
+          <matchColName>: false,
+          <matchColName>: true,
+          ...
+        }
+      }
+      where each matchCol name comes from the widgetDefinition.
+  */
+
+  if (matches) {
+    const {
+      term,
+      matches: matchObject
+    } = matches;
+    // Start building the matchString
+    let matchString = '';
+
+    // Ensure there is a term before continuing
+    if (term.trim()) {
+      for (const [key, value] of Object.entries(matchObject)) {
+        // [key,value] should look like [agreementName, true] or [description, false]
+        // Only act on match if configured
+        if (value) {
+          const matchColumn = defMatchColumns.find(dmc => dmc.name === key);
+          // If we can't find the column in the def then ignore
+          if (matchColumn) {
+            matchString += `${matchString.length ? '&' : ''}match=${matchColumn.accessPath}`;
+          }
+        }
+      }
+
+      // Don't bother adding match if there are no match columns
+      if (matchString.length) {
+        matchString += `&term=${term}`;
+      }
+    }
+    pathString += matchString;
+  }
 
   /*
       filterColumns will be an array of the form:
@@ -69,6 +117,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   if (filterColumns) {
     // Start building the filterString
     let filterString = '';
+    if (matches) {
+      filterString += '&';
+    }
 
     // Begin each filter with & unless it's the first one
     filterColumns.forEach((f, index) => {
@@ -107,7 +158,9 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   if (sortColumn) {
     // Start building the sortString
     let sortString = '';
-    if (filterColumns) {
+
+    // Check we have something other than just sort
+    if (pathString !== '?') {
       sortString += '&';
     }
     sortString += 'sort=';

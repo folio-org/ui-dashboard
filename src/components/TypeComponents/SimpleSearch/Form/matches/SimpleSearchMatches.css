@@ -1,0 +1,21 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.checkbox {
+  width: 100%;
+  padding: var(--gutter-static-two-thirds);
+
+  @media (--small-up) {
+    width: 50%;
+  }
+
+  @media (--medium-up) {
+    width: 25%;
+  }
+}
+
+
+
+.checkboxContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
