@@ -13,36 +13,34 @@
   */
 
 const matchBuilder = (matches, defMatchColumns) => {
-  let matchString = '';
+  const matchStrings = [];
   if (matches) {
     const {
       term,
       matches: matchObject
     } = matches;
-    // Start building the matchString
 
     // Ensure there is a term before continuing
-    if (term?.trim()) {
-      for (const [key, value] of Object.entries(matchObject)) {
-        // [key,value] should look like [agreementName, true] or [description, false]
-        // Only act on match if configured
-        if (value) {
-          const matchColumn = defMatchColumns.find(dmc => dmc.name === key);
-          // If we can't find the column in the def then ignore
-          if (matchColumn) {
-            matchString += `${matchString.length ? '&' : ''}match=${matchColumn.accessPath}`;
-          }
-        }
-      }
+    if (!term.trim()) {
+      return '';
+    }
 
-      // Don't bother adding match if there are no match columns
-      if (matchString.length) {
-        matchString += `&term=${encodeURI(term)}`;
+    for (const [key, value] of Object.entries(matchObject)) {
+      // [key,value] should look like [agreementName, true] or [description, false]
+      // Only act on match if configured and can find matchColumn in the definition
+      const matchColumn = defMatchColumns.find(dmc => dmc.name === key);
+      if (value && matchColumn) {
+        matchStrings.push(`match=${matchColumn.accessPath}`);
       }
+    }
+
+    // Don't bother adding match if there are no match columns
+    if (matchStrings.length) {
+      matchStrings.push(`term=${encodeURI(term)}`);
     }
   }
 
-  return matchString;
+  return matchStrings.filter(Boolean).join('&');
 };
 
 export default matchBuilder;
