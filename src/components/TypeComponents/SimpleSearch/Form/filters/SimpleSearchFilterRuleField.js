@@ -55,7 +55,6 @@ const SimpleSearchFilterRuleField = ({
         filterComponentProps={filterComponentProps}
         input={{ name }}
         selectifiedComparators={selectifiedComparators}
-        dateTime={valueType === 'DateTime'}
       />
     );
   }

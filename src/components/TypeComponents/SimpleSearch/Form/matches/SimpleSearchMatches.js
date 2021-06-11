@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Field, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 
 import {
   Accordion,
@@ -15,13 +16,8 @@ const SimpleSearchMatches = ({
     isEdit,
     matches
   },
-  id,
-  ...rest
+  id
 }) => {
-  const { values } = useFormState();
-  console.log('Matches: %o', matches);
-  console.log('Values: %o', values);
-
   // If no matches in def we can ignore
   if (!matches) {
     return null;
@@ -82,6 +78,22 @@ const SimpleSearchMatches = ({
       </div>
     </Accordion>
   );
+};
+
+SimpleSearchMatches.propTypes = {
+  data: PropTypes.shape({
+    isEdit: PropTypes.bool,
+    matches: PropTypes.shape({
+      defaultTerm: PropTypes.string,
+      columns: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        accessPath: PropTypes.string.isRequired,
+        default: PropTypes.bool
+      })).isRequired,
+      termConfigurable: PropTypes.bool.isRequired
+    })
+  }),
+  id: PropTypes.string.isRequired
 };
 
 export default SimpleSearchMatches;

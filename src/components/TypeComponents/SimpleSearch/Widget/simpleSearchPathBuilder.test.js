@@ -94,11 +94,11 @@ const widgetDef = {
         'filterPath':'agreementStatus.value',
         'valueType': 'Enum',
         'enumValues': [
-          {'value': 'active'},
-          {'value': 'closed'},
-          {'value': 'draft'},
-          {'value': 'in_negotiation'},
-          {'value': 'requested'}
+          { 'value': 'active' },
+          { 'value': 'closed' },
+          { 'value': 'draft' },
+          { 'value': 'in_negotiation' },
+          { 'value': 'requested' }
         ],
         'comparators': ['==', '!=']
       },
@@ -151,8 +151,8 @@ const widgetDef = {
         'filterPath':'isPerpetual.value',
         'valueType': 'Enum',
         'enumValues': [
-          {'value': 'yes', 'label': 'Yes'},
-          {'value': 'no', 'label': 'No'}
+          { 'value': 'yes', 'label': 'Yes' },
+          { 'value': 'no', 'label': 'No' }
         ],
         'comparators': ['==', '!=']
       },
@@ -230,7 +230,7 @@ const widgetDef = {
         'name':'renewalPriority',
         'label':'Renewal priority',
         'sortPath':'renewalPriority.value',
-        'sortTypes': ['asc', 'desc'] 
+        'sortTypes': ['asc', 'desc']
       }
     ]
   },
