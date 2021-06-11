@@ -34,29 +34,22 @@ const simpleSearchPathBuilder = (widgetDef, widgetConf, stripes) => {
   pathString += '?';
 
   const matchString = matchBuilder(matches, defMatchColumns);
-  pathString += matchString;
-
   const filterString = filterBuilder(filterColumns, defFilterColumns, stripes);
-  pathString += `${matchString.length ? '&' : ''}${filterString}`;
-
   const sortString = sortBuilder(sortColumn, defSortColumns);
-  pathString += `${(matchString.length || filterString.length) ? '&' : ''}${sortString}`;
 
-  // Add stats=true
-  pathString += `${
-    (
-      matchString.length ||
-      filterString.length ||
-      sortString.length
-    ) ?
-      '&' :
-      ''
-  }stats=true`;
-
+  let perPageString = '';
   if (numberOfRows) {
-    // We can assume always & because stats will be present
-    pathString += `&perPage=${numberOfRows}`;
+    perPageString = `perPage=${numberOfRows}`;
   }
+
+  // Filter to non-empty strings, and join them together with '&'
+  pathString += [
+    matchString,
+    filterString,
+    sortString,
+    'stats=true',
+    perPageString
+  ].filter(Boolean).join('&');
 
   return pathString;
 };
