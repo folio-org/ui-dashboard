@@ -21,7 +21,7 @@ const matchBuilder = (matches, defMatchColumns) => {
     } = matches;
 
     // Ensure there is a term before continuing
-    if (!term.trim()) {
+    if (!term?.trim()) {
       return '';
     }
 
