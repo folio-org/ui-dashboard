@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 1.1.0 (In Progress)
+
 ## 1.0.0 2021-06-16
   * ERM-1696 Add support for match + terms in simple search widget type
   * ERM-1655 Implement "No results found" message for simple search widget
