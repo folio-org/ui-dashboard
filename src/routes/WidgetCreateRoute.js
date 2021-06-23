@@ -106,10 +106,7 @@ const WidgetCreateRoute = ({
     } else {
       // New widget, POST and close
       postWidget(submitValue)
-        .then(handleClose)
-        // Ensure we refetch the widgetInstance after submit.
-        // This ensures we aren't initially getting a memoized version on next edit.
-        .then(refetchWidgetInstance);
+        .then(handleClose);
     }
   };
 
