@@ -17,11 +17,12 @@ import {
 import PropTypes from 'prop-types';
 import Registry from './Registry';
 
+import DashboardsRoute from './routes/DashboardsRoute';
+import DashboardRoute from './routes/DashboardRoute';
+import DashboardOrderRoute from './routes/DashboardOrderRoute';
+import WidgetCreateRoute from './routes/WidgetCreateRoute';
+
 const Settings = lazy(() => import('./settings'));
-const DashboardsRoute = lazy(() => import('./routes/DashboardsRoute'));
-const DashboardRoute = lazy(() => import('./routes/DashboardRoute'));
-const DashboardOrderRoute = lazy(() => import('./routes/DashboardOrderRoute'));
-const WidgetCreateRoute = lazy(() => import('./routes/WidgetCreateRoute'));
 
 const App = (appProps) => {
   const { actAs, history, location, match: { path } } = appProps;
@@ -72,17 +73,15 @@ const App = (appProps) => {
               </NavList>
         )}
           </AppContextMenu>
-          <div>
-            <Suspense fallback={null}>
-              <Switch>
-                <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
-                <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
-                <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
-                <Route component={DashboardRoute} path={`${path}/:dashName`} />
-                <Route component={DashboardsRoute} path={path} />
-              </Switch>
-            </Suspense>
-          </div>
+          <Suspense fallback={null}>
+            <Switch>
+              <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
+              <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
+              <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
+              <Route component={DashboardRoute} path={`${path}/:dashName`} />
+              <Route component={DashboardsRoute} path={path} />
+            </Switch>
+          </Suspense>
         </HasCommand>
       </CommandList>
       {isShortcutsModalOpen && (
