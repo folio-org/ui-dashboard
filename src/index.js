@@ -1,6 +1,18 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Switch } from 'react-router-dom';
-import { Route, coreEvents, HandlerManager } from '@folio/stripes/core';
+import { AppContextMenu, Route, coreEvents, HandlerManager } from '@folio/stripes/core';
+
+import {
+  CommandList,
+  HasCommand,
+  KeyboardShortcutsModal,
+  NavList,
+  NavListItem,
+  NavListSection,
+  checkScope,
+  defaultKeyboardShortcuts,
+} from '@folio/stripes/components';
 
 import PropTypes from 'prop-types';
 import Registry from './Registry';
@@ -12,7 +24,9 @@ const DashboardOrderRoute = lazy(() => import('./routes/DashboardOrderRoute'));
 const WidgetCreateRoute = lazy(() => import('./routes/WidgetCreateRoute'));
 
 const App = (appProps) => {
-  const { actAs, match: { path } } = appProps;
+  const { actAs, history, location, match: { path } } = appProps;
+  const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
+
   if (actAs === 'settings') {
     return (
       <Suspense fallback={null}>
@@ -21,16 +35,63 @@ const App = (appProps) => {
     );
   }
 
+  const goToNew = () => {
+    history.push(`${location.pathname}/create`);
+  };
+
+  const shortcuts = [
+    {
+      name: 'new',
+      handler: goToNew,
+    },
+    {
+      name: 'openShortcutModal',
+      handler: () => setIsShortcutsModalOpen(true),
+    }
+  ];
+
   return (
-    <Suspense fallback={null}>
-      <Switch>
-        <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
-        <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
-        <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
-        <Route component={DashboardRoute} path={`${path}/:dashName`} />
-        <Route component={DashboardsRoute} path={path} />
-      </Switch>
-    </Suspense>
+    <>
+      <CommandList commands={defaultKeyboardShortcuts}>
+        <HasCommand
+          commands={shortcuts}
+          isWithinScope={checkScope}
+          scope={document.body}
+        >
+          <AppContextMenu>
+            {(_handleToggle) => (
+              <NavList>
+                <NavListSection>
+                  <NavListItem
+                    id="keyboard-shortcuts-item"
+                    onClick={() => { setIsShortcutsModalOpen(true); }}
+                  >
+                    <FormattedMessage id="ui-agreements.appMenu.keyboardShortcuts" />
+                  </NavListItem>
+                </NavListSection>
+              </NavList>
+        )}
+          </AppContextMenu>
+          <div>
+            <Suspense fallback={null}>
+              <Switch>
+                <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
+                <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
+                <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
+                <Route component={DashboardRoute} path={`${path}/:dashName`} />
+                <Route component={DashboardsRoute} path={path} />
+              </Switch>
+            </Suspense>
+          </div>
+        </HasCommand>
+      </CommandList>
+      {isShortcutsModalOpen && (
+      <KeyboardShortcutsModal
+        allCommands={defaultKeyboardShortcuts}
+        onClose={() => setIsShortcutsModalOpen(false)}
+      />
+        )}
+    </>
   );
 };
 
@@ -70,6 +131,8 @@ App.eventHandler = (event, stripes, data) => {
 
 App.propTypes = {
   actAs: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   stripes: PropTypes.object.isRequired,
 };

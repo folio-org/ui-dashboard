@@ -9,10 +9,12 @@ import { useFormState, useForm } from 'react-final-form';
 
 import {
   Button,
+  HasCommand,
   Icon,
   Pane,
   Paneset,
   PaneFooter,
+  checkScope
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
@@ -81,37 +83,57 @@ const ReorderForm = ({
     return get(values, `${name}.name`);
   };
 
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: (e) => {
+        e.preventDefault();
+        if (!pristine && !submitting) {
+          onSubmit();
+        }
+      }
+    },
+  ];
+
   return (
-    <Paneset>
-      <Pane
-        centerContent
-        defaultWidth="100%"
-        footer={renderPaneFooter()}
-        id="pane-reorder-form"
-        paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
+    <>
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
-        <FieldArray
-          component={DragAndDropFieldArray}
-          draggableDivStyle={getDraggableDivStyle}
-          name="widgets"
-          renderHandle={(name, index) => (
-            <Icon
-              ariaLabel={
+        <Paneset>
+          <Pane
+            centerContent
+            defaultWidth="100%"
+            footer={renderPaneFooter()}
+            id="pane-reorder-form"
+            paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
+          >
+            <FieldArray
+              component={DragAndDropFieldArray}
+              draggableDivStyle={getDraggableDivStyle}
+              name="widgets"
+              renderHandle={(name, index) => (
+                <Icon
+                  ariaLabel={
                 intl.formatMessage(
                   { id: 'ui-dashboard.dashboard.reorderForm.dragAndDropHandleAria' },
                   { index: index + 1, widgetName: widgetNameFromName(name) }
                 )
               }
-              icon="drag-drop"
-            />
+                  icon="drag-drop"
+                />
           )}
-        >
-          {(name) => {
+            >
+              {(name) => {
             return widgetNameFromName(name);
           }}
-        </FieldArray>
-      </Pane>
-    </Paneset>
+            </FieldArray>
+          </Pane>
+        </Paneset>
+      </HasCommand>
+    </>
   );
 };
 

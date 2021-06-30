@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
   AccordionSet,
+  AccordionStatus,
+  HasCommand,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 
 import SimpleSearchFilterArray from './filters/SimpleSearchFilterArray';
@@ -29,47 +34,70 @@ const SimpleSearchForm = ({
       columns: sortColumns = []
     } = {},
   } = specificWidgetDefinition?.definition;
+
+  const accordionStatusRef = useRef();
+
   const initialAccordionState = {
     filters: true,
     results: true,
     sort: true
   };
 
+  const shortcuts = [
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
+    }
+  ];
+
+
   return (
     <>
-      <AccordionSet initialStatus={initialAccordionState}>
-        {/* This component now only displays url link stuff, consider renaming */}
-        <SimpleSearchConfigurableProperties
-          configurableProperties={configurableProperties}
-        />
-        <SimpleSearchMatches
-          data={{
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <AccordionStatus ref={accordionStatusRef}>
+          <AccordionSet initialStatus={initialAccordionState}>
+            {/* This component now only displays url link stuff, consider renaming */}
+            <SimpleSearchConfigurableProperties
+              configurableProperties={configurableProperties}
+            />
+            <SimpleSearchMatches
+              data={{
             isEdit,
             matches,
           }}
-          id="simple-search-form-matches"
-        />
-        <FieldArray
-          addButtonId="simple-search-form-add-filter-button"
-          addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
-          component={SimpleSearchFilterArray}
-          data={{
+              id="simple-search-form-matches"
+            />
+            <FieldArray
+              addButtonId="simple-search-form-add-filter-button"
+              addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
+              component={SimpleSearchFilterArray}
+              data={{
             filterColumns
           }}
-          deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
-          headerId="ui-dashboard.simpleSearchForm.filters"
-          id="simple-search-form-filters"
-          name="filterColumns"
-        />
-        <SimpleSearchResults
-          data={{
+              deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
+              headerId="ui-dashboard.simpleSearchForm.filters"
+              id="simple-search-form-filters"
+              name="filterColumns"
+            />
+            <SimpleSearchResults
+              data={{
             resultColumns,
             configurableProperties,
             sortColumns
           }}
-          id="simple-search-form-results"
-        />
-      </AccordionSet>
+              id="simple-search-form-results"
+            />
+          </AccordionSet>
+        </AccordionStatus>
+      </HasCommand>
     </>
   );
 };
