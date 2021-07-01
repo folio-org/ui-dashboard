@@ -149,6 +149,7 @@ const WidgetForm = ({
                 >
                   <Field
                     component={TextField}
+                    maxLength={255}
                     name="name"
                     required
                     validate={requiredValidator}
