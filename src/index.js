@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Switch } from 'react-router-dom';
 import { AppContextMenu, Route, coreEvents, HandlerManager } from '@folio/stripes/core';
@@ -17,12 +17,15 @@ import {
 import PropTypes from 'prop-types';
 import Registry from './Registry';
 
+// ERM-1735: took out the lazy load, causing errors with keyboard shortcuts / stripes-react-hotkeys,
+// see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
+// and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
 import DashboardsRoute from './routes/DashboardsRoute';
 import DashboardRoute from './routes/DashboardRoute';
 import DashboardOrderRoute from './routes/DashboardOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 
-const Settings = lazy(() => import('./settings'));
+import Settings from './settings';
 
 const App = (appProps) => {
   const { actAs, history, location, match: { path } } = appProps;
@@ -30,9 +33,7 @@ const App = (appProps) => {
 
   if (actAs === 'settings') {
     return (
-      <Suspense fallback={null}>
-        <Settings {...appProps} />
-      </Suspense>
+      <Settings {...appProps} />
     );
   }
 
@@ -73,15 +74,13 @@ const App = (appProps) => {
               </NavList>
         )}
           </AppContextMenu>
-          <Suspense fallback={null}>
-            <Switch>
-              <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
-              <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
-              <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
-              <Route component={DashboardRoute} path={`${path}/:dashName`} />
-              <Route component={DashboardsRoute} path={path} />
-            </Switch>
-          </Suspense>
+          <Switch>
+            <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
+            <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
+            <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
+            <Route component={DashboardRoute} path={`${path}/:dashName`} />
+            <Route component={DashboardsRoute} path={path} />
+          </Switch>
         </HasCommand>
       </CommandList>
       {isShortcutsModalOpen && (

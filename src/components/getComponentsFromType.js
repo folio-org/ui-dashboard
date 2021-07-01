@@ -5,11 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWithTokens';
 import simpleSearchWidgetToInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/widgetToInitialValues';
 
-const ErrorComponent = React.lazy(() => import('./ErrorComponents/ErrorComponent'));
-
-// Lazy-load SimpleSearch components/functions
-const SimpleSearch = React.lazy(() => import('./TypeComponents/SimpleSearch/Widget/SimpleSearch'));
-const SimpleSearchForm = React.lazy(() => import('./TypeComponents/SimpleSearch/Form/SimpleSearchForm'));
+// ERM-1735: took out the lazy load, causing errors with keyboard shortcuts / stripes-react-hotkeys,
+// see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
+// and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
+import ErrorComponent from './ErrorComponents/ErrorComponent';
+// SimpleSearch components/functions
+import SimpleSearch from './TypeComponents/SimpleSearch/Widget/SimpleSearch';
+import SimpleSearchForm from './TypeComponents/SimpleSearch/Form/SimpleSearchForm';
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
