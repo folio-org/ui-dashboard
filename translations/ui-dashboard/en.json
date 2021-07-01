@@ -8,6 +8,8 @@
   "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
   "canvas.actions": "Actions",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "loading": "Loading",
 
   "dashboardHeader.new": "New",

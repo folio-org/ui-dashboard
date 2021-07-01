@@ -67,7 +67,7 @@ const App = (appProps) => {
                     id="keyboard-shortcuts-item"
                     onClick={() => { setIsShortcutsModalOpen(true); }}
                   >
-                    <FormattedMessage id="ui-agreements.appMenu.keyboardShortcuts" />
+                    <FormattedMessage id="ui-dashboard.appMenu.keyboardShortcuts" />
                   </NavListItem>
                 </NavListSection>
               </NavList>

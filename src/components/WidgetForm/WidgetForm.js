@@ -196,7 +196,6 @@ const WidgetForm = ({
           }
           </Pane>
         </Paneset>
-
         <ConfirmationModal
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.continue" />}
