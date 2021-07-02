@@ -24,7 +24,6 @@ const Widget = ({
     <HasCommand
       commands={shortcuts}
       isWithinScope={checkScope}
-      scope={Widget.children}
     >
       <div className={css.widgetContainer}>
         <div
