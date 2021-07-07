@@ -25,15 +25,13 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'date': {
         return (data) => {
           const date = get(data, accessPath);
-          return date ? <FormattedUTCDate value={date} /> :
-          null;
+          return date && <FormattedUTCDate value={date} />;
         };
       }
       case 'datetime': {
         return (data) => {
           const date = get(data, accessPath);
-          return date ? <FormattedDateTime date={date} /> :
-          null;
+          return date && <FormattedDateTime date={date} />;
         };
       }
       case 'boolean': {
