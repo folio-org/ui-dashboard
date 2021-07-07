@@ -150,7 +150,7 @@ const WidgetForm = ({
             onClose={onClose}
             paneTitle={
               params.widgetId ?
-                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetname: name }} /> :
+                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetName: name }} /> :
                 <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
             }
           >
