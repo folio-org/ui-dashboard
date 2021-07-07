@@ -7,7 +7,8 @@ import {
   Dropdown,
   DropdownMenu,
   Headline,
-  IconButton
+  IconButton,
+  Icon
 } from '@folio/stripes/components';
 
 import css from './WidgetHeader.css';
@@ -51,7 +52,9 @@ const WidgetHeader = ({
         id="clickable-new-widget"
         onClick={() => onWidgetEdit(widgetId)}
       >
-        <FormattedMessage id="ui-dashboard.widgetHeader.editButton" />
+        <Icon icon="edit">
+          <FormattedMessage id="ui-dashboard.widgetHeader.editButton" />
+        </Icon>
       </Button>
       <Button
         aria-label={
@@ -65,7 +68,9 @@ const WidgetHeader = ({
         // We have to feed the widgetDelete the name as well for the confirmation modal
         onClick={() => onWidgetDelete(widgetId, name)}
       >
-        <FormattedMessage id="ui-dashboard.widgetHeader.deleteButton" />
+        <Icon icon="trash">
+          <FormattedMessage id="ui-dashboard.widgetHeader.deleteButton" />
+        </Icon>
       </Button>
     </DropdownMenu>
   );
