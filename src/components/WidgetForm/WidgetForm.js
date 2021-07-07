@@ -6,6 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
+  AppIcon
+} from '@folio/stripes/core';
+
+import {
   Button,
   ConfirmationModal,
   Col,
@@ -135,10 +139,13 @@ const WidgetForm = ({
       >
         <Paneset>
           <Pane
+            appIcon={<AppIcon app="dashboard" />}
             centerContent
             defaultWidth="100%"
+            dismissible
             footer={renderPaneFooter()}
             id="pane-widget-form"
+            onClose={onClose}
             paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
           >
             <Row>
