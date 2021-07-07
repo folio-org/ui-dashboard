@@ -27,6 +27,10 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 const propTypes = {
   data: PropTypes.shape({
+    name: PropTypes.string,
+    params: PropTypes.shape({
+      widgetId: PropTypes.string,
+    }),
     specificWidgetDefinition: PropTypes.object,
     widgetDefinitions: PropTypes.array
   }).isRequired,
@@ -35,9 +39,6 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     setSelectedDef: PropTypes.func.isRequired
   }),
-  params: PropTypes.shape({
-    widgetId: PropTypes.string,
-  }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };
@@ -45,6 +46,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    name,
     params,
     selectedDefinition,
     widgetDefinitions = [],
@@ -146,7 +148,11 @@ const WidgetForm = ({
             footer={renderPaneFooter()}
             id="pane-widget-form"
             onClose={onClose}
-            paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
+            paneTitle={
+              params.widgetId ?
+                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetname: name }} /> :
+                <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
+            }
           >
             <Row>
               <Col xs={6}>

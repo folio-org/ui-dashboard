@@ -32,6 +32,7 @@
   "widgetHeader.deleteButton": "Delete",
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
+  "widgetForm.editWidget": "Edit - {widgetName}",
   "widgetForm.createWidget": "New widget",
   "widgetForm.widgetName": "Widget name",
   "widgetForm.widgetDefinition": "Widget definition",
