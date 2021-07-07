@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
-import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
+import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 
 import Registry from '../../../../Registry';
 
@@ -26,14 +26,14 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
         return (data) => {
           const date = get(data, accessPath);
           return date ? <FormattedUTCDate value={date} /> :
-          <NoValue />;
+          null;
         };
       }
       case 'datetime': {
         return (data) => {
           const date = get(data, accessPath);
           return date ? <FormattedDateTime date={date} /> :
-          <NoValue />;
+          null;
         };
       }
       case 'boolean': {
