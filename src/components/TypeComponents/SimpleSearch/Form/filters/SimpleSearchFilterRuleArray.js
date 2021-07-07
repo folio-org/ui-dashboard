@@ -5,11 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
-  Button,
+  Button
 } from '@folio/stripes/components';
 
 import { EditCard } from '@folio/stripes-erm-components';
 
+import css from './filters.css';
 import SimpleSearchFilterRuleField from './SimpleSearchFilterRuleField';
 
 const SimpleSearchFilterRuleArray = ({
@@ -25,11 +26,15 @@ const SimpleSearchFilterRuleArray = ({
           <div
             key={`simple-search-filter-rule-array-${fieldName}`}
           >
-            {index !== 0 &&
-              <FormattedMessage
-                id="ui-dashboard.simpleSearchForm.filters.filterField.rule.or"
-              />
-            }
+            <div
+              className={css.orAnd}
+            >
+              {index !== 0 &&
+                <FormattedMessage
+                  id="ui-dashboard.simpleSearchForm.filters.filterField.rule.or"
+                />
+              }
+            </div>
             <EditCard
               data-test-filter-rule-number={index}
               data-testid={`simple-search-filter-rule-array[${index}]`}

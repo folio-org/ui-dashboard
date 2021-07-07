@@ -1,0 +1,12 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.absoluteSelected {
+  color: var(--color-text-p2);
+}
+
+.orAnd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--gutter-static-two-thirds);
+}

@@ -54,6 +54,7 @@
   "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
   "simpleSearchForm.filters.filterField.rule": "Rule {index}",
   "simpleSearchForm.filters.filterField.rule.or": "OR",
+  "simpleSearchForm.filters.filterField.rule.and": "AND",
   "simpleSearchForm.filters.dateFilterField.today": "Today (variable)",
 
   "simpleSearchForm.filters.dateFilterField.subtract": "Before",
