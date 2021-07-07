@@ -15,7 +15,7 @@ import {
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
-import css from './SimpleSearchFilterFields.css';
+import css from './filters.css';
 import isComparatorSpecialCase from '../../../utilities';
 
 

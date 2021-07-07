@@ -6,6 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
+  AppIcon
+} from '@folio/stripes/core';
+
+import {
   Button,
   ConfirmationModal,
   Col,
@@ -23,6 +27,10 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 
 const propTypes = {
   data: PropTypes.shape({
+    name: PropTypes.string,
+    params: PropTypes.shape({
+      widgetId: PropTypes.string,
+    }),
     specificWidgetDefinition: PropTypes.object,
     widgetDefinitions: PropTypes.array
   }).isRequired,
@@ -31,9 +39,6 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     setSelectedDef: PropTypes.func.isRequired
   }),
-  params: PropTypes.shape({
-    widgetId: PropTypes.string,
-  }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };
@@ -41,6 +46,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    name,
     params,
     selectedDefinition,
     widgetDefinitions = [],
@@ -135,11 +141,18 @@ const WidgetForm = ({
       >
         <Paneset>
           <Pane
+            appIcon={<AppIcon app="dashboard" />}
             centerContent
             defaultWidth="100%"
+            dismissible
             footer={renderPaneFooter()}
             id="pane-widget-form"
-            paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
+            onClose={onClose}
+            paneTitle={
+              params.widgetId ?
+                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetName: name }} /> :
+                <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
+            }
           >
             <Row>
               <Col xs={6}>
