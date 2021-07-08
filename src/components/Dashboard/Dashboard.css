@@ -30,7 +30,7 @@
   padding: var(--gutter-static);
 }
 
-.widgetContainer {
+.widgetsContainer {
   display: flex;
   flex-wrap: wrap;
 }
