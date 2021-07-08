@@ -8,7 +8,6 @@ import {
   Col,
   KeyValue,
   Layout,
-  NoValue,
   Row,
   Tooltip
 } from '@folio/stripes/components';
@@ -104,14 +103,14 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
           <Col md={3} xs={6}>
             <KeyValue label={<FormattedMessage id="stripes-erm-components.contacts.phone" />}>
               <span data-test-user-phone>
-                {phone ?? <NoValue />}
+                {phone ?? null}
               </span>
             </KeyValue>
           </Col>
           <Col md={4} xs={6}>
             <KeyValue label={<FormattedMessage id="stripes-erm-components.contacts.email" />}>
               <span data-test-user-email>
-                {email ?? <NoValue />}
+                {email ?? null}
               </span>
             </KeyValue>
           </Col>
