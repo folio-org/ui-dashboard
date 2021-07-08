@@ -74,7 +74,7 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
       return <NoWidgets />;
     }
     return (
-      <div className={css.widgetContainer}>
+      <div className={css.widgetsContainer}>
         {widgets.map(w => (
           <RenderWidget
             key={`widget-${w.id}`}
