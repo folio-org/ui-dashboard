@@ -93,7 +93,7 @@ const App = (appProps) => {
 };
 
 App.eventHandler = (event, _s, data) => {
-  if (event === 'ui-dashboard-registry-load') {
+  if (event === 'ui-stripes-registry-load') {
     // DATA should contain registry singleton
     data.registerResource('widget');
   }
