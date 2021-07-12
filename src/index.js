@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Switch } from 'react-router-dom';
-import { AppContextMenu, Route, coreEvents, HandlerManager } from '@folio/stripes/core';
+import { AppContextMenu, Route } from '@folio/stripes/core';
 
 import {
   CommandList,
@@ -15,7 +15,6 @@ import {
 } from '@folio/stripes/components';
 
 import PropTypes from 'prop-types';
-import Registry from './Registry';
 
 // ERM-1735: took out the lazy load, causing errors with keyboard shortcuts / stripes-react-hotkeys,
 // see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
@@ -93,32 +92,7 @@ const App = (appProps) => {
   );
 };
 
-// TODO if we can figure out how to obtain modules object outside of a component, use the following directly
-/*   modules.handler.forEach(mod => {
-    const m = mod.getModule();
-    console.log("M: %o", m)
-    const handler = m[mod.handlerName]
-    console.log ("handler: %o", handler)
-    handler('ui-dashboard-registry-load', stripes, Registry)
-  }); */
-
-// Track whether we've already fired the dash event with a boolean
-let registryEventFired = false;
-App.eventHandler = (event, stripes, data) => {
-  if (event === coreEvents.LOGIN) {
-    // Ensure event only fired once
-    if (registryEventFired === false) {
-      registryEventFired = true;
-      return () => (
-        <HandlerManager
-          data={Registry}
-          event="ui-dashboard-registry-load"
-          stripes={stripes}
-        />
-      );
-    }
-  }
-
+App.eventHandler = (event, _s, data) => {
   if (event === 'ui-dashboard-registry-load') {
     // DATA should contain registry singleton
     data.registerResource('widget');

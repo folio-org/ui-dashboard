@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 
-import Registry from '../../../../Registry';
+import { Registry } from '@folio/stripes-registry';
 
 /*
   Takes in a simpleSearch result->column shape

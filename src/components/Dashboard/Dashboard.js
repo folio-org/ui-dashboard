@@ -29,7 +29,6 @@ const Dashboard = ({ dashboardId, onCreate, onReorder, onWidgetDelete, onWidgetE
   // Keep track of which widget we're deleting--necessary because this is the dashboard level
   const [widgetToDelete, setWidgetToDelete] = useState({});
 
-
   const setupConfirmationModal = (widgetId, widgetName) => {
     // Hijack the onDelete function to show confirmation modal instead at this level
     setShowDeleteConfirmationModal(true);
