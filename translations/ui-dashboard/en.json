@@ -182,5 +182,8 @@
   "simpleSearch.widget.nFoundBadge": "{total} found",
   "simpleSearch.widget.linkText": "Link to app",
   "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}",
-  "simpleSearch.widget.noResultFound": "No results found"
+  "simpleSearch.widget.noResultFound": "No results found",
+  "simpleSearch.noContent": "Content cannot be displayed. ",
+  "simpleSearch.errorDetails": "Error details",
+  "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
 }

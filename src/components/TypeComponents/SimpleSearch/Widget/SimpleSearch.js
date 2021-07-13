@@ -1,14 +1,17 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import moment from 'moment';
-
 import { useQuery } from 'react-query';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
-import { Badge } from '@folio/stripes/components';
+import {
+  Badge,
+  MessageBanner,
+  TextLink,
+} from '@folio/stripes/components';
 
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
@@ -18,10 +21,7 @@ import { WidgetFooter } from '../../../Widget';
 
 import css from './SimpleSearch.css';
 
-const SimpleSearch = ({
-  widget,
-  widgetDef
-}) => {
+const SimpleSearch = ({ widget, widgetDef }) => {
   const intl = useIntl();
   /*
    * IMPORTANT this code uses react-query.
@@ -34,14 +34,29 @@ const SimpleSearch = ({
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
 
+  const [errorMessage, setErrorMessage] = useState(null);
   const ky = useOkapiKy();
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-    () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+     async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+    .then(res => {
+      console.log(res);
+      if (!res.ok) {
+        throw new Error(
+          intl.formatMessage({ id: 'ui-dashboard.simpleSearch.noContent' })
+        );
+      }
+      return res.json();
+    })
+    // .catch(err => alert(err))
+    .catch(err => {
+      setErrorMessage(err.message);
+    })
   );
+
   const simpleTableData = useMemo(() => data?.results || [], [data]);
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
   const {
@@ -75,22 +90,46 @@ const SimpleSearch = ({
     );
   };
 
+  // const renderError = () => {
+  //   //if error render this function
+  // };
+
+  // const renderSimpleTable = () => {
+  //   //if not error render this function
+  // };
+
   return (
     <>
       <div className={css.countBadge}>
         <Badge>
-          <FormattedMessage id="ui-dashboard.simpleSearch.widget.nFoundBadge" values={{ total: data?.total }} />
+          <FormattedMessage
+            id="ui-dashboard.simpleSearch.widget.nFoundBadge"
+            values={{ total: data?.total }}
+          />
         </Badge>
       </div>
-      {!data?.results?.length ?
-        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" /> :
+      {errorMessage ? (
+        <MessageBanner type="error">
+          {errorMessage}
+          <TextLink
+            className={css.viewDetailsButton}
+            data-test-error-boundary-production-error-details-button
+            element="button"
+            type="button"
+          >
+            <FormattedMessage id="stripes-components.ErrorBoundary.detailsButtonLabel" />
+          </TextLink>
+        </MessageBanner>
+      ) : !data?.results?.length ? (
+        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
+      ) : (
         <SimpleTable
           key={`simple-table-${widget.id}`}
           columns={columns}
           data={simpleTableData}
           widgetId={widget.id}
         />
-      }
+      )}
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => refetch()}
@@ -109,7 +148,7 @@ SimpleSearch.propTypes = {
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   }).isRequired,
-  widgetDef: PropTypes.object.isRequired
+  widgetDef: PropTypes.object.isRequired,
 };
