@@ -22,6 +22,12 @@
   "dashboard.deleteWidget": "Delete widget",
   "dashboard.delete": "Delete",
   "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
+  "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",
+  "dashboard.errorDetails": "Error details",
+  "dashboard.close": "Close",
+  "dashboard.copy": "Copy",
+  "dashboard.copied": "Copied",
 
   "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
   "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",

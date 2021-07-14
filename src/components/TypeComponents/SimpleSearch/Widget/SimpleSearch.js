@@ -1,27 +1,18 @@
 import React, { useMemo, useState } from 'react';
-
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-
 import moment from 'moment';
 import { useQuery } from 'react-query';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-
-import {
-  Badge,
-  MessageBanner,
-  TextLink,
-} from '@folio/stripes/components';
-
+import { Badge } from '@folio/stripes/components';
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
-
 import SimpleTable from '../../../SimpleTable';
 import { WidgetFooter } from '../../../Widget';
-
 import css from './SimpleSearch.css';
+import DashboardErrorBanner from '../../../Dashboard/DashboardErrorBanner/DashboardErrorBanner';
 
-const SimpleSearch = ({ widget, widgetDef }) => {
+const SimpleSearch = ({ widget, widgetDef, onShowModal }) => {
   const intl = useIntl();
   /*
    * IMPORTANT this code uses react-query.
@@ -29,11 +20,9 @@ const SimpleSearch = ({ widget, widgetDef }) => {
    * A decision has not been made either way yet, so for now I've gone with react-query.
    * Should that happen, the APIs seem quite similar so porting won't be too difficult.
    */
-
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
-
   const [errorMessage, setErrorMessage] = useState(null);
   const ky = useOkapiKy();
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
@@ -41,47 +30,40 @@ const SimpleSearch = ({ widget, widgetDef }) => {
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-     async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
-    .then(res => {
-      console.log(res);
-      if (!res.ok) {
-        throw new Error(
-          intl.formatMessage({ id: 'ui-dashboard.simpleSearch.noContent' })
-        );
-      }
-      return res.json();
-    })
-    // .catch(err => alert(err))
-    .catch(err => {
-      setErrorMessage(err.message);
-    })
+    async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(
+              intl.formatMessage({ id: 'ui-dashboard.simpleSearch.noContent' })
+            );
+          }
+          return res.json();
+        })
+        // .catch(err => alert(err))
+        .catch((err) => {
+          setErrorMessage(err.message);
+        })
   );
-
   const simpleTableData = useMemo(() => data?.results || [], [data]);
-  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
-  const {
-    configurableProperties: {
-      urlLink
-    } = {}
-  } = widgetConf;
-
+  const timestamp = dataUpdatedAt
+    ? moment(dataUpdatedAt).format('hh:mm a')
+    : '';
+  const { configurableProperties: { urlLink } = {} } = widgetConf;
   const urlLinkButton = () => {
     if (!urlLink) {
       return null;
     }
     return (
       <a
-        aria-label={
-          intl.formatMessage(
-            { id: 'ui-dashboard.simpleSearch.widget.linkTextForWidget' },
-            {
-              linkText: intl.formatMessage(
-                { id: 'ui-dashboard.simpleSearch.widget.linkText' }
-              ),
-              widgetName: widget.name
-            }
-          )
-        }
+        aria-label={intl.formatMessage(
+          { id: 'ui-dashboard.simpleSearch.widget.linkTextForWidget' },
+          {
+            linkText: intl.formatMessage({
+              id: 'ui-dashboard.simpleSearch.widget.linkText',
+            }),
+            widgetName: widget.name,
+          }
+        )}
         className={css.linkText}
         href={urlLink}
       >
@@ -89,14 +71,6 @@ const SimpleSearch = ({ widget, widgetDef }) => {
       </a>
     );
   };
-
-  // const renderError = () => {
-  //   //if error render this function
-  // };
-
-  // const renderSimpleTable = () => {
-  //   //if not error render this function
-  // };
 
   return (
     <>
@@ -109,17 +83,7 @@ const SimpleSearch = ({ widget, widgetDef }) => {
         </Badge>
       </div>
       {errorMessage ? (
-        <MessageBanner type="error">
-          {errorMessage}
-          <TextLink
-            className={css.viewDetailsButton}
-            data-test-error-boundary-production-error-details-button
-            element="button"
-            type="button"
-          >
-            <FormattedMessage id="stripes-components.ErrorBoundary.detailsButtonLabel" />
-          </TextLink>
-        </MessageBanner>
+        <DashboardErrorBanner onShowModal={onShowModal(errorMessage)} />
       ) : !data?.results?.length ? (
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
       ) : (
@@ -141,9 +105,7 @@ const SimpleSearch = ({ widget, widgetDef }) => {
     </>
   );
 };
-
 export default SimpleSearch;
-
 SimpleSearch.propTypes = {
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
@@ -151,4 +113,5 @@ SimpleSearch.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   widgetDef: PropTypes.object.isRequired,
+  onShowModal: PropTypes.func,
 };
