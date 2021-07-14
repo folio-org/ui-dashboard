@@ -196,7 +196,11 @@ const SimpleSearchDateFilterField = ({
 
 SimpleSearchDateFilterField.propTypes = {
   dateTime: PropTypes.bool,
-  filterComponent: PropTypes.object,
+  filterComponent: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   filterComponentProps: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired

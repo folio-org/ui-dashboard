@@ -40,11 +40,15 @@ const SimpleSearchMatches = ({
         />
         {columns?.map(matchCol => {
           return (
-            <Field
-              defaultValue={matchCol.default}
-              name={`matches.matches[${matchCol.name}]`}
-              render={() => null}
-            />
+            <div
+              key={`matches.matches[${matchCol.name}]`}
+            >
+              <Field
+                defaultValue={matchCol.default}
+                name={`matches.matches[${matchCol.name}]`}
+                render={() => null}
+              />
+            </div>
           );
         })}
       </>
@@ -64,7 +68,10 @@ const SimpleSearchMatches = ({
       <div className={css.checkboxContainer}>
         {columns?.map(matchCol => {
           return (
-            <div className={css.checkbox}>
+            <div
+              key={`matches.matches[${matchCol.name}]`}
+              className={css.checkbox}
+            >
               <Field
                 component={Checkbox}
                 defaultValue={matchCol.default}
