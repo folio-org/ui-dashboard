@@ -44,14 +44,16 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'link': {
         return (data) => {
           const linkText = get(data, accessPath);
-          const viewTemplate = Registry.getResource(resource)?.getViewTemplate();
-          if (!viewTemplate) {
+          const viewUrl = Registry.getResource(resource)?.getViewResource();
+
+          if (!viewUrl) {
             return linkText;
           }
 
+          // This could be a string or a function, check typeof
           return (
             <Link
-              to={viewTemplate(data)}
+              to={typeof viewUrl === 'string' ? viewUrl : viewUrl(data)}
             >
               {linkText}
             </Link>
