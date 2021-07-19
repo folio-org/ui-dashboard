@@ -7,14 +7,12 @@ const ErrorMessage = ({ error, stack, id }) => (
   <MessageBanner
     className={css.message}
     contentClassName={css.message__content}
-    data-test-error-boundary-message
     icon={null}
     id={id}
     type="error"
   >
     <Headline
       className={css.error}
-      data-test-error-boundary-message-error
       size="large"
       tag="h3"
     >

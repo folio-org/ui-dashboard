@@ -10,7 +10,6 @@ const DashboardErrorBanner = ({ viewErrorHandler }) => {
       <FormattedMessage id="ui-dashboard.simpleSearch.noContent" />
       <TextLink
         className={css.viewDetailsButton}
-        data-test-error-boundary-production-error-details-button
         element="button"
         onClick={viewErrorHandler}
         type="button"

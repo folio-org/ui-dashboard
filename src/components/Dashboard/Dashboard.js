@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -51,6 +51,7 @@ const Dashboard = ({
     errorStack: null
   });
 
+  const copyRef = useRef(null);
   const intl = useIntl();
 
   // This takes an error and a stacktrace to pass to the modal, and opens it
@@ -77,6 +78,11 @@ const Dashboard = ({
   };
 
   const handleCopyStack = () => {
+    const el = copyRef.current;
+    el.select();
+    el.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+
     setErrorState({
       ...errorState,
       errorCopied: true
@@ -106,6 +112,8 @@ const Dashboard = ({
         clearTimeout(timeout);
       };
     }, []);
+
+
 
     return (
       <Widget
@@ -149,7 +157,6 @@ const Dashboard = ({
     );
   };
 
-  console.log("ERRORMESSAGE: %o", errorState.errorMessage)
   return (
     <>
       <div className={css.dashboard}>
@@ -183,6 +190,7 @@ const Dashboard = ({
         }}
         open={showDeleteConfirmationModal}
       />
+      {/* MOVE THIS TO ANOTHER COMPONENT -> GENERAL REFACTORING */}
       <Modal
         closeOnBackgroundClick
         dismissible
@@ -222,6 +230,13 @@ const Dashboard = ({
         <ErrorMessage
           error={errorState.errorMessage}
           stack={errorState.errorStack}
+        />
+        {/* Hidden textfield to hold error text for copying */}
+        <textarea
+          ref={copyRef}
+          aria-hidden
+          className="sr-only"
+          defaultValue={`URL: ${window.location.href}\n\nError: ${errorState.errorMessage}\n\nStack: ${errorState.errorStack}`}
         />
       </Modal>
     </>

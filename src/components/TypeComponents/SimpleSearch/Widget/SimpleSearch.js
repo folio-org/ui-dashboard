@@ -48,7 +48,13 @@ const SimpleSearch = ({
         })
         .catch(async (err) => {
           // TODO internationalize this
-          const errorMessage = `HTTPError: ${err.response?.status} ${err.response?.statusText}`;
+          const errorMessage = intl.formatMessage(
+            { id: 'ui-dashboard.httpError' },
+            {
+              errorCode: err.response?.status,
+              errorText: err.response?.statusText
+            }
+          );
 
           const errBody = await err.response?.text();
           setErrorState({
@@ -59,10 +65,11 @@ const SimpleSearch = ({
         })
   );
   const simpleTableData = useMemo(() => data?.results || [], [data]);
-  const timestamp = dataUpdatedAt
-    ? moment(dataUpdatedAt).format('hh:mm a')
-    : '';
+
+  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
+
   const { configurableProperties: { urlLink } = {} } = widgetConf;
+
   const urlLinkButton = () => {
     if (!urlLink) {
       return null;
