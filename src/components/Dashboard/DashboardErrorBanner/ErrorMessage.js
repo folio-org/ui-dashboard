@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Headline, MessageBanner } from '@folio/stripes/components';
 import css from './ErrorMessage.css';
 
-const ErrorMessage = ({ errorMessage, stack, id }) => (
+const ErrorMessage = ({ error, stack, id }) => (
   <MessageBanner
     className={css.message}
     contentClassName={css.message__content}
@@ -18,7 +18,7 @@ const ErrorMessage = ({ errorMessage, stack, id }) => (
       size="large"
       tag="h3"
     >
-      Error: {errorMessage}
+      {error}
     </Headline>
     <pre className={css.stack} data-test-error-boundary-message-stack-trace>
       {stack}
@@ -27,7 +27,7 @@ const ErrorMessage = ({ errorMessage, stack, id }) => (
 );
 
 ErrorMessage.propTypes = {
-  errorMessage: PropTypes.node,
+  error: PropTypes.node,
   id: PropTypes.string,
   stack: PropTypes.node,
 };

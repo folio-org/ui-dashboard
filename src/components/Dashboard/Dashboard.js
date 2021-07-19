@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   ConfirmationModal,
@@ -9,8 +10,9 @@ import {
   Button,
   Headline,
   Icon,
-  SRStatus,
 } from '@folio/stripes/components';
+
+
 import DashboardHeader from './DashboardHeader';
 import NoWidgets from './NoWidgets';
 import css from './Dashboard.css';
@@ -24,58 +26,61 @@ const propTypes = {
   onReorder: PropTypes.func.isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
-  onCopyError: PropTypes.func,
-  stackTrace: PropTypes.string,
   widgets: PropTypes.arrayOf(PropTypes.object),
 };
+
 const Dashboard = ({
   dashboardId,
   onCreate,
   onReorder,
   onWidgetDelete,
   onWidgetEdit,
-  widgets,
-  onCopyError,
-  stackTrace,
+  widgets
 }) => {
   // Handle delete through a delete confirmation modal rather than directly
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
     useState(false);
   // Keep track of which widget we're deleting--necessary because this is the dashboard level
   const [widgetToDelete, setWidgetToDelete] = useState({});
-  const [errorMessage, setErrorMessage] = useState('');
-  const [errorCopied, setErrorCopied] = useState(false);
+
+  const [errorState, setErrorState] = useState({
+    errorCopied: false,
+    errorMessage: null,
+    errorModalOpen: false,
+    errorStack: null
+  });
 
   const intl = useIntl();
-  const copyRef = useRef(null);
-  const srsRef = useRef(null);
 
-  const handleShowModal = (errorMessage) => {
-    setErrorMessage(errorMessage);
+  const handleError = (err, stack) => {
+    setErrorState({
+      errorMessage: err,
+      errorModalOpen: true,
+      errorStack: stack,
+      ...errorState
+    });
   };
+
   const handleHideModal = () => {
-    setErrorMessage('');
+    setErrorState({
+      errorModalOpen: false,
+      ...errorState
+    });
   };
+
   const setupConfirmationModal = (widgetId, widgetName) => {
     // Hijack the onDelete function to show confirmation modal instead at this level
     setShowDeleteConfirmationModal(true);
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
+
   const handleCopyStack = () => {
-    const el = copyRef.current;
-    el.select();
-    el.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    if (typeof onCopyError === 'function') {
-      onCopyError(el.defaultValue);
-    }
-    srsRef.current.sendMessage(
-      intl.formatMessage({
-        id: 'stripes-components.ErrorBoundary.errorCopiedScreenReaderMessage',
-      })
-    );
-    setErrorCopied(true);
+    setErrorState({
+      errorCopied: true,
+      ...errorState
+    });
   };
+
   const RenderWidget = ({ widget }) => {
     const {
       specificWidgetDefinition,
@@ -84,17 +89,22 @@ const Dashboard = ({
       widget.definition?.name,
       widget.definition?.version
     );
+
     useEffect(() => {
       let timeout;
-      if (errorCopied) {
+      if (errorState.errorCopied) {
         timeout = setTimeout(() => {
-          setErrorCopied(false);
+          setErrorState({
+            errorCopied: false,
+            ...errorState
+          });
         }, 1000);
       }
       return () => {
         clearTimeout(timeout);
       };
     }, []);
+
     return (
       <Widget
         onWidgetDelete={setupConfirmationModal}
@@ -103,13 +113,14 @@ const Dashboard = ({
       >
         <WidgetComponent
           key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
-          onShowModal={(errorMessage) => handleShowModal(errorMessage)}
+          onError={handleError}
           widget={widget}
           widgetDef={specificWidgetDefinition?.definition}
         />
       </Widget>
     );
   };
+
   RenderWidget.propTypes = {
     widget: PropTypes.shape({
       definition: PropTypes.shape({
@@ -119,6 +130,7 @@ const Dashboard = ({
       id: PropTypes.string.isRequired,
     }).isRequired,
   };
+
   const dashboardContents = () => {
     if (!widgets?.length) {
       return <NoWidgets />;
@@ -134,6 +146,8 @@ const Dashboard = ({
       </div>
     );
   };
+
+  console.log("ERRORMESSAGE: %o", errorState.errorMessage)
   return (
     <>
       <div className={css.dashboard}>
@@ -142,60 +156,6 @@ const Dashboard = ({
           onCreate={onCreate}
           onReorder={onReorder}
         />
-        <FormattedMessage id="ui-dashboard.dashboard.errorDetails">
-          {([modalLabel]) => (
-            <Modal
-              aria-label={modalLabel}
-              closeOnBackgroundClick
-              contentClass={css.modalContent}
-              data-test-error-boundary-production-error-details-modal
-              dismissible
-              footer={
-                <ModalFooter>
-                  <Button
-                    buttonStyle="primary"
-                    marginBottom0
-                    onClick={handleHideModal}
-                  >
-                    <FormattedMessage id="ui-dashboard.dashboard.close" />
-                  </Button>
-                  <Button
-                    aria-label={intl.formatMessage({
-                      id: 'ui-dashboard.dashboard.copyErrorButtonAriaLabel.copyErrorButtonAriaLabel',
-                    })}
-                    buttonStyle="default"
-                    data-test-error-boundary-production-error-copy-button
-                    disabled={errorCopied}
-                    marginBottom0
-                    onClick={handleCopyStack}
-                  >
-                    <Icon icon="clipboard">
-                      {errorCopied ? (
-                        <FormattedMessage id="ui-dashboard.dashboard.copied" />
-                      ) : (
-                        <FormattedMessage id="ui-dashboard.dashboard.copy" />
-                      )}
-                    </Icon>
-                  </Button>
-                </ModalFooter>
-              }
-              label={modalLabel}
-              onClose={handleHideModal}
-              open={errorMessage}
-              size="medium"
-            >
-              <SRStatus ref={srsRef} />
-              <Headline size="medium">
-                <FormattedMessage id="ui-dashboard.dashboard.errorDetailsDescription" />
-              </Headline>
-              <ErrorMessage
-                data-test-error-boundary-production-error-message
-                error={errorMessage}
-                stack={stackTrace}
-              />
-            </Modal>
-          )}
-        </FormattedMessage>
         <div className={css.dashboardContent}>{dashboardContents()}</div>
       </div>
       <ConfirmationModal
@@ -221,8 +181,49 @@ const Dashboard = ({
         }}
         open={showDeleteConfirmationModal}
       />
+      <Modal
+        closeOnBackgroundClick
+        dismissible
+        footer={
+          <ModalFooter>
+            <Button
+              buttonStyle="primary"
+              marginBottom0
+              onClick={handleHideModal}
+            >
+              <FormattedMessage id="ui-dashboard.dashboard.close" />
+            </Button>
+            <Button
+              buttonStyle="default"
+              disabled={errorState.errorCopied}
+              marginBottom0
+              onClick={handleCopyStack}
+            >
+              <Icon icon="clipboard">
+                {errorState.errorCopied ? (
+                  <FormattedMessage id="ui-dashboard.dashboard.copied" />
+                ) : (
+                  <FormattedMessage id="ui-dashboard.dashboard.copy" />
+                )}
+              </Icon>
+            </Button>
+          </ModalFooter>
+        }
+        label={<FormattedMessage id="ui-dashboard.dashboard.errorDetails" />}
+        onClose={handleHideModal}
+        open={errorState.errorModalOpen}
+        size="medium"
+      >
+        <Headline size="medium">
+          <FormattedMessage id="ui-dashboard.dashboard.errorDetailsDescription" />
+        </Headline>
+        <ErrorMessage
+          error={errorState.errorMessage}
+        />
+      </Modal>
     </>
   );
 };
+
 export default Dashboard;
 Dashboard.propTypes = propTypes;

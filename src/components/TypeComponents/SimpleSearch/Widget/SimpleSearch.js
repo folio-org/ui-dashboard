@@ -12,7 +12,11 @@ import { WidgetFooter } from '../../../Widget';
 import css from './SimpleSearch.css';
 import DashboardErrorBanner from '../../../Dashboard/DashboardErrorBanner/DashboardErrorBanner';
 
-const SimpleSearch = ({ widget, widgetDef, onShowModal }) => {
+const SimpleSearch = ({
+  onError,
+  widget,
+  widgetDef
+}) => {
   const intl = useIntl();
   /*
    * IMPORTANT this code uses react-query.
@@ -23,25 +27,42 @@ const SimpleSearch = ({ widget, widgetDef, onShowModal }) => {
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
-  const [errorMessage, setErrorMessage] = useState(null);
+
+  const [fetchError, setFetchError] = useState(false);
+  const [fetchErrorMessage, setFetchErrorMessage] = useState();
+
+  const [errorState, setErrorState] = useState({
+    isError: false,
+    errorMessage: null,
+    errorStack: null
+  });
+
   const ky = useOkapiKy();
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-    async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+    //async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+    async () => ky('wibble/wibblewobble')
         .then((res) => {
-          if (!res.ok) {
-            throw new Error(
-              intl.formatMessage({ id: 'ui-dashboard.simpleSearch.noContent' })
-            );
-          }
           return res.json();
         })
-        // .catch(err => alert(err))
         .catch((err) => {
-          setErrorMessage(err.message);
+          // TODO internationalize this
+          const errorMessage = `HTTPError: ${err.response?.status} ${err.response?.statusText}`
+          const errorBody = err.response?.text()
+            .then(errRes => {
+              return errRes;
+            });
+
+          console.log("Err body: %o", errorBody);
+          setErrorState({
+            isError: true,
+            errorMessage,
+            errorStack: errorBody,
+            ...errorState
+          });
         })
   );
   const simpleTableData = useMemo(() => data?.results || [], [data]);
@@ -82,8 +103,9 @@ const SimpleSearch = ({ widget, widgetDef, onShowModal }) => {
           />
         </Badge>
       </div>
-      {errorMessage ? (
-        <DashboardErrorBanner onShowModal={onShowModal(errorMessage)} />
+      {/* TODO This should be up above */}
+      {errorState.isError ? (
+        <DashboardErrorBanner viewErrorHandler={() => onError(fetchErrorMessage)} />
       ) : !data?.results?.length ? (
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
       ) : (
@@ -113,5 +135,4 @@ SimpleSearch.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   widgetDef: PropTypes.object.isRequired,
-  onShowModal: PropTypes.func,
 };

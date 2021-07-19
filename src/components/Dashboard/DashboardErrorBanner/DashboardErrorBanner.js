@@ -4,7 +4,7 @@ import { MessageBanner, TextLink } from '@folio/stripes/components';
 import PropTypes from 'prop-types';
 import css from './DashboardErrorBanner.css';
 
-const DashboardErrorBanner = ({ onShowModal }) => {
+const DashboardErrorBanner = ({ viewErrorHandler }) => {
   return (
     <MessageBanner type="error">
       <FormattedMessage id="ui-dashboard.simpleSearch.noContent" />
@@ -12,7 +12,7 @@ const DashboardErrorBanner = ({ onShowModal }) => {
         className={css.viewDetailsButton}
         data-test-error-boundary-production-error-details-button
         element="button"
-        onClick={onShowModal}
+        onClick={viewErrorHandler}
         type="button"
       >
         <FormattedMessage id="stripes-components.ErrorBoundary.detailsButtonLabel" />
@@ -22,6 +22,6 @@ const DashboardErrorBanner = ({ onShowModal }) => {
 };
 
 DashboardErrorBanner.propTypes = {
-  onShowModal: PropTypes.func,
+  viewErrorHandler: PropTypes.func,
 };
 export default DashboardErrorBanner;
