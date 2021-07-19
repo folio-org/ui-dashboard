@@ -124,9 +124,12 @@ const Dashboard = ({
       return <NoWidgets />;
     }
     return (
-      <div className={css.widgetContainer}>
-        {widgets.map((w) => (
-          <RenderWidget key={`widget-${w.id}`} widget={w} />
+      <div className={css.widgetsContainer}>
+        {widgets.map(w => (
+          <RenderWidget
+            key={`widget-${w.id}`}
+            widget={w}
+          />
         ))}
       </div>
     );

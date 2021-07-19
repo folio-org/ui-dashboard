@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { HasCommand, checkScope } from '@folio/stripes/components';
+
 import WidgetHeader from './WidgetHeader';
 
 import css from './Widget.css';
@@ -11,26 +13,38 @@ const Widget = ({
   onWidgetEdit,
   widget
 }) => {
+  const shortcuts = [
+    {
+      name: 'edit',
+      handler: () => onWidgetEdit(widget.id),
+    }
+  ];
+
   return (
-    <div className={css.widgetContainer}>
-      <div
-        className={css.card}
-      >
-        <WidgetHeader
-          key={`widget-header-${widget.id}`}
-          name={widget.name}
-          onWidgetDelete={onWidgetDelete}
-          onWidgetEdit={onWidgetEdit}
-          widgetId={widget.id}
-        />
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+    >
+      <div className={css.widgetContainer}>
         <div
-          key={`widget-body-${widget.id}`}
-          className={css.body}
+          className={css.card}
         >
-          {children}
+          <WidgetHeader
+            key={`widget-header-${widget.id}`}
+            name={widget.name}
+            onWidgetDelete={onWidgetDelete}
+            onWidgetEdit={onWidgetEdit}
+            widgetId={widget.id}
+          />
+          <div
+            key={`widget-body-${widget.id}`}
+            className={css.body}
+          >
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </HasCommand>
   );
 };
 

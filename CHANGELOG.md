@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
-## 1.1.0 (In Progress)
+## 2.0.0 (In Progress)
+  * ERM-1768 Registry: Move Registry class out of Dashboard and into dedicated repo
 
 ## 1.0.0 2021-06-16
   * ERM-1696 Add support for match + terms in simple search widget type

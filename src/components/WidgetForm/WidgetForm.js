@@ -6,21 +6,31 @@ import { FormattedMessage } from 'react-intl';
 import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
+  AppIcon
+} from '@folio/stripes/core';
+
+import {
   Button,
   ConfirmationModal,
   Col,
+  HasCommand,
   KeyValue,
   Pane,
   Paneset,
   PaneFooter,
   Row,
   Select,
-  TextField
+  TextField,
+  checkScope,
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 const propTypes = {
   data: PropTypes.shape({
+    name: PropTypes.string,
+    params: PropTypes.shape({
+      widgetId: PropTypes.string,
+    }),
     specificWidgetDefinition: PropTypes.object,
     widgetDefinitions: PropTypes.array
   }).isRequired,
@@ -29,9 +39,6 @@ const propTypes = {
     onSubmit: PropTypes.func.isRequired,
     setSelectedDef: PropTypes.func.isRequired
   }),
-  params: PropTypes.shape({
-    widgetId: PropTypes.string,
-  }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
 };
@@ -39,6 +46,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    name,
     params,
     selectedDefinition,
     widgetDefinitions = [],
@@ -60,6 +68,18 @@ const WidgetForm = ({
   // Need to keep track of "next" widgetDef index for use in the modal.
   // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
+
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: (e) => {
+        e.preventDefault();
+        if (!pristine && !submitting) {
+          onSubmit();
+        }
+      }
+    },
+  ];
 
   const renderPaneFooter = () => {
     return (
@@ -114,39 +134,52 @@ const WidgetForm = ({
 
   return (
     <>
-      <Paneset>
-        <Pane
-          centerContent
-          defaultWidth="100%"
-          footer={renderPaneFooter()}
-          id="pane-widget-form"
-          paneTitle={<FormattedMessage id="ui-dashboard.widgetForm.createWidget" />}
-        >
-          <Row>
-            <Col xs={6}>
-              <KeyValue
-                data-testid="widget-form-name"
-                label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
-              >
-                <Field
-                  component={TextField}
-                  name="name"
-                  required
-                  validate={requiredValidator}
-                />
-              </KeyValue>
-            </Col>
-            <Col xs={6}>
-              <KeyValue
-                data-testid="widget-form-definition"
-                label={<FormattedMessage id="ui-dashboard.widgetForm.widgetDefinition" />}
-              >
-                <Field
-                  component={Select}
-                  dataOptions={selectifiedWidgetDefs}
-                  disabled={!!params.widgetId}
-                  name="definition"
-                  onChange={e => {
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <Paneset>
+          <Pane
+            appIcon={<AppIcon app="dashboard" />}
+            centerContent
+            defaultWidth="100%"
+            dismissible
+            footer={renderPaneFooter()}
+            id="pane-widget-form"
+            onClose={onClose}
+            paneTitle={
+              params.widgetId ?
+                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetName: name }} /> :
+                <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
+            }
+          >
+            <Row>
+              <Col xs={6}>
+                <KeyValue
+                  data-testid="widget-form-name"
+                  label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
+                >
+                  <Field
+                    component={TextField}
+                    maxLength={255}
+                    name="name"
+                    required
+                    validate={requiredValidator}
+                  />
+                </KeyValue>
+              </Col>
+              <Col xs={6}>
+                <KeyValue
+                  data-testid="widget-form-definition"
+                  label={<FormattedMessage id="ui-dashboard.widgetForm.widgetDefinition" />}
+                >
+                  <Field
+                    component={Select}
+                    dataOptions={selectifiedWidgetDefs}
+                    disabled={!!params.widgetId}
+                    name="definition"
+                    onChange={e => {
                     // Other than the name/def, are any of the fields dirty?
                     delete dirtyFields.name;
                     delete dirtyFields.definition;
@@ -161,38 +194,39 @@ const WidgetForm = ({
                       setSelectedDef(widgetDefinitions[e.target.value]);
                     }
                   }}
-                  required
-                  validate={requiredValidator}
-                />
-              </KeyValue>
-            </Col>
-          </Row>
-          {selectedDefinition &&
+                    required
+                    validate={requiredValidator}
+                  />
+                </KeyValue>
+              </Col>
+            </Row>
+            {selectedDefinition &&
             // Get specific form component for the selected widgetDefinition
             <WidgetFormComponent
               isEdit={!!params.widgetId}
               specificWidgetDefinition={selectedDefinition}
             />
           }
-        </Pane>
-      </Paneset>
-      <ConfirmationModal
-        buttonStyle="danger"
-        confirmLabel={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.continue" />}
-        data-test-delete-confirmation-modal
-        heading={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.heading" />}
-        id="wipe-widget-form-confirmation"
-        message={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.message" />}
-        onCancel={() => {
+          </Pane>
+        </Paneset>
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.continue" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.heading" />}
+          id="wipe-widget-form-confirmation"
+          message={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.message" />}
+          onCancel={() => {
           setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
           setNewDef();
         }}
-        onConfirm={() => {
+          onConfirm={() => {
           changeDefinitionAndWipeForm();
           setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
         }}
-        open={confirmWipeFormModalOpen}
-      />
+          open={confirmWipeFormModalOpen}
+        />
+      </HasCommand>
     </>
   );
 };

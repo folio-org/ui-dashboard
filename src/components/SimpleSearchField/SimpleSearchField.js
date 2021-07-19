@@ -29,9 +29,8 @@ const SimpleSearchField = (props) => {
     <TextField
       {...rest}
       aria-label={rest['aria-label'] || ariaLabel}
-      focussedClass={css.isFocused}
+      focussedclass={css.isFocused}
       hasClearIcon
-      parse={v => v} // Lets us send an empty string instead of `undefined`
       startControl={searchIcon}
       type="search"
     />

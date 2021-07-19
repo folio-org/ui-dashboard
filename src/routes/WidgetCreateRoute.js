@@ -135,6 +135,7 @@ const WidgetCreateRoute = ({
               data={{
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
+                name: widget?.name,
                 params,
                 selectedDefinition,
                 widgetDefinitions,

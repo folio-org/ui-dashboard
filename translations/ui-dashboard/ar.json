@@ -151,5 +151,8 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "تم تعيينه",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "لم يتم تعيينه",
     "simpleSearch.widget.noResultFound": "لم يتم العثور على نتائج",
-    "simpleSearchForm.matches": "بحث"
+    "simpleSearchForm.matches": "بحث",
+    "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
+    "simpleSearchForm.filters.filterField.rule.and": "و",
+    "widgetForm.editWidget": "تحرير - {widgetName}"
 }

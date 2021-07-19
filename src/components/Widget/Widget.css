@@ -1,6 +1,5 @@
 @import '@folio/stripes-components/lib/variables';
 
-
 .card {
   width: 100%;
   background-color: var(--bg);
@@ -12,6 +11,27 @@
   padding: var(--gutter-static);
   padding-bottom: 0;
   box-shadow: var(--shadow);
+
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    background-color: var(--primary);
+    top: -5px;
+    opacity: 0;
+    transition: height 200ms, top 200ms, opacity 500ms;
+    pointer-events: none;
+  }
+
+  &:focus-within::after {
+    opacity: 1;
+    height: 5px;
+    top: 0;
+  }
 }
 
 .widgetContainer {

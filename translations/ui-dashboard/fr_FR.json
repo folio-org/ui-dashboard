@@ -151,5 +151,8 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "est défini",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "n'est pas défini",
     "simpleSearch.widget.noResultFound": "Aucun résultat trouvé",
-    "simpleSearchForm.matches": "Rechercher"
+    "simpleSearchForm.matches": "Rechercher",
+    "appMenu.keyboardShortcuts": "Raccourcis clavier",
+    "simpleSearchForm.filters.filterField.rule.and": "AND",
+    "widgetForm.editWidget": "Edit - {widgetName}"
 }

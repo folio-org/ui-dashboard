@@ -8,6 +8,8 @@
   "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
   "canvas.actions": "Actions",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "loading": "Loading",
 
   "dashboardHeader.new": "New",
@@ -36,6 +38,7 @@
   "widgetHeader.deleteButton": "Delete",
   "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
 
+  "widgetForm.editWidget": "Edit - {widgetName}",
   "widgetForm.createWidget": "New widget",
   "widgetForm.widgetName": "Widget name",
   "widgetForm.widgetDefinition": "Widget definition",
@@ -58,6 +61,7 @@
   "simpleSearchForm.filters.filterField.rule.removeRule": "Remove rule {index}",
   "simpleSearchForm.filters.filterField.rule": "Rule {index}",
   "simpleSearchForm.filters.filterField.rule.or": "OR",
+  "simpleSearchForm.filters.filterField.rule.and": "AND",
   "simpleSearchForm.filters.dateFilterField.today": "Today (variable)",
 
   "simpleSearchForm.filters.dateFilterField.subtract": "Before",

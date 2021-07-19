@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
-import { FormattedUTCDate, Icon, NoValue } from '@folio/stripes/components';
+import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 
-import Registry from '../../../../Registry';
+import { Registry } from '@folio/stripes-registry';
 
 /*
   Takes in a simpleSearch result->column shape
@@ -25,15 +25,13 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'date': {
         return (data) => {
           const date = get(data, accessPath);
-          return date ? <FormattedUTCDate value={date} /> :
-          <NoValue />;
+          return date ? <FormattedUTCDate value={date} /> : null;
         };
       }
       case 'datetime': {
         return (data) => {
           const date = get(data, accessPath);
-          return date ? <FormattedDateTime date={date} /> :
-          <NoValue />;
+          return date ? <FormattedDateTime date={date} /> : null;
         };
       }
       case 'boolean': {
@@ -46,14 +44,16 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'link': {
         return (data) => {
           const linkText = get(data, accessPath);
-          const viewTemplate = Registry.getResource(resource)?.getViewTemplate();
-          if (!viewTemplate) {
+          const viewUrl = Registry.getResource(resource)?.getViewResource();
+
+          if (!viewUrl) {
             return linkText;
           }
 
+          // This could be a string or a function, check typeof
           return (
             <Link
-              to={viewTemplate(data)}
+              to={typeof viewUrl === 'string' ? viewUrl : viewUrl(data)}
             >
               {linkText}
             </Link>
