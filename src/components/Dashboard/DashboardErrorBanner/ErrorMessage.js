@@ -20,7 +20,7 @@ const ErrorMessage = ({ error, stack, id }) => (
     >
       {error}
     </Headline>
-    <pre className={css.stack} data-test-error-boundary-message-stack-trace>
+    <pre className={css.stack}>
       {stack}
     </pre>
   </MessageBanner>

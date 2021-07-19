@@ -38,11 +38,12 @@ const Dashboard = ({
   widgets
 }) => {
   // Handle delete through a delete confirmation modal rather than directly
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
-    useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+
   // Keep track of which widget we're deleting--necessary because this is the dashboard level
   const [widgetToDelete, setWidgetToDelete] = useState({});
 
+  // This stores the CANVAS-LEVEL error state, ready to display in the modal
   const [errorState, setErrorState] = useState({
     errorCopied: false,
     errorMessage: null,
@@ -52,19 +53,20 @@ const Dashboard = ({
 
   const intl = useIntl();
 
+  // This takes an error and a stacktrace to pass to the modal, and opens it
   const handleError = (err, stack) => {
     setErrorState({
+      ...errorState,
       errorMessage: err,
       errorModalOpen: true,
-      errorStack: stack,
-      ...errorState
+      errorStack: stack
     });
   };
 
   const handleHideModal = () => {
     setErrorState({
-      errorModalOpen: false,
-      ...errorState
+      ...errorState,
+      errorModalOpen: false
     });
   };
 
@@ -76,8 +78,8 @@ const Dashboard = ({
 
   const handleCopyStack = () => {
     setErrorState({
-      errorCopied: true,
-      ...errorState
+      ...errorState,
+      errorCopied: true
     });
   };
 
@@ -95,8 +97,8 @@ const Dashboard = ({
       if (errorState.errorCopied) {
         timeout = setTimeout(() => {
           setErrorState({
-            errorCopied: false,
-            ...errorState
+            ...errorState,
+            errorCopied: false
           });
         }, 1000);
       }
@@ -219,6 +221,7 @@ const Dashboard = ({
         </Headline>
         <ErrorMessage
           error={errorState.errorMessage}
+          stack={errorState.errorStack}
         />
       </Modal>
     </>

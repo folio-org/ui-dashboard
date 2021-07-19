@@ -28,9 +28,7 @@ const SimpleSearch = ({
   const widgetConf = JSON.parse(widget.configuration);
   const columns = columnParser({ widgetDef, widgetConf });
 
-  const [fetchError, setFetchError] = useState(false);
-  const [fetchErrorMessage, setFetchErrorMessage] = useState();
-
+  // This stores the WIDGET-LEVEL error state, ready to pass to the canvas if required
   const [errorState, setErrorState] = useState({
     isError: false,
     errorMessage: null,
@@ -48,20 +46,15 @@ const SimpleSearch = ({
         .then((res) => {
           return res.json();
         })
-        .catch((err) => {
+        .catch(async (err) => {
           // TODO internationalize this
-          const errorMessage = `HTTPError: ${err.response?.status} ${err.response?.statusText}`
-          const errorBody = err.response?.text()
-            .then(errRes => {
-              return errRes;
-            });
+          const errorMessage = `HTTPError: ${err.response?.status} ${err.response?.statusText}`;
 
-          console.log("Err body: %o", errorBody);
+          const errBody = await err.response?.text();
           setErrorState({
             isError: true,
             errorMessage,
-            errorStack: errorBody,
-            ...errorState
+            errorStack: errBody
           });
         })
   );
@@ -93,8 +86,8 @@ const SimpleSearch = ({
     );
   };
 
-  return (
-    <>
+  const renderBadge = () => {
+    return (
       <div className={css.countBadge}>
         <Badge>
           <FormattedMessage
@@ -103,19 +96,44 @@ const SimpleSearch = ({
           />
         </Badge>
       </div>
-      {/* TODO This should be up above */}
-      {errorState.isError ? (
-        <DashboardErrorBanner viewErrorHandler={() => onError(fetchErrorMessage)} />
-      ) : !data?.results?.length ? (
-        <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
-      ) : (
+    );
+  };
+
+  const displayWidgetBody = () => {
+    if (errorState.isError) {
+      return (
+        <DashboardErrorBanner
+          viewErrorHandler={
+            () => onError(errorState.errorMessage, errorState.errorStack)
+          }
+        />
+      );
+    }
+
+    if (!data?.results?.length) {
+      return (
+        <>
+          {renderBadge}
+          <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
+        </>
+      );
+    }
+    return (
+      <>
+        {renderBadge}
         <SimpleTable
           key={`simple-table-${widget.id}`}
           columns={columns}
           data={simpleTableData}
           widgetId={widget.id}
         />
-      )}
+      </>
+    );
+  };
+
+  return (
+    <>
+      {displayWidgetBody()}
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
         onRefresh={() => refetch()}
