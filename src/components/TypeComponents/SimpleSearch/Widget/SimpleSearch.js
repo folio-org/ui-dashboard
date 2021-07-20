@@ -10,7 +10,7 @@ import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../../../SimpleTable';
 import { WidgetFooter } from '../../../Widget';
 import css from './SimpleSearch.css';
-import { ErrorBanner } from '../../../ErrorComponents';
+import { ErrorBanner, errorParser } from '../../../ErrorComponents';
 
 const SimpleSearch = ({
   onError,
@@ -39,64 +39,19 @@ const SimpleSearch = ({
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
 
-  // TODO Refactor to its own function component
-  const errorParser = async (err) => {
-    let errorMessage;
-    let errBody;
-
-    /* For HTTPError we assume error.response returns a Promise */
-    if (err.name.toLowerCase() === 'httperror') {
-      /*
-       * Due to the nature of okapi endpoint calls, err.response
-       * could comprise of JSON data OR string data. Read in as Blob
-       * and deal with either case separately
-       */
-      const errBlob = await err.response?.blob();
-      const errBlobText = await errBlob.text();
-
-      if (errBlob.type === 'application/json') {
-        const errJson = JSON.parse(errBlobText);
-        errorMessage = intl.formatMessage(
-          { id: 'ui-dashboard.httpError' },
-          {
-            errorCode: err.response?.status,
-            errorText: `${err.response?.statusText}\n${errJson?.message}`
-          }
-        );
-        errBody = errJson.stackTrace?.join('\n');
-      } else {
-        // Otherwise we've probably got a string, just display errBlobText as the stack
-        errorMessage = intl.formatMessage(
-          { id: 'ui-dashboard.httpError' },
-          {
-            errorCode: err.response?.status,
-            errorText: err.response?.statusText
-          }
-        );
-        errBody = errBlobText;
-      }
-    } else {
-      errorMessage = err.name;
-      errBody = err.message;
-    }
-
-    return ({
-      isError: true,
-      errorMessage,
-      errorStack: errBody
-    });
-  };
-
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-    //async () => ky(pathBuilder(widgetDef, widgetConf, stripes))
-    async () => ky('wibble/wibblewobble')
+    async () => ky(pathBuilder(widgetDef, widgetConf, stripes))
         .then((res) => {
           return res.json();
         })
         .catch(async err => {
-          setErrorState(await errorParser(err));
+          const parsedError = await errorParser(err, intl);
+          setErrorState({
+            ...parsedError,
+            isError: true
+          });
         })
   );
   const simpleTableData = useMemo(() => data?.results || [], [data]);
@@ -189,6 +144,7 @@ const SimpleSearch = ({
 };
 export default SimpleSearch;
 SimpleSearch.propTypes = {
+  onError: PropTypes.func.isRequired,
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
