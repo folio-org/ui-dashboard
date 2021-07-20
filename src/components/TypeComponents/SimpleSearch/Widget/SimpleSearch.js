@@ -38,30 +38,65 @@ const SimpleSearch = ({
   const ky = useOkapiKy();
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
+
+  // TODO Refactor to its own function component
+  const errorParser = async (err) => {
+    let errorMessage;
+    let errBody;
+
+    /* For HTTPError we assume error.response returns a Promise */
+    if (err.name.toLowerCase() === 'httperror') {
+      /*
+       * Due to the nature of okapi endpoint calls, err.response
+       * could comprise of JSON data OR string data. Read in as Blob
+       * and deal with either case separately
+       */
+      const errBlob = await err.response?.blob();
+      const errBlobText = await errBlob.text();
+
+      if (errBlob.type === 'application/json') {
+        const errJson = JSON.parse(errBlobText);
+        errorMessage = intl.formatMessage(
+          { id: 'ui-dashboard.httpError' },
+          {
+            errorCode: err.response?.status,
+            errorText: `${err.response?.statusText}\n${errJson?.message}`
+          }
+        );
+        errBody = errJson.stackTrace?.join('\n');
+      } else {
+        // Otherwise we've probably got a string, just display errBlobText as the stack
+        errorMessage = intl.formatMessage(
+          { id: 'ui-dashboard.httpError' },
+          {
+            errorCode: err.response?.status,
+            errorText: err.response?.statusText
+          }
+        );
+        errBody = errBlobText;
+      }
+    } else {
+      errorMessage = err.name;
+      errBody = err.message;
+    }
+
+    return ({
+      isError: true,
+      errorMessage,
+      errorStack: errBody
+    });
+  };
+
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-    //async () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
+    //async () => ky(pathBuilder(widgetDef, widgetConf, stripes))
     async () => ky('wibble/wibblewobble')
         .then((res) => {
           return res.json();
         })
-        .catch(async (err) => {
-          // TODO internationalize this
-          const errorMessage = intl.formatMessage(
-            { id: 'ui-dashboard.httpError' },
-            {
-              errorCode: err.response?.status,
-              errorText: err.response?.statusText
-            }
-          );
-
-          const errBody = await err.response?.text();
-          setErrorState({
-            isError: true,
-            errorMessage,
-            errorStack: errBody
-          });
+        .catch(async err => {
+          setErrorState(await errorParser(err));
         })
   );
   const simpleTableData = useMemo(() => data?.results || [], [data]);
@@ -120,14 +155,14 @@ const SimpleSearch = ({
     if (!data?.results?.length) {
       return (
         <>
-          {renderBadge}
+          {renderBadge()}
           <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
         </>
       );
     }
     return (
       <>
-        {renderBadge}
+        {renderBadge()}
         <SimpleTable
           key={`simple-table-${widget.id}`}
           columns={columns}
