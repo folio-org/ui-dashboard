@@ -10,7 +10,7 @@ import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../../../SimpleTable';
 import { WidgetFooter } from '../../../Widget';
 import css from './SimpleSearch.css';
-import DashboardErrorBanner from '../../../Dashboard/DashboardErrorBanner/DashboardErrorBanner';
+import { ErrorBanner } from '../../../ErrorComponents';
 
 const SimpleSearch = ({
   onError,
@@ -144,7 +144,7 @@ const SimpleSearch = ({
   const displayWidgetBody = () => {
     if (errorState.isError) {
       return (
-        <DashboardErrorBanner
+        <ErrorBanner
           viewErrorHandler={
             () => onError(errorState.errorMessage, errorState.errorStack)
           }

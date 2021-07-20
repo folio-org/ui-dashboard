@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   ConfirmationModal,
 } from '@folio/stripes/components';
-
 
 import DashboardHeader from './DashboardHeader';
 import NoWidgets from './NoWidgets';
@@ -44,8 +43,6 @@ const Dashboard = ({
     errorModalOpen: false,
     errorStack: null
   });
-
-  const intl = useIntl();
 
   // This takes an error and a stacktrace to pass to the modal, and opens it
   const handleError = (err, stack) => {

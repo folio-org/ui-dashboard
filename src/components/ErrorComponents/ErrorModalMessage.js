@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Headline, MessageBanner } from '@folio/stripes/components';
-import css from './ErrorMessage.css';
+import css from './ErrorModalMessage.css';
 
-const ErrorMessage = ({ error, stack, id }) => (
+const ErrorModalMessage = ({ error, stack, id }) => (
   <MessageBanner
     className={css.message}
     contentClassName={css.message__content}
@@ -24,10 +24,10 @@ const ErrorMessage = ({ error, stack, id }) => (
   </MessageBanner>
 );
 
-ErrorMessage.propTypes = {
+ErrorModalMessage.propTypes = {
   error: PropTypes.node,
   id: PropTypes.string,
   stack: PropTypes.node,
 };
 
-export default ErrorMessage;
+export default ErrorModalMessage;

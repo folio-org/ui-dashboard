@@ -11,7 +11,7 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
-import ErrorMessage from '../Dashboard/DashboardErrorBanner/ErrorMessage';
+import ErrorModalMessage from './ErrorModalMessage';
 
 const COPY_TIMEOUT = 1000;
 const COPY_RANGE = 99999;
@@ -95,7 +95,7 @@ const ErrorModal = ({
       <Headline size="medium">
         <FormattedMessage id="ui-dashboard.dashboard.errorDetailsDescription" />
       </Headline>
-      <ErrorMessage
+      <ErrorModalMessage
         error={message}
         stack={stack}
       />

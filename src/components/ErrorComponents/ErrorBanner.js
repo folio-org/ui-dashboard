@@ -2,9 +2,9 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { MessageBanner, TextLink } from '@folio/stripes/components';
 import PropTypes from 'prop-types';
-import css from './DashboardErrorBanner.css';
+import css from './ErrorBanner.css';
 
-const DashboardErrorBanner = ({ viewErrorHandler }) => {
+const ErrorBanner = ({ viewErrorHandler }) => {
   return (
     <MessageBanner type="error">
       <FormattedMessage id="ui-dashboard.simpleSearch.noContent" />
@@ -20,7 +20,7 @@ const DashboardErrorBanner = ({ viewErrorHandler }) => {
   );
 };
 
-DashboardErrorBanner.propTypes = {
+ErrorBanner.propTypes = {
   viewErrorHandler: PropTypes.func,
 };
-export default DashboardErrorBanner;
+export default ErrorBanner;
