@@ -186,5 +186,13 @@
   "simpleSearch.widget.nFoundBadge": "{total} found",
   "simpleSearch.widget.linkText": "Link to app",
   "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}",
-  "simpleSearch.widget.noResultFound": "No results found"
+  "simpleSearch.widget.noResultFound": "No results found",
+
+  "shortcut.collapseAll": "Collapse all accordions",
+  "shortcut.createRecord": "Create a new widget",
+  "shortcut.editRecord": "Edit a widget",
+  "shortcut.expandAll": "Expand all accordions",
+  "shortcut.goToSearchFilter": "Go to \"Search & filter\" pane",
+  "shortcut.saveRecord": "Save form changes",
+  "shortcut.expandOrCollapse": "Expand or collapse an accordion"
 }
