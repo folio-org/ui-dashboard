@@ -26,7 +26,7 @@ const SimpleSearch = ({
    */
   // At some point these will be versioned, so we might need to switch up logic slightly based on type version
   const widgetConf = JSON.parse(widget.configuration);
-  const columns = columnParser({ widgetDef, widgetConf });
+  const columns = columnParser({ onError, widgetDef, widgetConf });
 
   // This stores the WIDGET-LEVEL error state, ready to pass to the canvas if required
   const [errorState, setErrorState] = useState({
