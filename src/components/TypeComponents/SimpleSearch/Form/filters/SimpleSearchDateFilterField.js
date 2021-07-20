@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-
+import { getLocaleDateFormat } from '@folio/stripes/components';
 import { Field, useForm, useFormState } from 'react-final-form';
 
 import { get } from 'lodash';
@@ -54,7 +54,7 @@ const SimpleSearchDateFilterField = ({
 
   const dateValidator = (value, allValues) => {
     if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.absoluteValueWarning" />;
+      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.invalidDate" values={{ dateFormat: getLocaleDateFormat({ intl }) }} />;
     }
     return undefined;
   };
