@@ -20,7 +20,7 @@ const propTypes = {
   handlers: PropTypes.shape({
     onHideModal: PropTypes.func.isRequired
   }).isRequired,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
   modalOpen: PropTypes.bool.isRequired,
   stack: PropTypes.string
 };
