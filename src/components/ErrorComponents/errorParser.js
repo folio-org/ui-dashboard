@@ -5,49 +5,49 @@
 
 // Passing in the intl object isn't ideal,
 // but this can't be a hook if it's going to run conditionally
-const errorParser = async (err, intl) => {
+const errorParser = async (error, intl) => {
   let errorMessage;
-  let errBody;
+  let errorBody;
 
   /* For HTTPError we assume error.response returns a Promise */
-  if (err.name.toLowerCase() === 'httperror') {
+  if (error.name.toLowerCase() === 'httperror') {
     /*
      * Due to the nature of okapi endpoint calls, err.response
      * could comprise of JSON data OR string data. Read in as Blob
      * and deal with either case separately
      */
-    const errBlob = await err.response?.blob();
-    const errBlobText = await errBlob.text();
+    const errorBlob = await error.response?.blob();
+    const errorBlobText = await errorBlob.text();
 
-    if (errBlob.type === 'application/json') {
-      const errJson = JSON.parse(errBlobText);
+    if (errorBlob.type === 'application/json') {
+      const jsonError = JSON.parse(errorBlobText);
       errorMessage = intl.formatMessage(
         { id: 'ui-dashboard.httpError' },
         {
-          errorCode: err.response?.status,
-          errorText: `${err.response?.statusText}\n${errJson?.message}`
+          errorCode: error.response?.status,
+          errorText: `${error.response?.statusText}\n${jsonError?.message}`
         }
       );
-      errBody = errJson.stackTrace?.join('\n');
+      errorBody = jsonError.stackTrace?.join('\n');
     } else {
       // Otherwise we've probably got a string, just display errBlobText as the stack
       errorMessage = intl.formatMessage(
         { id: 'ui-dashboard.httpError' },
         {
-          errorCode: err.response?.status,
-          errorText: err.response?.statusText
+          errorCode: error.response?.status,
+          errorText: error.response?.statusText
         }
       );
-      errBody = errBlobText;
+      errorBody = errorBlobText;
     }
   } else {
-    errorMessage = err.name;
-    errBody = err.message;
+    errorMessage = error.name;
+    errorBody = error.message;
   }
 
   return ({
     errorMessage,
-    errorStack: errBody
+    errorStack: errorBody
   });
 };
 
