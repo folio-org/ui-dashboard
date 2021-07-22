@@ -38,7 +38,7 @@ const App = (appProps) => {
     );
   }
 
-  const commands = appKeyboardShortcuts.concat(ermDefaultKeyboardShortcuts);
+  const commands = [...appKeyboardShortcuts, ...ermDefaultKeyboardShortcuts];
 
   const goToNew = () => {
     history.push(`${location.pathname}/create`);
