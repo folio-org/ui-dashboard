@@ -70,8 +70,8 @@
   "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
   "simpleSearchForm.filters.dateFilterField.offsetMethod": "Offset method",
   "simpleSearchForm.filters.dateFilterField.timeUnit": "Time unit",
-  "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",
   "simpleSearchForm.filters.dateFilterField.date": "Date",
+  "simpleSearchForm.filters.dateFilterField.invalidDate": "Please enter a date in the format {dateFormat} to continue",
 
   "simpleSearchForm.filters.uuidFilterField.currentUser": "Me (variable)",
   "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
