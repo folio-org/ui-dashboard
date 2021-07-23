@@ -33,10 +33,12 @@ const ErrorModal = ({
   modalOpen,
   stack,
 }) => {
+  // initialized a hook to hold the reference to the copy error text
   const copyRef = useRef(null);
   const [copied, setCopied] = useState(false);
-
+  // handels copy error from the stacktrace
   const handleCopyStack = () => {
+    // access reference value
     const el = copyRef.current;
     el.select();
     el.setSelectionRange(0, COPY_RANGE);
@@ -45,6 +47,7 @@ const ErrorModal = ({
     setCopied(true);
   };
 
+  // tracks 'copied' status, and resets after 1 second
   useEffect(() => {
     let timeout;
     if (copied) {
@@ -57,18 +60,13 @@ const ErrorModal = ({
     };
   }, [copied, setCopied]);
 
-
   return (
     <Modal
       closeOnBackgroundClick
       dismissible
       footer={
         <ModalFooter>
-          <Button
-            buttonStyle="primary"
-            marginBottom0
-            onClick={onHideModal}
-          >
+          <Button buttonStyle="primary" marginBottom0 onClick={onHideModal}>
             <FormattedMessage id="ui-dashboard.dashboard.close" />
           </Button>
           <Button
@@ -95,10 +93,7 @@ const ErrorModal = ({
       <Headline size="medium">
         <FormattedMessage id="ui-dashboard.dashboard.errorDetailsDescription" />
       </Headline>
-      <ErrorModalMessage
-        error={message}
-        stack={stack}
-      />
+      <ErrorModalMessage error={message} stack={stack} />
       {/* Hidden textfield to hold error text for copying */}
       <textarea
         ref={copyRef}
