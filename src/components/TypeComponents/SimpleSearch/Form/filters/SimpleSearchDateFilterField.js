@@ -64,6 +64,7 @@ const SimpleSearchDateFilterField = ({
     <Row>
       <Col xs={3}>
         <Field
+          autoFocus
           component={Select}
           dataOptions={selectifiedComparators}
           defaultValue={selectifiedComparators[0]?.value}
@@ -81,7 +82,7 @@ const SimpleSearchDateFilterField = ({
               <InfoPopover
                 content={
                   <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.infoPopover" />
-                  }
+                }
                 placement="top"
               />
             </div>
