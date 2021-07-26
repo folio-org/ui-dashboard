@@ -65,7 +65,13 @@ const simpleSearchColumnParser = ({
       <ErrorBoundary
         onError={onError}
       >
-        {render(original)}
+        {/*
+          * Protect against receiving a broken function
+          * return instead of component return with a 'div'
+          */}
+        <div>
+          {render(original)}
+        </div>
       </ErrorBoundary>
     );
 
