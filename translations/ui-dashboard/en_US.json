@@ -1,8 +1,15 @@
 {
     "meta.title": "Dashboard",
     "noWidgets": "Add a new widget to your dashboard",
+    "httpError": "HTTPError: {errorCode} {errorText}",
     "dashboardHeader.new": "New",
     "dashboard.newWidget": "{label} widget",
+    "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
+    "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",
+    "dashboard.errorDetails": "Error details",
+    "dashboard.close": "Close",
+    "dashboard.copy": "Copy",
+    "dashboard.copied": "Copied",
     "widgetForm.createWidget": "New widget",
     "widgetFooter.refreshButtonLabel": "Refresh widget: {widgetName}",
     "widgetForm.widgetName": "Widget name",
@@ -154,5 +161,8 @@
     "simpleSearchForm.matches": "Search",
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
-    "widgetForm.editWidget": "Edit - {widgetName}"
+    "widgetForm.editWidget": "Edit - {widgetName}",
+    "simpleSearch.contentError": "Content cannot be displayed. ",
+    "simpleSearch.errorDetails": "Error details",
+    "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
 }

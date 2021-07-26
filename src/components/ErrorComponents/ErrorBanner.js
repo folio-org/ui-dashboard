@@ -7,7 +7,7 @@ import css from './ErrorBanner.css';
 const ErrorBanner = ({ viewErrorHandler }) => {
   return (
     <MessageBanner type="error">
-      <FormattedMessage id="ui-dashboard.simpleSearch.noContent" />
+      <FormattedMessage id="ui-dashboard.simpleSearch.contentError" />
       <TextLink
         className={css.viewDetailsButton}
         element="button"
