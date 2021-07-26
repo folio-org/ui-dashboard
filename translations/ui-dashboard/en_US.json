@@ -110,6 +110,7 @@
     "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
     "simpleSearchForm.results.minimumWarning": "Error: Results display must contain at least one column.",
     "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}",
+    "simpleSearch.widget.noResultsFound": "No results found",
     "dashboard.deleteWidget": "Delete widget",
     "dashboard.delete": "Delete",
     "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>.",
