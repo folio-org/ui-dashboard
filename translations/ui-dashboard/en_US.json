@@ -41,8 +41,6 @@
     "simpleSearch.widget.nFoundBadge": "{total} found",
     "simpleSearch.widget.linkText": "Link to app",
     "simpleSearchForm.filters.dateFilterField.today": "Today (variable)",
-    "simpleSearchForm.filters.dateFilterField.subtract": "Before",
-    "simpleSearchForm.filters.dateFilterField.add": "After",
     "simpleSearchForm.filters.dateFilterField.days": "Days",
     "simpleSearchForm.filters.dateFilterField.weeks": "Weeks",
     "simpleSearchForm.filters.dateFilterField.months": "Months",
@@ -97,7 +95,6 @@
     "dashboardHeader.reorder": "Edit widget display order",
     "dashboard.reorderForm.paneTitle": "Edit dashboard",
     "dashboard.reorderForm.widget.widgetname": "Widget name",
-    "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "An absolute date or date token must be input",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
     "simpleSearchForm.results.column": "Column",
     "simpleSearchForm.results.label": "Label",
@@ -164,5 +161,12 @@
     "widgetForm.editWidget": "Edit - {widgetName}",
     "simpleSearch.contentError": "Content cannot be displayed. ",
     "simpleSearch.errorDetails": "Error details",
-    "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
+    "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:",
+    "simpleSearchForm.filters.dateFilterField.invalidDate": "Please enter a date in the format {dateFormat} to continue",
+    "simpleSearchForm.filters.dateFilterField.beforeToday": "Before today",
+    "simpleSearchForm.filters.dateFilterField.afterToday": "After today",
+    "simpleSearchForm.filters.dateFilterField.when": "When",
+    "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
+    "simpleSearchForm.filters.dateFilterField.number": "Number",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date."
 }

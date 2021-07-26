@@ -34,8 +34,6 @@
     "simpleSearch.widget.nFoundBadge": "تم العثور على {total}",
     "simpleSearch.widget.linkText": "ربط إلى تطبيق",
     "simpleSearchForm.filters.dateFilterField.today": "اليوم (متغير)",
-    "simpleSearchForm.filters.dateFilterField.subtract": "قبل",
-    "simpleSearchForm.filters.dateFilterField.add": "بعد",
     "simpleSearchForm.filters.dateFilterField.days": "أيام",
     "simpleSearchForm.filters.dateFilterField.weeks": "أسابيع",
     "simpleSearchForm.filters.dateFilterField.months": "أشهر",
@@ -90,7 +88,6 @@
     "dashboardHeader.reorder": "تحرير ترتيب عرض الودجة",
     "dashboard.reorderForm.paneTitle": "تحرير اللوحة الرئيسية",
     "dashboard.reorderForm.widget.widgetname": "اسم الودجة",
-    "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "يجب أن يكون التاريخ المطلق أو رمز التاريخ إدخالاً",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "يجب أن يكون معرف المستخدم الفريد UUID أو رمز المستخدم الحالي إدخالاً",
     "simpleSearchForm.results.column": "العمود",
     "simpleSearchForm.results.label": "ملصق تسمية",
@@ -154,5 +151,12 @@
     "simpleSearchForm.matches": "بحث",
     "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
     "simpleSearchForm.filters.filterField.rule.and": "و",
-    "widgetForm.editWidget": "تحرير - {widgetName}"
+    "widgetForm.editWidget": "تحرير - {widgetName}",
+    "simpleSearchForm.filters.dateFilterField.invalidDate": "يرجى إدخال تاريخ بتنسيق {dateFormat} للمتابعة",
+    "simpleSearchForm.filters.dateFilterField.beforeToday": "قبل اليوم",
+    "simpleSearchForm.filters.dateFilterField.afterToday": "بعد اليوم",
+    "simpleSearchForm.filters.dateFilterField.when": "متي",
+    "simpleSearchForm.filters.dateFilterField.fixedDate": "التاريخ المثبت",
+    "simpleSearchForm.filters.dateFilterField.number": "رقم",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "يمكن أن يكون التاريخ متغيراً أو ثابتاً. للتاريخ المتغير، قم بتعيين قيمة الحقول الثلاثة: الرقم، والوحدة الزمنية، ومتى من أول زر. استخدم الزر الثاني لإدخال التاريخ الثابت."
 }
