@@ -34,8 +34,6 @@
     "simpleSearch.widget.nFoundBadge": "共找到{total}",
     "simpleSearch.widget.linkText": "连结到应用",
     "simpleSearchForm.filters.dateFilterField.today": "今天（可变）",
-    "simpleSearchForm.filters.dateFilterField.subtract": "减去",
-    "simpleSearchForm.filters.dateFilterField.add": "添加",
     "simpleSearchForm.filters.dateFilterField.days": "天",
     "simpleSearchForm.filters.dateFilterField.weeks": "周",
     "simpleSearchForm.filters.dateFilterField.months": "月",
@@ -90,7 +88,6 @@
     "dashboardHeader.reorder": "编辑小工具显示顺序",
     "dashboard.reorderForm.paneTitle": "編輯儀表板",
     "dashboard.reorderForm.widget.widgetname": "實用工具名稱",
-    "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "必須輸入絕對日期或日期Token",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "必須輸入使用者UUID或使用者Token",
     "simpleSearchForm.results.column": "欄位",
     "simpleSearchForm.results.label": "標籤",
@@ -154,5 +151,12 @@
     "simpleSearchForm.matches": "Search",
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
-    "widgetForm.editWidget": "Edit - {widgetName}"
+    "widgetForm.editWidget": "Edit - {widgetName}",
+    "simpleSearchForm.filters.dateFilterField.invalidDate": "Please enter a date in the format {dateFormat} to continue",
+    "simpleSearchForm.filters.dateFilterField.beforeToday": "Before today",
+    "simpleSearchForm.filters.dateFilterField.afterToday": "After today",
+    "simpleSearchForm.filters.dateFilterField.when": "When",
+    "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
+    "simpleSearchForm.filters.dateFilterField.number": "Number",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date."
 }

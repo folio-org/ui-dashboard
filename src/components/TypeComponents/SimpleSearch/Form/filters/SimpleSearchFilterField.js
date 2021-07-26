@@ -122,6 +122,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
         label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterBy" />}
       >
         <Field
+          autoFocus
           component={Select}
           dataOptions={selectifiedFilterNames}
           name={`${name}.name`}

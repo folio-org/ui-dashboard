@@ -34,8 +34,6 @@
     "simpleSearch.widget.nFoundBadge": "{total} encontrado",
     "simpleSearch.widget.linkText": "Link para o aplicativo",
     "simpleSearchForm.filters.dateFilterField.today": "Hoje (variável)",
-    "simpleSearchForm.filters.dateFilterField.subtract": "Antes",
-    "simpleSearchForm.filters.dateFilterField.add": "Depois",
     "simpleSearchForm.filters.dateFilterField.days": "Dias",
     "simpleSearchForm.filters.dateFilterField.weeks": "Semanas",
     "simpleSearchForm.filters.dateFilterField.months": "Meses",
@@ -90,7 +88,6 @@
     "dashboardHeader.reorder": "Editar ordem de exibição do widget",
     "dashboard.reorderForm.paneTitle": "Editar painel de controle",
     "dashboard.reorderForm.widget.widgetname": "Nome do widget",
-    "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "Uma data absoluta ou token de data deve ser inserido",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "Um UUID de usuário ou token de usuário atual deve ser inserido",
     "simpleSearchForm.results.column": "Coluna",
     "simpleSearchForm.results.label": "Etiqueta",
@@ -154,5 +151,12 @@
     "simpleSearchForm.matches": "Pesquisa",
     "appMenu.keyboardShortcuts": "Atalhos do teclado",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
-    "widgetForm.editWidget": "Editar - {widgetName}"
+    "widgetForm.editWidget": "Editar - {widgetName}",
+    "simpleSearchForm.filters.dateFilterField.invalidDate": "Please enter a date in the format {dateFormat} to continue",
+    "simpleSearchForm.filters.dateFilterField.beforeToday": "Before today",
+    "simpleSearchForm.filters.dateFilterField.afterToday": "After today",
+    "simpleSearchForm.filters.dateFilterField.when": "When",
+    "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
+    "simpleSearchForm.filters.dateFilterField.number": "Number",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date."
 }

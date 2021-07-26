@@ -34,8 +34,6 @@
     "simpleSearch.widget.nFoundBadge": "Znaleziono {total}",
     "simpleSearch.widget.linkText": "Link do aplikacji",
     "simpleSearchForm.filters.dateFilterField.today": "Dzisiaj (zmienna)",
-    "simpleSearchForm.filters.dateFilterField.subtract": "Odejmij",
-    "simpleSearchForm.filters.dateFilterField.add": "Dodaj",
     "simpleSearchForm.filters.dateFilterField.days": "Dni",
     "simpleSearchForm.filters.dateFilterField.weeks": "Tygodnie",
     "simpleSearchForm.filters.dateFilterField.months": "Miesiące",
@@ -90,7 +88,6 @@
     "dashboardHeader.reorder": "Edytuj zamówienie",
     "dashboard.reorderForm.paneTitle": "Edytuj pulpit",
     "dashboard.reorderForm.widget.widgetname": "Nazwa widżetu",
-    "simpleSearchForm.filters.dateFilterField.absoluteValueWarning": "Należy wprowadzić datę bezwzględną lub token daty.",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "Należy wprowadzić UUID użytkownika lub token bieżącego użytkownika.",
     "simpleSearchForm.results.column": "Kolumna",
     "simpleSearchForm.results.label": "Etykieta",
@@ -154,5 +151,12 @@
     "simpleSearchForm.matches": "Search",
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
-    "widgetForm.editWidget": "Edit - {widgetName}"
+    "widgetForm.editWidget": "Edit - {widgetName}",
+    "simpleSearchForm.filters.dateFilterField.invalidDate": "Please enter a date in the format {dateFormat} to continue",
+    "simpleSearchForm.filters.dateFilterField.beforeToday": "Before today",
+    "simpleSearchForm.filters.dateFilterField.afterToday": "After today",
+    "simpleSearchForm.filters.dateFilterField.when": "When",
+    "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
+    "simpleSearchForm.filters.dateFilterField.number": "Number",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date."
 }

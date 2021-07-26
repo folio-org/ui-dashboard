@@ -10,6 +10,7 @@ import {
   Datepicker,
   getLocaleDateFormat,
   KeyValue,
+  InfoPopover,
   Row,
   Select,
   TextField,
@@ -63,6 +64,7 @@ const SimpleSearchDateFilterField = ({
     <Row>
       <Col xs={3}>
         <Field
+          autoFocus
           component={Select}
           dataOptions={selectifiedComparators}
           defaultValue={selectifiedComparators[0]?.value}
@@ -74,7 +76,17 @@ const SimpleSearchDateFilterField = ({
       </Col>
       <Col xs={9}>
         <KeyValue
-          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />}
+          label={
+            <div>
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />
+              <InfoPopover
+                content={
+                  <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.infoPopover" />
+                }
+                placement="top"
+              />
+            </div>
+          }
         >
           <RelativeOrAbsolute
             absoluteComponent={
@@ -82,6 +94,7 @@ const SimpleSearchDateFilterField = ({
                 <Col xs={3}>
                   <Field
                     {...(dateTime ? filterComponentProps?.dateFieldProps : filterComponentProps)}
+                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.fixedDate' })}
                     component={Datepicker}
                     disabled={
                       comparatorIsSpecialCase ||
@@ -112,6 +125,7 @@ const SimpleSearchDateFilterField = ({
               <Row>
                 <Col xs={3}>
                   <Field
+                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.number' })}
                     component={TextField}
                     defaultValue={0}
                     disabled={
@@ -129,6 +143,7 @@ const SimpleSearchDateFilterField = ({
                 </Col>
                 <Col xs={3}>
                   <Field
+                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.timeUnit" />}
                     component={Select}
                     dataOptions={[
                       {
@@ -157,15 +172,16 @@ const SimpleSearchDateFilterField = ({
                 </Col>
                 <Col xs={3}>
                   <Field
+                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.when" />}
                     component={Select}
                     dataOptions={[
                       {
                         value: 'add',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.add' })
+                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.afterToday' })
                       },
                       {
                         value: 'subtract',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
+                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeToday' })
                       }
                     ]}
                     disabled={
