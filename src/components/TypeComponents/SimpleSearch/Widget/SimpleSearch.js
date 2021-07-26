@@ -111,7 +111,7 @@ const SimpleSearch = ({
       return (
         <>
           {renderBadge()}
-          <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultFound" />
+          <FormattedMessage id="ui-dashboard.simpleSearch.widget.noResultsFound" />
         </>
       );
     }
