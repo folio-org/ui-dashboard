@@ -24,6 +24,7 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
     >
       <Col xs={6}>
         <Field
+          autoFocus
           component={Select}
           dataOptions={selectifiedResultColumns}
           defaultValue={selectifiedResultColumns[0].value}
