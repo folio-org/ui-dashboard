@@ -11,12 +11,12 @@ import {
   Col,
   Headline,
   Icon,
+  IconButton,
   MessageBanner,
   Row,
   TextField
 } from '@folio/stripes/components';
 
-import RowWithDelete from '../../../../RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 import SimpleSearchSort from '../sort';
 import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
@@ -37,22 +37,27 @@ const SimpleSearchResults = ({
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>
-        <RowWithDelete
-          key={`simple-search-result-array-${fieldName}`}
-          ariaLabel={
-            intl.formatMessage(
-              { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
-              { index: index + 1 }
-            )
-          }
-          onDelete={() => fields.remove(index)}
-        >
-          <Field
-            component={SimpleSearchResultField}
-            name={fieldName}
-            resultColumns={resultColumns}
-          />
-        </RowWithDelete>
+        <Row key={`simple-search-result-array-${fieldName}`} middle="xs">
+          <Col xs={11}>
+            <Field
+              component={SimpleSearchResultField}
+              name={fieldName}
+              resultColumns={resultColumns}
+            />
+          </Col>
+          <Col className={css.deleteIcon} xs={1}>
+            <IconButton
+              ariaLabel={
+                intl.formatMessage(
+                  { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
+                  { index: index + 1 }
+                )
+              }
+              icon="trash"
+              onClick={() => fields.remove(index)}
+            />
+          </Col>
+        </Row>
       </div>
     );
   };
@@ -105,6 +110,7 @@ const SimpleSearchResults = ({
                 renderHandle={() => (
                   <Icon
                     icon="drag-drop"
+                    iconRootClass={css.dragHandle}
                   />
                 )}
               >
