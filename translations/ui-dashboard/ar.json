@@ -147,7 +147,6 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "غير لاغ",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "تم تعيينه",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "لم يتم تعيينه",
-    "simpleSearch.widget.noResultFound": "لم يتم العثور على نتائج",
     "simpleSearchForm.matches": "بحث",
     "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
     "simpleSearchForm.filters.filterField.rule.and": "و",
@@ -158,5 +157,16 @@
     "simpleSearchForm.filters.dateFilterField.when": "متي",
     "simpleSearchForm.filters.dateFilterField.fixedDate": "التاريخ المثبت",
     "simpleSearchForm.filters.dateFilterField.number": "رقم",
-    "simpleSearchForm.filters.dateFilterField.infoPopover": "يمكن أن يكون التاريخ متغيراً أو ثابتاً. للتاريخ المتغير، قم بتعيين قيمة الحقول الثلاثة: الرقم، والوحدة الزمنية، ومتى من أول زر. استخدم الزر الثاني لإدخال التاريخ الثابت."
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "يمكن أن يكون التاريخ متغيراً أو ثابتاً. للتاريخ المتغير، قم بتعيين قيمة الحقول الثلاثة: الرقم، والوحدة الزمنية، ومتى من أول زر. استخدم الزر الثاني لإدخال التاريخ الثابت.",
+    "httpError": "خطأHTTP: {errorCode} {errorText}",
+    "dashboard.errorDetailsDescription": "حدث ما يلي، مما أدى إلى منع عرض المحتوى في الودجة:",
+    "dashboard.copyErrorButtonAriaLabel": "نسخ الخطأ إلى الحافظة",
+    "dashboard.errorDetails": "تفاصيل الخطأ",
+    "dashboard.close": "إغلاق",
+    "dashboard.copy": "نسخ",
+    "dashboard.copied": "تم النسخ",
+    "simpleSearch.widget.noResultsFound": "لم يتم العثور على نتائج",
+    "simpleSearch.contentError": "لا يمكن عرض المحتوى.",
+    "simpleSearch.errorDetails": "تفاصيل الخطأ",
+    "simpleSearch.errorDescription": "حدث ما يلي، مما أدى إلى منع عرض المحتوى في الودجة:"
 }

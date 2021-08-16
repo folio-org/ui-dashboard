@@ -8,7 +8,7 @@ import {
   Checkbox
 } from '@folio/stripes/components';
 
-import SimpleSearchField from '../../../../SimpleSearchField';
+import SearchField from '../../../../SearchField';
 import css from './SimpleSearchMatches.css';
 
 const SimpleSearchMatches = ({
@@ -61,7 +61,7 @@ const SimpleSearchMatches = ({
       label={<FormattedMessage id="ui-dashboard.simpleSearchForm.matches" />}
     >
       <Field
-        component={SimpleSearchField}
+        component={SearchField}
         defaultValue={isEdit ? undefined : defaultTerm}
         name="matches.term"
       />

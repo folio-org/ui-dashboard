@@ -8,6 +8,8 @@
   "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
   "canvas.actions": "Actions",
 
+  "httpError": "HTTPError: {errorCode} {errorText}",
+
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
 
   "loading": "Loading",
@@ -24,6 +26,12 @@
   "dashboard.deleteWidget": "Delete widget",
   "dashboard.delete": "Delete",
   "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
+  "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",
+  "dashboard.errorDetails": "Error details",
+  "dashboard.close": "Close",
+  "dashboard.copy": "Copy",
+  "dashboard.copied": "Copied",
 
   "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
   "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
@@ -191,5 +199,8 @@
   "simpleSearch.widget.nFoundBadge": "{total} found",
   "simpleSearch.widget.linkText": "Link to app",
   "simpleSearch.widget.linkTextForWidget": "{linkText} for widget: {widgetName}",
-  "simpleSearch.widget.noResultFound": "No results found"
+  "simpleSearch.widget.noResultsFound": "No results found",
+  "simpleSearch.contentError": "Content cannot be displayed. ",
+  "simpleSearch.errorDetails": "Error details",
+  "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
 }

@@ -1,0 +1,16 @@
+.message {
+    padding: calc(var(--gutter) * 1.5);
+  }
+  
+  .message__content {
+    overflow: auto;
+  }
+  
+  .error {
+    margin: 0 0 calc(var(--gutter) * 1.5) 0;
+  }
+  
+  .stack {
+    margin: 0;
+    line-height: 1.65;
+  }

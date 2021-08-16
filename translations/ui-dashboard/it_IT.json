@@ -147,7 +147,6 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "is not null",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "is set",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "is not set",
-    "simpleSearch.widget.noResultFound": "No results found",
     "simpleSearchForm.matches": "Search",
     "appMenu.keyboardShortcuts": "Keyboard shortcuts",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
@@ -158,5 +157,16 @@
     "simpleSearchForm.filters.dateFilterField.when": "When",
     "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
     "simpleSearchForm.filters.dateFilterField.number": "Number",
-    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date."
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date.",
+    "httpError": "HTTPError: {errorCode} {errorText}",
+    "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
+    "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",
+    "dashboard.errorDetails": "Error details",
+    "dashboard.close": "Close",
+    "dashboard.copy": "Copy",
+    "dashboard.copied": "Copied",
+    "simpleSearch.widget.noResultsFound": "No results found",
+    "simpleSearch.contentError": "Content cannot be displayed. ",
+    "simpleSearch.errorDetails": "Error details",
+    "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
 }
