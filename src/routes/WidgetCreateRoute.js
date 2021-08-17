@@ -74,7 +74,10 @@ const WidgetCreateRoute = ({
   }
 
   const handleClose = () => {
-    history.push(`/dashboard/${params.dashName}`);
+    history.push({
+      pathname: `/dashboard/${params.dashName}`,
+      state: widget.id
+    });
   };
 
   const doTheSubmit = ({
