@@ -73,10 +73,10 @@ const WidgetCreateRoute = ({
     };
   }
 
-  const handleClose = () => {
+  const handleClose = (id) => {
     history.push({
       pathname: `/dashboard/${params.dashName}`,
-      state: widget.id
+      state: id
     });
   };
 
@@ -102,14 +102,15 @@ const WidgetCreateRoute = ({
     if (params.widgetId) {
       // Widget already exists, PUT and close
       putWidget(submitValue)
-        .then(handleClose)
+        .then(handleClose(params.widgetId))
         // Ensure we refetch the widgetInstance after submit.
         // This ensures we aren't initially getting a memoized version on next edit.
         .then(refetchWidgetInstance);
     } else {
       // New widget, POST and close
       postWidget(submitValue)
-        .then(handleClose);
+        .then(data => data.json())
+        .then(({ id }) => handleClose(id));
     }
   };
 

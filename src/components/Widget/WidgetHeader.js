@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -20,10 +21,24 @@ const WidgetHeader = ({
   widgetId,
 }) => {
   const intl = useIntl();
+  const widgetFocusRef = useRef(null);
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (state && widgetId === state && widgetFocusRef.current) {
+      widgetFocusRef.current.focus();
+    }
+  }, [state, widgetFocusRef, widgetId]);
+
   // eslint-disable-next-line react/prop-types
   const renderActionMenuToggle = ({ onToggle, triggerRef, keyHandler, ariaProps, getTriggerProps }) => (
     <IconButton
-      ref={triggerRef}
+      // ref={triggerRef}
+      ref={node => {
+        // eslint-disable-next-line react/prop-types
+        if (triggerRef) triggerRef.current = node;
+        if (widgetFocusRef) widgetFocusRef.current = node;
+      }}
       aria-label={
         intl.formatMessage(
           { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
