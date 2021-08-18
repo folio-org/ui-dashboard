@@ -76,7 +76,7 @@ const WidgetCreateRoute = ({
   const handleClose = (id) => {
     history.push({
       pathname: `/dashboard/${params.dashName}`,
-      state: id
+      ...(id && { state: id })
     });
   };
 
@@ -146,7 +146,7 @@ const WidgetCreateRoute = ({
                 WidgetFormComponent
               }}
               handlers={{
-                onClose: handleClose,
+                onClose: () => handleClose(params.widgetId),
                 onSubmit: handleSubmit,
                 setSelectedDef
               }}
