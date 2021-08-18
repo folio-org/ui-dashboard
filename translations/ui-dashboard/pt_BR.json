@@ -161,12 +161,12 @@
     "httpError": "HTTPError: {errorCode} {errorText}",
     "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
     "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",
-    "dashboard.errorDetails": "Error details",
-    "dashboard.close": "Close",
-    "dashboard.copy": "Copy",
-    "dashboard.copied": "Copied",
-    "simpleSearch.widget.noResultsFound": "No results found",
+    "dashboard.errorDetails": "Detalhes do erro",
+    "dashboard.close": "Fechar",
+    "dashboard.copy": "Copiar",
+    "dashboard.copied": "Copiado",
+    "simpleSearch.widget.noResultsFound": "Nenhum resultado encontrado",
     "simpleSearch.contentError": "Content cannot be displayed. ",
-    "simpleSearch.errorDetails": "Error details",
+    "simpleSearch.errorDetails": "Detalhes do erro",
     "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
 }
