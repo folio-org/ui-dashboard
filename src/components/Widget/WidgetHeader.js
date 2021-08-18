@@ -21,37 +21,35 @@ const WidgetHeader = ({
   widgetId,
 }) => {
   const intl = useIntl();
-  const widgetFocusRef = useRef(null);
+  let widgetFocusRef = useRef(null);
   const { state } = useLocation();
 
   useEffect(() => {
-    if (state && widgetId === state && widgetFocusRef.current) {
+    if (widgetId === state && widgetFocusRef.current) {
       widgetFocusRef.current.focus();
     }
-  }, [state, widgetFocusRef, widgetId]);
+  }, [state, widgetId]);
 
   // eslint-disable-next-line react/prop-types
-  const renderActionMenuToggle = ({ onToggle, triggerRef, keyHandler, ariaProps, getTriggerProps }) => (
-    <IconButton
-      // ref={triggerRef}
-      ref={node => {
-        // eslint-disable-next-line react/prop-types
-        if (triggerRef) triggerRef.current = node;
-        if (widgetFocusRef) widgetFocusRef.current = node;
-      }}
-      aria-label={
-        intl.formatMessage(
-          { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
-          { widgetName: name }
-        )
-      }
-      icon="ellipsis"
-      onClick={onToggle}
-      onKeyDown={keyHandler}
-      {...getTriggerProps()}
-      {...ariaProps}
-    />
-  );
+  const renderActionMenuToggle = ({ onToggle, keyHandler, triggerRef, ariaProps, getTriggerProps }) => {
+    widgetFocusRef = triggerRef;
+    return (
+      <IconButton
+        ref={widgetFocusRef}
+        aria-label={
+          intl.formatMessage(
+            { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
+            { widgetName: name }
+          )
+        }
+        icon="ellipsis"
+        onClick={onToggle}
+        onKeyDown={keyHandler}
+        {...getTriggerProps()}
+        {...ariaProps}
+      />
+    );
+  };
 
   // eslint-disable-next-line react/prop-types
   const renderActionMenuContent = () => (
