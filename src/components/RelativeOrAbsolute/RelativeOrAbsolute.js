@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 
 import { Field } from 'react-final-form';
 
@@ -25,12 +26,28 @@ const RelativeOrAbsolute = ({
   relativeComponent,
   validateFields = []
 }) => {
+  const intl = useIntl();
+
   return (
     <>
+      <Row className={css.innerRow}>
+        <div className={css.radioButton}>
+          <Field
+            aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
+            component={RadioButton}
+            label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
+            labelClass={css.radioLabelClass}
+            name={`${name}.relativeOrAbsolute`}
+            type="radio"
+            value="today"
+          />
+        </div>
+      </Row>
       <Row className={css.innerRow}>
         <div className={css.flexContainer}>
           <div className={css.radioButton}>
             <Field
+              aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.relativeDate' })}
               component={RadioButton}
               defaultValue="absolute"
               disabled={disabled}
@@ -49,6 +66,7 @@ const RelativeOrAbsolute = ({
         <div className={css.flexContainer}>
           <div className={css.radioButton}>
             <Field
+              aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.fixedDate' })}
               component={RadioButton}
               disabled={disabled}
               name={`${name}.relativeOrAbsolute`}

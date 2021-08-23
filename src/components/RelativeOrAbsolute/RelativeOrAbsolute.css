@@ -1,5 +1,9 @@
 @import '@folio/stripes-components/lib/variables.css';
 
+.radioLabelClass {
+  font-weight: var(--text-weight-normal);
+}
+
 .item {
   padding: var(--gutter-static-one-third) var(--gutter-static-two-thirds);
   align-self: center;

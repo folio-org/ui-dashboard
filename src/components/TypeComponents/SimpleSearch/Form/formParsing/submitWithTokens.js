@@ -1,9 +1,18 @@
+import moment from 'moment';
+
 const submitWithTokens = (widgetConf) => {
   const tweakedWidgetConf = { ...widgetConf };
   // Remove tokens, for each filterColumn map the existing rules onto a comparator/value pair
   const tweakedFilterColumns = tweakedWidgetConf.filterColumns?.map(fc => {
     const tweakedRules = [...fc.rules]?.map(fcr => {
-      if (fcr.relativeOrAbsolute === 'relative') {
+      if (fcr.relativeOrAbsolute === 'today') {
+        const currentDate = moment(new Date()).startOf('day').format('YYYY-MM-DD');
+        return ({
+          comparator: fcr.comparator,
+          filterValue: currentDate,
+          relativeOrAbsolute: 'today'
+        });
+      } else if (fcr.relativeOrAbsolute === 'relative') {
         // We have a token, adapt the output value
         let outputValue = '';
         switch (fc.fieldType) {
@@ -35,11 +44,13 @@ const submitWithTokens = (widgetConf) => {
         }
         return ({
           comparator: fcr.comparator,
-          filterValue: outputValue
+          filterValue: outputValue,
+          relativeOrAbsolute: 'relative'
         });
+      } else {
+        // This isn't a token, escape
+        return fcr;
       }
-      // This isn't a token, escape
-      return fcr;
     });
     return ({
       name: fc.name,
