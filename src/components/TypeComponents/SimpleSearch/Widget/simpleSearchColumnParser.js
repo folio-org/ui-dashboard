@@ -69,7 +69,9 @@ const simpleSearchColumnParser = ({
           <ErrorBoundary
             onError={onError}
           >
-            {render(original)}
+            <div>
+              {render(original)}
+            </div>
           </ErrorBoundary>
         );
       } catch (e) {
