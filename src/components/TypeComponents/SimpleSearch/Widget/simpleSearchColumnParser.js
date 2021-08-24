@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ErrorBoundary from '../../../ErrorComponents/ErrorBoundary';
+import { ErrorBanner, ErrorBoundary } from '../../../ErrorComponents';
 import getDefaultRenderFunction from './getDefaultRenderFunction';
 /*
   Takes in the fetched data, and returns an object of the shape:
@@ -60,20 +60,29 @@ const simpleSearchColumnParser = ({
     // NOTE this is column-wide, not cell wide.
     // That would need to happen in the SimpleTable component.
     const render = getDefaultRenderFunction(drc, resource);
+
     // Pass render function entire object, not just cell value
-    returnColumn.Cell = ({ row: { original } }) => (
-      <ErrorBoundary
-        onError={onError}
-      >
-        {/*
-          * Protect against receiving a broken function
-          * return instead of component return with a 'div'
-          */}
-        <div>
-          {render(original)}
-        </div>
-      </ErrorBoundary>
-    );
+    returnColumn.Cell = ({ row: { original } }) => {
+      try {
+        // If rendered component throws error, this will catch it.
+        return (
+          <ErrorBoundary
+            onError={onError}
+          >
+            {render(original)}
+          </ErrorBoundary>
+        );
+      } catch (e) {
+        // If render function itself throws error, this will catch it.
+        return (
+          <ErrorBanner
+            viewErrorHandler={
+              () => onError(e.message, e.stack)
+            }
+          />
+        );
+      }
+    };
 
     returnColumn.Cell.propTypes = {
       row: PropTypes.shape({
