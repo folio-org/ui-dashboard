@@ -13,7 +13,8 @@
     "build": "stripes build --output ./output",
     "lint": "eslint .",
     "test": "yarn run test:jest",
-    "test:jest": "jest --ci --coverage"
+    "test:jest": "jest --ci --coverage",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-dashboard ./translations/ui-dashboard/compiled"
   },
   "stripes": {
     "actsAs": [
@@ -77,6 +78,7 @@
     "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^6.2.0",
     "@folio/stripes-cli": "^2.3.0",
+    "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",

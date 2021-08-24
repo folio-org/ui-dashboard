@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useIntl } from 'react-intl';
 
 import { Field } from 'react-final-form';
 
@@ -15,6 +16,7 @@ const propTypes = {
   relativeComponent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
   disabled: PropTypes.bool,
   name: PropTypes.string.isRequired,
+  renderToday: PropTypes.bool,
   validateFields: PropTypes.arrayOf(PropTypes.string)
 };
 
@@ -23,14 +25,33 @@ const RelativeOrAbsolute = ({
   disabled = false,
   name,
   relativeComponent,
-  validateFields = []
+  validateFields = [],
+  renderToday
 }) => {
+  const intl = useIntl();
+
   return (
     <>
+      {renderToday &&
+        <Row className={css.innerRow}>
+          <div className={css.radioButton}>
+            <Field
+              aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
+              component={RadioButton}
+              label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
+              labelClass={css.radioLabelClass}
+              name={`${name}.relativeOrAbsolute`}
+              type="radio"
+              value="today"
+            />
+          </div>
+        </Row>
+      }
       <Row className={css.innerRow}>
         <div className={css.flexContainer}>
           <div className={css.radioButton}>
             <Field
+              aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.relativeDate' })}
               component={RadioButton}
               defaultValue="absolute"
               disabled={disabled}
@@ -49,6 +70,7 @@ const RelativeOrAbsolute = ({
         <div className={css.flexContainer}>
           <div className={css.radioButton}>
             <Field
+              aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.fixedDate' })}
               component={RadioButton}
               disabled={disabled}
               name={`${name}.relativeOrAbsolute`}
