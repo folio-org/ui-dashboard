@@ -197,6 +197,7 @@ const SimpleSearchDateFilterField = ({
                 </Col>
               </Row>
             }
+            renderToday
             validateFields={
               dateTime ?
                 [`${name}.filterValue.date`, `${name}.filterValue.time`] :
