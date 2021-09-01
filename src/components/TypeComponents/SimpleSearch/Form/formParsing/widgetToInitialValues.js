@@ -15,13 +15,7 @@ const widgetToInitialValues = (widget, widgetDef) => {
         // Check for date tokens in each rule
         const tweakedRules = [...fc.rules]?.map(fcr => {
           const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
-          if (!tokenMatch) {
-            // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
-            return ({
-              ...fcr,
-              relativeOrAbsolute: 'absolute'
-            });
-          }
+          if (!tokenMatch) return fcr;
           // At this point, we have a token, so we need to parse it out to work out the other fields
           const dateMatch = tokenMatch.match(/(currentDate)((#)(-?)(\d{1,3}))?((#)([d,w,M,y]))?/);
           return ({

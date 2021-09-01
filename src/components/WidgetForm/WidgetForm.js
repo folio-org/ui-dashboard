@@ -161,6 +161,7 @@ const WidgetForm = ({
                   label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
                 >
                   <Field
+                    autoFocus
                     component={TextField}
                     maxLength={255}
                     name="name"

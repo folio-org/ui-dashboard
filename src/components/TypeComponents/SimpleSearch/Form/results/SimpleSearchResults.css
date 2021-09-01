@@ -12,3 +12,12 @@
 .warningBanner {
   margin-bottom: var(--gutter-static-two-thirds);
 }
+
+.deleteIcon {
+  padding: 0;
+  margin-top: 8px;
+}
+
+.dragHandle {
+  margin-top: 8px;
+}
