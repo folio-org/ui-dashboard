@@ -168,7 +168,7 @@
     "simpleSearch.contentError": "لا يمكن عرض المحتوى.",
     "simpleSearch.errorDetails": "تفاصيل الخطأ",
     "simpleSearch.errorDescription": "حدث ما يلي، مما أدى إلى منع عرض المحتوى في الودجة:",
-    "simpleSearchForm.filters.dateFilterField.beforeOrAfterToday": "Before or after today",
-    "simpleSearchForm.filters.dateFilterField.lengthOfTime": "Length of time",
+    "simpleSearchForm.filters.dateFilterField.beforeOrAfterToday": "قبل أو بعد اليوم",
+    "simpleSearchForm.filters.dateFilterField.lengthOfTime": "المدة الزمنية",
     "simpleSearchForm.filters.dateFilterField.relativeDate": "التاريخ النسبي"
 }

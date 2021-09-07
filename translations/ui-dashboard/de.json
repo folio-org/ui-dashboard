@@ -150,7 +150,7 @@
     "simpleSearchForm.matches": "Suche",
     "appMenu.keyboardShortcuts": "Tastenkürzel",
     "simpleSearchForm.filters.filterField.rule.and": "UND",
-    "widgetForm.editWidget": "Bearbeiten - {widgetname}",
+    "widgetForm.editWidget": "Bearbeiten - {widgetName}",
     "simpleSearchForm.filters.dateFilterField.invalidDate": "Bitte ein Datum im Format {dateFormat} eingeben, um fortzufahren",
     "simpleSearchForm.filters.dateFilterField.beforeToday": "vor heute",
     "simpleSearchForm.filters.dateFilterField.afterToday": "nach heute",
