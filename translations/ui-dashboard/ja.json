@@ -156,7 +156,7 @@
     "simpleSearchForm.filters.dateFilterField.afterToday": "After today",
     "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
     "simpleSearchForm.filters.dateFilterField.number": "Number",
-    "simpleSearchForm.filters.dateFilterField.infoPopover": "The Date can be variable or fixed. For a variable date set the values of the three fields Number, Time unit and When in the first radio button. Use the second radio button to enter a fixed date.",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "\"Date\" can be relative or fixed. Choose the third radio button option to filter by a fixed date. To apply a relative date choose either the first option \"Today\" or the second option and set the values of the three fields: \"Length of time\", \"Unit of time\" and \"Before or after today\".",
     "httpError": "HTTPError: {errorCode} {errorText}",
     "dashboard.errorDetailsDescription": "The following occured, preventing the display of content in the widget:",
     "dashboard.copyErrorButtonAriaLabel": "Copy error to clipholder",

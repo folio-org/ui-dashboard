@@ -150,7 +150,7 @@
     "simpleSearchForm.matches": "Suche",
     "appMenu.keyboardShortcuts": "Tastenkürzel",
     "simpleSearchForm.filters.filterField.rule.and": "UND",
-    "widgetForm.editWidget": "Bearbeiten - {widgetname}",
+    "widgetForm.editWidget": "Bearbeiten - {widgetName}",
     "simpleSearchForm.filters.dateFilterField.invalidDate": "Bitte ein Datum im Format {dateFormat} eingeben, um fortzufahren",
     "simpleSearchForm.filters.dateFilterField.beforeToday": "vor heute",
     "simpleSearchForm.filters.dateFilterField.afterToday": "nach heute",
@@ -168,7 +168,7 @@
     "simpleSearch.contentError": "Inhalt kann nicht angezeigt werden.",
     "simpleSearch.errorDetails": "Fehlerdetails",
     "simpleSearch.errorDescription": "Folgendes ist aufgetreten, wodurch die Anzeige von Inhalten im Widget verhindert wurde:",
-    "simpleSearchForm.filters.dateFilterField.beforeOrAfterToday": "Before or after today",
-    "simpleSearchForm.filters.dateFilterField.lengthOfTime": "Length of time",
-    "simpleSearchForm.filters.dateFilterField.relativeDate": "Relative date"
+    "simpleSearchForm.filters.dateFilterField.beforeOrAfterToday": "Vor oder nach heute",
+    "simpleSearchForm.filters.dateFilterField.lengthOfTime": "Länge der Zeit",
+    "simpleSearchForm.filters.dateFilterField.relativeDate": "Relatives Datum"
 }
