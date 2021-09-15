@@ -18,7 +18,7 @@ import {
   TextField
 } from '@folio/stripes/components';
 
-import { Registry } from '@folio/stripes-registry';
+import { Registry } from '@folio/handler-stripes-registry';
 import UserLookup from '../../../../UserLookup';
 
 
@@ -56,22 +56,22 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       filterComponentProps = {
         backendDateStandard: 'YYYY-MM-DD',
         id,
-        timeZone:'UTC',
+        timeZone: 'UTC',
         usePortal: true
       };
       FilterComponent = Datepicker;
       break;
-      case 'DateTime':
-        filterComponentProps = {
-          dateFieldProps: {
-            backendDateStandard: 'YYYY-MM-DD',
-            id,
-            timeZone:'UTC',
-            usePortal: true
-          }
-        };
-        FilterComponent = Datepicker;
-        break;
+    case 'DateTime':
+      filterComponentProps = {
+        dateFieldProps: {
+          backendDateStandard: 'YYYY-MM-DD',
+          id,
+          timeZone: 'UTC',
+          usePortal: true
+        }
+      };
+      FilterComponent = Datepicker;
+      break;
     case 'UUID': {
       const resourceReg = Registry.getResource(selectedFilterColumn.resource);
 

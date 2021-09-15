@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { FormattedDateTime } from '@folio/stripes-erm-components';
 import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 
-import { Registry } from '@folio/stripes-registry';
+import { Registry } from '@folio/handler-stripes-registry';
 
 /*
   Takes in a simpleSearch result->column shape
@@ -37,7 +37,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
         return (data) => {
           const bool = get(data, accessPath);
           return bool ? <Icon icon="check-circle" /> :
-          <Icon icon="times-circle" />;
+            <Icon icon="times-circle" />;
         };
       }
       case 'link': {
