@@ -156,7 +156,7 @@
     "simpleSearchForm.filters.dateFilterField.afterToday": "Depois de hoje",
     "simpleSearchForm.filters.dateFilterField.fixedDate": "Data fixa",
     "simpleSearchForm.filters.dateFilterField.number": "Número",
-    "simpleSearchForm.filters.dateFilterField.infoPopover": "A Data pode ser variável ou fixa. Para uma data variável, defina os valores dos três campos Número, Unidade de tempo e Quando no primeiro botão de rádio. Use o segundo botão de rádio para inserir uma data fixa.",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "\"Data\" pode ser relativa ou fixa. Escolha a terceira opção de botão de rádio para filtrar por uma data fixa. Para aplicar uma data relativa, escolha a primeira opção \"Hoje\" ou a segunda opção e defina os valores dos três campos: \"Duração\", \"Unidade de tempo\" e \"Antes ou depois de hoje\".",
     "httpError": "ErroHTTP: {errorCode} {errorText}",
     "dashboard.errorDetailsDescription": "O seguinte ocorreu, impedindo a exibição de conteúdo no widget:",
     "dashboard.copyErrorButtonAriaLabel": "Copiar erro para clipholder",
