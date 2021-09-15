@@ -36,8 +36,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
       case 'boolean': {
         return (data) => {
           const bool = get(data, accessPath);
-          return bool ? <Icon icon="check-circle" /> :
-            <Icon icon="times-circle" />;
+          return bool ? <Icon icon="check-circle" /> : <Icon icon="times-circle" />;
         };
       }
       case 'link': {
