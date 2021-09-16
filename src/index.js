@@ -71,7 +71,7 @@ const App = (appProps) => {
                   </NavListItem>
                 </NavListSection>
               </NavList>
-        )}
+            )}
           </AppContextMenu>
           <Switch>
             <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
@@ -83,17 +83,17 @@ const App = (appProps) => {
         </HasCommand>
       </CommandList>
       {isShortcutsModalOpen && (
-      <KeyboardShortcutsModal
-        allCommands={defaultKeyboardShortcuts}
-        onClose={() => setIsShortcutsModalOpen(false)}
-      />
-        )}
+        <KeyboardShortcutsModal
+          allCommands={defaultKeyboardShortcuts}
+          onClose={() => setIsShortcutsModalOpen(false)}
+        />
+      )}
     </>
   );
 };
 
 App.eventHandler = (event, _s, data) => {
-  if (event === 'ui-stripes-registry-load') {
+  if (event === 'LOAD_STRIPES_REGISTRY') {
     // DATA should contain registry singleton
     data.registerResource('widget');
   }
