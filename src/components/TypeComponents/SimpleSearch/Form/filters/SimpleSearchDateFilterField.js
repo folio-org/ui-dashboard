@@ -59,6 +59,10 @@ const SimpleSearchDateFilterField = ({
     return undefined;
   };
 
+  const buttonProps = {
+    'disabled': comparatorIsSpecialCase
+  };
+
   return (
     <Row>
       <Col xs={3}>
@@ -79,6 +83,7 @@ const SimpleSearchDateFilterField = ({
             <div>
               <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />
               <InfoPopover
+                buttonProps={buttonProps}
                 content={
                   <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.infoPopover" />
                 }
