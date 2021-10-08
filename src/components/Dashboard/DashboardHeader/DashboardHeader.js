@@ -11,7 +11,7 @@ import css from './DashboardHeader.css';
 
 const propTypes = {
   onCreate: PropTypes.func.isRequired,
-  onReorder: PropTypes.func.isRequired
+  onReorder: PropTypes.func
 };
 
 export default function DashboardHeader({ onCreate, onReorder }) {
@@ -24,13 +24,15 @@ export default function DashboardHeader({ onCreate, onReorder }) {
       >
         <FormattedMessage id="ui-dashboard.dashboardHeader.new" />
       </Button>
-      <Button
-        buttonStyle="dropdownItem"
-        id="clickable-reorderdashboard"
-        onClick={onReorder}
-      >
-        <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
-      </Button>
+      {onReorder &&
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-reorderdashboard"
+          onClick={onReorder}
+        >
+          <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
+        </Button>
+      }
     </>
   );
 
