@@ -1,6 +1,7 @@
 // This must reflect any manipulations happening in submitWithTokens
 // These components accept the widget, and the passed definition
 const widgetToInitialValues = (widget, widgetDef) => {
+  // We have an existing widget, parse it and creat initialValues
   const widgetConf = JSON.parse(widget.configuration);
   // We need to deal with tokens
   const { filterColumns } = widgetConf;

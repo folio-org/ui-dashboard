@@ -12,7 +12,7 @@ import {
 
 import css from './SimpleSearchResults.css';
 
-const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
+const SimpleSearchResultField = ({ resultColumns, input }) => {
   const { change } = useForm();
 
   // Set up result columns to populate result col select
@@ -29,16 +29,12 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
           dataOptions={selectifiedResultColumns}
           defaultValue={selectifiedResultColumns[0].value}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
-          name={`${name}.name`}
-          onChange={
-            e => {
-              change(`${name}.name`, e.target.value);
-
-              // Keep track of which result column has been selected
-              const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
-              change(`${name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
-            }
-          }
+          name={`${input.name}.name`}
+          onChange={e => {
+            const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
+            change(`${input.name}.name`, e.target.value);
+            change(`${input.name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
+          }}
         />
       </Col>
       <Col xs={6}>
@@ -46,7 +42,7 @@ const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
           component={TextField}
           defaultValue={selectifiedResultColumns[0].label}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.label" />}
-          name={`${name}.label`}
+          name={`${input.name}.label`}
         />
       </Col>
     </Row>

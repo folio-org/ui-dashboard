@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 // TODO figure out lazy loading of functions
 import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWithTokens';
 import simpleSearchWidgetToInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/widgetToInitialValues';
+import simpleSearchCreateInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/createInitialValues';
+
 
 // ERM-1735: took out the lazy load, causing errors with keyboard shortcuts / stripes-react-hotkeys,
 // see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
@@ -37,6 +39,7 @@ const getComponentsFromType = (widgetType = '') => {
 
       componentBundle.submitManipulation = simpleSearchSubmitManipulation;
       componentBundle.widgetToInitialValues = simpleSearchWidgetToInitialValues;
+      componentBundle.createInitialValues = simpleSearchCreateInitialValues;
       break;
     }
     default:
@@ -44,6 +47,7 @@ const getComponentsFromType = (widgetType = '') => {
       componentBundle.WidgetFormComponent = WidgetFormComponentError;
       componentBundle.submitManipulation = (props) => (props);
       componentBundle.widgetToInitialValues = (props) => (props);
+      componentBundle.createInitialValues = (props) => (props);
   }
 
   return componentBundle;
