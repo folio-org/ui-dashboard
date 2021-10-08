@@ -99,7 +99,7 @@ const WidgetEditRoute = ({
 
     // Widget already exists, PUT and close
     putWidget(submitValue)
-      .then(handleClose(params.widgetId))
+      .then(() => handleClose(params.widgetId))
       // Ensure we refetch the widgetInstance after submit.
       // This ensures we aren't initially getting a memoized version on next edit.
       .then(refetchWidgetInstance);
