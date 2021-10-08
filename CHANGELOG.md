@@ -1,6 +1,10 @@
 # Change history for ui-dashboard
 
-## 2.0.0 (In Progress)
+## 2.0.0 2021-10-07
+  * Upgrade to stripes v7
+  * Improve the date filter comparator UX. ERM-1648, ERM-1839, ERM-1840
+  * a11y improvements. ERM-1648, ERM-1788
+  * Add keyboard shortcuts to ui-dashboard. ERM-1735, ERM-1736
   * ERM-1768 Registry: Move Registry class out of Dashboard and into dedicated repo
 
 ## 1.0.0 2021-06-16

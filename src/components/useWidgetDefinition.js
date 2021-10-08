@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 
