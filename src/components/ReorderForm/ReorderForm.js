@@ -6,6 +6,7 @@ import { get } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { useFormState, useForm } from 'react-final-form';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   Button,
@@ -104,10 +105,13 @@ const ReorderForm = ({
       >
         <Paneset>
           <Pane
+            appIcon={<AppIcon app="dashboard" />}
             centerContent
             defaultWidth="100%"
+            dismissible
             footer={renderPaneFooter()}
             id="pane-reorder-form"
+            onClose={onClose}
             paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
           >
             <FieldArray

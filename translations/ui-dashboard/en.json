@@ -13,7 +13,7 @@
   "dashboardHeader.new": "New",
   "dashboardHeader.reorder": "Edit widget display order",
   "dashboard.newWidget": "{label} widget",
-  "dashboard.reorderForm.paneTitle": "Edit dashboard",
+  "dashboard.reorderForm.paneTitle": "Edit widget display order",
   "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
   "dashboard.reorderForm.widget.widgetname": "Widget name",
   "dashboard.deleteWidget": "Delete widget",
