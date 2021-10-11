@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 2.1.0 In progress
+* UX improvements for Dashboard. ERM-1792, ERM-1855
 ## 2.0.0 2021-10-07
   * Upgrade to stripes v7
   * Improve the date filter comparator UX. ERM-1648, ERM-1839, ERM-1840
@@ -26,7 +28,7 @@
     * Overhauled file structure
     * Fixed moment dependency
     * Fixes to how dashboard fetches widget components per Type
-  * ERM-1613 Add basic Widget Actions. 
+  * ERM-1613 Add basic Widget Actions.
   * ERM-1612 Edit existing dashboard widgetInstance.
   * ERM-1614 Fixed filter issue in date filter field.
   * Fixes to fetch ordering issues
