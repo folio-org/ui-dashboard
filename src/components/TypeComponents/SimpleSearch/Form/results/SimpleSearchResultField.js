@@ -35,6 +35,9 @@ const SimpleSearchResultField = ({ resultColumns, input }) => {
             change(`${input.name}.name`, e.target.value);
             change(`${input.name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
           }}
+          validate={(value, allValues) => {
+            return allValues?.resultColumns.filter(({ name }) => name === value).length > 1 ? <FormattedMessage id="ui-dashboard.error.duplicateColumn" /> : undefined;
+          }}
         />
       </Col>
       <Col xs={6}>

@@ -6,6 +6,7 @@
   "error.noDashboardsForUser": "No dashboards exist for this user.",
   "error.noWidgetComponentForType": "No widget component for type: {widgetType}",
   "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
+  "error.duplicateColumn": "Duplicate column, please rectify",
   "canvas.actions": "Actions",
   "httpError": "HTTPError: {errorCode} {errorText}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",

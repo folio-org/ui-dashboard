@@ -99,7 +99,7 @@ const SimpleSearchResults = ({
       </Row>
       <FieldArray
         name="resultColumns"
-        render={({ fields, meta: { valid } }) => {
+        render={({ fields, meta: { error, valid } }) => {
           return (
             <>
               <Headline margin="x-small" size="medium" tag="h2">
@@ -116,7 +116,7 @@ const SimpleSearchResults = ({
               >
                 {renderResultField}
               </DragAndDropFieldArray>
-              {!valid &&
+              {(!valid && error === 'this should not display') &&
                 <MessageBanner
                   className={css.warningBanner}
                   tabIndex={0}
