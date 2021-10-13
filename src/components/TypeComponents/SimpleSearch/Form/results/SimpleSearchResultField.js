@@ -12,7 +12,7 @@ import {
 
 import css from './SimpleSearchResults.css';
 
-const SimpleSearchResultField = ({ resultColumns, input }) => {
+const SimpleSearchResultField = ({ resultColumns, index, input }) => {
   const { change } = useForm();
 
   // Set up result columns to populate result col select
@@ -24,7 +24,6 @@ const SimpleSearchResultField = ({ resultColumns, input }) => {
     >
       <Col xs={6}>
         <Field
-          autoFocus
           component={Select}
           dataOptions={selectifiedResultColumns}
           defaultValue={selectifiedResultColumns[0].value}

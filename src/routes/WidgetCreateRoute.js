@@ -41,7 +41,9 @@ const WidgetCreateRoute = ({
   } = getComponentsFromType(selectedDefinition?.type?.name ?? '');
 
   const initialValues = {
-    ...createInitialValues(selectedDefinition)
+    widgetConfig: {
+      ...createInitialValues(selectedDefinition)
+    }
   };
 
   const handleClose = (id) => {
@@ -54,9 +56,9 @@ const WidgetCreateRoute = ({
   const doTheSubmit = ({
     definition: _d,
     name,
-    ...widgetConf
+    widgetConfig
   }) => {
-    const tweakedWidgetConf = submitManipulation(widgetConf);
+    const tweakedWidgetConf = submitManipulation(widgetConfig);
     // Stringify the configuration
     const conf = JSON.stringify({
       ...tweakedWidgetConf
@@ -77,9 +79,6 @@ const WidgetCreateRoute = ({
 
   return (
     <Form
-      enableReinitialize
-      initialValues={initialValues}
-      keepDirtyOnReinitialize
       mutators={arrayMutators}
       navigationCheck
       onSubmit={doTheSubmit}

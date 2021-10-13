@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-
 import { Field, useFormState, useForm } from 'react-final-form';
 
 import {
@@ -25,6 +24,8 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
+import InnerWidgetForm from './InnerWidgetForm';
+
 const propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
@@ -46,6 +47,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    initialValues,
     name,
     params,
     selectedDefinition,
@@ -60,7 +62,7 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
-  const { dirtyFields, values } = useFormState();
+  const { dirtyFields } = useFormState();
   const { change } = useForm();
 
   // Simple true/false to show/hide modal and then wipe form
@@ -80,6 +82,11 @@ const WidgetForm = ({
       }
     },
   ];
+
+  const [widgetConfigValues, setWidgetConfigvalues] = useState();
+  useEffect(() => {
+    change("widgetConfig", widgetConfigValues);
+  }, [change, widgetConfigValues]);
 
   const renderPaneFooter = () => {
     return (
@@ -111,17 +118,6 @@ const WidgetForm = ({
   };
 
   const changeDefinitionAndWipeForm = () => {
-    /*
-     * This should control wiping the form when def changes,
-     * so it runs through all fields that aren't name or definition and wipes them
-    */
-    const fieldsToNotWipe = ['definition', 'name'];
-    Object.keys(values).forEach(valueKey => {
-      if (!fieldsToNotWipe.includes(valueKey)) {
-        change(valueKey, undefined);
-      }
-    });
-
     change('definition', newDef);
     setSelectedDef(widgetDefinitions[newDef]);
     setNewDef();
@@ -201,13 +197,25 @@ const WidgetForm = ({
                 </KeyValue>
               </Col>
             </Row>
-            {selectedDefinition &&
-            // Get specific form component for the selected widgetDefinition
-            <WidgetFormComponent
-              isEdit={!!params.widgetId}
-              specificWidgetDefinition={selectedDefinition}
-            />
-          }
+            {selectedDefinition && WidgetFormComponent &&
+              <Field
+                name="widgetConfig"
+                render={() => (
+                  <InnerWidgetForm
+                    data={{
+                      initialValues: initialValues.widgetConfig,
+                      isEdit: !!params.widgetId,
+                      specificWidgetDefinition: selectedDefinition,
+                      WidgetFormComponent
+                    }}
+                    handlers={{
+                      onSubmit: onSubmit,
+                      setWidgetConfigvalues
+                    }}
+                  />
+                )}
+              />
+           }
           </Pane>
         </Paneset>
         <ConfirmationModal

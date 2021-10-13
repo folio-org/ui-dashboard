@@ -41,6 +41,7 @@ const SimpleSearchResults = ({
           <Col xs={11}>
             <Field
               component={SimpleSearchResultField}
+              index={index}
               name={fieldName}
               resultColumns={resultColumns}
             />
