@@ -101,7 +101,6 @@ const SimpleSearchForm = ({
 };
 
 SimpleSearchForm.propTypes = {
-  isEdit: PropTypes.bool,
   specificWidgetDefinition: PropTypes.object
 };
 
