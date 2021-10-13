@@ -125,7 +125,10 @@ const SimpleSearchResults = ({
                   <FormattedMessage id="ui-dashboard.simpleSearchForm.results.minimumWarning" />
                 </MessageBanner>
               }
-              <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
+              <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({
+                name: resultColumns?.[0]?.name,
+                label: resultColumns?.[0]?.label ?? resultColumns?.[0]?.name
+              })}>
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
               </Button>
             </>
