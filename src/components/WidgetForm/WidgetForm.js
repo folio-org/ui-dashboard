@@ -25,8 +25,6 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 
-import InnerWidgetForm from './InnerWidgetForm';
-
 const propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
@@ -197,23 +195,23 @@ const WidgetForm = ({
               <Field
                 name="widgetConfig"
                 render={() => (
+                  /* Keeping this as a separate form allows us to deal with incoming WidgetForms as part of configuration only,
+                   * which is useful to stop form value injection in the case we accept entire forms through the Registry
+                   * It also means the changing initialValues only reinitialises the inner form
+                   */
                   <Form
                     initialValues={initialValues.widgetConfig}
                     mutators={arrayMutators}
                     navigationCheck
                     onSubmit={onSubmit}
-                    render={(formProps) => {
+                    render={({ form: { getState } }) => {
+                      const { values: innerFormValues } = getState();
+                      setWidgetConfigvalues(innerFormValues);
                       return (
-                        <InnerWidgetForm
-                          {...formProps}
-                          data={{
-                            isEdit: !!params.widgetId,
-                            specificWidgetDefinition: selectedDefinition,
-                            WidgetFormComponent
-                          }}
-                          handlers={{
-                            setWidgetConfigvalues
-                          }}
+                          /* Get specific form component for the selected widgetDefinition */
+                        <WidgetFormComponent
+                          isEdit={!!params.widgetId}
+                          specificWidgetDefinition={selectedDefinition}
                         />
                       );
                     }}

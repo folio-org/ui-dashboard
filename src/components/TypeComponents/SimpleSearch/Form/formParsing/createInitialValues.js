@@ -1,7 +1,6 @@
-// This function can take `widgetDef` as a parameter if necessary
+// This function sets up the initialValues for creation of a new Widget
 const createInitialValues = (widgetDef) => {
   const { definition = {} } = widgetDef;
-  console.log("Def: %o", definition);
 
   return {
     configurableProperties: {

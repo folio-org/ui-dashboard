@@ -18,7 +18,6 @@ import SimpleSearchMatches from './matches/SimpleSearchMatches';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
-  isEdit,
   specificWidgetDefinition
 }) => {
   const {
