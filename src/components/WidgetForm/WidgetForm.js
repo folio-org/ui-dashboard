@@ -63,8 +63,8 @@ const WidgetForm = ({
   pristine,
   submitting,
 }) => {
-  const { dirtyFields } = useFormState();
   const { change } = useForm();
+  const { values } = useFormState();
 
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
@@ -178,20 +178,15 @@ const WidgetForm = ({
                     disabled={!!params.widgetId}
                     name="definition"
                     onChange={e => {
-                    // Other than the name/def, are any of the fields dirty?
-                    delete dirtyFields.name;
-                    delete dirtyFields.definition;
-                    const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
-
-                    // If we have dirty fields, set up confirmation modal
-                    if (dirtyFieldsCount > 0) {
+                    // If we already have a definition, open confirmation modal
+                    if (values.definition) {
                       setNewDef(e.target.value);
                       setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
                     } else {
                       change('definition', e.target.value);
                       setSelectedDef(widgetDefinitions[e.target.value]);
                     }
-                  }}
+                    }}
                     required
                     validate={requiredValidator}
                   />
