@@ -26,7 +26,6 @@ const SimpleSearchResultField = ({ resultColumns, index, input }) => {
         <Field
           component={Select}
           dataOptions={selectifiedResultColumns}
-          defaultValue={selectifiedResultColumns[0].value}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
           name={`${input.name}.name`}
           onChange={e => {
@@ -39,7 +38,6 @@ const SimpleSearchResultField = ({ resultColumns, index, input }) => {
       <Col xs={6}>
         <Field
           component={TextField}
-          defaultValue={selectifiedResultColumns[0].label}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.label" />}
           name={`${input.name}.label`}
         />

@@ -71,7 +71,6 @@ const SimpleSearchResults = ({
       <Row>
         <Col xs={numberOfRows.configurable ? 3 : 0}>
           <Field
-            defaultValue={numberOfRows.defValue}
             name="configurableProperties.numberOfRows"
             type="number"
           >
