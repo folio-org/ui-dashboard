@@ -70,9 +70,8 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchMatches
               data={{
-            isEdit,
-            matches,
-          }}
+              matches,
+            }}
               id="simple-search-form-matches"
             />
             <FieldArray
