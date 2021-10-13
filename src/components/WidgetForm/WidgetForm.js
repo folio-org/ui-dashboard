@@ -86,7 +86,7 @@ const WidgetForm = ({
 
   const [widgetConfigValues, setWidgetConfigvalues] = useState();
   useEffect(() => {
-    change("widgetConfig", widgetConfigValues);
+    change('widgetConfig', widgetConfigValues);
   }, [change, widgetConfigValues]);
 
   const renderPaneFooter = () => {
@@ -224,7 +224,7 @@ const WidgetForm = ({
                     }}
                     subscription={{ values: true }}
                   />
-                  
+
                 )}
               />
            }

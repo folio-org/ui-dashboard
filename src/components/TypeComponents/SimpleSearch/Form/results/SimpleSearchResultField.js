@@ -12,7 +12,7 @@ import {
 
 import css from './SimpleSearchResults.css';
 
-const SimpleSearchResultField = ({ resultColumns, index, input }) => {
+const SimpleSearchResultField = ({ resultColumns, input }) => {
   const { change } = useForm();
 
   // Set up result columns to populate result col select
