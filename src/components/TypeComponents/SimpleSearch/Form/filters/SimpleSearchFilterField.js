@@ -129,7 +129,9 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
           // Reset filter value when selecting different filter type
           onChange={
             e => {
-              change(`${name}.rules`, [{}]);
+              change(`${name}.rules`, [{
+                comparator: selectedFilterColumn?.[0]
+              }]);
               change(`${name}.name`, e.target.value);
             }
           }
