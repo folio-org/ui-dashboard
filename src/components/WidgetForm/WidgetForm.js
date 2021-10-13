@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState, useForm } from 'react-final-form';
+import { Field, Form, useFormState, useForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 
 import {
   AppIcon
@@ -201,18 +202,29 @@ const WidgetForm = ({
               <Field
                 name="widgetConfig"
                 render={() => (
-                  <InnerWidgetForm
-                    data={{
-                      initialValues: initialValues.widgetConfig,
-                      isEdit: !!params.widgetId,
-                      specificWidgetDefinition: selectedDefinition,
-                      WidgetFormComponent
+                  <Form
+                    initialValues={initialValues.widgetConfig}
+                    mutators={arrayMutators}
+                    navigationCheck
+                    onSubmit={onSubmit}
+                    render={(formProps) => {
+                      return (
+                        <InnerWidgetForm
+                          {...formProps}
+                          data={{
+                            isEdit: !!params.widgetId,
+                            specificWidgetDefinition: selectedDefinition,
+                            WidgetFormComponent
+                          }}
+                          handlers={{
+                            setWidgetConfigvalues
+                          }}
+                        />
+                      );
                     }}
-                    handlers={{
-                      onSubmit: onSubmit,
-                      setWidgetConfigvalues
-                    }}
+                    subscription={{ values: true }}
                   />
+                  
                 )}
               />
            }
