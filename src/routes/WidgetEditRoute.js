@@ -81,9 +81,9 @@ const WidgetEditRoute = ({
   const doTheSubmit = ({
     definition: _d,
     name,
-    ...widgetConf
+    widgetConfig
   }) => {
-    const tweakedWidgetConf = submitManipulation(widgetConf);
+    const tweakedWidgetConf = submitManipulation(widgetConfig);
     // Stringify the configuration
     const conf = JSON.stringify({
       ...tweakedWidgetConf
@@ -106,17 +106,7 @@ const WidgetEditRoute = ({
   };
 
   return (
-    /*
-     * IMPORTANT
-     * DO NOT ENABLE keepDirtyOnReinitialize
-     * This code works by fetching a function which will parse the data
-     * and work out initialValues. Sometimes that function does not load for the first render,
-     * leading to defaultValues being triggered and set for some fields.
-     * In those cases we want a refresh of initialValues to wipe the form,
-     * not remain as dirty values.
-     */
     <Form
-      enableReinitialize
       initialValues={initialValues}
       mutators={arrayMutators}
       navigationCheck

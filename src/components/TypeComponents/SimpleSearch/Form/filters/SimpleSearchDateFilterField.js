@@ -66,7 +66,6 @@ const SimpleSearchDateFilterField = ({
           autoFocus
           component={Select}
           dataOptions={selectifiedComparators}
-          defaultValue={selectifiedComparators[0]?.value}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}
           name={`${name}.comparator`}
           required

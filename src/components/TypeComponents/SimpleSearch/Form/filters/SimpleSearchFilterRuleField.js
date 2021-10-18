@@ -81,7 +81,6 @@ const SimpleSearchFilterRuleField = ({
               autoFocus
               component={Select}
               dataOptions={selectifiedComparators}
-              defaultValue={selectifiedComparators[0]?.value}
               name={`${name}.comparator`}
               required
               validate={requiredValidator}

@@ -71,7 +71,7 @@ const widgetToInitialValues = (widget, widgetDef) => {
 
   return {
     name: widget.name,
-    ...widgetConf
+    widgetConfig: widgetConf
   };
 };
 

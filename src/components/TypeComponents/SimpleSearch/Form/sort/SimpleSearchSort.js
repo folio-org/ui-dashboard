@@ -37,14 +37,12 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
     return (
       <>
         <Field
-          defaultValue={sortColumns[0].name}
           name="sortColumn.name"
           render={() => {
             return null;
           }}
         />
         <Field
-          defaultValue={sortColumns[0].sortTypes[0]}
           name="sortColumn.sortType"
           render={() => {
             return null;
@@ -64,7 +62,6 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         <Field
           component={Select}
           dataOptions={selectifiedSortColumns}
-          defaultValue={sortColumns[0]?.name}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortBy" />}
           name="sortColumn.name"
           onChange={e => {
@@ -85,7 +82,6 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
         <Field
           component={Select}
           dataOptions={selectifiedSortDirs}
-          defaultValue={selectedSortCol.sortTypes[0]}
           disabled={selectifiedSortDirs.length <= 1}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.sort.sortDirection" />}
           name="sortColumn.sortType"
