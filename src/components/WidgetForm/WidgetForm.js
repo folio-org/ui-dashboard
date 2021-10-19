@@ -37,7 +37,7 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    setSelectedDef: PropTypes.func.isRequired
+    setSelectedDef: PropTypes.func.isRequired,
   }),
   pristine: PropTypes.bool,
   submitting: PropTypes.bool
@@ -53,10 +53,10 @@ const WidgetForm = ({
     widgetDefinitions = [],
     WidgetFormComponent
   } = {},
-  handlers:{
+  handlers: {
     onClose,
     onSubmit,
-    setSelectedDef
+    setSelectedDef,
   },
   pristine,
   submitting,
@@ -83,6 +83,8 @@ const WidgetForm = ({
   ];
 
   const [widgetConfigValues, setWidgetConfigvalues] = useState();
+  const [innerFormValidState, setInnerFormValidState] = useState();
+
   useEffect(() => {
     change('widgetConfig', widgetConfigValues);
   }, [change, widgetConfigValues]);
@@ -176,14 +178,14 @@ const WidgetForm = ({
                     disabled={!!params.widgetId}
                     name="definition"
                     onChange={e => {
-                    // If we already have a definition, open confirmation modal
-                    if (values.definition) {
-                      setNewDef(e.target.value);
-                      setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-                    } else {
-                      change('definition', e.target.value);
-                      setSelectedDef(widgetDefinitions[e.target.value]);
-                    }
+                      // If we already have a definition, open confirmation modal
+                      if (values.definition) {
+                        setNewDef(e.target.value);
+                        setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+                      } else {
+                        change('definition', e.target.value);
+                        setSelectedDef(widgetDefinitions[e.target.value]);
+                      }
                     }}
                     required
                     validate={requiredValidator}
@@ -205,10 +207,11 @@ const WidgetForm = ({
                     navigationCheck
                     onSubmit={onSubmit}
                     render={({ form: { getState } }) => {
-                      const { values: innerFormValues } = getState();
+                      const { values: innerFormValues, valid } = getState();
+                      setInnerFormValidState(valid);
                       setWidgetConfigvalues(innerFormValues);
                       return (
-                          /* Get specific form component for the selected widgetDefinition */
+                        /* Get specific form component for the selected widgetDefinition */
                         <WidgetFormComponent
                           isEdit={!!params.widgetId}
                           specificWidgetDefinition={selectedDefinition}
@@ -217,10 +220,10 @@ const WidgetForm = ({
                     }}
                     subscription={{ values: true }}
                   />
-
                 )}
+                validate={() => !innerFormValidState}
               />
-           }
+            }
           </Pane>
         </Paneset>
         <ConfirmationModal
@@ -231,13 +234,13 @@ const WidgetForm = ({
           id="wipe-widget-form-confirmation"
           message={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.message" />}
           onCancel={() => {
-          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-          setNewDef();
-        }}
+            setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+            setNewDef();
+          }}
           onConfirm={() => {
-          changeDefinitionAndWipeForm();
-          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-        }}
+            changeDefinitionAndWipeForm();
+            setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+          }}
           open={confirmWipeFormModalOpen}
         />
       </HasCommand>
