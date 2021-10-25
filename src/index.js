@@ -23,6 +23,7 @@ import DashboardsRoute from './routes/DashboardsRoute';
 import DashboardRoute from './routes/DashboardRoute';
 import DashboardOrderRoute from './routes/DashboardOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
+import WidgetEditRoute from './routes/WidgetEditRoute';
 
 import Settings from './settings';
 
@@ -75,7 +76,7 @@ const App = (appProps) => {
           </AppContextMenu>
           <Switch>
             <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
-            <Route component={WidgetCreateRoute} path={`${path}/:dashName/:widgetId/edit`} />
+            <Route component={WidgetEditRoute} path={`${path}/:dashName/:widgetId/edit`} />
             <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
             <Route component={DashboardRoute} path={`${path}/:dashName`} />
             <Route component={DashboardsRoute} path={path} />

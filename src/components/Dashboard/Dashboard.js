@@ -125,7 +125,7 @@ const Dashboard = ({
         <DashboardHeader
           key={`dashboard-header-${dashboardId}`}
           onCreate={onCreate}
-          onReorder={onReorder}
+          onReorder={widgets?.length > 1 ? onReorder : null}
         />
         <div className={css.dashboardContent}>{dashboardContents()}</div>
       </div>

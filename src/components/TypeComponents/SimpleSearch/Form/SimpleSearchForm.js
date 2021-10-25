@@ -18,7 +18,6 @@ import SimpleSearchMatches from './matches/SimpleSearchMatches';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
-  isEdit,
   specificWidgetDefinition
 }) => {
   const {
@@ -70,9 +69,8 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchMatches
               data={{
-            isEdit,
-            matches,
-          }}
+              matches,
+            }}
               id="simple-search-form-matches"
             />
             <FieldArray
@@ -103,7 +101,6 @@ const SimpleSearchForm = ({
 };
 
 SimpleSearchForm.propTypes = {
-  isEdit: PropTypes.bool,
   specificWidgetDefinition: PropTypes.object
 };
 

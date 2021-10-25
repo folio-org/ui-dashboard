@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -10,7 +10,7 @@ import WidgetForm from '../components/WidgetForm';
 import getComponentsFromType from '../components/getComponentsFromType';
 
 
-const WidgetCreateRoute = ({
+const WidgetEditRoute = ({
   history,
   match: {
     params
@@ -23,28 +23,53 @@ const WidgetCreateRoute = ({
     () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
 
-  const { mutateAsync: postWidget } = useMutation(
-    ['ui-dashboard', 'widgetCreateRoute', 'postWidget'],
-    (data) => ky.post('servint/widgets/instances', { json: data })
+  const { mutateAsync: putWidget } = useMutation(
+    ['ui-dashboard', 'widgetCreateRoute', 'putWidget'],
+    (data) => ky.put(`servint/widgets/instances/${params.widgetId}`, { json: data })
   );
 
+  // If we have a widgetId then fetch that widget
+  const { data: widget, refetch: refetchWidgetInstance } = useQuery(
+    // Ensure we refetch widget if widgetId changes
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidget', params.widgetId],
+    () => ky(`servint/widgets/instances/${params.widgetId}`).json(),
+    {
+      /* Only run this query if we have an existing widgetInstance */
+      enabled: !!params.widgetId
+    }
+  );
+
+  // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
   const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
-    () => ky('servint/widgets/definitions/global').json()
+    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
+    () => ky(`servint/widgets/definitions/global${widget ? '?name=' + widget.definition?.name + '&version=' + widget.definition?.version : ''}`).json()
   );
   const [selectedDefinition, setSelectedDef] = useState();
 
+  useEffect(() => {
+    // Widget may need a render cycle to be fetched, if and when it does get fetched set selectedDef to it
+    if (widget) {
+      setSelectedDef(widgetDefinitions?.[0]);
+    }
+  }, [widget, widgetDefinitions]);
+
   const {
     submitManipulation,
-    createInitialValues,
+    widgetToInitialValues,
     WidgetFormComponent
   } = getComponentsFromType(selectedDefinition?.type?.name ?? '');
 
-  const initialValues = {
-    widgetConfig: {
-      ...createInitialValues(selectedDefinition)
-    }
-  };
+  let initialValues = {};
+  if (widget) {
+    initialValues = {
+      definition: 0,
+      ...widgetToInitialValues(widget, selectedDefinition)
+    };
+  } else {
+    initialValues = {
+      ...widgetToInitialValues(widget, selectedDefinition)
+    };
+  }
 
   const handleClose = (id) => {
     history.push({
@@ -71,14 +96,18 @@ const WidgetCreateRoute = ({
       owner: { id: dashboard.id },
       configuration: conf
     };
-    // New widget, POST and close
-    postWidget(submitValue)
-      .then(data => data.json())
-      .then(({ id }) => handleClose(id));
+
+    // Widget already exists, PUT and close
+    putWidget(submitValue)
+      .then(() => handleClose(params.widgetId))
+      // Ensure we refetch the widgetInstance after submit.
+      // This ensures we aren't initially getting a memoized version on next edit.
+      .then(refetchWidgetInstance);
   };
 
   return (
     <Form
+      initialValues={initialValues}
       mutators={arrayMutators}
       navigationCheck
       onSubmit={doTheSubmit}
@@ -91,6 +120,7 @@ const WidgetCreateRoute = ({
               data={{
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
+                name: widget?.name,
                 params,
                 selectedDefinition,
                 widgetDefinitions,
@@ -109,9 +139,9 @@ const WidgetCreateRoute = ({
   );
 };
 
-export default WidgetCreateRoute;
+export default WidgetEditRoute;
 
-WidgetCreateRoute.propTypes = {
+WidgetEditRoute.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

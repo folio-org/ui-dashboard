@@ -1,6 +1,14 @@
 # Change history for ui-dashboard
 
-## 2.0.0 (In Progress)
+## 2.1.0 In progress
+  * UX improvements for Dashboard. ERM-1792, ERM-1855
+  * Upgrade `@folio/react-intl-safe-html` for compatibility with `@folio/stripes` `v7`. ERM-1894
+
+## 2.0.0 2021-10-07
+  * Upgrade to stripes v7
+  * Improve the date filter comparator UX. ERM-1648, ERM-1839, ERM-1840
+  * a11y improvements. ERM-1648, ERM-1788
+  * Add keyboard shortcuts to ui-dashboard. ERM-1735, ERM-1736
   * ERM-1768 Registry: Move Registry class out of Dashboard and into dedicated repo
 
 ## 1.0.0 2021-06-16
@@ -22,7 +30,7 @@
     * Overhauled file structure
     * Fixed moment dependency
     * Fixes to how dashboard fetches widget components per Type
-  * ERM-1613 Add basic Widget Actions. 
+  * ERM-1613 Add basic Widget Actions.
   * ERM-1612 Edit existing dashboard widgetInstance.
   * ERM-1614 Fixed filter issue in date filter field.
   * Fixes to fetch ordering issues

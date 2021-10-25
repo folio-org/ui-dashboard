@@ -18,7 +18,6 @@ const SimpleSearchConfigurableProperties = ({
       { (urlLink.configurable || urlLink.defValue) &&
         // If urlLink is non configurable and has no defValue then we don't need it on the form
         <Field
-          defaultValue={urlLink.defValue}
           name="configurableProperties.urlLink"
         >
           {({ ...fieldRenderProps }) => {
