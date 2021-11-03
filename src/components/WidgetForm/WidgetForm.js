@@ -219,9 +219,9 @@ const WidgetForm = ({
                       );
                     }}
                     subscription={{ values: true }}
-                    validate={() => !innerFormValidState}
                   />
                 )}
+                validate={() => !innerFormValidState}
               />
             }
           </Pane>
