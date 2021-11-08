@@ -38,6 +38,7 @@ const RelativeOrAbsolute = ({
             <Field
               aria-label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
               component={RadioButton}
+              disabled={disabled}
               label={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.today' })}
               labelClass={css.radioLabelClass}
               name={`${name}.relativeOrAbsolute`}

@@ -24,15 +24,14 @@ export default function DashboardHeader({ onCreate, onReorder }) {
       >
         <FormattedMessage id="ui-dashboard.dashboardHeader.new" />
       </Button>
-      {onReorder &&
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-reorderdashboard"
-          onClick={onReorder}
-        >
-          <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
-        </Button>
-      }
+      <Button
+        buttonStyle="dropdownItem"
+        disabled={!onReorder}
+        id="clickable-reorderdashboard"
+        onClick={onReorder}
+      >
+        <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
+      </Button>
     </>
   );
 
