@@ -114,7 +114,6 @@
     "compose-function": "^3.0.3",
     "final-form": "^4.19.0",
     "final-form-arrays": "^3.0.1",
-    "final-form-set-field-touched": "^1.0.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
