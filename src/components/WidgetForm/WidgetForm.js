@@ -59,7 +59,7 @@ const WidgetForm = ({
     setSelectedDef
   },
   pristine,
-  submitting,
+  submitting
 }) => {
   const { change } = useForm();
   const { values } = useFormState();

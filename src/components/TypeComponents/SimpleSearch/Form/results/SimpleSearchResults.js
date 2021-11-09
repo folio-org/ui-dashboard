@@ -14,7 +14,8 @@ import {
   IconButton,
   MessageBanner,
   Row,
-  TextField
+  TextField,
+  Layout
 } from '@folio/stripes/components';
 
 import SimpleSearchResultField from './SimpleSearchResultField';
@@ -37,7 +38,7 @@ const SimpleSearchResults = ({
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>
-        <Row key={`simple-search-result-array-${fieldName}`} middle="xs">
+        <Row key={`simple-search-result-array-${fieldName}`}>
           <Col xs={11}>
             <Field
               component={SimpleSearchResultField}
@@ -46,17 +47,19 @@ const SimpleSearchResults = ({
               resultColumns={resultColumns}
             />
           </Col>
-          <Col className={css.deleteIcon} xs={1}>
-            <IconButton
-              ariaLabel={
-                intl.formatMessage(
-                  { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
-                  { index: index + 1 }
-                )
-              }
-              icon="trash"
-              onClick={() => fields.remove(index)}
-            />
+          <Col xs={1}>
+            <Layout className="marginTopLabelSpacer">
+              <IconButton
+                ariaLabel={
+                  intl.formatMessage(
+                    { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
+                    { index: index + 1 }
+                  )
+                }
+                icon="trash"
+                onClick={() => fields.remove(index)}
+              />
+            </Layout>
           </Col>
         </Row>
       </div>
@@ -128,9 +131,9 @@ const SimpleSearchResults = ({
               <Button
                 id="simple-search-form-add-result-column-button"
                 onClick={() => fields.push({
-                name: resultColumns?.[0]?.name,
-                label: resultColumns?.[0]?.label ?? resultColumns?.[0]?.name
-              })}
+                  name: resultColumns?.[0]?.name,
+                  label: resultColumns?.[0]?.label ?? resultColumns?.[0]?.name
+                })}
               >
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
               </Button>

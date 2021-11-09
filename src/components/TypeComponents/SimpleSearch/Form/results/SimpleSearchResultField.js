@@ -7,7 +7,7 @@ import {
   Col,
   Row,
   Select,
-  TextField
+  TextField,
 } from '@folio/stripes/components';
 
 import css from './SimpleSearchResults.css';
@@ -17,26 +17,32 @@ const SimpleSearchResultField = ({ resultColumns, input }) => {
 
   // Set up result columns to populate result col select
   const selectifiedResultColumns = resultColumns.map(rc => ({ value: rc.name, label: rc.label || rc.name }));
-
   return (
-    <Row
-      className={css.innerRow}
-    >
+    <Row className={css.innerRow}>
       <Col xs={6}>
         <Field
-          component={Select}
-          dataOptions={selectifiedResultColumns}
-          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
           name={`${input.name}.name`}
-          onChange={e => {
-            const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
-            change(`${input.name}.name`, e.target.value);
-            change(`${input.name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
-          }}
           validate={(value, allValues) => {
             return allValues?.resultColumns.filter(({ name }) => name === value).length > 1 ? <FormattedMessage id="ui-dashboard.error.duplicateColumn" /> : undefined;
           }}
-        />
+        >
+          {({ input: inputVal, meta }) => {
+            return (
+              <Select
+                autoFocus
+                {...inputVal}
+                dataOptions={selectifiedResultColumns}
+                error={meta && meta.error}
+                label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
+                onChange={e => {
+                  const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
+                  change(`${input.name}.name`, e.target.value);
+                  change(`${input.name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
+                }}
+              />
+            );
+          }}
+        </Field>
       </Col>
       <Col xs={6}>
         <Field

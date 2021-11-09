@@ -69,8 +69,8 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchMatches
               data={{
-              matches,
-            }}
+                matches,
+              }}
               id="simple-search-form-matches"
             />
             <FieldArray
@@ -78,8 +78,8 @@ const SimpleSearchForm = ({
               addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
               component={SimpleSearchFilterArray}
               data={{
-            filterColumns
-          }}
+                filterColumns
+              }}
               deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
               headerId="ui-dashboard.simpleSearchForm.filters"
               id="simple-search-form-filters"
@@ -87,10 +87,10 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchResults
               data={{
-            resultColumns,
-            configurableProperties,
-            sortColumns
-          }}
+                resultColumns,
+                configurableProperties,
+                sortColumns
+              }}
               id="simple-search-form-results"
             />
           </AccordionSet>
