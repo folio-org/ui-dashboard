@@ -156,7 +156,7 @@
     "simpleSearchForm.filters.dateFilterField.afterToday": "오늘 이후",
     "simpleSearchForm.filters.dateFilterField.fixedDate": "고정 날짜",
     "simpleSearchForm.filters.dateFilterField.number": "번호",
-    "simpleSearchForm.filters.dateFilterField.infoPopover": "\"Date\" can be relative or fixed. Choose the third radio button option to filter by a fixed date. To apply a relative date choose either the first option \"Today\" or the second option and set the values of the three fields: \"Length of time\", \"Unit of time\" and \"Before or after today\".",
+    "simpleSearchForm.filters.dateFilterField.infoPopover": "\"날짜\"는 상대적이거나 고정될 수 있습니다. 고정 날짜로 필터링하려면 세 번째 라디오 버튼 옵션을 선택합니다. 상대 날짜를 적용하려면 첫 번째 옵션 \"오늘\" 또는 두 번째 옵션을 선택하고 \"시간 길이\", \"시간 단위\" 및 \"오늘 전후\"의 세 필드 값을 설정합니다.",
     "httpError": "HTTP오류: {오류코드} {오류텍스트}",
     "dashboard.errorDetailsDescription": "다음이 발생하여 위젯에 콘텐츠가 표시되지 않습니다.",
     "dashboard.copyErrorButtonAriaLabel": "클립 홀더에 오류 복사",
