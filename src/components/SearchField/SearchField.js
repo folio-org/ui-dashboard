@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Icon, TextField } from '@folio/stripes/components';
 
-import css from './SimpleSearchField.css';
+import css from './SearchField.css';
 
 // Accepts the same props as TextField
 const propTypes = {
@@ -11,7 +11,7 @@ const propTypes = {
   onClear: PropTypes.func,
 };
 
-const SimpleSearchField = (props) => {
+const SearchField = (props) => {
   const {
     ariaLabel,
     ...rest
@@ -37,6 +37,6 @@ const SimpleSearchField = (props) => {
   );
 };
 
-SimpleSearchField.propTypes = propTypes;
+SearchField.propTypes = propTypes;
 
-export default SimpleSearchField;
+export default SearchField;

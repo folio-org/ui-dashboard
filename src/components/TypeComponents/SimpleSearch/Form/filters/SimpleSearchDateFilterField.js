@@ -10,6 +10,7 @@ import {
   Datepicker,
   getLocaleDateFormat,
   KeyValue,
+  InfoPopover,
   Row,
   Select,
   TextField,
@@ -19,7 +20,6 @@ import {
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
-import css from './filters.css';
 import isComparatorSpecialCase from '../../../utilities';
 
 /* This component handles both Date and DateTime components.
@@ -48,7 +48,7 @@ const SimpleSearchDateFilterField = ({
 
     // Ensure relative vs absolute is always set
     if (relOrAbsValue === undefined) {
-      change(`${name}.relativeOrAbsolute`, 'relative');
+      change(`${name}.relativeOrAbsolute`, 'today');
     }
   }, [change, name, relOrAbsValue, values]);
 
@@ -59,13 +59,17 @@ const SimpleSearchDateFilterField = ({
     return undefined;
   };
 
+  const buttonProps = {
+    'disabled': comparatorIsSpecialCase
+  };
+
   return (
     <Row>
       <Col xs={3}>
         <Field
+          autoFocus
           component={Select}
           dataOptions={selectifiedComparators}
-          defaultValue={selectifiedComparators[0]?.value}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}
           name={`${name}.comparator`}
           required
@@ -74,7 +78,18 @@ const SimpleSearchDateFilterField = ({
       </Col>
       <Col xs={9}>
         <KeyValue
-          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />}
+          label={
+            <div>
+              <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.date" />
+              <InfoPopover
+                buttonProps={buttonProps}
+                content={
+                  <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.infoPopover" />
+                }
+                placement="top"
+              />
+            </div>
+          }
         >
           <RelativeOrAbsolute
             absoluteComponent={
@@ -82,10 +97,12 @@ const SimpleSearchDateFilterField = ({
                 <Col xs={3}>
                   <Field
                     {...(dateTime ? filterComponentProps?.dateFieldProps : filterComponentProps)}
+                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.fixedDate' })}
                     component={Datepicker}
                     disabled={
                       comparatorIsSpecialCase ||
-                      relOrAbsValue === 'relative'
+                      relOrAbsValue === 'relative' ||
+                      relOrAbsValue === 'today'
                     }
                     name={dateTime ? `${name}.filterValue.date` : `${name}.filterValue`}
                     validate={dateValidator}
@@ -97,7 +114,8 @@ const SimpleSearchDateFilterField = ({
                       component={Timepicker}
                       disabled={
                         comparatorIsSpecialCase ||
-                        relOrAbsValue === 'relative'
+                        relOrAbsValue === 'relative' ||
+                        relOrAbsValue === 'today'
                       }
                       name={`${name}.filterValue.time`}
                       validate={dateValidator}
@@ -112,11 +130,13 @@ const SimpleSearchDateFilterField = ({
               <Row>
                 <Col xs={3}>
                   <Field
+                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.lengthOfTime' })}
                     component={TextField}
                     defaultValue={0}
                     disabled={
                       comparatorIsSpecialCase ||
-                      relOrAbsValue !== 'relative'
+                      relOrAbsValue === 'absolute' ||
+                      relOrAbsValue === 'today'
                     }
                     name={`${name}.offset`}
                     type="number"
@@ -129,6 +149,7 @@ const SimpleSearchDateFilterField = ({
                 </Col>
                 <Col xs={3}>
                   <Field
+                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.timeUnit" />}
                     component={Select}
                     dataOptions={[
                       {
@@ -150,38 +171,37 @@ const SimpleSearchDateFilterField = ({
                     ]}
                     disabled={
                       comparatorIsSpecialCase ||
-                      relOrAbsValue !== 'relative'
+                      relOrAbsValue === 'absolute' ||
+                      relOrAbsValue === 'today'
                     }
                     name={`${name}.timeUnit`}
                   />
                 </Col>
                 <Col xs={3}>
                   <Field
+                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeOrAfterToday" />}
                     component={Select}
                     dataOptions={[
                       {
                         value: 'add',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.add' })
+                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.afterToday' })
                       },
                       {
                         value: 'subtract',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.subtract' })
+                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeToday' })
                       }
                     ]}
                     disabled={
                       comparatorIsSpecialCase ||
-                      relOrAbsValue !== 'relative'
+                      relOrAbsValue === 'absolute' ||
+                      relOrAbsValue === 'today'
                     }
                     name={`${name}.offsetMethod`}
                   />
                 </Col>
-                <Col xs={3}>
-                  <div className={relOrAbsValue === 'absolute' ? css.absoluteSelected : null}>
-                    <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.today" />
-                  </div>
-                </Col>
               </Row>
             }
+            renderToday
             validateFields={
               dateTime ?
                 [`${name}.filterValue.date`, `${name}.filterValue.time`] :

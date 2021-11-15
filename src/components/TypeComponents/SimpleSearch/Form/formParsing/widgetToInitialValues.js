@@ -1,6 +1,7 @@
 // This must reflect any manipulations happening in submitWithTokens
 // These components accept the widget, and the passed definition
 const widgetToInitialValues = (widget, widgetDef) => {
+  // We have an existing widget, parse it and creat initialValues
   const widgetConf = JSON.parse(widget.configuration);
   // We need to deal with tokens
   const { filterColumns } = widgetConf;
@@ -15,13 +16,7 @@ const widgetToInitialValues = (widget, widgetDef) => {
         // Check for date tokens in each rule
         const tweakedRules = [...fc.rules]?.map(fcr => {
           const tokenMatch = fcr.filterValue.match(/\{\{(.*)\}\}/)?.[1];
-          if (!tokenMatch) {
-            // This rule is non tokenised - set relativeOrAbsolute to 'absolute' and leave filterValue
-            return ({
-              ...fcr,
-              relativeOrAbsolute: 'absolute'
-            });
-          }
+          if (!tokenMatch) return fcr;
           // At this point, we have a token, so we need to parse it out to work out the other fields
           const dateMatch = tokenMatch.match(/(currentDate)((#)(-?)(\d{1,3}))?((#)([d,w,M,y]))?/);
           return ({
@@ -76,7 +71,7 @@ const widgetToInitialValues = (widget, widgetDef) => {
 
   return {
     name: widget.name,
-    ...widgetConf
+    widgetConfig: widgetConf
   };
 };
 

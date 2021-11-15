@@ -7,45 +7,48 @@ import {
   Col,
   Row,
   Select,
-  TextField
+  TextField,
 } from '@folio/stripes/components';
 
 import css from './SimpleSearchResults.css';
 
-const SimpleSearchResultField = ({ resultColumns, input: { name } }) => {
+const SimpleSearchResultField = ({ resultColumns, input }) => {
   const { change } = useForm();
 
   // Set up result columns to populate result col select
   const selectifiedResultColumns = resultColumns.map(rc => ({ value: rc.name, label: rc.label || rc.name }));
-
   return (
-    <Row
-      className={css.innerRow}
-    >
+    <Row className={css.innerRow}>
       <Col xs={6}>
         <Field
-          component={Select}
-          dataOptions={selectifiedResultColumns}
-          defaultValue={selectifiedResultColumns[0].value}
-          label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
-          name={`${name}.name`}
-          onChange={
-            e => {
-              change(`${name}.name`, e.target.value);
-
-              // Keep track of which result column has been selected
-              const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
-              change(`${name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
-            }
-          }
-        />
+          name={`${input.name}.name`}
+          validate={(value, allValues) => {
+            return allValues?.resultColumns.filter(({ name }) => name === value).length > 1 ? <FormattedMessage id="ui-dashboard.error.duplicateColumn" /> : undefined;
+          }}
+        >
+          {({ input: inputVal, meta }) => {
+            return (
+              <Select
+                autoFocus
+                {...inputVal}
+                dataOptions={selectifiedResultColumns}
+                error={meta && meta.error}
+                label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.column" />}
+                onChange={e => {
+                  const selectedResultColumn = selectifiedResultColumns.find(rc => rc.value === e.target.value);
+                  change(`${input.name}.name`, e.target.value);
+                  change(`${input.name}.label`, selectedResultColumn?.label || selectedResultColumn?.name);
+                }}
+              />
+            );
+          }}
+        </Field>
       </Col>
       <Col xs={6}>
         <Field
           component={TextField}
-          defaultValue={selectifiedResultColumns[0].label}
           label={<FormattedMessage id="ui-dashboard.simpleSearchForm.results.label" />}
-          name={`${name}.label`}
+          name={`${input.name}.label`}
         />
       </Col>
     </Row>

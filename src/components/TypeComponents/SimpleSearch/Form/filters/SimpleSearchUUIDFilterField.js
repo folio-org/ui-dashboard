@@ -62,9 +62,9 @@ const SimpleSearchUUIDFilterField = ({
           <Col xs={6}>
             <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
               <Field
+                autoFocus
                 component={Select}
                 dataOptions={selectifiedComparators}
-                defaultValue={selectifiedComparators[0]?.value}
                 name={`${name}.comparator`}
                 required
                 validate={requiredValidator}
@@ -120,9 +120,9 @@ const SimpleSearchUUIDFilterField = ({
         <Col xs={6}>
           <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
             <Field
+              autoFocus
               component={Select}
               dataOptions={selectifiedComparators}
-              defaultValue={selectifiedComparators[0]?.value}
               name={`${name}.comparator`}
               required
               validate={requiredValidator}

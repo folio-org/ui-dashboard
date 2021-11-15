@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { ErrorBanner, ErrorBoundary } from '../../../ErrorComponents';
 import getDefaultRenderFunction from './getDefaultRenderFunction';
 /*
   Takes in the fetched data, and returns an object of the shape:
@@ -31,6 +34,7 @@ const capitaliseText = (str) => {
 };
 
 const simpleSearchColumnParser = ({
+  onError,
   widgetConf: {
     resultColumns = []
   } = {},
@@ -56,8 +60,37 @@ const simpleSearchColumnParser = ({
     // NOTE this is column-wide, not cell wide.
     // That would need to happen in the SimpleTable component.
     const render = getDefaultRenderFunction(drc, resource);
+
     // Pass render function entire object, not just cell value
-    returnColumn.Cell = ({ row: { original } }) => render(original);
+    returnColumn.Cell = ({ row: { original } }) => {
+      try {
+        // If rendered component throws error, this will catch it.
+        return (
+          <ErrorBoundary
+            onError={onError}
+          >
+            <div>
+              {render(original)}
+            </div>
+          </ErrorBoundary>
+        );
+      } catch (e) {
+        // If render function itself throws error, this will catch it.
+        return (
+          <ErrorBanner
+            viewErrorHandler={
+              () => onError(e.message, e.stack)
+            }
+          />
+        );
+      }
+    };
+
+    returnColumn.Cell.propTypes = {
+      row: PropTypes.shape({
+        original: PropTypes.object
+      }).isRequired,
+    };
 
     return returnColumn;
   });

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-
-import { Field, useFormState, useForm } from 'react-final-form';
+import { Field, Form, useFormState, useForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 
 import {
   AppIcon
@@ -46,25 +46,28 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    initialValues,
     name,
     params,
     selectedDefinition,
     widgetDefinitions = [],
     WidgetFormComponent
   } = {},
-  handlers:{
+  handlers: {
     onClose,
     onSubmit,
     setSelectedDef
   },
   pristine,
-  submitting,
+  submitting
 }) => {
-  const { dirtyFields, values } = useFormState();
   const { change } = useForm();
+  const { values } = useFormState();
 
   // Simple true/false to show/hide modal and then wipe form
   const [confirmWipeFormModalOpen, setConfirmWipeFormModalOpen] = useState(false);
+  const [innerFormValidState, setInnerFormValidState] = useState();
+
   // Need to keep track of "next" widgetDef index for use in the modal.
   // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
@@ -80,6 +83,11 @@ const WidgetForm = ({
       }
     },
   ];
+
+  const [widgetConfigValues, setWidgetConfigvalues] = useState();
+  useEffect(() => {
+    change('widgetConfig', widgetConfigValues);
+  }, [change, widgetConfigValues]);
 
   const renderPaneFooter = () => {
     return (
@@ -111,17 +119,6 @@ const WidgetForm = ({
   };
 
   const changeDefinitionAndWipeForm = () => {
-    /*
-     * This should control wiping the form when def changes,
-     * so it runs through all fields that aren't name or definition and wipes them
-    */
-    const fieldsToNotWipe = ['definition', 'name'];
-    Object.keys(values).forEach(valueKey => {
-      if (!fieldsToNotWipe.includes(valueKey)) {
-        change(valueKey, undefined);
-      }
-    });
-
     change('definition', newDef);
     setSelectedDef(widgetDefinitions[newDef]);
     setNewDef();
@@ -161,6 +158,7 @@ const WidgetForm = ({
                   label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
                 >
                   <Field
+                    autoFocus
                     component={TextField}
                     maxLength={255}
                     name="name"
@@ -180,33 +178,52 @@ const WidgetForm = ({
                     disabled={!!params.widgetId}
                     name="definition"
                     onChange={e => {
-                    // Other than the name/def, are any of the fields dirty?
-                    delete dirtyFields.name;
-                    delete dirtyFields.definition;
-                    const dirtyFieldsCount = Object.keys(dirtyFields)?.length;
-
-                    // If we have dirty fields, set up confirmation modal
-                    if (dirtyFieldsCount > 0) {
-                      setNewDef(e.target.value);
-                      setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-                    } else {
-                      change('definition', e.target.value);
-                      setSelectedDef(widgetDefinitions[e.target.value]);
-                    }
-                  }}
+                      // If we already have a definition, open confirmation modal
+                      if (values.definition) {
+                        setNewDef(e.target.value);
+                        setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+                      } else {
+                        change('definition', e.target.value);
+                        setSelectedDef(widgetDefinitions[e.target.value]);
+                      }
+                    }}
                     required
                     validate={requiredValidator}
                   />
                 </KeyValue>
               </Col>
             </Row>
-            {selectedDefinition &&
-            // Get specific form component for the selected widgetDefinition
-            <WidgetFormComponent
-              isEdit={!!params.widgetId}
-              specificWidgetDefinition={selectedDefinition}
-            />
-          }
+            {selectedDefinition && WidgetFormComponent &&
+              <Field
+                name="widgetConfig"
+                render={() => (
+                  /* Keeping this as a separate form allows us to deal with incoming WidgetForms as part of configuration only,
+                   * which is useful to stop form value injection in the case we accept entire forms through the Registry
+                   * It also means the changing initialValues only reinitialises the inner form
+                   */
+                  <Form
+                    initialValues={initialValues.widgetConfig}
+                    mutators={arrayMutators}
+                    navigationCheck
+                    onSubmit={onSubmit}
+                    render={({ form: { getState } }) => {
+                      const { values: innerFormValues, valid } = getState();
+                      setWidgetConfigvalues(innerFormValues);
+                      setInnerFormValidState(valid);
+                      return (
+                        /* Get specific form component for the selected widgetDefinition */
+                        <WidgetFormComponent
+                          isEdit={!!params.widgetId}
+                          specificWidgetDefinition={selectedDefinition}
+                        />
+                      );
+                    }}
+                    subscription={{ values: true }}
+                  />
+                )}
+                validate={() => !innerFormValidState}
+              />
+            }
           </Pane>
         </Paneset>
         <ConfirmationModal
@@ -217,13 +234,13 @@ const WidgetForm = ({
           id="wipe-widget-form-confirmation"
           message={<FormattedMessage id="ui-dashboard.widgetForm.changeDefinitionWarningModal.message" />}
           onCancel={() => {
-          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-          setNewDef();
-        }}
+            setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+            setNewDef();
+          }}
           onConfirm={() => {
-          changeDefinitionAndWipeForm();
-          setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
-        }}
+            changeDefinitionAndWipeForm();
+            setConfirmWipeFormModalOpen(!confirmWipeFormModalOpen);
+          }}
           open={confirmWipeFormModalOpen}
         />
       </HasCommand>

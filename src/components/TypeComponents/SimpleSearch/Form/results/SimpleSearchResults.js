@@ -11,12 +11,13 @@ import {
   Col,
   Headline,
   Icon,
+  IconButton,
   MessageBanner,
   Row,
-  TextField
+  TextField,
+  Layout
 } from '@folio/stripes/components';
 
-import RowWithDelete from '../../../../RowWithDelete';
 import SimpleSearchResultField from './SimpleSearchResultField';
 import SimpleSearchSort from '../sort';
 import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
@@ -37,22 +38,30 @@ const SimpleSearchResults = ({
   const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
     return (
       <div className={css.resultLine}>
-        <RowWithDelete
-          key={`simple-search-result-array-${fieldName}`}
-          ariaLabel={
-            intl.formatMessage(
-              { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
-              { index: index + 1 }
-            )
-          }
-          onDelete={() => fields.remove(index)}
-        >
-          <Field
-            component={SimpleSearchResultField}
-            name={fieldName}
-            resultColumns={resultColumns}
-          />
-        </RowWithDelete>
+        <Row key={`simple-search-result-array-${fieldName}`}>
+          <Col xs={11}>
+            <Field
+              component={SimpleSearchResultField}
+              index={index}
+              name={fieldName}
+              resultColumns={resultColumns}
+            />
+          </Col>
+          <Col xs={1}>
+            <Layout className="marginTopLabelSpacer">
+              <IconButton
+                ariaLabel={
+                  intl.formatMessage(
+                    { id: 'ui-dashboard.simpleSearchForm.results.resultDeleteAria' },
+                    { index: index + 1 }
+                  )
+                }
+                icon="trash"
+                onClick={() => fields.remove(index)}
+              />
+            </Layout>
+          </Col>
+        </Row>
       </div>
     );
   };
@@ -65,7 +74,6 @@ const SimpleSearchResults = ({
       <Row>
         <Col xs={numberOfRows.configurable ? 3 : 0}>
           <Field
-            defaultValue={numberOfRows.defValue}
             name="configurableProperties.numberOfRows"
             type="number"
           >
@@ -94,7 +102,7 @@ const SimpleSearchResults = ({
       </Row>
       <FieldArray
         name="resultColumns"
-        render={({ fields, meta: { valid } }) => {
+        render={({ fields, meta: { error, valid } }) => {
           return (
             <>
               <Headline margin="x-small" size="medium" tag="h2">
@@ -105,12 +113,13 @@ const SimpleSearchResults = ({
                 renderHandle={() => (
                   <Icon
                     icon="drag-drop"
+                    iconRootClass={css.dragHandle}
                   />
                 )}
               >
                 {renderResultField}
               </DragAndDropFieldArray>
-              {!valid &&
+              {(!valid && error === 'this should not display') &&
                 <MessageBanner
                   className={css.warningBanner}
                   tabIndex={0}
@@ -119,7 +128,13 @@ const SimpleSearchResults = ({
                   <FormattedMessage id="ui-dashboard.simpleSearchForm.results.minimumWarning" />
                 </MessageBanner>
               }
-              <Button id="simple-search-form-add-result-column-button" onClick={() => fields.push({})}>
+              <Button
+                id="simple-search-form-add-result-column-button"
+                onClick={() => fields.push({
+                  name: resultColumns?.[0]?.name,
+                  label: resultColumns?.[0]?.label ?? resultColumns?.[0]?.name
+                })}
+              >
                 <FormattedMessage id="ui-dashboard.simpleSearchForm.results.addResult" />
               </Button>
             </>

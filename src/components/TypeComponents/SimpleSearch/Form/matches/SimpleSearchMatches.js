@@ -8,12 +8,11 @@ import {
   Checkbox
 } from '@folio/stripes/components';
 
-import SimpleSearchField from '../../../../SimpleSearchField';
+import SearchField from '../../../../SearchField';
 import css from './SimpleSearchMatches.css';
 
 const SimpleSearchMatches = ({
   data: {
-    isEdit,
     matches
   },
   id
@@ -24,7 +23,6 @@ const SimpleSearchMatches = ({
   }
 
   const {
-    defaultTerm,
     columns,
     termConfigurable
   } = matches;
@@ -34,7 +32,6 @@ const SimpleSearchMatches = ({
     return (
       <>
         <Field
-          defaultValue={defaultTerm}
           name="matches.term"
           render={() => null}
         />
@@ -44,7 +41,6 @@ const SimpleSearchMatches = ({
               key={`matches.matches[${matchCol.name}]`}
             >
               <Field
-                defaultValue={matchCol.default}
                 name={`matches.matches[${matchCol.name}]`}
                 render={() => null}
               />
@@ -61,8 +57,7 @@ const SimpleSearchMatches = ({
       label={<FormattedMessage id="ui-dashboard.simpleSearchForm.matches" />}
     >
       <Field
-        component={SimpleSearchField}
-        defaultValue={isEdit ? undefined : defaultTerm}
+        component={SearchField}
         name="matches.term"
       />
       <div className={css.checkboxContainer}>
@@ -74,7 +69,6 @@ const SimpleSearchMatches = ({
             >
               <Field
                 component={Checkbox}
-                defaultValue={matchCol.default}
                 label={matchCol.label ?? matchCol.name}
                 name={`matches.matches[${matchCol.name}]`}
                 type="checkbox"

@@ -12,3 +12,7 @@
 .warningBanner {
   margin-bottom: var(--gutter-static-two-thirds);
 }
+
+.dragHandle {
+  margin-top: 8px;
+}

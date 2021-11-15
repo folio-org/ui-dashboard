@@ -5,4 +5,7 @@ buildNPM {
   runSonarqube = true
   runTest = true
   runTestOptions = ''
+  runScripts = [
+      ['formatjs-compile': ''],
+    ]
 }

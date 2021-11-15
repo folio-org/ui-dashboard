@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useLocation } from 'react-router-dom';
 
 import {
   Button,
@@ -20,23 +21,35 @@ const WidgetHeader = ({
   widgetId,
 }) => {
   const intl = useIntl();
+  let widgetFocusRef = useRef(null);
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (widgetId === state && widgetFocusRef.current) {
+      widgetFocusRef.current.focus();
+    }
+  }, [state, widgetId]);
+
   // eslint-disable-next-line react/prop-types
-  const renderActionMenuToggle = ({ onToggle, triggerRef, keyHandler, ariaProps, getTriggerProps }) => (
-    <IconButton
-      ref={triggerRef}
-      aria-label={
-        intl.formatMessage(
-          { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
-          { widgetName: name }
-        )
-      }
-      icon="ellipsis"
-      onClick={onToggle}
-      onKeyDown={keyHandler}
-      {...getTriggerProps()}
-      {...ariaProps}
-    />
-  );
+  const renderActionMenuToggle = ({ onToggle, keyHandler, triggerRef, ariaProps, getTriggerProps }) => {
+    widgetFocusRef = triggerRef;
+    return (
+      <IconButton
+        ref={widgetFocusRef}
+        aria-label={
+          intl.formatMessage(
+            { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
+            { widgetName: name }
+          )
+        }
+        icon="ellipsis"
+        onClick={onToggle}
+        onKeyDown={keyHandler}
+        {...getTriggerProps()}
+        {...ariaProps}
+      />
+    );
+  };
 
   // eslint-disable-next-line react/prop-types
   const renderActionMenuContent = () => (

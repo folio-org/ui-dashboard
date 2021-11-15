@@ -1,6 +1,6 @@
 {
   "name": "@folio/dashboard",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Dashboard app for configurable FOLIO widgets",
   "main": "src/index.js",
   "repository": "",
@@ -13,7 +13,8 @@
     "build": "stripes build --output ./output",
     "lint": "eslint .",
     "test": "yarn run test:jest",
-    "test:jest": "jest --ci --coverage"
+    "test:jest": "jest --ci --coverage",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-dashboard ./translations/ui-dashboard/compiled"
   },
   "stripes": {
     "actsAs": [
@@ -75,8 +76,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.2.0",
+    "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.3.0",
+    "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
@@ -97,17 +99,17 @@
     "miragejs": "^0.1.40",
     "mocha": "^8.0.1",
     "moment": "^2.22.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.8.1",
     "react-query": "^3.9.0",
     "react-router-dom": "^5.2.0",
     "sinon": "^9.0.2"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^2.0.0",
-    "@folio/stripes-erm-components": "^5.1.0",
-    "@folio/stripes-registry": "^1.0.0",
+    "@folio/handler-stripes-registry": "^1.0.0",
+    "@folio/react-intl-safe-html": "^3.1.0",
+    "@folio/stripes-erm-components": "^6.0.0",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form": "^4.19.0",
@@ -121,10 +123,10 @@
     "react-table": "^7.6.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.2.0",
+    "@folio/stripes": "^7.0.0",
     "moment": "^2.22.2",
-    "react": "*",
-    "react-dom": "*",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.8.1",
     "react-query": "^3.9.0",
     "react-router-dom": "^5.2.0"

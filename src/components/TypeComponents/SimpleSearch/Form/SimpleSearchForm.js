@@ -18,7 +18,6 @@ import SimpleSearchMatches from './matches/SimpleSearchMatches';
 import SimpleSearchConfigurableProperties from './configurableProperties/SimpleSearchConfigurableProperties';
 
 const SimpleSearchForm = ({
-  isEdit,
   specificWidgetDefinition
 }) => {
   const {
@@ -70,9 +69,8 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchMatches
               data={{
-            isEdit,
-            matches,
-          }}
+                matches,
+              }}
               id="simple-search-form-matches"
             />
             <FieldArray
@@ -80,8 +78,8 @@ const SimpleSearchForm = ({
               addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
               component={SimpleSearchFilterArray}
               data={{
-            filterColumns
-          }}
+                filterColumns
+              }}
               deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
               headerId="ui-dashboard.simpleSearchForm.filters"
               id="simple-search-form-filters"
@@ -89,10 +87,10 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchResults
               data={{
-            resultColumns,
-            configurableProperties,
-            sortColumns
-          }}
+                resultColumns,
+                configurableProperties,
+                sortColumns
+              }}
               id="simple-search-form-results"
             />
           </AccordionSet>
@@ -103,7 +101,6 @@ const SimpleSearchForm = ({
 };
 
 SimpleSearchForm.propTypes = {
-  isEdit: PropTypes.bool,
   specificWidgetDefinition: PropTypes.object
 };
 

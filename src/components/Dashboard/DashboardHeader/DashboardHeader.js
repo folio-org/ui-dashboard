@@ -11,7 +11,7 @@ import css from './DashboardHeader.css';
 
 const propTypes = {
   onCreate: PropTypes.func.isRequired,
-  onReorder: PropTypes.func.isRequired
+  onReorder: PropTypes.func
 };
 
 export default function DashboardHeader({ onCreate, onReorder }) {
@@ -26,6 +26,7 @@ export default function DashboardHeader({ onCreate, onReorder }) {
       </Button>
       <Button
         buttonStyle="dropdownItem"
+        disabled={!onReorder}
         id="clickable-reorderdashboard"
         onClick={onReorder}
       >
