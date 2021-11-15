@@ -171,5 +171,8 @@
   "simpleSearch.widget.noResultsFound": "No results found",
   "simpleSearch.contentError": "Content cannot be displayed. ",
   "simpleSearch.errorDetails": "Error details",
-  "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:"
+  "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:",
+  "shortcut.new": "Create a new widget",
+  "shortcut.edit": "Edit a widget",
+  "shortcut.save": "Save form changes"
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Switch } from 'react-router-dom';
 import { AppContextMenu, Route } from '@folio/stripes/core';
 
@@ -29,6 +29,7 @@ import WidgetEditRoute from './routes/WidgetEditRoute';
 import Settings from './settings';
 
 const App = (appProps) => {
+  const intl = useIntl();
   const { actAs, history, location, match: { path } } = appProps;
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
 
@@ -42,9 +43,9 @@ const App = (appProps) => {
 
   const renamedShortcuts = renameShortcutLabels(appSpecificShortcuts,
     [
-      { 'shortcut': 'new', 'label': 'Create a new widget' },
-      { 'shortcut': 'edit', 'label': 'Edit a widget' },
-      { 'shortcut': 'save', 'label': 'Save form changes' }
+      { 'shortcut': 'new', 'label': intl.formatMessage({ id: 'ui-dashboard.shortcut.new' }) },
+      { 'shortcut': 'edit', 'label': intl.formatMessage({ id: 'ui-dashboard.shortcut.edit' }) },
+      { 'shortcut': 'save', 'label': intl.formatMessage({ id: 'ui-dashboard.shortcut.save' }) },
     ]);
 
   const goToNew = () => {
