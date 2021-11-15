@@ -11,12 +11,11 @@ import {
   NavListItem,
   NavListSection,
   checkScope,
+  importShortcuts,
+  renameShortcutLabels
 } from '@folio/stripes/components';
 
 import PropTypes from 'prop-types';
-
-import { ermDefaultKeyboardShortcuts } from '@folio/stripes-erm-components';
-import appKeyboardShortcuts from './appKeyboardShortcuts';
 
 // ERM-1735: took out the lazy load, causing errors with keyboard shortcuts / stripes-react-hotkeys,
 // see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
@@ -39,7 +38,14 @@ const App = (appProps) => {
     );
   }
 
-  const commands = [...appKeyboardShortcuts, ...ermDefaultKeyboardShortcuts];
+  const appSpecificShortcuts = importShortcuts(['new', 'edit', 'save', 'expandAllSections', 'collapseAllSections', 'expandOrCollapseAccordion', 'openShortcutModal']);
+
+  const renamedShortcuts = renameShortcutLabels(appSpecificShortcuts,
+    [
+      { 'shortcut': 'new', 'label': 'Create a new widget' },
+      { 'shortcut': 'edit', 'label': 'Edit a widget' },
+      { 'shortcut': 'save', 'label': 'Save form changes' }
+    ]);
 
   const goToNew = () => {
     history.push(`${location.pathname}/create`);
@@ -58,7 +64,7 @@ const App = (appProps) => {
 
   return (
     <>
-      <CommandList commands={commands}>
+      <CommandList commands={renamedShortcuts}>
         <HasCommand
           commands={shortcuts}
           isWithinScope={checkScope}
@@ -89,7 +95,7 @@ const App = (appProps) => {
       </CommandList>
       {isShortcutsModalOpen && (
         <KeyboardShortcutsModal
-          allCommands={commands}
+          allCommands={renamedShortcuts}
           onClose={() => setIsShortcutsModalOpen(false)}
         />
       )}
