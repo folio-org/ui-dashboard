@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import moment from 'moment';
+
 import {
   Col,
   Datepicker,
@@ -19,8 +21,14 @@ const RADIO_VALUE_DATE = 'date';
 const RADIO_VALUE_TODAY = 'today';
 const RADIO_VALUE_OFFSET = 'offset';
 
-const TokenDatePicker = ({ input, meta, onChange }) => {
+const TokenDatePicker = ({
+  backendDateStandard="YYYY-MM-DD",
+  input,
+  meta,
+  onChange
+}) => {
   //TODO handle backendDateStandard and non valid date...
+  // Need to check if getLocaleDateFormat matches the value
   const intl = useIntl();
 
   const hiddenInput = useRef(null);
@@ -31,8 +39,9 @@ const TokenDatePicker = ({ input, meta, onChange }) => {
   // Keep track of which set of fields we're targeting
   const [radioValue, setRadioValue] = useState('');
 
-  // Keep track of date field
+  // Keep track of what's entered into the date field and also what we'll send to the backend
   const [dateValue, setDateValue] = useState('');
+  const [backendDateValue, setBackendDateValue] = useState('');
 
   // Keep track of relative offset fields
   const [offset, setOffset] = useState(0);
@@ -68,9 +77,19 @@ const TokenDatePicker = ({ input, meta, onChange }) => {
   useEffect(() => {
     const relativeToken = tokenise('date', { offset, offsetSign, timeUnit });
     const todayToken = tokenise('date');
-    setValueIfRadioMatch(RADIO_VALUE_DATE, dateValue);
-    setValueIfRadioMatch(RADIO_VALUE_TODAY, todayToken);
-    setValueIfRadioMatch(RADIO_VALUE_OFFSET, relativeToken);
+
+    // TODO if not valid, ensure field not set
+    if (offsetValidation(offset)) {
+      nativeChangeField(hiddenInput, false, "ERROR_INVALID_OFFSET");
+      setOutputValue("ERROR_INVALID_OFFSET");
+    } else if (dateValidation(dateValue)) {
+      nativeChangeField(hiddenInput, false, "ERROR_INVALID_DATE_FIELD");
+      setOutputValue("ERROR_INVALID_DATE_FIELD");
+    } else {
+      setValueIfRadioMatch(RADIO_VALUE_DATE, dateValue);
+      setValueIfRadioMatch(RADIO_VALUE_TODAY, todayToken);
+      setValueIfRadioMatch(RADIO_VALUE_OFFSET, relativeToken);
+    }
   }, [
     dateValue,
     offset,
@@ -110,18 +129,32 @@ const TokenDatePicker = ({ input, meta, onChange }) => {
     }
   };
 
-  const offsetValid = (value) => {
+  const offsetValidation = (value) => {
     const valueInt = parseInt(value, 10);
     if (radioValue === RADIO_VALUE_OFFSET && (valueInt < 0 || valueInt > 999)) {
-      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetValidation" />;
+      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetValidationation" />;
     }
 
     return undefined;
   };
 
-  const dateValid = (value) => {
+  const dateValidation = (value) => {
+    const acceptedFormat = getLocaleDateFormat({ intl });
+    const parsedDate = moment(value, acceptedFormat);
+    console.log("MOMENT: %o", parsedDate)
+
     if (radioValue === RADIO_VALUE_DATE && !value) {
       return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.invalidDate" values={{ dateFormat: getLocaleDateFormat({ intl }) }} />;
+    }
+
+    if (radioValue === RADIO_VALUE_DATE &&
+      (
+        !parsedDate?._isValid ||
+        parsedDate?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
+      )
+    ) {
+      // TODO proper translation
+      return "NOT A VALID DATE OF FORM: " + acceptedFormat;
     }
     return undefined;
   };
@@ -149,7 +182,7 @@ const TokenDatePicker = ({ input, meta, onChange }) => {
         </Col>
         <Col xs={3}>
           <TextField
-            error={offsetValid(offset)}
+            error={offsetValidation(offset)}
             onChange={handleOffsetChange}
             type="number"
             validationEnabled
@@ -208,8 +241,7 @@ const TokenDatePicker = ({ input, meta, onChange }) => {
         </Col>
         <Col xs={3}>
           <Datepicker
-            backendDateStandard="YYYY-MM-DD"
-            error={dateValid(dateValue)}
+            error={dateValidation(dateValue)}
             onChange={handleDateChange}
             timeZone="UTC"
             usePortal
