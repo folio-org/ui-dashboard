@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import moment from 'moment';
@@ -21,13 +23,16 @@ const RADIO_VALUE_DATE = 'date';
 const RADIO_VALUE_TODAY = 'today';
 const RADIO_VALUE_OFFSET = 'offset';
 
+const ERROR_INVALID_DATE_FIELD = 'ERROR_INVALID_DATE_FIELD';
+const ERROR_INVALID_OFFSET = 'ERROR_INVALID_OFFSET';
+
 const TokenDatePicker = ({
-  backendDateStandard="YYYY-MM-DD",
+  backendDateStandard = 'YYYY-MM-DD',
   input,
   meta,
   onChange
 }) => {
-  //TODO handle backendDateStandard and non valid date...
+  // TODO handle backendDateStandard
   // Need to check if getLocaleDateFormat matches the value
   const intl = useIntl();
 
@@ -70,6 +75,31 @@ const TokenDatePicker = ({
     }
   }, [outputValue, radioValue]);
 
+
+  const offsetValidation = useCallback((value) => {
+    const valueInt = parseInt(value, 10);
+    if (radioValue === RADIO_VALUE_OFFSET && (valueInt < 0 || valueInt > 999)) {
+      return <FormattedMessage id="ui-dashboard.tokenDatePicker.validation.invalidOffset" />;
+    }
+
+    return undefined;
+  }, [radioValue]);
+
+  const dateValidation = useCallback((value) => {
+    const acceptedFormat = getLocaleDateFormat({ intl });
+    const parsedDate = moment(value, acceptedFormat);
+
+    if (radioValue === RADIO_VALUE_DATE && (
+      !value ||
+      !parsedDate?._isValid ||
+      parsedDate?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
+    )) {
+      return <FormattedMessage id="ui-dashboard.tokenDatePicker.validation.invalidDate" values={{ dateFormat: getLocaleDateFormat({ intl }) }} />;
+    }
+
+    return undefined;
+  }, [intl, radioValue]);
+
   /* When internal values change, update input value
    * NativeFieldChange allows us to programatically set
    * the hidden input field and fire an onChange
@@ -80,20 +110,22 @@ const TokenDatePicker = ({
 
     // TODO if not valid, ensure field not set
     if (offsetValidation(offset)) {
-      nativeChangeField(hiddenInput, false, "ERROR_INVALID_OFFSET");
-      setOutputValue("ERROR_INVALID_OFFSET");
+      nativeChangeField(hiddenInput, false, ERROR_INVALID_OFFSET);
+      setOutputValue(ERROR_INVALID_OFFSET);
     } else if (dateValidation(dateValue)) {
-      nativeChangeField(hiddenInput, false, "ERROR_INVALID_DATE_FIELD");
-      setOutputValue("ERROR_INVALID_DATE_FIELD");
+      nativeChangeField(hiddenInput, false, ERROR_INVALID_DATE_FIELD);
+      setOutputValue(ERROR_INVALID_DATE_FIELD);
     } else {
       setValueIfRadioMatch(RADIO_VALUE_DATE, dateValue);
       setValueIfRadioMatch(RADIO_VALUE_TODAY, todayToken);
       setValueIfRadioMatch(RADIO_VALUE_OFFSET, relativeToken);
     }
   }, [
+    dateValidation,
     dateValue,
     offset,
     offsetSign,
+    offsetValidation,
     outputValue,
     radioValue,
     setValueIfRadioMatch,
@@ -129,43 +161,13 @@ const TokenDatePicker = ({
     }
   };
 
-  const offsetValidation = (value) => {
-    const valueInt = parseInt(value, 10);
-    if (radioValue === RADIO_VALUE_OFFSET && (valueInt < 0 || valueInt > 999)) {
-      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetValidationation" />;
-    }
-
-    return undefined;
-  };
-
-  const dateValidation = (value) => {
-    const acceptedFormat = getLocaleDateFormat({ intl });
-    const parsedDate = moment(value, acceptedFormat);
-    console.log("MOMENT: %o", parsedDate)
-
-    if (radioValue === RADIO_VALUE_DATE && !value) {
-      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.invalidDate" values={{ dateFormat: getLocaleDateFormat({ intl }) }} />;
-    }
-
-    if (radioValue === RADIO_VALUE_DATE &&
-      (
-        !parsedDate?._isValid ||
-        parsedDate?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
-      )
-    ) {
-      // TODO proper translation
-      return "NOT A VALID DATE OF FORM: " + acceptedFormat;
-    }
-    return undefined;
-  };
-
   return (
     <>
       <Row>
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_TODAY}
-            label="today"
+            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
             onChange={handleRadioChange}
             value={RADIO_VALUE_TODAY}
           />
@@ -175,7 +177,7 @@ const TokenDatePicker = ({
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_OFFSET}
-            label=" "
+            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.calculatedDate" />}
             onChange={handleRadioChange}
             value={RADIO_VALUE_OFFSET}
           />
@@ -234,7 +236,7 @@ const TokenDatePicker = ({
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_DATE}
-            label="date"
+            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.fixedDate" />}
             onChange={handleRadioChange}
             value={RADIO_VALUE_DATE}
           />
@@ -260,6 +262,13 @@ const TokenDatePicker = ({
       />
     </>
   );
+};
+
+TokenDatePicker.propTypes = {
+  backendDateStandard: PropTypes.string,
+  input: PropTypes.object,
+  meta: PropTypes.object,
+  onChange: PropTypes.func
 };
 
 export default TokenDatePicker;
