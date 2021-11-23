@@ -195,14 +195,14 @@ const TokenDatePicker = ({
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_OFFSET}
-            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.calculatedDate" />}
+            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
             onChange={handleRadioChange}
             value={RADIO_VALUE_OFFSET}
           />
         </Col>
         <Col xs={3}>
           <TextField
-            error={offsetValidation(offset)}
+            error={offsetValidation(offset, radioValue)}
             marginBottom0
             onChange={handleOffsetChange}
             type="number"
@@ -265,7 +265,7 @@ const TokenDatePicker = ({
         <Col xs={3}>
           <Datepicker
             backendDateStandard={backendDateStandard}
-            error={dateValidation(dateValue)}
+            error={dateValidation(dateValue, radioValue, dateMoment, acceptedFormat)}
             onChange={handleDateChange}
             timeZone="UTC"
             usePortal

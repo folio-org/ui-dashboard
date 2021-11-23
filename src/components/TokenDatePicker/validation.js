@@ -22,7 +22,16 @@ const dateValidation = (value, radioValue, dateMoment, dateFormat) => {
   return undefined;
 };
 
+const errorValidation = (value) => {
+  if (value?.match(/ERROR_/g)) {
+    return "this shouldn't be happening";
+  }
+
+  return undefined;
+};
+
 export {
-  offsetValidation,
-  dateValidation
+  dateValidation,
+  errorValidation,
+  offsetValidation
 };

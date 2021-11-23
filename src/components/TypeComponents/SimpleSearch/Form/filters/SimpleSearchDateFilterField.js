@@ -7,19 +7,19 @@ import { get } from 'lodash';
 
 import {
   Col,
-  Datepicker,
   getLocaleDateFormat,
   KeyValue,
   InfoPopover,
   Row,
   Select,
-  TextField,
-  Timepicker
+  TextField
 } from '@folio/stripes/components';
 
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
+import { TokenDatePicker, errorValidation } from '../../../../TokenDatePicker';
+
 import isComparatorSpecialCase from '../../../utilities';
 
 /* This component handles both Date and DateTime components.
@@ -91,122 +91,10 @@ const SimpleSearchDateFilterField = ({
             </div>
           }
         >
-          <RelativeOrAbsolute
-            absoluteComponent={
-              <Row>
-                <Col xs={3}>
-                  <Field
-                    {...(dateTime ? filterComponentProps?.dateFieldProps : filterComponentProps)}
-                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.fixedDate' })}
-                    component={Datepicker}
-                    disabled={
-                      comparatorIsSpecialCase ||
-                      relOrAbsValue === 'relative' ||
-                      relOrAbsValue === 'today'
-                    }
-                    name={dateTime ? `${name}.filterValue.date` : `${name}.filterValue`}
-                    validate={dateValidator}
-                  />
-                </Col>
-                {dateTime &&
-                  <Col xs={3}>
-                    <Field
-                      component={Timepicker}
-                      disabled={
-                        comparatorIsSpecialCase ||
-                        relOrAbsValue === 'relative' ||
-                        relOrAbsValue === 'today'
-                      }
-                      name={`${name}.filterValue.time`}
-                      validate={dateValidator}
-                    />
-                  </Col>
-                }
-              </Row>
-            }
-            disabled={comparatorIsSpecialCase}
-            name={name}
-            relativeComponent={
-              <Row>
-                <Col xs={3}>
-                  <Field
-                    ariaLabel={intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.lengthOfTime' })}
-                    component={TextField}
-                    defaultValue={0}
-                    disabled={
-                      comparatorIsSpecialCase ||
-                      relOrAbsValue === 'absolute' ||
-                      relOrAbsValue === 'today'
-                    }
-                    name={`${name}.offset`}
-                    type="number"
-                    validate={value => (
-                      parseInt(value, 10) < 0 || parseInt(value, 10) > 999 ?
-                        <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.offsetValidation" /> :
-                        undefined
-                    )}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <Field
-                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.timeUnit" />}
-                    component={Select}
-                    dataOptions={[
-                      {
-                        value: 'd',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.days' })
-                      },
-                      {
-                        value: 'w',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.weeks' })
-                      },
-                      {
-                        value: 'M',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.months' })
-                      },
-                      {
-                        value: 'y',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.years' })
-                      }
-                    ]}
-                    disabled={
-                      comparatorIsSpecialCase ||
-                      relOrAbsValue === 'absolute' ||
-                      relOrAbsValue === 'today'
-                    }
-                    name={`${name}.timeUnit`}
-                  />
-                </Col>
-                <Col xs={3}>
-                  <Field
-                    aria-label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeOrAfterToday" />}
-                    component={Select}
-                    dataOptions={[
-                      {
-                        value: 'add',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.afterToday' })
-                      },
-                      {
-                        value: 'subtract',
-                        label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeToday' })
-                      }
-                    ]}
-                    disabled={
-                      comparatorIsSpecialCase ||
-                      relOrAbsValue === 'absolute' ||
-                      relOrAbsValue === 'today'
-                    }
-                    name={`${name}.offsetMethod`}
-                  />
-                </Col>
-              </Row>
-            }
-            renderToday
-            validateFields={
-              dateTime ?
-                [`${name}.filterValue.date`, `${name}.filterValue.time`] :
-                [`${name}.filterValue`]
-            }
+          <Field
+            component={TokenDatePicker}
+            name="date"
+            validate={errorValidation}
           />
         </KeyValue>
       </Col>
