@@ -33,7 +33,13 @@ const detokenise = (token) => {
   let type = '';
   const params = {};
 
-  const tokenMatch = token.toString().match(/\{\{(.*)\}\}/)?.[1];
+  const tokenMatch = token?.toString()?.match(/\{\{(.*)\}\}/)?.[1];
+  if (!tokenMatch) {
+    return (
+      ['noToken', {}]
+    );
+  }
+
   if (tokenMatch === 'currentUser') {
     type = 'user';
   } else {
