@@ -192,6 +192,7 @@ const TokenUserPicker = ({
               checked={radioValue === RADIO_VALUE_ME}
               id={`${input.name}-tokenDatePicker-radio-me`}
               label={<FormattedMessage id="ui-dashboard.tokenUserPicker.me" />}
+              labelClass={radioValue === RADIO_VALUE_ME ? css.selectedOption : css.option}
               onChange={handleRadioChange}
               onKeyDown={meKeyHandler}
               value={RADIO_VALUE_ME}
@@ -206,6 +207,7 @@ const TokenUserPicker = ({
               checked={radioValue === RADIO_VALUE_USER}
               id={`${input.name}-tokenDatePicker-radio-user`}
               label={<FormattedMessage id="ui-dashboard.tokenUserPicker.user" />}
+              labelClass={radioValue === RADIO_VALUE_USER ? css.selectedOption : css.option}
               onChange={handleRadioChange}
               onKeyDown={userKeyHandler}
               value={RADIO_VALUE_USER}

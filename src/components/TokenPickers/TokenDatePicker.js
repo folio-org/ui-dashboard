@@ -216,6 +216,7 @@ const TokenDatePicker = ({
               disabled={disabled}
               id={`${input.name}-tokenDatePicker-radio-today`}
               label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
+              labelClass={radioValue === RADIO_VALUE_TODAY ? css.selectedOption : css.option}
               onChange={handleRadioChange}
               onKeyDown={todayKeyHandler}
               value={RADIO_VALUE_TODAY}
@@ -231,6 +232,7 @@ const TokenDatePicker = ({
               disabled={disabled}
               id={`${input.name}-tokenDatePicker-radio-relative`}
               label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
+              labelClass={radioValue === RADIO_VALUE_OFFSET ? css.selectedOption : css.option}
               onChange={handleRadioChange}
               onKeyDown={relativeKeyHandler}
               value={RADIO_VALUE_OFFSET}
@@ -300,6 +302,7 @@ const TokenDatePicker = ({
               checked={radioValue === RADIO_VALUE_DATE}
               disabled={disabled}
               label={<FormattedMessage id="ui-dashboard.tokenDatePicker.fixedDate" />}
+              labelClass={radioValue === RADIO_VALUE_DATE ? css.selectedOption : css.option}
               onChange={handleRadioChange}
               value={RADIO_VALUE_DATE}
             />

@@ -3,3 +3,12 @@
 .rowMargin {
   margin-bottom: var(--gutter-static-two-thirds)
 }
+
+.selectedOption {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.option {
+  font-weight: normal;
+}
