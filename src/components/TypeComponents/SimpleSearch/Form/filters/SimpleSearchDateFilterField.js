@@ -18,7 +18,7 @@ import {
 import { requiredValidator } from '@folio/stripes-erm-components';
 
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
-import { TokenDatePicker, errorValidation } from '../../../../TokenDatePicker';
+import { TokenDatePicker, errorValidation } from '../../../../TokenPickers';
 
 import isComparatorSpecialCase from '../../../utilities';
 
@@ -32,7 +32,6 @@ const SimpleSearchDateFilterField = ({
   selectifiedComparators,
   dateTime
 }) => {
-  const intl = useIntl();
   const { values } = useFormState();
   const { change } = useForm();
 
@@ -52,12 +51,6 @@ const SimpleSearchDateFilterField = ({
     }
   }, [change, name, relOrAbsValue, values]);
 
-  const dateValidator = (value, allValues) => {
-    if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-      return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.invalidDate" values={{ dateFormat: getLocaleDateFormat({ intl }) }} />;
-    }
-    return undefined;
-  };
 
   const buttonProps = {
     'disabled': comparatorIsSpecialCase
@@ -93,7 +86,7 @@ const SimpleSearchDateFilterField = ({
         >
           <Field
             component={TokenDatePicker}
-            name="date"
+            name={`${name}.filterValue`}
             validate={errorValidation}
           />
         </KeyValue>

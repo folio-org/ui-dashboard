@@ -44,6 +44,8 @@
   "tokenDatePicker.fixedDate": "Fixed date",
   "tokenDatePicker.relativeDate": "Relative date",
   "tokenDatePicker.today": "Today (relative)",
+  "tokenUserPicker.me": "Me (relative)",
+  "tokenUserPicker.user": "Fixed user",
   "simpleSearchForm.filters": "Filters",
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",

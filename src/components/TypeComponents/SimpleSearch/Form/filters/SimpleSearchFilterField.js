@@ -81,9 +81,16 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
       const findUserPluginAvailable = !!modulePlugins?.find(p => p.pluginType === 'find-user') &&
         stripes.hasPerm('module.ui-plugin-find-user.enabled');
 
-      if (selectedFilterColumn.resource === 'user' && !LookupComponent && findUserPluginAvailable) {
-        // USER does not have a lookup component in the registry, fallback to known user lookup for now
-        LookupComponent = UserLookup;
+      if (selectedFilterColumn.resource === 'user') {
+        if (findUserPluginAvailable) {
+          // USER might have a lookup component in the registry,
+          // but we need certain props to behave for our token picker.
+          // Fallback to known user lookup for now
+          LookupComponent = UserLookup;
+        } else {
+          // If we can't use that plugin for whatever reason, ensure we fallback to TextField
+          LookupComponent = null;
+        }
       }
 
       if (LookupComponent) {

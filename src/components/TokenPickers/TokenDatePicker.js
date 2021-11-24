@@ -34,7 +34,7 @@ import {
   TAB
 } from './constants';
 
-import css from './TokenDatePicker.css';
+import css from './TokenPickers.css';
 
 const TokenDatePicker = ({
   backendDateStandard = 'YYYY-MM-DD',
@@ -151,7 +151,6 @@ const TokenDatePicker = ({
     dateValue,
     offset,
     offsetSign,
-    outputValue,
     radioValue,
     setValueIfRadioMatch,
     timeUnit

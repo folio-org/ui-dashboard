@@ -17,6 +17,7 @@ import { requiredValidator } from '@folio/stripes-erm-components';
 import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
 import css from './filters.css';
 import isComparatorSpecialCase from '../../../utilities';
+import { TokenUserPicker } from '../../../../TokenPickers';
 
 
 const SimpleSearchUUIDFilterField = ({
@@ -75,7 +76,7 @@ const SimpleSearchUUIDFilterField = ({
             <KeyValue
               label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.uuid" />}
             >
-              <RelativeOrAbsolute
+              {/* <RelativeOrAbsolute
                 absoluteComponent={
                   <Field
                     {...filterComponentProps}
@@ -101,6 +102,13 @@ const SimpleSearchUUIDFilterField = ({
                   </div>
                 }
                 validateFields={[`${name}.filterValue`]}
+              /> */}
+
+              <Field
+                {...filterComponentProps}
+                component={TokenUserPicker}
+                name={`${name}.filterValue`}
+                UserSelectComponent={filterComponent}
               />
             </KeyValue>
           </Col>

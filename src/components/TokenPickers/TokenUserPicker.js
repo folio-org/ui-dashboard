@@ -1,0 +1,212 @@
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+import PropTypes from 'prop-types';
+
+import { FormattedMessage } from 'react-intl';
+
+import { useModules, useStripes } from '@folio/stripes/core';
+
+import {
+  Col,
+  RadioButton,
+  Row,
+  TextField
+} from '@folio/stripes/components';
+
+// TODO this should be exported from stripes-components
+import nativeChangeField from '@folio/stripes-components/util/nativeChangeFieldValue';
+
+import UserLookup from '../UserLookup';
+import { detokenise, tokenise } from '../../tokenise';
+import { offsetValidation, dateValidation } from './validation';
+
+import {
+  RADIO_VALUE_ME,
+  RADIO_VALUE_USER,
+  TAB
+} from './constants';
+
+import css from './TokenPickers.css';
+
+const TokenUserPicker = ({
+  input,
+  meta,
+  onChange,
+  onUserSelected,
+  initialResource
+}) => {
+  // Set up stripes to handle plugin rendering
+  const stripes = useStripes();
+  const { plugin: modulePlugins } = useModules();
+
+  // TODO isEnabled for plugins/modules is something that should be exposed, perhaps via the registry
+  const findUserPluginAvailable = !!modulePlugins?.find(p => p.pluginType === 'find-user') &&
+    stripes.hasPerm('module.ui-plugin-find-user.enabled');
+
+  // Refs
+  const hiddenInput = useRef(null);
+
+  // Keep track of which set of fields we're targeting
+  const [radioValue, setRadioValue] = useState('');
+  const [user, setUser] = useState(initialResource ?? '');
+
+  const handleUserLookupChange = (usr) => {
+    if (onUserSelected) {
+      onUserSelected(usr);
+    }
+
+    setUser(usr);
+
+    if (usr) {
+      setRadioValue(RADIO_VALUE_USER);
+    }
+  };
+
+  const handleUserTextChange = (e) => {
+    setUser({ id: e.target.value });
+
+    if (e.target.value) {
+      setRadioValue(RADIO_VALUE_USER);
+    }
+  };
+
+  let UserSelectComponent;
+  let userSelectProps = {};
+  if (findUserPluginAvailable) {
+    UserSelectComponent = UserLookup;
+    userSelectProps = {
+      id: `${input.name}-user-lookup`,
+      input: {
+        name: `${input.name}-user-lookup`,
+        value: user
+      },
+      onResourceSelected: handleUserLookupChange,
+      resource: user
+    };
+  } else {
+    // If we can't use that plugin for whatever reason, ensure we fallback to TextField
+    UserSelectComponent = TextField;
+    userSelectProps = {
+      id: `${input.name}-user-textfield`,
+      onChange: handleUserTextChange,
+    };
+  }
+
+  // Stripes form components have made it impossible to do this using ref.
+  const radioButtonMe = document.getElementById(`${input.name}-tokenDatePicker-radio-me`);
+  const radioButtonUser = document.getElementById(`${input.name}-tokenDatePicker-radio-user`);
+
+  // Keep track of actual value
+  const [outputValue, setOutputValue] = useState(meta.initial ?? '');
+
+  const changeOutputValue = (value) => {
+    nativeChangeField(hiddenInput, false, value);
+    setOutputValue(value);
+  };
+
+  const setValueIfRadioMatch = useCallback((radioMatch, value) => {
+    if (radioValue === radioMatch && outputValue !== value) {
+      changeOutputValue(value);
+    }
+  }, [outputValue, radioValue]);
+
+  /* When internal values change, update input value
+   * NativeFieldChange allows us to programatically set
+   * the hidden input field and fire an onChange
+   */
+  useEffect(() => {
+    const meToken = tokenise('user', {});
+
+    setValueIfRadioMatch(RADIO_VALUE_ME, meToken);
+    setValueIfRadioMatch(RADIO_VALUE_USER, user?.id);
+  }, [
+    user,
+    setValueIfRadioMatch,
+  ]);
+
+  // onBlur and onFocus not supported at the moment, due to multiple fields in one
+  const handleChange = (e) => {
+    // Actually set the value in the form
+    input.onChange(e);
+
+    // If the user has set up an onChange, this will ensure that that fires
+    if (onChange) {
+      onChange(e, e.target.value);
+    }
+  };
+
+  const handleRadioChange = (e) => {
+    setRadioValue(e.target.value);
+  };
+
+  // Radio buttons by default tab to the next non-radio button focus.
+  // Me needs to tab to "fixed user"
+  const meKeyHandler = (e) => {
+    if (e.code === TAB && !e.shiftKey) {
+      radioButtonUser.focus();
+      e.preventDefault();
+    }
+  };
+
+  // Likewise fixed user needs to be able to tab backwards to "me"
+  const userKeyHandler = (e) => {
+    if (e.code === TAB && e.shiftKey) {
+      radioButtonMe.focus();
+      e.preventDefault();
+    }
+  };
+
+  return (
+    <>
+      <Row className={css.rowMargin}>
+        <Col xs={2}>
+          <RadioButton
+            checked={radioValue === RADIO_VALUE_ME}
+            id={`${input.name}-tokenDatePicker-radio-me`}
+            label={<FormattedMessage id="ui-dashboard.tokenUserPicker.me" />}
+            onChange={handleRadioChange}
+            onKeyDown={meKeyHandler}
+            value={RADIO_VALUE_ME}
+          />
+        </Col>
+      </Row>
+      <Row className={css.rowMargin}>
+        <Col xs={2}>
+          <RadioButton
+            checked={radioValue === RADIO_VALUE_USER}
+            id={`${input.name}-tokenDatePicker-radio-user`}
+            label={<FormattedMessage id="ui-dashboard.tokenUserPicker.user" />}
+            onChange={handleRadioChange}
+            onKeyDown={userKeyHandler}
+            value={RADIO_VALUE_USER}
+          />
+        </Col>
+        <Col xs={10}>
+          <UserSelectComponent
+            {...userSelectProps}
+          />
+        </Col>
+      </Row>
+      <input
+        {...input}
+        ref={hiddenInput}
+        hidden
+        onChange={handleChange}
+        type="text"
+        value={outputValue}
+      />
+    </>
+  );
+};
+
+TokenUserPicker.propTypes = {
+  input: PropTypes.object,
+  meta: PropTypes.object,
+  onChange: PropTypes.func
+};
+
+export default TokenUserPicker;
