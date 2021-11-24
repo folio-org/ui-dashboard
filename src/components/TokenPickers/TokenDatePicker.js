@@ -38,6 +38,7 @@ import css from './TokenPickers.css';
 
 const TokenDatePicker = ({
   backendDateStandard = 'YYYY-MM-DD',
+  disabled,
   input,
   meta,
   onChange
@@ -59,7 +60,7 @@ const TokenDatePicker = ({
 
   // InitialValue setup
   // RADIO BUTTON
-  let initialRadioValue = '';
+  let initialRadioValue = RADIO_VALUE_TODAY;
 
   // FIXED DATE FIELD
   let initialDateMoment = {};
@@ -209,9 +210,10 @@ const TokenDatePicker = ({
   return (
     <>
       <Row className={css.rowMargin}>
-        <Col xs={2}>
+        <Col xs={3}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_TODAY}
+            disabled={disabled}
             id={`${input.name}-tokenDatePicker-radio-today`}
             label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
             onChange={handleRadioChange}
@@ -221,9 +223,10 @@ const TokenDatePicker = ({
         </Col>
       </Row>
       <Row className={css.rowMargin}>
-        <Col xs={2}>
+        <Col xs={3}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_OFFSET}
+            disabled={disabled}
             id={`${input.name}-tokenDatePicker-radio-relative`}
             label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
             onChange={handleRadioChange}
@@ -233,6 +236,7 @@ const TokenDatePicker = ({
         </Col>
         <Col xs={3}>
           <TextField
+            disabled={disabled}
             error={offsetValidation(offset, radioValue)}
             marginBottom0
             onChange={handleOffsetChange}
@@ -261,6 +265,7 @@ const TokenDatePicker = ({
                 label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.years' })
               }
             ]}
+            disabled={disabled}
             marginBottom0
             onChange={handleTimeUnitChange}
             value={timeUnit}
@@ -278,6 +283,7 @@ const TokenDatePicker = ({
                 label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.filters.dateFilterField.beforeToday' })
               }
             ]}
+            disabled={disabled}
             marginBottom0
             onChange={handleOffsetSignChange}
             value={offsetSign}
@@ -285,17 +291,19 @@ const TokenDatePicker = ({
         </Col>
       </Row>
       <Row className={css.rowMargin}>
-        <Col xs={2}>
+        <Col xs={3}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_DATE}
+            disabled={disabled}
             label={<FormattedMessage id="ui-dashboard.tokenDatePicker.fixedDate" />}
             onChange={handleRadioChange}
             value={RADIO_VALUE_DATE}
           />
         </Col>
-        <Col xs={3}>
+        <Col xs={6}>
           <Datepicker
             backendDateStandard={backendDateStandard}
+            disabled={disabled}
             error={dateValidation(dateValue, radioValue, dateMoment, acceptedFormat)}
             onChange={handleDateChange}
             timeZone="UTC"

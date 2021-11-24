@@ -50,7 +50,7 @@ const SimpleSearchUUIDFilterField = ({
   return (
     <>
       <Row>
-        <Col xs={6}>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
             <Field
               autoFocus
@@ -62,7 +62,7 @@ const SimpleSearchUUIDFilterField = ({
             />
           </KeyValue>
         </Col>
-        <Col xs={6}>
+        <Col xs={9}>
           <KeyValue
             label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.uuid" />}
           >

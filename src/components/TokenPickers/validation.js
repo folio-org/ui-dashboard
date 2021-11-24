@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { RADIO_VALUE_DATE, RADIO_VALUE_OFFSET } from './constants';
+import { RADIO_VALUE_DATE, RADIO_VALUE_OFFSET, RADIO_VALUE_USER } from './constants';
 
 const offsetValidation = (value, radioValue) => {
   const valueInt = parseInt(value, 10);
@@ -22,6 +22,15 @@ const dateValidation = (value, radioValue, dateMoment, dateFormat) => {
   return undefined;
 };
 
+const userValidation = (value, radioValue) => {
+  if (radioValue === RADIO_VALUE_USER && !value) {
+    return <FormattedMessage id="ui-dashboard.tokenUserPicker.validation.invalidUser" />;
+  }
+
+  return undefined;
+};
+
+
 const errorValidation = (value) => {
   if (value?.match(/ERROR_/g)) {
     return "this shouldn't be happening";
@@ -33,5 +42,6 @@ const errorValidation = (value) => {
 export {
   dateValidation,
   errorValidation,
-  offsetValidation
+  offsetValidation,
+  userValidation
 };

@@ -22,11 +22,12 @@ import nativeChangeField from '@folio/stripes-components/util/nativeChangeFieldV
 
 import UserLookup from '../UserLookup';
 import { detokenise, tokenise } from '../../tokenise';
-import { offsetValidation, dateValidation } from './validation';
+import { userValidation } from './validation';
 
 import {
   RADIO_VALUE_ME,
   RADIO_VALUE_USER,
+  ERROR_INVALID_USER_FIELD,
   TAB
 } from './constants';
 
@@ -51,8 +52,8 @@ const TokenUserPicker = ({
   const hiddenInput = useRef(null);
 
   // Set up initialValues
-  let initialRadioValue;
-  let initialUser;
+  let initialRadioValue = RADIO_VALUE_ME;
+  let initialUser = '';
   if (meta.initial) {
     const [tokenType] = detokenise(meta.initial);
     if (tokenType === 'user') {
@@ -134,9 +135,14 @@ const TokenUserPicker = ({
   useEffect(() => {
     const meToken = tokenise('user', {});
 
-    setValueIfRadioMatch(RADIO_VALUE_ME, meToken);
-    setValueIfRadioMatch(RADIO_VALUE_USER, user?.id);
+    if (userValidation(user.id, radioValue)) {
+      changeOutputValue(ERROR_INVALID_USER_FIELD);
+    } else {
+      setValueIfRadioMatch(RADIO_VALUE_ME, meToken);
+      setValueIfRadioMatch(RADIO_VALUE_USER, user?.id);
+    }
   }, [
+    radioValue,
     user,
     setValueIfRadioMatch,
   ]);

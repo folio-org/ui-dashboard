@@ -73,7 +73,7 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
         FilterComponent = TokenUserPicker;
         filterComponentProps = {
           id,
-          validate: (v) => { if (!v) { alert("ERR: %o", v) }}
+          validate: errorValidation
         };
       }
       break;
