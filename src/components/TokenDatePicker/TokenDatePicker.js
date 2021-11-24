@@ -1,4 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -25,7 +30,8 @@ import {
   RADIO_VALUE_TODAY,
   RADIO_VALUE_OFFSET,
   ERROR_INVALID_DATE_FIELD,
-  ERROR_INVALID_OFFSET
+  ERROR_INVALID_OFFSET,
+  TAB
 } from './constants';
 
 import css from './TokenDatePicker.css';
@@ -41,7 +47,12 @@ const TokenDatePicker = ({
   const intl = useIntl();
   const acceptedFormat = getLocaleDateFormat({ intl });
 
+  // Refs
   const hiddenInput = useRef(null);
+
+  // Stripes form components have made it impossible to do this using ref.
+  const radioButtonToday = document.getElementById(`${input.name}-tokenDatePicker-radio-today`);
+  const radioButtonRelative = document.getElementById(`${input.name}-tokenDatePicker-radio-relative`);
 
   // Keep track of actual value
   const [outputValue, setOutputValue] = useState(meta.initial ?? '');
@@ -179,14 +190,33 @@ const TokenDatePicker = ({
     }
   };
 
+  // Radio buttons by default tab to the next non-radio button focus.
+  // This is fine for the relative and fixed dates, but Today needs to tab to "relative date"
+  const todayKeyHandler = (e) => {
+    if (e.code === TAB && !e.shiftKey) {
+      radioButtonRelative.focus();
+      e.preventDefault();
+    }
+  };
+
+  // Likewise relative needs to be able to tab backwards to "today"
+  const relativeKeyHandler = (e) => {
+    if (e.code === TAB && e.shiftKey) {
+      radioButtonToday.focus();
+      e.preventDefault();
+    }
+  };
+
   return (
     <>
       <Row className={css.rowMargin}>
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_TODAY}
+            id={`${input.name}-tokenDatePicker-radio-today`}
             label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
             onChange={handleRadioChange}
+            onKeyDown={todayKeyHandler}
             value={RADIO_VALUE_TODAY}
           />
         </Col>
@@ -195,8 +225,10 @@ const TokenDatePicker = ({
         <Col xs={2}>
           <RadioButton
             checked={radioValue === RADIO_VALUE_OFFSET}
+            id={`${input.name}-tokenDatePicker-radio-relative`}
             label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
             onChange={handleRadioChange}
+            onKeyDown={relativeKeyHandler}
             value={RADIO_VALUE_OFFSET}
           />
         </Col>
