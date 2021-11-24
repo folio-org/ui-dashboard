@@ -34,6 +34,7 @@ import {
 import css from './TokenPickers.css';
 
 const TokenUserPicker = ({
+  disabled,
   input,
   meta,
   onChange,
@@ -93,6 +94,7 @@ const TokenUserPicker = ({
   if (findUserPluginAvailable) {
     UserSelectComponent = UserLookup;
     userSelectProps = {
+      disabled,
       id: `${input.name}-user-lookup`,
       input: {
         name: `${input.name}-user-lookup`,
@@ -105,6 +107,7 @@ const TokenUserPicker = ({
     // If we can't use that plugin for whatever reason, ensure we fallback to TextField
     UserSelectComponent = TextField;
     userSelectProps = {
+      disabled,
       id: `${input.name}-user-textfield`,
       onChange: handleUserTextChange,
     };
@@ -223,9 +226,12 @@ const TokenUserPicker = ({
 };
 
 TokenUserPicker.propTypes = {
+  disabled: PropTypes.bool,
   input: PropTypes.object,
   meta: PropTypes.object,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  onUserSelected: PropTypes.func,
+  resource: PropTypes.object
 };
 
 export default TokenUserPicker;

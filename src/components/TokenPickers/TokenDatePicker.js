@@ -43,7 +43,6 @@ const TokenDatePicker = ({
   meta,
   onChange
 }) => {
-  // TODO handle backendDateStandard
   // Need to check if getLocaleDateFormat matches the value
   const intl = useIntl();
   const acceptedFormat = getLocaleDateFormat({ intl });
