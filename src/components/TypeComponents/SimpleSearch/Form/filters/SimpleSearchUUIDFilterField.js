@@ -33,21 +33,12 @@ const SimpleSearchUUIDFilterField = ({
   const comparator = get(values, `${name}.comparator`);
   const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
 
-  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
-
   // Resource variable for UUID case
-  const [resource, setResource] = useState(get(initialValues, `${name}.resource`) ?? {});
+  const [resource, setResource] = useState(get(initialValues, `${name}.resource`));
   // This field is used when editing the widget, to display existing resource data
   useEffect(() => {
     change(`${name}.resource`, resource);
   }, [change, name, resource]);
-
-  useEffect(() => {
-    // Ensure relative vs absolute is always  in the case resource is user
-    if (resourceType === 'user' && relOrAbsValue === undefined) {
-      change(`${name}.relativeOrAbsolute`, 'relative');
-    }
-  }, [change, name, relOrAbsValue, resourceType, values]);
 
   // Set up onResourceSelected and resource for the plugin to handle
   filterComponentProps.onResourceSelected = r => {
@@ -76,39 +67,12 @@ const SimpleSearchUUIDFilterField = ({
             <KeyValue
               label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.uuid" />}
             >
-              {/* <RelativeOrAbsolute
-                absoluteComponent={
-                  <Field
-                    {...filterComponentProps}
-                    component={filterComponent}
-                    disabled={
-                      comparatorIsSpecialCase ||
-                      relOrAbsValue === 'relative'
-                    }
-                    name={`${name}.filterValue`}
-                    validate={(value, allValues) => {
-                      if (get(allValues, `${name}.relativeOrAbsolute`) === 'absolute' && !value) {
-                        return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.absoluteValueWarning" />;
-                      }
-                      return undefined;
-                    }}
-                  />
-                }
-                disabled={comparatorIsSpecialCase}
-                name={name}
-                relativeComponent={
-                  <div className={relOrAbsValue === 'absolute' ? css.absoluteSelected : null}>
-                    <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.currentUser" />
-                  </div>
-                }
-                validateFields={[`${name}.filterValue`]}
-              /> */}
-
               <Field
-                {...filterComponentProps}
                 component={TokenUserPicker}
+                disabled={comparatorIsSpecialCase}
+                initialResource={resource}
                 name={`${name}.filterValue`}
-                UserSelectComponent={filterComponent}
+                onUserSelected={r => setResource(r)}
               />
             </KeyValue>
           </Col>

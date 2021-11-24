@@ -50,9 +50,22 @@ const TokenUserPicker = ({
   // Refs
   const hiddenInput = useRef(null);
 
+  // Set up initialValues
+  let initialRadioValue;
+  let initialUser;
+  if (meta.initial) {
+    const [tokenType] = detokenise(meta.initial);
+    if (tokenType === 'user') {
+      initialRadioValue = RADIO_VALUE_ME;
+    } else {
+      initialRadioValue = RADIO_VALUE_USER;
+      initialUser = initialResource;
+    }
+  }
+
   // Keep track of which set of fields we're targeting
-  const [radioValue, setRadioValue] = useState('');
-  const [user, setUser] = useState(initialResource ?? '');
+  const [radioValue, setRadioValue] = useState(initialRadioValue);
+  const [user, setUser] = useState(initialUser ?? '');
 
   const handleUserLookupChange = (usr) => {
     if (onUserSelected) {
