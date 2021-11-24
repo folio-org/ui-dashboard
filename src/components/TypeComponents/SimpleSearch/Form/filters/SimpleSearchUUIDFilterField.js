@@ -14,17 +14,13 @@ import {
 
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import RelativeOrAbsolute from '../../../../RelativeOrAbsolute';
-import css from './filters.css';
 import isComparatorSpecialCase from '../../../utilities';
-import { TokenUserPicker } from '../../../../TokenPickers';
 
 
 const SimpleSearchUUIDFilterField = ({
   filterComponent,
   filterComponentProps,
   input: { name },
-  resourceType,
   selectifiedComparators
 }) => {
   const { initialValues, values } = useFormState();
@@ -40,51 +36,16 @@ const SimpleSearchUUIDFilterField = ({
     change(`${name}.resource`, resource);
   }, [change, name, resource]);
 
-  // Set up onResourceSelected and resource for the plugin to handle
-  filterComponentProps.onResourceSelected = r => {
-    setResource(r);
-    change(`${name}.filterValue`, r.id);
+  // Set up filterComponentProps with resource specific stuff
+  const fcp = {
+    ...filterComponentProps,
+    onResourceSelected: r => {
+      setResource(r);
+      change(`${name}.filterValue`, r.id);
+    }, // For any lookups that are not users
+    onUserSelected: r => setResource(r), // for users
+    resource,
   };
-  filterComponentProps.resource = resource;
-
-  if (resourceType === 'user') {
-    return (
-      <>
-        <Row>
-          <Col xs={6}>
-            <KeyValue label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.filterField.comparator" />}>
-              <Field
-                autoFocus
-                component={Select}
-                dataOptions={selectifiedComparators}
-                name={`${name}.comparator`}
-                required
-                validate={requiredValidator}
-              />
-            </KeyValue>
-          </Col>
-          <Col xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.uuid" />}
-            >
-              <Field
-                component={TokenUserPicker}
-                disabled={comparatorIsSpecialCase}
-                initialResource={resource}
-                name={`${name}.filterValue`}
-                onUserSelected={r => setResource(r)}
-              />
-            </KeyValue>
-          </Col>
-        </Row>
-        <Field
-          name={`${name}.resource`}
-          render={() => (null)}
-          value={resource}
-        />
-      </>
-    );
-  }
 
   return (
     <>
@@ -106,16 +67,10 @@ const SimpleSearchUUIDFilterField = ({
             label={<FormattedMessage id="ui-dashboard.simpleSearchForm.filters.dateFilterField.uuid" />}
           >
             <Field
-              {...filterComponentProps}
+              {...fcp}
               component={filterComponent}
               disabled={comparatorIsSpecialCase}
               name={`${name}.filterValue`}
-              validate={(value) => {
-                if (!value) {
-                  return <FormattedMessage id="ui-dashboard.simpleSearchForm.filters.uuidFilterField.emptyWarning" />;
-                }
-                return undefined;
-              }}
             />
           </KeyValue>
         </Col>

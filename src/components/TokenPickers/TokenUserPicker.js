@@ -37,7 +37,7 @@ const TokenUserPicker = ({
   meta,
   onChange,
   onUserSelected,
-  initialResource
+  resource
 }) => {
   // Set up stripes to handle plugin rendering
   const stripes = useStripes();
@@ -59,7 +59,7 @@ const TokenUserPicker = ({
       initialRadioValue = RADIO_VALUE_ME;
     } else {
       initialRadioValue = RADIO_VALUE_USER;
-      initialUser = initialResource;
+      initialUser = resource;
     }
   }
 
