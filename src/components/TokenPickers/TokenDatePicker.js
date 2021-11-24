@@ -210,28 +210,32 @@ const TokenDatePicker = ({
     <>
       <Row className={css.rowMargin}>
         <Col xs={3}>
-          <RadioButton
-            checked={radioValue === RADIO_VALUE_TODAY}
-            disabled={disabled}
-            id={`${input.name}-tokenDatePicker-radio-today`}
-            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
-            onChange={handleRadioChange}
-            onKeyDown={todayKeyHandler}
-            value={RADIO_VALUE_TODAY}
-          />
+          <div aria-label={intl.formatMessage({ id: 'ui-dashboard.tokenDatePicker.today' })}>
+            <RadioButton
+              checked={radioValue === RADIO_VALUE_TODAY}
+              disabled={disabled}
+              id={`${input.name}-tokenDatePicker-radio-today`}
+              label={<FormattedMessage id="ui-dashboard.tokenDatePicker.today" />}
+              onChange={handleRadioChange}
+              onKeyDown={todayKeyHandler}
+              value={RADIO_VALUE_TODAY}
+            />
+          </div>
         </Col>
       </Row>
       <Row className={css.rowMargin}>
         <Col xs={3}>
-          <RadioButton
-            checked={radioValue === RADIO_VALUE_OFFSET}
-            disabled={disabled}
-            id={`${input.name}-tokenDatePicker-radio-relative`}
-            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
-            onChange={handleRadioChange}
-            onKeyDown={relativeKeyHandler}
-            value={RADIO_VALUE_OFFSET}
-          />
+          <div aria-label={intl.formatMessage({ id: 'ui-dashboard.tokenDatePicker.relativeDate' })}>
+            <RadioButton
+              checked={radioValue === RADIO_VALUE_OFFSET}
+              disabled={disabled}
+              id={`${input.name}-tokenDatePicker-radio-relative`}
+              label={<FormattedMessage id="ui-dashboard.tokenDatePicker.relativeDate" />}
+              onChange={handleRadioChange}
+              onKeyDown={relativeKeyHandler}
+              value={RADIO_VALUE_OFFSET}
+            />
+          </div>
         </Col>
         <Col xs={3}>
           <TextField
@@ -291,13 +295,15 @@ const TokenDatePicker = ({
       </Row>
       <Row className={css.rowMargin}>
         <Col xs={3}>
-          <RadioButton
-            checked={radioValue === RADIO_VALUE_DATE}
-            disabled={disabled}
-            label={<FormattedMessage id="ui-dashboard.tokenDatePicker.fixedDate" />}
-            onChange={handleRadioChange}
-            value={RADIO_VALUE_DATE}
-          />
+          <div aria-label={intl.formatMessage({ id: 'ui-dashboard.tokenDatePicker.fixedDate' })}>
+            <RadioButton
+              checked={radioValue === RADIO_VALUE_DATE}
+              disabled={disabled}
+              label={<FormattedMessage id="ui-dashboard.tokenDatePicker.fixedDate" />}
+              onChange={handleRadioChange}
+              value={RADIO_VALUE_DATE}
+            />
+          </div>
         </Col>
         <Col xs={6}>
           <Datepicker
@@ -326,6 +332,7 @@ const TokenDatePicker = ({
 
 TokenDatePicker.propTypes = {
   backendDateStandard: PropTypes.string,
+  disabled: PropTypes.bool,
   input: PropTypes.object,
   meta: PropTypes.object,
   onChange: PropTypes.func

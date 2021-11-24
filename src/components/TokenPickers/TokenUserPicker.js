@@ -6,7 +6,7 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useModules, useStripes } from '@folio/stripes/core';
 
@@ -41,6 +41,7 @@ const TokenUserPicker = ({
   onUserSelected,
   resource
 }) => {
+  const intl = useIntl();
   // Set up stripes to handle plugin rendering
   const stripes = useStripes();
   const { plugin: modulePlugins } = useModules();
@@ -186,26 +187,30 @@ const TokenUserPicker = ({
     <>
       <Row className={css.rowMargin}>
         <Col xs={2}>
-          <RadioButton
-            checked={radioValue === RADIO_VALUE_ME}
-            id={`${input.name}-tokenDatePicker-radio-me`}
-            label={<FormattedMessage id="ui-dashboard.tokenUserPicker.me" />}
-            onChange={handleRadioChange}
-            onKeyDown={meKeyHandler}
-            value={RADIO_VALUE_ME}
-          />
+          <div aria-label={intl.formatMessage({ id: 'ui-dashboard.tokenUserPicker.me' })}>
+            <RadioButton
+              checked={radioValue === RADIO_VALUE_ME}
+              id={`${input.name}-tokenDatePicker-radio-me`}
+              label={<FormattedMessage id="ui-dashboard.tokenUserPicker.me" />}
+              onChange={handleRadioChange}
+              onKeyDown={meKeyHandler}
+              value={RADIO_VALUE_ME}
+            />
+          </div>
         </Col>
       </Row>
       <Row className={css.rowMargin}>
         <Col xs={2}>
-          <RadioButton
-            checked={radioValue === RADIO_VALUE_USER}
-            id={`${input.name}-tokenDatePicker-radio-user`}
-            label={<FormattedMessage id="ui-dashboard.tokenUserPicker.user" />}
-            onChange={handleRadioChange}
-            onKeyDown={userKeyHandler}
-            value={RADIO_VALUE_USER}
-          />
+          <div aria-label={intl.formatMessage({ id: 'ui-dashboard.tokenUserPicker.user' })}>
+            <RadioButton
+              checked={radioValue === RADIO_VALUE_USER}
+              id={`${input.name}-tokenDatePicker-radio-user`}
+              label={<FormattedMessage id="ui-dashboard.tokenUserPicker.user" />}
+              onChange={handleRadioChange}
+              onKeyDown={userKeyHandler}
+              value={RADIO_VALUE_USER}
+            />
+          </div>
         </Col>
         <Col xs={10}>
           <UserSelectComponent
