@@ -33,24 +33,9 @@ const SimpleSearchDateFilterField = ({
   dateTime
 }) => {
   const { values } = useFormState();
-  const { change } = useForm();
 
   const comparator = get(values, `${name}.comparator`);
   const comparatorIsSpecialCase = isComparatorSpecialCase(comparator);
-  const relOrAbsValue = get(values, `${name}.relativeOrAbsolute`);
-
-  useEffect(() => {
-    // Ensure offset is always 0 rather than being unset
-    if (get(values, `${name}.offset`) === undefined) {
-      change(`${name}.offset`, 0);
-    }
-
-    // Ensure relative vs absolute is always set
-    if (relOrAbsValue === undefined) {
-      change(`${name}.relativeOrAbsolute`, 'today');
-    }
-  }, [change, name, relOrAbsValue, values]);
-
 
   const buttonProps = {
     'disabled': comparatorIsSpecialCase

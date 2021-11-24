@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 // TODO figure out lazy loading of functions
-import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWithTokens';
+import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWidget';
 import simpleSearchWidgetToInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/widgetToInitialValues';
 import simpleSearchCreateInitialValues from './TypeComponents/SimpleSearch/Form/formParsing/createInitialValues';
 
