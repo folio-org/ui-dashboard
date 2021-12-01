@@ -12,13 +12,11 @@ import { useModules, useStripes } from '@folio/stripes/core';
 
 import {
   Col,
+  nativeChangeFieldValue as nativeChangeField,
   RadioButton,
   Row,
   TextField
 } from '@folio/stripes/components';
-
-// TODO this should be exported from stripes-components
-import nativeChangeField from '@folio/stripes-components/util/nativeChangeFieldValue';
 
 import UserLookup from '../UserLookup';
 import { detokenise, tokenise } from '../../tokenise';

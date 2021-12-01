@@ -14,14 +14,13 @@ import {
   Col,
   Datepicker,
   getLocaleDateFormat,
+  nativeChangeFieldValue as nativeChangeField,
   RadioButton,
   Row,
   Select,
   TextField
 } from '@folio/stripes/components';
 
-// TODO this should be exported from stripes-components
-import nativeChangeField from '@folio/stripes-components/util/nativeChangeFieldValue';
 import { detokenise, tokenise } from '../../tokenise';
 import { offsetValidation, dateValidation } from './validation';
 

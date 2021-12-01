@@ -26,6 +26,7 @@ const SimpleSearchFilterArray = ({
         {fields.map((fieldName, index) => (
           <>
             <div
+              key={`simple-search-filter-array-${fieldName}-orAnd[${index}]`}
               className={css.orAnd}
             >
               {index !== 0 &&
@@ -35,7 +36,7 @@ const SimpleSearchFilterArray = ({
               }
             </div>
             <EditCard
-              key={`simple-search-filter-array-${fieldName}`}
+              key={`simple-search-filter-array-${fieldName}[${index}]`}
               data-test-filter-number={index}
               data-testid={`simple-search-field-array[${index}]`}
               deleteButtonTooltipText={<FormattedMessage id={deleteButtonTooltipId} values={{ index: index + 1 }} />}

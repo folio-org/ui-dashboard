@@ -24,7 +24,7 @@ const SimpleSearchFilterRuleArray = ({
       fields.map((fieldName, index) => {
         return (
           <div
-            key={`simple-search-filter-rule-array-${fieldName}`}
+            key={`simple-search-filter-rule-array-${fieldName}[${index}]`}
           >
             <div
               className={css.orAnd}
