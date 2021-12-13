@@ -183,5 +183,5 @@
     "tokenUserPicker.me": "أنا (نسبي)",
     "tokenUserPicker.user": "مستخدم ثابت",
     "tokenUserPicker.validation.invalidUser": "يرجى اختيار مستخدم للمتابعة",
-    "simpleSearchForm.filters.uuidFilterField.emptyWarning": "Please enter a valid UUID to continue"
+    "simpleSearchForm.filters.uuidFilterField.emptyWarning": "يرجى إدخال معرّف عمومي فريد صالح للمتابعة"
 }
