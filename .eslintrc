@@ -3,11 +3,7 @@
   "parser": "@babel/eslint-parser",
   "rules": {
     "react/jsx-sort-props": "error",
-    "react/react-in-jsx-scope": "off",
-
-     // TODO: Remove when https://issues.folio.org/browse/STRIPES-742 to reinstate these rules. 
-     "template-curly-spacing" : "off",
-     "indent" : "off"
+    "react/react-in-jsx-scope": "off"
   },
   "env": {
     "jest/globals": true
