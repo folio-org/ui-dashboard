@@ -8,14 +8,14 @@ const tokenise = (type, params = {}) => {
     case 'date':
       outputValue += '{{currentDate';
 
-        if (offset && offset !== '0') {
-          // Can be minus, default is positive
-          outputValue += `#${offsetSign === 'subtract' ? '-' : ''}${offset}`;
-          if (timeUnit) {
-            outputValue += `#${timeUnit}`;
-          }
+      if (offset && offset !== '0') {
+        // Can be minus, default is positive
+        outputValue += `#${offsetSign === 'subtract' ? '-' : ''}${offset}`;
+        if (timeUnit) {
+          outputValue += `#${timeUnit}`;
         }
-        outputValue += '}}';
+      }
+      outputValue += '}}';
       break;
     case 'user':
       outputValue = '{{currentUser}}';
