@@ -2,7 +2,6 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -136,7 +135,7 @@ const Dashboard = ({
         heading={<FormattedMessage id="ui-dashboard.dashboard.deleteWidget" />}
         id="delete-agreement-confirmation"
         message={
-          <SafeHTMLMessage
+          <FormattedMessage
             id="ui-dashboard.dashboard.deleteWidgetConfirmMessage"
             values={{ name: widgetToDelete.name }}
           />
