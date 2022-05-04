@@ -110,4 +110,5 @@ App.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
 };
+
 export default App;

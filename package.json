@@ -46,7 +46,14 @@
         "displayName": "UI: Dashboard module is enabled",
         "visible": false
       },
-
+      {
+        "permissionName": "settings.dashboard.enabled",
+        "displayName": "Settings (dashboard): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": false
+      },
       {
         "permissionName": "ui-dashboard.dashboards.manage",
         "displayName": "Dashboard: Manage dashboard",
