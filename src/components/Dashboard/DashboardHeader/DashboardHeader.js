@@ -10,7 +10,7 @@ import ActionMenu from '../../ActionMenu/ActionMenu';
 import css from './DashboardHeader.css';
 
 const propTypes = {
-  onCreate: PropTypes.func.isRequired,
+  onCreate: PropTypes.func,
   onReorder: PropTypes.func
 };
 

@@ -19,8 +19,7 @@
   "stripes": {
     "actsAs": [
       "app",
-      "handler",
-      "settings"
+      "handler"
     ],
     "handlerName": "eventHandler",
     "displayName": "ui-dashboard.meta.title",
@@ -47,14 +46,7 @@
         "displayName": "UI: Dashboard module is enabled",
         "visible": false
       },
-      {
-        "permissionName": "settings.dashboard.enabled",
-        "displayName": "Settings (dashboard): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": false
-      },
+
       {
         "permissionName": "ui-dashboard.dashboards.manage",
         "displayName": "Dashboard: Manage dashboard",
@@ -76,6 +68,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
+    "@folio/stripes-testing": "^4.2.0",
     "@folio/stripes": "^7.1.0",
     "@folio/stripes-cli": "^2.5.0",
     "@formatjs/cli": "^4.2.31",
