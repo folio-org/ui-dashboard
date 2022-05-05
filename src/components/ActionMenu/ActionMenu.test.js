@@ -8,19 +8,19 @@ import ActionMenu from './ActionMenu';
 const actionMenu = () => {};
 
 describe('UrlCustomizer', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <ActionMenu
-          actionMenu={actionMenu}
-        />,
-        translationsProperties
-      );
-    });
-
-    test('renders the expected action button', async () => {
-        await Button('Actions').exists();
-        await Button('Actions').click();
-      });
+  beforeEach(() => {
+    renderWithIntl(
+      <ActionMenu
+        actionMenu={actionMenu}
+      />,
+      translationsProperties
+    );
   });
+
+  test('renders the expected action button', async () => {
+    await Button('Actions').exists();
+    await Button('Actions').click();
+  });
+});
 
 

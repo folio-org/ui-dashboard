@@ -6,25 +6,25 @@ import translationsProperties from '../../../../test/helpers';
 import DashboardHeader from './DashboardHeader';
 
 const data = {
-    'onCreate': () => {},
-    'onReorder': null
-  };
+  'onCreate': () => {},
+  'onReorder': null
+};
 
 describe('UrlCustomizer', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <DashboardHeader
-          data={data}
-        />,
-        translationsProperties
-      );
-    });
-
-    test('renders the expected action button dropdown', async () => {
-        await Button('Actions').exists();
-        await Button('Actions').click();
-        await Button('New').exists();
-      });
+  beforeEach(() => {
+    renderWithIntl(
+      <DashboardHeader
+        data={data}
+      />,
+      translationsProperties
+    );
   });
+
+  test('renders the expected action button dropdown', async () => {
+    await Button('Actions').exists();
+    await Button('Actions').click();
+    await Button('New').exists();
+  });
+});
 
 
