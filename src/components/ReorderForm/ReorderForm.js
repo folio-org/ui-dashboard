@@ -128,11 +128,11 @@ const ReorderForm = ({
               }
                   icon="drag-drop"
                 />
-          )}
+              )}
             >
               {(name) => {
-            return widgetNameFromName(name);
-          }}
+                return widgetNameFromName(name);
+              }}
             </FieldArray>
           </Pane>
         </Paneset>
