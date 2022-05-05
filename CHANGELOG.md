@@ -1,4 +1,6 @@
 # Change history for ui-dashboard
+## 2.0.1 2022-05-05
+  * ERM-2073. Agreement/license links missing in Dashboard widgets.
 
 ## 2.0.0 2021-10-07
   * Upgrade to stripes v7
