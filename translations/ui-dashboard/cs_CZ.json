@@ -172,9 +172,9 @@
     "simpleSearchForm.filters.dateFilterField.lengthOfTime": "Length of time",
     "simpleSearchForm.filters.dateFilterField.relativeDate": "Relative date",
     "error.duplicateColumn": "Duplicitní sloupec, opravte prosím",
-    "shortcut.new": "Create a new widget",
-    "shortcut.edit": "Edit a widget",
-    "shortcut.save": "Save form changes",
+    "shortcut.new": "Vytvoření nového widgetu",
+    "shortcut.edit": "Upravit widget",
+    "shortcut.save": "Uložit změny formuláře",
     "tokenDatePicker.validation.invalidDate": "Chcete-li pokračovat, zadejte datum ve formátu {dateFormat}",
     "tokenDatePicker.validation.invalidOffset": "Posun musí být větší nebo roven 0 a nesmí být větší než 999",
     "tokenDatePicker.fixedDate": "Pevné datum",
@@ -183,5 +183,5 @@
     "tokenUserPicker.me": "Já (příbuzný)",
     "tokenUserPicker.user": "Opravený uživatel",
     "tokenUserPicker.validation.invalidUser": "Vyberte uživatele, ve kterém chcete pokračovat",
-    "simpleSearchForm.filters.uuidFilterField.emptyWarning": "Please enter a valid UUID to continue"
+    "simpleSearchForm.filters.uuidFilterField.emptyWarning": "Chcete-li pokračovat, zadejte platné UUID"
 }
