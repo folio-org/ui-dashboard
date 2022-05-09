@@ -8,3 +8,9 @@
 .linkText {
   font-weight: var(--text-weight-bold);
 }
+
+.spinner {
+  position: absolute;
+  margin-left: 50%;
+  margin-right: -50%;
+}

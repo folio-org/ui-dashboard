@@ -39,8 +39,8 @@ export default class ErrorBoundary extends Component {
       .map(str => str.replace(/\s+/, ''))
       .join('\n');
 
-      // Error message seems to include stack as well, split on newline
-      const errorMessage = error.message.split('\n')[0];
+    // Error message seems to include stack as well, split on newline
+    const errorMessage = error.message.split('\n')[0];
 
     this.setState({ error: errorMessage, stack });
   }

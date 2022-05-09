@@ -26,18 +26,10 @@ import DashboardOrderRoute from './routes/DashboardOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 import WidgetEditRoute from './routes/WidgetEditRoute';
 
-import Settings from './settings';
 
-const App = (appProps) => {
+const App = ({ history, location, match: { path } }) => {
   const intl = useIntl();
-  const { actAs, history, location, match: { path } } = appProps;
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
-
-  if (actAs === 'settings') {
-    return (
-      <Settings {...appProps} />
-    );
-  }
 
   const appSpecificShortcuts = importShortcuts(['new', 'edit', 'save', 'expandAllSections', 'collapseAllSections', 'expandOrCollapseAccordion', 'openShortcutModal']);
 
@@ -114,11 +106,9 @@ App.eventHandler = (event, _s, data) => {
 };
 
 App.propTypes = {
-  actAs: PropTypes.string.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  stripes: PropTypes.object.isRequired,
 };
 
 export default App;

@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import { useQuery } from 'react-query';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { Badge } from '@folio/stripes/components';
+import { Badge, Spinner } from '@folio/stripes/components';
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../../../SimpleTable';
@@ -39,22 +39,24 @@ const SimpleSearch = ({
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
 
-  const { data, dataUpdatedAt, refetch } = useQuery(
+  const { data, dataUpdatedAt, isLoading: widgetsLoading, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
     async () => ky(pathBuilder(widgetDef, widgetConf, stripes))
-        .then((res) => {
-          return res.json();
-        })
-        .catch(async err => {
-          const parsedError = await errorParser(err, intl);
-          setErrorState({
-            ...parsedError,
-            isError: true
-          });
-        })
+      .then((res) => {
+        return res.json();
+      })
+      .catch(async err => {
+        const parsedError = await errorParser(err, intl);
+        setErrorState({
+          ...parsedError,
+          isError: true
+        });
+      })
   );
+
   const simpleTableData = useMemo(() => data?.results || [], [data]);
+
 
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
 
@@ -105,6 +107,10 @@ const SimpleSearch = ({
           }
         />
       );
+    }
+
+    if (widgetsLoading) {
+      return <span className={css.spinner}><Spinner /></span>;
     }
 
     if (!data?.results?.length) {
