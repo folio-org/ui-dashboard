@@ -1,4 +1,6 @@
 # Change history for ui-dashboard
+## 2.1.1 2022-05-11
+  * ERM-2073. Agreement/license links missing in Dashboard widgets.
 
 ## 2.1.0 2022-03-02
   * ERM-1927 Cannot select options in option switcher in widget config
