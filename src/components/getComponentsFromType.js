@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Spinner } from '@folio/stripes/components';
 
 // TODO figure out lazy loading of functions
 import simpleSearchSubmitManipulation from './TypeComponents/SimpleSearch/Form/formParsing/submitWidget';
@@ -17,7 +18,7 @@ import SimpleSearchForm from './TypeComponents/SimpleSearch/Form/SimpleSearchFor
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
-const getComponentsFromType = (widgetType = '') => {
+const getComponentsFromType = (widgetType = '', isLoading) => {
   const componentBundle = {};
 
   const WidgetComponentError = () => (
@@ -31,6 +32,15 @@ const getComponentsFromType = (widgetType = '') => {
       <FormattedMessage id="ui-dashboard.error.noWidgetFormComponentForType" values={{ widgetType }} />
     </ErrorComponent>
   );
+
+  if (isLoading) {
+    return {
+      WidgetComponent: <Spinner />,
+      WidgetFormComponent: <Spinner />
+    };
+  }
+
+  console.log('isLoading %o :', isLoading);
 
   switch (widgetType) {
     case 'SimpleSearch': {
