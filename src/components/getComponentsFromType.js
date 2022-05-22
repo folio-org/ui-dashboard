@@ -15,6 +15,7 @@ import ErrorComponent from './ErrorComponents/ErrorComponent';
 // SimpleSearch components/functions
 import SimpleSearch from './TypeComponents/SimpleSearch/Widget/SimpleSearch';
 import SimpleSearchForm from './TypeComponents/SimpleSearch/Form/SimpleSearchForm';
+import css from './Style.css';
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
@@ -35,12 +36,10 @@ const getComponentsFromType = (widgetType = '', isLoading) => {
 
   if (isLoading) {
     return {
-      WidgetComponent: <Spinner />,
-      WidgetFormComponent: <Spinner />
+      WidgetComponent: () => (<Spinner className={css.spinner} />),
+      WidgetFormComponent: () => (<Spinner className={css.spinner} />)
     };
   }
-
-  console.log('isLoading %o :', isLoading);
 
   switch (widgetType) {
     case 'SimpleSearch': {
