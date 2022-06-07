@@ -1,4 +1,6 @@
 # Change history for ui-dashboard
+## 2.1.2 2022-06-07
+* ERM-2188. Backport recent zh_TW translations
 ## 2.1.1 2022-05-11
   * ERM-2073. Agreement/license links missing in Dashboard widgets.
 
