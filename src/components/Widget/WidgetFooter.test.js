@@ -41,7 +41,7 @@ describe('WidgetFooter', () => {
       );
 
       // IconButton calls seem to not work right now
-      const refreshButton = getByRole('button', { 'aria-label': `Refresh widget: ${widgetFooterProps.widgetName}`});
+      const refreshButton = getByRole('button', { 'aria-label': `Refresh widget: ${widgetFooterProps.widgetName}` });
       await userEvent.click(refreshButton);
     });
 
