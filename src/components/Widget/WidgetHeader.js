@@ -36,7 +36,7 @@ const WidgetHeader = ({
     return (
       <IconButton
         ref={widgetFocusRef}
-        aria-label={
+        ariaLabel={
           intl.formatMessage(
             { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
             { widgetName: name }

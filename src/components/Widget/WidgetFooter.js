@@ -23,7 +23,7 @@ const WidgetFooter = ({
       >
         <IconButton
           key={`widget-footer-${widgetId}-refresh-icon`}
-          aria-label={
+          ariaLabel={
             intl.formatMessage(
               { id: 'ui-dashboard.widgetFooter.refreshButtonLabel' },
               { widgetName }

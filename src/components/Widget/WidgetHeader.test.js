@@ -1,11 +1,10 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import userEvent from '@testing-library/user-event';
+import { Dropdown } from '@folio/stripes-testing';
 
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import WidgetHeader from './WidgetHeader';
 import translationsProperties from '../../../test/helpers';
-
 
 const widgetName = 'Widget Test 1';
 const widgetId = '123456789';
@@ -29,7 +28,7 @@ describe('WidgetHeader', () => {
     expect(getByText(widgetName)).toBeInTheDocument();
   });
 
-  test('renders actions button with correct menu options available on click', () => {
+  test('renders actions button with correct menu options available on click', async () => {
     const { getByRole } = renderWithIntl(
       <WidgetHeader
         name={widgetName}
@@ -40,17 +39,16 @@ describe('WidgetHeader', () => {
       translationsProperties
     );
 
-    const actionsButton = getByRole('button', { name: /Actions for widget: Widget Test 1/i });
-    expect(actionsButton).toBeInTheDocument();
+    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
 
-    userEvent.click(actionsButton);
-    expect(getByRole('button', { name: /Edit widget: Widget Test 1/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /Delete widget: Widget Test 1/i })).toBeInTheDocument();
+    expect(actionsButton.exists());
+
+    expect(getByRole('button', { name: /Edit widget: Widget Test 1/i, hidden: true })).toBeInTheDocument();
+    expect(getByRole('button', { name: /Delete widget: Widget Test 1/i, hidden: true })).toBeInTheDocument();
   });
 
-
-  test('fires onWidgetEdit on clicking edit button', () => {
-    const { getByRole } = renderWithIntl(
+  test('fires onWidgetEdit on clicking edit button', async () => {
+    renderWithIntl(
       <WidgetHeader
         name={widgetName}
         onWidgetDelete={onWidgetDelete}
@@ -60,13 +58,14 @@ describe('WidgetHeader', () => {
       translationsProperties
     );
 
-    userEvent.click(getByRole('button', { name: /Actions for widget: Widget Test 1/i }));
-    userEvent.click(getByRole('button', { name: /Edit widget: Widget Test 1/i }));
+    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
+    await actionsButton.choose('Edit');
+
     expect(onWidgetEdit.mock.calls.length).toBe(1);
   });
 
-  test('fires onWidgetDelete on clicking delete button', () => {
-    const { getByRole } = renderWithIntl(
+  test('fires onWidgetDelete on clicking delete button', async () => {
+    renderWithIntl(
       <WidgetHeader
         name={widgetName}
         onWidgetDelete={onWidgetDelete}
@@ -76,8 +75,9 @@ describe('WidgetHeader', () => {
       translationsProperties
     );
 
-    userEvent.click(getByRole('button', { name: /Actions for widget: Widget Test 1/i }));
-    userEvent.click(getByRole('button', { name: /Delete widget: Widget Test 1/i }));
+    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
+    await actionsButton.choose('Delete');
+
     expect(onWidgetDelete.mock.calls.length).toBe(1);
   });
 });

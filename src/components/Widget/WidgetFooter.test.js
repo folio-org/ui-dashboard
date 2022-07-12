@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+
+import { Button, IconButton } from '@folio/stripes-testing';
 import userEvent from '@testing-library/user-event';
 
 import '@folio/stripes-erm-components/test/jest/__mock__';
@@ -18,25 +20,34 @@ const widgetFooterProps = {
 
 describe('WidgetFooter', () => {
   test('renders refresh button with correct aria-label', () => {
-    const { getByRole } = renderWithIntl(
+    renderWithIntl(
       <WidgetFooter
         {...widgetFooterProps}
       />,
       translationsProperties
     );
-    expect(getByRole('button', { name: `Refresh widget: ${widgetFooterProps.widgetName}` })).toBeInTheDocument();
+
+    const refreshButton = IconButton(`Refresh widget: ${widgetFooterProps.widgetName}`);
+    expect(refreshButton.exists());
   });
 
-  test('clicking refresh button calls onRefresh', () => {
-    const { getByRole } = renderWithIntl(
-      <WidgetFooter
-        {...widgetFooterProps}
-      />,
-      translationsProperties
-    );
-    const refreshButton = getByRole('button', { name: `Refresh widget: ${widgetFooterProps.widgetName}` });
-    userEvent.click(refreshButton);
-    expect(widgetFooterProps.onRefresh.mock.calls.length).toBe(1);
+  describe('clicking refresh button', () => {
+    beforeEach(async () => {
+      const { getByRole } = renderWithIntl(
+        <WidgetFooter
+          {...widgetFooterProps}
+        />,
+        translationsProperties
+      );
+
+      // IconButton calls seem to not work right now
+      const refreshButton = getByRole('button', { 'aria-label': `Refresh widget: ${widgetFooterProps.widgetName}`});
+      await userEvent.click(refreshButton);
+    });
+
+    test('clicking refresh button calls onRefresh', () => {
+      expect(widgetFooterProps.onRefresh.mock.calls.length).toBe(1);
+    });
   });
 
   test('renders timestamp correctly', () => {
@@ -46,6 +57,7 @@ describe('WidgetFooter', () => {
       />,
       translationsProperties
     );
+
     expect(getByText(widgetFooterProps.timestamp)).toBeInTheDocument();
   });
 
@@ -56,6 +68,7 @@ describe('WidgetFooter', () => {
       />,
       translationsProperties
     );
+
     expect(getByText(/right content/i)).toBeInTheDocument();
   });
 });
