@@ -37,7 +37,7 @@ const DashboardRoute = ({
   const { data: widgets, isLoading: widgetsLoading } = useQuery(
     // We need this to rerun when the dashboard updates
     ['ui-dashboard', 'dashboardRoute', 'widgets', dashboard],
-    () => ky(`servint/widgets/instances/my-widgets?filters=owner.id=${dashboard?.id}&sort=weight;asc&perPage=100`).json(),
+    () => ky(`servint/dashboard/${dashId}/widgets?sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
       enabled: (

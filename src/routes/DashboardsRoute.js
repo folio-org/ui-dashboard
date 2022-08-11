@@ -37,7 +37,7 @@ const DashboardsRoute = ({
        * NOTE this simply pushes the user to the first dashboard in their list,
        * which initially should only be a single dashboard, DEFAULT
        */
-      const dashId = dashboards[0]?.id;
+      const dashId = dashboards[0]?.dashboard?.id;
       history.push(`/dashboard/${dashId}`);
     }
   }, [dashboards, history, isInitialDashFinished]);
