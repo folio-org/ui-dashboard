@@ -20,12 +20,13 @@ const DashboardsRoute = ({
 
   const ky = useOkapiKy();
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
+  // For now ensure we always get the dashboards back from earliest to latest
   const [isInitialDashFinished, setInitialDashFinished] = useState(false);
   const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboards'],
     async () => {
       // Actually wait for the data to come back.
-      const dashData = await ky('servint/dashboard/my-dashboards').json();
+      const dashData = await ky('servint/dashboard/my-dashboards?sort=dateCreated;asc').json();
       setInitialDashFinished(true);
       return dashData;
     }
