@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useQuery } from 'react-query';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+
 import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
@@ -19,14 +21,35 @@ const DashboardsRoute = ({
    */
 
   const ky = useOkapiKy();
+  const myDashboardsQueryParams = useMemo(() => (
+    generateKiwtQueryParams(
+      {
+        sort: [
+          {
+            path: 'defaultUserDashboard',
+            direction: 'desc'
+          },
+          {
+            path: 'userDashboardWeight'
+          },
+          {
+            path: 'dateCreated',
+            direction: 'desc'
+          }
+        ],
+        stats: false
+      },
+      {}
+    )
+  ), []);
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
   // For now ensure we always get the dashboards back from earliest to latest
   const [isInitialDashFinished, setInitialDashFinished] = useState(false);
   const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
-    ['ui-dashboard', 'dashboardRoute', 'dashboards'],
+    ['ui-dashboard', 'dashboardRoute', 'dashboards', myDashboardsQueryParams],
     async () => {
       // Actually wait for the data to come back.
-      const dashData = await ky('servint/dashboard/my-dashboards?sort=dateCreated;asc').json();
+      const dashData = await ky(`servint/dashboard/my-dashboards?${myDashboardsQueryParams.join('&')}`).json();
       setInitialDashFinished(true);
       return dashData;
     }

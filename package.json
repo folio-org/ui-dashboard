@@ -32,7 +32,8 @@
       "servint": "1.0"
     },
     "stripesDeps": [
-      "@folio/stripes-erm-components"
+      "@folio/stripes-erm-components",
+      "@k-int/stripes-kint-components"
     ],
     "icons": [
       {
@@ -133,6 +134,7 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^6.2.0",
+    "@k-int/stripes-kint-components": "^2.8.2",
     "classnames": "^2.2.6",
     "compose-function": "^3.0.3",
     "final-form": "^4.19.0",
