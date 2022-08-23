@@ -78,10 +78,10 @@ const App = ({ history, location, match: { path } }) => {
             )}
           </AppContextMenu>
           <Switch>
-            <Route component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
-            <Route component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
-            <Route component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
-            <Route component={DashboardRoute} path={`${path}/:dashId`} />
+            <Route component={WidgetCreateRoute} path={`${path}/:dashName/create`} />
+            <Route component={WidgetEditRoute} path={`${path}/:dashName/:widgetId/edit`} />
+            <Route component={DashboardOrderRoute} path={`${path}/:dashName/editOrder`} />
+            <Route component={DashboardRoute} path={`${path}/:dashName`} />
             <Route component={DashboardsRoute} path={path} />
           </Switch>
         </HasCommand>

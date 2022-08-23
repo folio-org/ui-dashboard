@@ -19,15 +19,15 @@ const DashboardRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
-  const [dashId, setDashId] = useState(params.dashId);
+  const [dashName, setDashName] = useState(params.dashName);
 
   // Load specific dashboard -- for now will only be DEFAULT
   const [isInitialCallFinished, setInitialCallFinished] = useState(false);
-  const { data: dashboard, isLoading: dashboardLoading, refetch: refetchDashboard } = useQuery(
+  const { data: { 0: dashboard } = [], isLoading: dashboardLoading, refetch: refetchDashboard } = useQuery(
     ['ui-dashboard', 'dashboardRoute', 'dashboard'],
     async () => {
       // Actually wait for the data to come back.
-      const dashData = await ky(`servint/dashboard/${dashId}`).json();
+      const dashData = await ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json();
       setInitialCallFinished(true);
       return dashData;
     }
@@ -37,7 +37,7 @@ const DashboardRoute = ({
   const { data: widgets, isLoading: widgetsLoading } = useQuery(
     // We need this to rerun when the dashboard updates
     ['ui-dashboard', 'dashboardRoute', 'widgets', dashboard],
-    () => ky(`servint/dashboard/${dashId}/widgets?sort=weight;asc&perPage=100`).json(),
+    () => ky(`servint/widgets/instances/my-widgets?filters=owner.id=${dashboard?.id}&sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
       enabled: (
@@ -82,7 +82,7 @@ const DashboardRoute = ({
       <Dashboard
         key={`dashboard-${dashboard.id}`}
         dashboardId={dashboard.id}
-        onChangeDash={setDashId}
+        onChangeDash={setDashName}
         onCreate={handleCreate}
         onReorder={handleReorder}
         onWidgetDelete={handleWidgetDelete}
@@ -93,7 +93,7 @@ const DashboardRoute = ({
   }
   return (
     <ErrorPage>
-      <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashboard?.name }} />
+      <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashName }} />
     </ErrorPage>
   );
 };
@@ -110,7 +110,7 @@ DashboardRoute.propTypes = {
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      dashId: PropTypes.string
+      dashName: PropTypes.string
     })
   }).isRequired
 };

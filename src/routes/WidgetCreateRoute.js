@@ -18,9 +18,9 @@ const WidgetCreateRoute = ({
 }) => {
   const ky = useOkapiKy();
   // Query setup for the dashboard/definitions/POST/PUT
-  const { data: dashboard = {} } = useQuery(
+  const { data: { 0: dashboard = {} } = [] } = useQuery(
     ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
-    () => ky(`servint/dashboard/${params.dashId}`).json()
+    () => ky(`servint/dashboard/my-dashboards?filters=name=${params.dashName}`).json()
   );
 
   const { mutateAsync: postWidget } = useMutation(
@@ -48,7 +48,7 @@ const WidgetCreateRoute = ({
 
   const handleClose = (id) => {
     history.push({
-      pathname: `/dashboard/${params.dashId}`,
+      pathname: `/dashboard/${params.dashName}`,
       ...(id && { state: id })
     });
   };
@@ -121,7 +121,7 @@ WidgetCreateRoute.propTypes = {
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      dashId: PropTypes.string,
+      dashName: PropTypes.string,
       widgetId: PropTypes.string,
     })
   }).isRequired
