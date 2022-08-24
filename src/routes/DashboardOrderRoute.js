@@ -13,22 +13,22 @@ const DashboardOrderRoute = ({
   history,
   match: {
     params: {
-      dashName
+      dashId
     }
   }
 }) => {
   const ky = useOkapiKy();
 
-  // Load specific dashboard from name
-  const { data: { 0: dashboard } = [], isLoading: dashboardLoading } = useQuery(
+  // Load specific dashboard
+  const { data: dashboard, isLoading: dashboardLoading } = useQuery(
     ['ui-dashboard', 'dashboardOrderRoute', 'dashboard'],
-    () => ky(`servint/dashboard/my-dashboards?filters=name=${dashName}`).json(),
+    () => ky(`servint/dashboard/${dashId}`).json(),
   );
 
   // The PUT for the dashboardOrdering
   const { mutateAsync: putDashOrder } = useMutation(
     ['ui-dashboard', 'dashboardOrderRoute', 'putDashboard'],
-    (data) => ky.put(`servint/dashboard/${dashboard?.id}`, { json: data })
+    (data) => ky.put(`servint/dashboard/${dashId}`, { json: data })
   );
 
   if (dashboardLoading) {
@@ -38,7 +38,7 @@ const DashboardOrderRoute = ({
   }
 
   const handleClose = () => {
-    history.push(`/dashboard/${dashName}`);
+    history.push(`/dashboard/${dashId}`);
   };
 
   const doTheSubmit = (values) => (
@@ -85,7 +85,7 @@ DashboardOrderRoute.propTypes = {
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      dashName: PropTypes.string
+      dashId: PropTypes.string
     })
   }).isRequired
 };
