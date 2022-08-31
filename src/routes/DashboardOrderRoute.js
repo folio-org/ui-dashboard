@@ -21,7 +21,7 @@ const DashboardOrderRoute = ({
 
   // Load specific dashboard
   const { data: dashboard, isLoading: dashboardLoading } = useQuery(
-    ['ui-dashboard', 'dashboardOrderRoute', 'dashboard'],
+    ['ERM', 'dashboard', dashId],
     () => ky(`servint/dashboard/${dashId}`).json(),
   );
 

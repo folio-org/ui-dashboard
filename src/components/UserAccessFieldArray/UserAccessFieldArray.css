@@ -1,0 +1,72 @@
+@import '@folio/stripes-components/lib/variables';
+
+.editableListFormHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.mclRowContainer {
+  width: fit-content;
+}
+
+.editListRow {
+  display: flex;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: var(--radius);
+  margin-bottom: 4px;
+  min-height: 40px;
+  background-color: var(--color-fill-table-row-even);
+
+  &.isOdd {
+    background-color: var(--color-fill-table-row-odd);
+  }
+}
+
+.baselineListRow {
+  align-items: baseline;
+}
+
+.editListHeaders {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.editableListError {
+  width: 100%;
+  padding: 6px;
+  color: var(--error);
+}
+
+.mclCellStyle {
+  position: relative;
+  border: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    right: 0;
+    top: var(--gutter-static-one-third);
+    bottom: var(--gutter-static-one-third);
+    background-color: var(--color-border-p2);
+  }
+
+  &:last-child {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+[dir="rtl"] .mclCellStyle {
+  border: 0;
+
+  &::after {
+    right: auto;
+    left: 0;
+  }
+}

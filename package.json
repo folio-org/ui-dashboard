@@ -131,7 +131,8 @@
     "redux-observable": "^1.2.0",
     "rxjs": "^6.6.3",
     "sinon": "^14.0.0",
-    "typescript": "^2.8.0"
+    "typescript": "^2.8.0",
+    "zustand": "^4.0.0"
   },
   "dependencies": {
     "@k-int/stripes-kint-components": "^2.8.2",
@@ -156,6 +157,7 @@
     "react-dom": "^17.0.2",
     "react-intl": "^5.8.1",
     "react-query": "^3.9.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "zustand": "^4.0.0"
   }
 }

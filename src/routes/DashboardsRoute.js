@@ -44,31 +44,26 @@ const DashboardsRoute = ({
   ), []);
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
   // For now ensure we always get the dashboards back from earliest to latest
-  const [isInitialDashFinished, setInitialDashFinished] = useState(false);
   const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
-    ['ui-dashboard', 'dashboardRoute', 'dashboards', myDashboardsQueryParams],
-    async () => {
-      // Actually wait for the data to come back.
-      const dashData = await ky(`servint/dashboard/my-dashboards?${myDashboardsQueryParams.join('&')}`).json();
-      setInitialDashFinished(true);
-      return dashData;
-    }
+    ['ERM', 'dashboards', myDashboardsQueryParams],
+    () => ky(`servint/dashboard/my-dashboards?${myDashboardsQueryParams.join('&')}`).json()
   );
 
   useEffect(() => {
-    if (isInitialDashFinished && dashboards) {
+    if (!dashboardsLoading && dashboards) {
       /*
        * NOTE this simply pushes the user to the first dashboard in their list,
        * which initially should only be a single dashboard, DEFAULT
        */
-      const dashId = dashboards[0]?.dashboard?.id;
-      history.push(`/dashboard/${dashId}`);
+      history.push(`/dashboard/${dashboards[0]?.dashboard?.id}`);
     }
-  }, [dashboards, history, isInitialDashFinished]);
+  }, [dashboards, history, dashboardsLoading]);
 
   if (dashboardsLoading) {
     return <Loading />;
   }
+
+  // TODO We maybe need a container here to hold the tab options between dashboards
 
   // If finished loading and we have no dashboards, error out
   return (

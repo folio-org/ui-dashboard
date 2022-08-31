@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 // and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
 import DashboardsRoute from './routes/DashboardsRoute';
 import DashboardRoute from './routes/DashboardRoute';
+import DashboardAccessRoute from './routes/DashboardAccessRoute';
 import DashboardOrderRoute from './routes/DashboardOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 import WidgetEditRoute from './routes/WidgetEditRoute';
@@ -80,6 +81,7 @@ const App = ({ history, location, match: { path } }) => {
           <Switch>
             <Route component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
             <Route component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
+            <Route component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
             <Route component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
             <Route component={DashboardRoute} path={`${path}/:dashId`} />
             <Route component={DashboardsRoute} path={path} />

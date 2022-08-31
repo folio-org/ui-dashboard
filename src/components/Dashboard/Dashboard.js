@@ -26,6 +26,7 @@ const Dashboard = ({
   dashboardId,
   onCreate,
   onReorder,
+  onUserAccess,
   onWidgetDelete,
   onWidgetEdit,
   widgets
@@ -125,6 +126,7 @@ const Dashboard = ({
           key={`dashboard-header-${dashboardId}`}
           onCreate={onCreate}
           onReorder={widgets?.length > 1 ? onReorder : null}
+          onUserAccess={onUserAccess}
         />
         <div className={css.dashboardContent}>{dashboardContents()}</div>
       </div>

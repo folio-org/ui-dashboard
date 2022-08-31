@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { ErrorPage } from '../components/ErrorComponents';
-
 
 const DashboardRoute = ({
   history,
@@ -21,16 +20,12 @@ const DashboardRoute = ({
   const ky = useOkapiKy();
   const [dashId, setDashId] = useState(params.dashId);
 
+  const queryClient = useQueryClient();
+
   // Load specific dashboard -- for now will only be DEFAULT
-  const [isInitialCallFinished, setInitialCallFinished] = useState(false);
-  const { data: dashboard, isLoading: dashboardLoading, refetch: refetchDashboard } = useQuery(
-    ['ui-dashboard', 'dashboardRoute', 'dashboard'],
-    async () => {
-      // Actually wait for the data to come back.
-      const dashData = await ky(`servint/dashboard/${dashId}`).json();
-      setInitialCallFinished(true);
-      return dashData;
-    }
+  const { data: dashboard, isLoading: dashboardLoading } = useQuery(
+    ['ERM', 'dashboard', dashId],
+    () => ky(`servint/dashboard/${dashId}`).json(),
   );
 
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
@@ -41,7 +36,6 @@ const DashboardRoute = ({
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
       enabled: (
-        isInitialCallFinished &&
         dashboardLoading !== true &&
         dashboard?.id !== null
       )
@@ -62,6 +56,10 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/editOrder`);
   };
 
+  const handleUserAccess = () => {
+    history.push(`${location.pathname}/userAccess`);
+  };
+
   const handleWidgetEdit = (id) => {
     history.push(`${location.pathname}/${id}/edit`);
   };
@@ -69,7 +67,7 @@ const DashboardRoute = ({
   const handleWidgetDelete = (id) => {
     deleteWidget(id).then(() => (
       // Make sure to refetch dashboard when we delete a widget
-      refetchDashboard()
+      queryClient.invalidateQueries(['ERM', 'dashboard', dashId])
     ));
   };
 
@@ -85,12 +83,14 @@ const DashboardRoute = ({
         onChangeDash={setDashId}
         onCreate={handleCreate}
         onReorder={handleReorder}
+        onUserAccess={handleUserAccess}
         onWidgetDelete={handleWidgetDelete}
         onWidgetEdit={handleWidgetEdit}
         widgets={widgets}
       />
     );
   }
+
   return (
     <ErrorPage>
       <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashboard?.name }} />

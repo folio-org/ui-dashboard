@@ -6,7 +6,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import ActionMenu from '../../ActionMenu/ActionMenu';
+import ActionMenu from '../../ActionMenu';
 import css from './DashboardHeader.css';
 
 const propTypes = {
@@ -14,7 +14,7 @@ const propTypes = {
   onReorder: PropTypes.func
 };
 
-export default function DashboardHeader({ onCreate, onReorder }) {
+const DashboardHeader = ({ onCreate, onReorder, onUserAccess }) => {
   const getActionMenu = () => (
     <>
       <Button
@@ -32,6 +32,14 @@ export default function DashboardHeader({ onCreate, onReorder }) {
       >
         <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
       </Button>
+      <Button
+        buttonStyle="dropdownItem"
+        disabled={!onUserAccess}
+        id="clickable-userAccess"
+        onClick={onUserAccess}
+      >
+        <FormattedMessage id="ui-dashboard.dashboardHeader.userAccess" />
+      </Button>
     </>
   );
 
@@ -40,6 +48,8 @@ export default function DashboardHeader({ onCreate, onReorder }) {
       <ActionMenu actionMenu={getActionMenu} />
     </div>
   );
-}
+};
 
 DashboardHeader.propTypes = propTypes;
+
+export default DashboardHeader;

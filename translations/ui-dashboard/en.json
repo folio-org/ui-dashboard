@@ -13,6 +13,7 @@
   "loading": "Loading",
   "dashboardHeader.new": "New",
   "dashboardHeader.reorder": "Edit widget display order",
+  "dashboardHeader.userAccess": "User access",
   "dashboard.newWidget": "{label} widget",
   "dashboard.reorderForm.paneTitle": "Edit widget display order",
   "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
@@ -182,5 +183,16 @@
   "simpleSearch.errorDescription": "The following occurred, preventing the display of content in the widget:",
   "shortcut.new": "Create a new widget",
   "shortcut.edit": "Edit a widget",
-  "shortcut.save": "Save form changes"
+  "shortcut.save": "Save form changes",
+  "dashboardUsers.userAccess": "User access - {dashboardName}",
+  "dashboardUsers.user": "User",
+  "dashboardUsers.status": "Status",
+  "dashboardUsers.status.active": "Active",
+  "dashboardUsers.status.inactive": "Inactive",
+  "dashboardUsers.status.error": "Error",
+  "dashboardUsers.email": "Email",
+  "dashboardUsers.accessLevel": "Access level",
+  "dashboardUsers.accessLevel.view": "View",
+  "dashboardUsers.accessLevel.edit": "Edit",
+  "dashboardUsers.accessLevel.manage": "Manage"
 }
