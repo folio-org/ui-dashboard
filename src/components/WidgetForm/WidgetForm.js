@@ -24,6 +24,7 @@ import {
   checkScope,
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
+import { DashboardAccessInfo } from '../Dashboard';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -46,6 +47,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    dashId,
     initialValues,
     name,
     params,
@@ -151,6 +153,7 @@ const WidgetForm = ({
                 <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
             }
           >
+            <DashboardAccessInfo dashId={dashId} />
             <Row>
               <Col xs={6}>
                 <KeyValue

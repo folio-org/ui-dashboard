@@ -1,9 +1,11 @@
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 import useDashboardAccessStore from './useDashboardAccessStore';
 
 const useDashboardAccess = (dashId, options) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
+
   const addAccess = useDashboardAccessStore(state => state.addAccess);
   const getAccess = useDashboardAccessStore(state => state.getAccess);
 
@@ -35,7 +37,9 @@ const useDashboardAccess = (dashId, options) => {
     }
   };
 
-  return { access, hasAccess };
+  const hasAdminPerm = stripes.hasPerm('servint.dashboards.admin');
+
+  return { access, hasAccess, hasAdminPerm };
 };
 
 export default useDashboardAccess;

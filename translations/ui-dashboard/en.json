@@ -196,5 +196,6 @@
   "dashboardUsers.accessLevel": "Access level",
   "dashboardUsers.accessLevel.view": "View",
   "dashboardUsers.accessLevel.edit": "Edit",
-  "dashboardUsers.accessLevel.manage": "Manage"
+  "dashboardUsers.accessLevel.manage": "Manage",
+  "dashboardUsers.accessWarning": "User does not have valid access to this dashboard, access granted via okapi permission \"servint.dashboard.admin\""
 }

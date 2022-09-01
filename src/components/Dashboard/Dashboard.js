@@ -2,8 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { stripesConnect, useStripes } from '@folio/stripes/core';
+
 import {
-  ConfirmationModal,
+  ConfirmationModal, MessageBanner,
 } from '@folio/stripes/components';
 
 import DashboardHeader from './DashboardHeader';
@@ -12,6 +14,7 @@ import css from './Dashboard.css';
 import { ErrorModal } from '../ErrorComponents';
 import { Widget } from '../Widget';
 import useWidgetDefinition from '../useWidgetDefinition';
+import DashboardAccessInfo from './DashboardAccessInfo';
 
 const propTypes = {
   dashboardId: PropTypes.string.isRequired,
@@ -106,17 +109,25 @@ const Dashboard = ({
 
   const dashboardContents = () => {
     if (!widgets?.length) {
-      return <NoWidgets />;
+      return (
+        <>
+          <DashboardAccessInfo dashId={dashboardId} />
+          <NoWidgets />
+        </>
+      );
     }
     return (
-      <div className={css.widgetsContainer}>
-        {widgets.map(w => (
-          <RenderWidget
-            key={`widget-${w.id}`}
-            widget={w}
-          />
-        ))}
-      </div>
+      <>
+        <DashboardAccessInfo dashId={dashboardId} />
+        <div className={css.widgetsContainer}>
+          {widgets.map(w => (
+            <RenderWidget
+              key={`widget-${w.id}`}
+              widget={w}
+            />
+          ))}
+        </div>
+      </>
     );
   };
 
@@ -125,7 +136,7 @@ const Dashboard = ({
       <div className={css.dashboard}>
         <DashboardHeader
           key={`dashboard-header-${dashboardId}`}
-          hasAccess={hasAccess}
+          dashId={dashboardId}
           onCreate={onCreate}
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}

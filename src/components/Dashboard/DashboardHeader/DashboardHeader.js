@@ -8,18 +8,21 @@ import {
 
 import ActionMenu from '../../ActionMenu';
 import css from './DashboardHeader.css';
+import { useDashboardAccess } from '../../hooks';
 
 const propTypes = {
-  hasAccess: PropTypes.func.isRequired,
+  dashId: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired,
   onReorder: PropTypes.func.isRequired,
   onUserAccess: PropTypes.func.isRequired
 };
 
-const DashboardHeader = ({ hasAccess, onCreate, onReorder, onUserAccess }) => {
+const DashboardHeader = ({ dashId, onCreate, onReorder, onUserAccess }) => {
+  const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
+
   const getActionMenu = () => {
     const actionMenuButtons = [];
-    if (hasAccess('edit')) {
+    if (hasAccess('edit') || hasAdminPerm) {
       actionMenuButtons.push(
         <Button
           buttonStyle="dropdownItem"

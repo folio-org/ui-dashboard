@@ -76,3 +76,11 @@
   /* -webkit-filter: grayscale(100%); */
   filter: hue-rotate(196deg) grayscale(100);
 }
+
+.error {
+  color: var(--error)
+}
+
+.warn {
+  color: var(--warn)
+}

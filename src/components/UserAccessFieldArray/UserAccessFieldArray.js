@@ -1,17 +1,20 @@
 import PropTypes from 'prop-types';
-
-import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
-
-import { Button, IconButton, Layout, MultiColumnList, Pane, PaneFooter, Select, TextLink } from '@folio/stripes/components';
-import { AppIcon, useStripes } from '@folio/stripes/core';
 import classNames from 'classnames';
 
 import { Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
+
+import { AppIcon, useStripes } from '@folio/stripes/core';
+import { Button, Icon, IconButton, Layout, MultiColumnList, Pane, PaneFooter, Select, TextLink } from '@folio/stripes/components';
+
+import { NewBox } from '@folio/stripes-erm-components';
+
 import css from './UserAccessFieldArray.css';
 import UserLookupButton from '../UserLookup/UserLookupButton';
 import { useDashboardAccess } from '../hooks';
+import { DashboardAccessInfo } from '../Dashboard';
 
 const UserAccessFieldArray = ({
   dashboard: {
@@ -35,10 +38,10 @@ const UserAccessFieldArray = ({
   } = useKiwtFieldArray(fieldsName); // Doing this so this could be moved to another field in a form without breaking stuff
 
   const intl = useIntl();
-  const { hasAccess } = useDashboardAccess(dashId);
+  const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
 
-  const visibleColumns = ['user', 'status', 'email', 'accessLevel']
-  if (hasAccess('manage')) {
+  const visibleColumns = ['user', 'status', 'email', 'accessLevel'];
+  if (hasAccess('manage') || hasAdminPerm) {
     visibleColumns.push('remove');
   }
 
@@ -49,7 +52,7 @@ const UserAccessFieldArray = ({
       defaultWidth="100%"
       dismissible
       footer={
-        hasAccess('manage') &&
+        (hasAccess('manage') || hasAdminPerm) &&
         <PaneFooter
           renderEnd={(
             <Button
@@ -82,7 +85,8 @@ const UserAccessFieldArray = ({
         <FormattedMessage id="ui-dashboard.dashboardUsers.userAccess" values={{ dashboardName: dashName }} />
       }
     >
-      {hasAccess('manage') &&
+      <DashboardAccessInfo dashId={dashId} />
+      {(hasAccess('manage') || hasAdminPerm) &&
         <Layout
           className="display-flex flex-direction-column flex-align-items-end"
         >
@@ -124,29 +128,45 @@ const UserAccessFieldArray = ({
         formatter={{
           user: item => {
             if (item.user?.id) {
-              // TODO Icon and link to user
               return (
-                <AppIcon
-                  app="users"
-                  className={item.user.active ? undefined : css.inactiveAppIcon}
-                  iconAlignment="baseline"
-                  size="small"
-                >
-                  <TextLink to={`/users/preview/${item.user.id}`}>{`${item.user.personal?.lastName}, ${item.user.personal?.firstName}`}</TextLink>
-                </AppIcon>
+                <>
+                  <AppIcon
+                    app="users"
+                    className={item.user.active ? undefined : css.inactiveAppIcon}
+                    iconAlignment="baseline"
+                    size="small"
+                  >
+                    <TextLink to={`/users/preview/${item.user.id}`}>{`${item.user.personal?.lastName}, ${item.user.personal?.firstName}`}</TextLink>
+                  </AppIcon>
+                  {
+                    !item.id &&
+                    <NewBox />
+                  }
+                </>
               );
             }
 
             return item.user;
           },
           status: item => {
-            // TODO colouring these with Icons
             if (!item.user?.id) {
-              return <FormattedMessage id="ui-dashboard.dashboardUsers.status.error" />;
+              return (
+                <div className={css.error}>
+                  <Icon icon="exclamation-circle">
+                    <FormattedMessage id="ui-dashboard.dashboardUsers.status.error" />
+                  </Icon>
+                </div>
+              );
             }
 
             if (!item.user.active) {
-              return <FormattedMessage id="ui-dashboard.dashboardUsers.status.inactive" />;
+              return (
+                <div className={css.warn}>
+                  <Icon icon="exclamation-circle">
+                    <FormattedMessage id="ui-dashboard.dashboardUsers.status.inactive" />
+                  </Icon>
+                </div>
+              );
             }
 
             return <FormattedMessage id="ui-dashboard.dashboardUsers.status.active" />;
@@ -159,7 +179,15 @@ const UserAccessFieldArray = ({
           },
           accessLevel: item => {
             // POC field in place of value
-            if (hasAccess('manage') && item?.user?.id !== userId) {
+            // Allow an admin to edit their own perm ONLY on create (Still don't allow delete)
+            if (
+              // EITHER
+              // User is not the current user AND has admin perm or manage access
+              ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
+              // OR
+              // User IS current user, but user has adminPerm and the access object didn't previously exist
+              (item?.user?.id === userId && hasAdminPerm && !item.id)
+            ) {
               return (
                 <Field
                   component={Select}
@@ -194,7 +222,14 @@ const UserAccessFieldArray = ({
             return <FormattedMessage id={`ui-dashboard.dashboardUsers.accessLevel.${item.access}`} />;
           },
           remove: item => {
-            if (hasAccess('manage') && item?.user?.id !== userId) {
+            if (
+              // EITHER
+              // User is not the current user AND has admin perm or manage access
+              ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
+              // OR
+              // User IS current user, but user has adminPerm and the access object didn't previously exist
+              (item?.user?.id === userId && hasAdminPerm && !item.id)
+            ) {
               return (
                 <IconButton
                   icon="trash"

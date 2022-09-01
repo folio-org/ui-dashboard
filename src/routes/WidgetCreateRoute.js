@@ -89,6 +89,7 @@ const WidgetCreateRoute = ({
           <form onSubmit={handleSubmit}>
             <WidgetForm
               data={{
+                dashId: params.dashId,
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
                 params,

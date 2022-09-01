@@ -15,13 +15,18 @@ import {
   Pane,
   Paneset,
   PaneFooter,
-  checkScope
+  checkScope,
+  Layout
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
 import css from './ReorderForm.css';
+import { DashboardAccessInfo } from '../Dashboard';
 
 const ReorderForm = ({
+  dashboard: {
+    id: dashId
+  } = {},
   onClose,
   onSubmit,
   pristine,
@@ -114,26 +119,29 @@ const ReorderForm = ({
             onClose={onClose}
             paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
           >
-            <FieldArray
-              component={DragAndDropFieldArray}
-              draggableDivStyle={getDraggableDivStyle}
-              name="widgets"
-              renderHandle={(name, index) => (
-                <Icon
-                  ariaLabel={
-                intl.formatMessage(
-                  { id: 'ui-dashboard.dashboard.reorderForm.dragAndDropHandleAria' },
-                  { index: index + 1, widgetName: widgetNameFromName(name) }
-                )
-              }
-                  icon="drag-drop"
-                />
-              )}
-            >
-              {(name) => {
-                return widgetNameFromName(name);
-              }}
-            </FieldArray>
+            <DashboardAccessInfo dashId={dashId} />
+            <Layout className="marginTopHalf">
+              <FieldArray
+                component={DragAndDropFieldArray}
+                draggableDivStyle={getDraggableDivStyle}
+                name="widgets"
+                renderHandle={(name, index) => (
+                  <Icon
+                    ariaLabel={
+                  intl.formatMessage(
+                    { id: 'ui-dashboard.dashboard.reorderForm.dragAndDropHandleAria' },
+                    { index: index + 1, widgetName: widgetNameFromName(name) }
+                  )
+                }
+                    icon="drag-drop"
+                  />
+                )}
+              >
+                {(name) => {
+                  return widgetNameFromName(name);
+                }}
+              </FieldArray>
+            </Layout>
           </Pane>
         </Paneset>
       </HasCommand>
@@ -142,6 +150,9 @@ const ReorderForm = ({
 };
 
 ReorderForm.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }),
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
