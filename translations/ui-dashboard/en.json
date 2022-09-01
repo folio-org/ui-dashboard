@@ -191,6 +191,8 @@
   "dashboardUsers.status.inactive": "Inactive",
   "dashboardUsers.status.error": "Error",
   "dashboardUsers.email": "Email",
+  "dashboardUsers.remove": "Remove",
+  "dashboardUsers.addUser": "Add user",
   "dashboardUsers.accessLevel": "Access level",
   "dashboardUsers.accessLevel.view": "View",
   "dashboardUsers.accessLevel.edit": "Edit",

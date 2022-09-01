@@ -9,6 +9,7 @@ import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { ErrorPage } from '../components/ErrorComponents';
+import { useDashboardAccess } from '../components/hooks';
 
 const DashboardRoute = ({
   history,
@@ -41,6 +42,8 @@ const DashboardRoute = ({
       )
     }
   );
+
+  const { hasAccess } = useDashboardAccess(dashId);
 
   // The DELETE for the widgets
   const { mutateAsync: deleteWidget } = useMutation(
@@ -80,6 +83,7 @@ const DashboardRoute = ({
       <Dashboard
         key={`dashboard-${dashboard.id}`}
         dashboardId={dashboard.id}
+        hasAccess={hasAccess}
         onChangeDash={setDashId}
         onCreate={handleCreate}
         onReorder={handleReorder}

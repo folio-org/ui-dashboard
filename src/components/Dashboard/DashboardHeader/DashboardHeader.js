@@ -10,28 +10,38 @@ import ActionMenu from '../../ActionMenu';
 import css from './DashboardHeader.css';
 
 const propTypes = {
-  onCreate: PropTypes.func,
-  onReorder: PropTypes.func
+  hasAccess: PropTypes.func.isRequired,
+  onCreate: PropTypes.func.isRequired,
+  onReorder: PropTypes.func.isRequired,
+  onUserAccess: PropTypes.func.isRequired
 };
 
-const DashboardHeader = ({ onCreate, onReorder, onUserAccess }) => {
-  const getActionMenu = () => (
-    <>
-      <Button
-        buttonStyle="dropdownItem"
-        id="clickable-new-widget"
-        onClick={onCreate}
-      >
-        <FormattedMessage id="ui-dashboard.dashboardHeader.new" />
-      </Button>
-      <Button
-        buttonStyle="dropdownItem"
-        disabled={!onReorder}
-        id="clickable-reorderdashboard"
-        onClick={onReorder}
-      >
-        <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
-      </Button>
+const DashboardHeader = ({ hasAccess, onCreate, onReorder, onUserAccess }) => {
+  const getActionMenu = () => {
+    const actionMenuButtons = [];
+    if (hasAccess('edit')) {
+      actionMenuButtons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-new-widget"
+          onClick={onCreate}
+        >
+          <FormattedMessage id="ui-dashboard.dashboardHeader.new" />
+        </Button>
+      );
+
+      actionMenuButtons.push(
+        <Button
+          buttonStyle="dropdownItem"
+          disabled={!onReorder}
+          id="clickable-reorderdashboard"
+          onClick={onReorder}
+        >
+          <FormattedMessage id="ui-dashboard.dashboardHeader.reorder" />
+        </Button>
+      );
+    }
+    actionMenuButtons.push(
       <Button
         buttonStyle="dropdownItem"
         disabled={!onUserAccess}
@@ -40,8 +50,9 @@ const DashboardHeader = ({ onCreate, onReorder, onUserAccess }) => {
       >
         <FormattedMessage id="ui-dashboard.dashboardHeader.userAccess" />
       </Button>
-    </>
-  );
+    );
+    return actionMenuButtons;
+  };
 
   return (
     <div className={css.dashboardHeader}>

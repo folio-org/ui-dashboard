@@ -1,14 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { useMutation, useQuery } from 'react-query';
 
 import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { AppIcon, useOkapiKy } from '@folio/stripes/core';
+import { Button, Pane, PaneFooter } from '@folio/stripes/components';
+
 import Loading from '../components/Dashboard/Loading';
-import { useChunkedUsers, useDashboardAccess } from '../components/hooks';
+import { useChunkedUsers } from '../components/hooks';
 
 import UserAccessFieldArray from '../components/UserAccessFieldArray';
 
@@ -27,8 +29,6 @@ const DashboardAccessRoute = ({
     ['ERM', 'dashboard', dashId],
     () => ky(`servint/dashboard/${dashId}`).json(),
   );
-
-  const { access, hasAccess } = useDashboardAccess(dashId);
 
   // Load dashboard users
   const { data: dashboardAccess = [], isLoading: dashboardAccessLoading } = useQuery(
@@ -69,8 +69,7 @@ const DashboardAccessRoute = ({
         access: dashboardAccess.map(da => ({
           access: da.access.value, // Allow us to receive and send refdata value instead of id
           id: da.id,
-          user: users.find(usr => usr.id === da.user.id), // If this is undefined then we know we couldn't find the user
-          userId: da.user.id // Return this as a separate field to keep data intact
+          user: users.find(usr => usr.id === da.user.id) ?? da.user.id, // If this is a flat id then we know we couldn't find the user
         }))
       }}
       keepDirtyOnReinitialize
@@ -81,21 +80,16 @@ const DashboardAccessRoute = ({
       onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, pristine, submitting }) => (
         <form onSubmit={handleSubmit}>
           <FieldArray
             component={UserAccessFieldArray}
-            data={{
-              access,
-              dashboard,
-              users
-            }}
-            handlers={{
-              hasAccess,
-              onClose: handleClose,
-              onSubmit: handleSubmit
-            }}
+            dashboard={dashboard}
             name="access"
+            onClose={handleClose}
+            onSubmit={handleSubmit}
+            pristine={pristine}
+            submitting={submitting}
             triggerFormSubmit={handleSubmit}
           />
         </form>

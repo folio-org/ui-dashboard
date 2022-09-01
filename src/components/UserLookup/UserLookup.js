@@ -12,9 +12,10 @@ import {
   Tooltip
 } from '@folio/stripes/components';
 
-import { AppIcon, Pluggable } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import { renderUserName } from '@folio/stripes-erm-components';
+import UserLookupButton from './UserLookupButton';
 
 // This must return a function to render a link button
 const propTypes = {
@@ -29,25 +30,16 @@ const propTypes = {
 };
 
 const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
-  let triggerButton = useRef(null);
-
   const renderLinkUserButton = v => (
-    <Pluggable
-      dataKey="user"
-      disableRecordCreation
-      renderTrigger={(pluggableRenderProps) => {
-        triggerButton = pluggableRenderProps.buttonRef;
 
-        const buttonProps = {
-          'aria-haspopup': 'true',
-          'buttonStyle': v ? 'default' : 'primary',
-          'id': `${id}-search-button`,
-          'name': name,
-          'onClick': pluggableRenderProps.onClick,
-          'buttonRef': triggerButton,
-          'marginBottom0': true
-        };
-
+    <UserLookupButton
+      buttonProps={{
+        'buttonStyle': v ? 'default' : 'primary',
+        id: `${id}-search-button`,
+        name
+      }}
+      onResourceSelected={onResourceSelected}
+      renderButton={(buttonProps, pluggableRenderProps, triggerButton) => {
         if (v) {
           return (
             <Tooltip
@@ -77,11 +69,7 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
           </Button>
         );
       }}
-      selectUser={onResourceSelected}
-      type="find-user"
-    >
-      <FormattedMessage id="stripes-erm-components.contacts.noUserPlugin" />
-    </Pluggable>
+    />
   );
 
   const renderUser = () => {

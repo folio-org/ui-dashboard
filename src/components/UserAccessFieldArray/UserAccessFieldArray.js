@@ -1,33 +1,46 @@
-import { MultiColumnList, Pane, Select, TextField } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import PropTypes from 'prop-types';
+
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
+
+import { Button, IconButton, Layout, MultiColumnList, Pane, PaneFooter, Select, TextLink } from '@folio/stripes/components';
+import { AppIcon, useStripes } from '@folio/stripes/core';
 import classNames from 'classnames';
 
-import cloneDeep from 'lodash/cloneDeep';
-import get from 'lodash/get';
-
-import { Field, useFormState } from 'react-final-form';
+import { Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import css from './UserAccessFieldArray.css';
+import UserLookupButton from '../UserLookup/UserLookupButton';
+import { useDashboardAccess } from '../hooks';
 
 const UserAccessFieldArray = ({
-  data: {
-    access: myAccess,
-    dashboard,
-    users
-  } = {},
-  fields,
-  handlers: {
-    hasAccess,
-    onClose,
-    onSubmit
-  } = {}
+  dashboard: {
+    id: dashId,
+    name: dashName,
+  },
+  fields: {
+    name: fieldsName
+  },
+  onClose,
+  onSubmit,
+  pristine,
+  submitting
 }) => {
-  const { values } = useFormState();
-  console.log("VALS: %o", values);
-  console.log("FIELDS: %o", fields);
+  const { user: { user: { id: userId } = {} } = {} } = useStripes();
+
+  const {
+    items,
+    onAddField,
+    onDeleteField
+  } = useKiwtFieldArray(fieldsName); // Doing this so this could be moved to another field in a form without breaking stuff
 
   const intl = useIntl();
+  const { hasAccess } = useDashboardAccess(dashId);
+
+  const visibleColumns = ['user', 'status', 'email', 'accessLevel']
+  if (hasAccess('manage')) {
+    visibleColumns.push('remove');
+  }
 
   return (
     <Pane
@@ -35,40 +48,96 @@ const UserAccessFieldArray = ({
       centerContent
       defaultWidth="100%"
       dismissible
+      footer={
+        hasAccess('manage') &&
+        <PaneFooter
+          renderEnd={(
+            <Button
+              buttonStyle="primary mega"
+              disabled={pristine || submitting}
+              id="clickable-update-dashboard-users"
+              marginBottom0
+              onClick={onSubmit}
+              type="submit"
+            >
+              <FormattedMessage id="stripes-components.saveAndClose" />
+            </Button>
+          )}
+          renderStart={(
+            <Button
+              buttonStyle="default mega"
+              id="clickable-cancel"
+              marginBottom0
+              onClick={onClose}
+            >
+              <FormattedMessage id="stripes-components.cancel" />
+            </Button>
+          )}
+        />
+      }
+      height="93vh"
       id="pane-user-access-form"
       onClose={onClose}
       paneTitle={
-        <FormattedMessage id="ui-dashboard.dashboardUsers.userAccess" values={{ dashboardName: dashboard.name }} />
+        <FormattedMessage id="ui-dashboard.dashboardUsers.userAccess" values={{ dashboardName: dashName }} />
       }
     >
+      {hasAccess('manage') &&
+        <Layout
+          className="display-flex flex-direction-column flex-align-items-end"
+        >
+          <UserLookupButton
+            onResourceSelected={(resource) => {
+              onAddField({
+                access: 'view',
+                user: resource
+              });
+            }}
+            renderButton={(buttonProps) => (
+              <Button
+                {...buttonProps}
+              >
+                <FormattedMessage id="ui-dashboard.dashboardUsers.addUser" />
+              </Button>
+            )}
+          />
+        </Layout>
+      }
       <MultiColumnList
         columnMapping={{
           user: <FormattedMessage id="ui-dashboard.dashboardUsers.user" />,
           status: <FormattedMessage id="ui-dashboard.dashboardUsers.status" />,
           email: <FormattedMessage id="ui-dashboard.dashboardUsers.email" />,
           accessLevel: <FormattedMessage id="ui-dashboard.dashboardUsers.accessLevel" />,
+          remove: <FormattedMessage id="ui-dashboard.dashboardUsers.remove" />,
         }}
         columnWidths={{
-          user: { min: 200, max: 300 },
-          status: { min: 100, max: 150 },
-          email: { min: 200, max: 300 },
-          accessLevel: { min: 100, max: 150 },
+          user: { min: 200, max: 400 },
+          status: { min: 100, max: 200 },
+          email: { min: 200, max: 400 },
+          accessLevel: { min: 150, max: 300 },
+          remove: { min: 50, max: 100 },
         }}
         contentData={
-          // Assign fieldName/fieldIndex to contentData so we can use it in fields
-          fields.map((fieldName, fieldIndex) => {
-          // Fetch the content from the field Values
-            const cd = cloneDeep(get(values, fieldName));
-            return { ...cd, fieldName, fieldIndex };
-          })
+          items.map((item, index) => ({ ...item, index, onRemove: () => onDeleteField(index, item) }))
         }
         formatter={{
           user: item => {
             if (item.user?.id) {
               // TODO Icon and link to user
-              return `${item.user.personal?.lastName}, ${item.user.personal?.firstName}`;
+              return (
+                <AppIcon
+                  app="users"
+                  className={item.user.active ? undefined : css.inactiveAppIcon}
+                  iconAlignment="baseline"
+                  size="small"
+                >
+                  <TextLink to={`/users/preview/${item.user.id}`}>{`${item.user.personal?.lastName}, ${item.user.personal?.firstName}`}</TextLink>
+                </AppIcon>
+              );
             }
-            return item.userId;
+
+            return item.user;
           },
           status: item => {
             // TODO colouring these with Icons
@@ -90,45 +159,57 @@ const UserAccessFieldArray = ({
           },
           accessLevel: item => {
             // POC field in place of value
-            // FIXME Make this reliant on accessLevel
-            return (
-              <Field
-                component={Select}
-                dataOptions={[
-                  {
-                    value: 'view',
-                    label: intl.formatMessage({
-                      id: 'ui-dashboard.dashboardUsers.accessLevel.view'
-                    })
-                  },
-                  {
-                    value: 'edit',
-                    label: intl.formatMessage({
-                      id: 'ui-dashboard.dashboardUsers.accessLevel.edit'
-                    })
-                  },
-                  {
-                    value: 'manage',
-                    label: intl.formatMessage({
-                      id: 'ui-dashboard.dashboardUsers.accessLevel.manage'
-                    })
-                  }
-                ]}
-                fullWidth
-                marginBottom0
-                name={`${item.fieldName}.access`}
-                parse={v => v}
-              />
-            );
+            if (hasAccess('manage') && item?.user?.id !== userId) {
+              return (
+                <Field
+                  component={Select}
+                  dataOptions={[
+                    {
+                      value: 'view',
+                      label: intl.formatMessage({
+                        id: 'ui-dashboard.dashboardUsers.accessLevel.view'
+                      })
+                    },
+                    {
+                      value: 'edit',
+                      label: intl.formatMessage({
+                        id: 'ui-dashboard.dashboardUsers.accessLevel.edit'
+                      })
+                    },
+                    {
+                      value: 'manage',
+                      label: intl.formatMessage({
+                        id: 'ui-dashboard.dashboardUsers.accessLevel.manage'
+                      })
+                    }
+                  ]}
+                  fullWidth
+                  marginBottom0
+                  name={`${fieldsName}[${item.index}].access`}
+                  parse={v => v}
+                />
+              );
+            }
 
             return <FormattedMessage id={`ui-dashboard.dashboardUsers.accessLevel.${item.access}`} />;
           },
+          remove: item => {
+            if (hasAccess('manage') && item?.user?.id !== userId) {
+              return (
+                <IconButton
+                  icon="trash"
+                  marginBottom0
+                  onClick={item.onRemove}
+                />
+              );
+            }
+            return '';
+          }
         }}
         getCellClass={(defaultClass) => `${defaultClass} ${css.mclCellStyle}`}
         getRowContainerClass={(defaultClass) => `${defaultClass} ${css.mclRowContainer}`}
         headerRowClass={css.editListHeaders}
         interactive={false}
-        // TODO RowFormatter needs to deal with fields too
         rowFormatter={({
           cells,
           rowClass,
@@ -146,10 +227,22 @@ const UserAccessFieldArray = ({
             {cells}
           </div>
         )}
-        visibleColumns={['user', 'status', 'email', 'accessLevel']}
+        visibleColumns={visibleColumns}
       />
     </Pane>
   );
+};
+
+UserAccessFieldArray.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.object,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 export default UserAccessFieldArray;

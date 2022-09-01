@@ -24,6 +24,7 @@ const propTypes = {
 
 const Dashboard = ({
   dashboardId,
+  hasAccess,
   onCreate,
   onReorder,
   onUserAccess,
@@ -124,6 +125,7 @@ const Dashboard = ({
       <div className={css.dashboard}>
         <DashboardHeader
           key={`dashboard-header-${dashboardId}`}
+          hasAccess={hasAccess}
           onCreate={onCreate}
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}

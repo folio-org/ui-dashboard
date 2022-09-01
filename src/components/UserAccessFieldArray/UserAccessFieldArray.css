@@ -70,3 +70,9 @@
     left: 0;
   }
 }
+
+/* Why isn't this an icon in users??? */
+.inactiveAppIcon {
+  /* -webkit-filter: grayscale(100%); */
+  filter: hue-rotate(196deg) grayscale(100);
+}
