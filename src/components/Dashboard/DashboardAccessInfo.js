@@ -6,10 +6,7 @@ import { MessageBanner } from '@folio/stripes/components';
 import { useDashboardAccess } from '../hooks';
 
 const DashboardAccessInfo = ({ dashId }) => {
-  const { access, hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
-  console.log("ACCESS: %o", access);
-  console.log("HASACCESS: %o", hasAccess('view'));
-  console.log("HASADMINPERM: %o", hasAdminPerm);
+  const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
 
   if (!hasAccess('view') && hasAdminPerm) {
     return (

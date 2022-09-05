@@ -197,5 +197,7 @@
   "dashboardUsers.accessLevel.view": "View",
   "dashboardUsers.accessLevel.edit": "Edit",
   "dashboardUsers.accessLevel.manage": "Manage",
-  "dashboardUsers.accessWarning": "User does not have valid access to this dashboard, access granted via okapi permission \"servint.dashboard.admin\""
+  "dashboardUsers.accessWarning": "User does not have valid access to this dashboard, access granted via okapi permission \"servint.dashboard.admin\"",
+  "dashboardUsers.warningInactive": "<strong>Warning</strong>: user <strong>{user}</strong> is inactive and should be removed from this dashboard.",
+  "dashboardUsers.errorMissing": "<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard."
 }

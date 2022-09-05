@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { AppIcon, useStripes } from '@folio/stripes/core';
-import { Button, Icon, IconButton, Layout, MultiColumnList, Pane, PaneFooter, Select, TextLink } from '@folio/stripes/components';
+import { Button, Icon, IconButton, Layout, MessageBanner, MultiColumnList, Pane, PaneFooter, Select, TextLink } from '@folio/stripes/components';
 
 import { NewBox } from '@folio/stripes-erm-components';
 
@@ -44,6 +44,38 @@ const UserAccessFieldArray = ({
   if (hasAccess('manage') || hasAdminPerm) {
     visibleColumns.push('remove');
   }
+
+  const renderUserName = item => (
+    `${item.user.personal?.lastName}, ${item.user.personal?.firstName}`
+  );
+
+  const renderMessageBanners = () => {
+    return items.map(item => {
+      if (!item.user?.id) {
+        return (
+          <MessageBanner
+            dismissible
+            type="error"
+          >
+            <FormattedMessage id="ui-dashboard.dashboardUsers.errorMissing" values={{ user: item.user }} />
+          </MessageBanner>
+        );
+      }
+
+      if (!item.user.active) {
+        return (
+          <MessageBanner
+            dismissible
+            type="warning"
+          >
+            <FormattedMessage id="ui-dashboard.dashboardUsers.warningInactive" values={{ user: renderUserName(item) }} />
+          </MessageBanner>
+        );
+      }
+
+      return null;
+    });
+  };
 
   return (
     <Pane
@@ -85,6 +117,7 @@ const UserAccessFieldArray = ({
         <FormattedMessage id="ui-dashboard.dashboardUsers.userAccess" values={{ dashboardName: dashName }} />
       }
     >
+      {renderMessageBanners()}
       <DashboardAccessInfo dashId={dashId} />
       {(hasAccess('manage') || hasAdminPerm) &&
         <Layout
@@ -136,7 +169,7 @@ const UserAccessFieldArray = ({
                     iconAlignment="baseline"
                     size="small"
                   >
-                    <TextLink to={`/users/preview/${item.user.id}`}>{`${item.user.personal?.lastName}, ${item.user.personal?.firstName}`}</TextLink>
+                    <TextLink to={`/users/preview/${item.user.id}`}>{renderUserName(item)}</TextLink>
                   </AppIcon>
                   {
                     !item.id &&
