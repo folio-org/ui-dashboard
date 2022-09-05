@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { ErrorPage } from '../components/ErrorComponents';
-import { useDashboardAccess, useDashboardAccessStore } from '../components/hooks';
 
 const DashboardRoute = ({
   history,

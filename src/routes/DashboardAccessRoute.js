@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery } from 'react-query';
 
 import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 
-import { AppIcon, useOkapiKy } from '@folio/stripes/core';
-import { Button, Pane, PaneFooter } from '@folio/stripes/components';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
 import { useChunkedUsers } from '../components/hooks';
