@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 // see also https://folio-project.slack.com/archives/CAN13SWBF/p1580423284014600
 // and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
 import DashboardsRoute from './routes/DashboardsRoute';
+import DashboardIdRoute from './routes/DashboardIdRoute';
 import DashboardRoute from './routes/DashboardRoute';
 import DashboardAccessRoute from './routes/DashboardAccessRoute';
 import DashboardOrderRoute from './routes/DashboardOrderRoute';
@@ -79,11 +80,15 @@ const App = ({ history, location, match: { path } }) => {
             )}
           </AppContextMenu>
           <Switch>
-            <Route component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
-            <Route component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
-            <Route component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
-            <Route component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
-            <Route component={DashboardRoute} path={`${path}/:dashId`} />
+            <Route component={DashboardIdRoute} path={`${path}/:dashId?`}>
+              <Switch>
+                <Route component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
+                <Route component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
+                <Route component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
+                <Route component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
+                <Route component={DashboardRoute} path={`${path}/:dashId`} />
+              </Switch>
+            </Route>
             <Route component={DashboardsRoute} path={path} />
           </Switch>
         </HasCommand>

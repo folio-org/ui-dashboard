@@ -46,7 +46,6 @@ const DashboardAccessRoute = ({
     (data) => ky.post(`servint/dashboard/${dashId}/users`, { json: data })
   );
 
-
   if (dashboardLoading || areUsersLoading) {
     return (
       <Loading />

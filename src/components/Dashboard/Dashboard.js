@@ -27,7 +27,6 @@ const propTypes = {
 
 const Dashboard = ({
   dashboardId,
-  hasAccess,
   onCreate,
   onReorder,
   onUserAccess,

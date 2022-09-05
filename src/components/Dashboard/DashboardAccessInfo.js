@@ -11,7 +11,7 @@ const DashboardAccessInfo = ({ dashId }) => {
   if (!hasAccess('view') && hasAdminPerm) {
     return (
       <MessageBanner
-        type="error"
+        type="warning"
       >
         <FormattedMessage id="ui-dashboard.dashboardUsers.accessWarning" />
       </MessageBanner>

@@ -45,6 +45,7 @@ const WidgetEditRoute = ({
   );
   const [selectedDefinition, setSelectedDef] = useState();
 
+
   useEffect(() => {
     // Widget may need a render cycle to be fetched, if and when it does get fetched set selectedDef to it
     if (widget) {

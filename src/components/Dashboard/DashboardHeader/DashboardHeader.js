@@ -13,8 +13,8 @@ import { useDashboardAccess } from '../../hooks';
 const propTypes = {
   dashId: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired,
-  onReorder: PropTypes.func.isRequired,
-  onUserAccess: PropTypes.func.isRequired
+  onReorder: PropTypes.func,
+  onUserAccess: PropTypes.func
 };
 
 const DashboardHeader = ({ dashId, onCreate, onReorder, onUserAccess }) => {
@@ -25,6 +25,7 @@ const DashboardHeader = ({ dashId, onCreate, onReorder, onUserAccess }) => {
     if (hasAccess('edit') || hasAdminPerm) {
       actionMenuButtons.push(
         <Button
+          key="clickable-new-widget"
           buttonStyle="dropdownItem"
           id="clickable-new-widget"
           onClick={onCreate}
@@ -35,6 +36,7 @@ const DashboardHeader = ({ dashId, onCreate, onReorder, onUserAccess }) => {
 
       actionMenuButtons.push(
         <Button
+          key="clickable-reorderdashboard"
           buttonStyle="dropdownItem"
           disabled={!onReorder}
           id="clickable-reorderdashboard"
@@ -46,6 +48,7 @@ const DashboardHeader = ({ dashId, onCreate, onReorder, onUserAccess }) => {
     }
     actionMenuButtons.push(
       <Button
+        key="clickable-userAccess"
         buttonStyle="dropdownItem"
         disabled={!onUserAccess}
         id="clickable-userAccess"

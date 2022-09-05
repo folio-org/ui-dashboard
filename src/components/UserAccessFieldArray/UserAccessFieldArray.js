@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import { Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -15,6 +14,7 @@ import css from './UserAccessFieldArray.css';
 import UserLookupButton from '../UserLookup/UserLookupButton';
 import { useDashboardAccess } from '../hooks';
 import { DashboardAccessInfo } from '../Dashboard';
+import IfHasAccess from '../IfHasAccess';
 
 const UserAccessFieldArray = ({
   dashboard: {
@@ -84,31 +84,35 @@ const UserAccessFieldArray = ({
       defaultWidth="100%"
       dismissible
       footer={
-        (hasAccess('manage') || hasAdminPerm) &&
-        <PaneFooter
-          renderEnd={(
-            <Button
-              buttonStyle="primary mega"
-              disabled={pristine || submitting}
-              id="clickable-update-dashboard-users"
-              marginBottom0
-              onClick={onSubmit}
-              type="submit"
-            >
-              <FormattedMessage id="stripes-components.saveAndClose" />
-            </Button>
-          )}
-          renderStart={(
-            <Button
-              buttonStyle="default mega"
-              id="clickable-cancel"
-              marginBottom0
-              onClick={onClose}
-            >
-              <FormattedMessage id="stripes-components.cancel" />
-            </Button>
-          )}
-        />
+        <IfHasAccess
+          access="manage"
+          dashId={dashId}
+        >
+          <PaneFooter
+            renderEnd={(
+              <Button
+                buttonStyle="primary mega"
+                disabled={pristine || submitting}
+                id="clickable-update-dashboard-users"
+                marginBottom0
+                onClick={onSubmit}
+                type="submit"
+              >
+                <FormattedMessage id="stripes-components.saveAndClose" />
+              </Button>
+            )}
+            renderStart={(
+              <Button
+                buttonStyle="default mega"
+                id="clickable-cancel"
+                marginBottom0
+                onClick={onClose}
+              >
+                <FormattedMessage id="stripes-components.cancel" />
+              </Button>
+            )}
+          />
+        </IfHasAccess>
       }
       height="93vh"
       id="pane-user-access-form"
@@ -274,27 +278,7 @@ const UserAccessFieldArray = ({
             return '';
           }
         }}
-        getCellClass={(defaultClass) => `${defaultClass} ${css.mclCellStyle}`}
-        getRowContainerClass={(defaultClass) => `${defaultClass} ${css.mclRowContainer}`}
-        headerRowClass={css.editListHeaders}
         interactive={false}
-        rowFormatter={({
-          cells,
-          rowClass,
-          rowIndex,
-        }) => (
-          <div
-            aria-rowindex={rowIndex + 2}
-            className={classNames(
-              css.editListRow,
-              css.baselineListRow,
-              { [css.isOdd]: !(rowIndex % 2) },
-              rowClass
-            )}
-          >
-            {cells}
-          </div>
-        )}
         visibleColumns={visibleColumns}
       />
     </Pane>
@@ -309,8 +293,8 @@ UserAccessFieldArray.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   fields: PropTypes.object,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool
 };
 
 export default UserAccessFieldArray;

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import Loading from '../components/Dashboard/Loading';
 import Dashboard from '../components/Dashboard/Dashboard';
 
 import { ErrorPage } from '../components/ErrorComponents';
-import { useDashboardAccess } from '../components/hooks';
+import { useDashboardAccess, useDashboardAccessStore } from '../components/hooks';
 
 const DashboardRoute = ({
   history,
@@ -42,8 +42,6 @@ const DashboardRoute = ({
       )
     }
   );
-
-  const { hasAccess } = useDashboardAccess(dashId);
 
   // The DELETE for the widgets
   const { mutateAsync: deleteWidget } = useMutation(
@@ -83,7 +81,6 @@ const DashboardRoute = ({
       <Dashboard
         key={`dashboard-${dashboard.id}`}
         dashboardId={dashboard.id}
-        hasAccess={hasAccess}
         onChangeDash={setDashId}
         onCreate={handleCreate}
         onReorder={handleReorder}

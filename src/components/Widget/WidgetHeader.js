@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import {
   Button,
@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import css from './WidgetHeader.css';
+import { useDashboardAccess } from '../hooks';
 
 const WidgetHeader = ({
   name,
@@ -23,6 +24,9 @@ const WidgetHeader = ({
   const intl = useIntl();
   let widgetFocusRef = useRef(null);
   const { state } = useLocation();
+  const { dashId } = useParams();
+
+  const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
 
   useEffect(() => {
     if (widgetId === state && widgetFocusRef.current) {
@@ -33,22 +37,26 @@ const WidgetHeader = ({
   // eslint-disable-next-line react/prop-types
   const renderActionMenuToggle = ({ onToggle, keyHandler, triggerRef, ariaProps, getTriggerProps }) => {
     widgetFocusRef = triggerRef;
-    return (
-      <IconButton
-        ref={widgetFocusRef}
-        ariaLabel={
-          intl.formatMessage(
-            { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
-            { widgetName: name }
-          )
-        }
-        icon="ellipsis"
-        onClick={onToggle}
-        onKeyDown={keyHandler}
-        {...getTriggerProps()}
-        {...ariaProps}
-      />
-    );
+    if (hasAccess('edit') || hasAdminPerm) {
+      return (
+        <IconButton
+          ref={widgetFocusRef}
+          ariaLabel={
+            intl.formatMessage(
+              { id: 'ui-dashboard.widgetHeader.actionsButtonLabel' },
+              { widgetName: name }
+            )
+          }
+          icon="ellipsis"
+          onClick={onToggle}
+          onKeyDown={keyHandler}
+          {...getTriggerProps()}
+          {...ariaProps}
+        />
+      );
+    }
+
+    return null;
   };
 
   // eslint-disable-next-line react/prop-types

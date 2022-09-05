@@ -1,16 +1,26 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useQuery, useQueryClient } from 'react-query';
+
 import moment from 'moment';
-import { useQuery } from 'react-query';
+
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { Badge } from '@folio/stripes/components';
+
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../../../SimpleTable';
 import { WidgetFooter } from '../../../Widget';
-import css from './SimpleSearch.css';
 import { ErrorBanner, errorParser } from '../../../ErrorComponents';
+
+import css from './SimpleSearch.css';
+
+const DEFAULT_ERROR_STATE = {
+  isError: false,
+  errorMessage: null,
+  errorStack: null
+};
 
 const SimpleSearch = ({
   onError,
@@ -29,11 +39,7 @@ const SimpleSearch = ({
   const columns = columnParser({ onError, widgetDef, widgetConf });
 
   // This stores the WIDGET-LEVEL error state, ready to pass to the canvas if required
-  const [errorState, setErrorState] = useState({
-    isError: false,
-    errorMessage: null,
-    errorStack: null
-  });
+  const [errorState, setErrorState] = useState(DEFAULT_ERROR_STATE);
 
   const ky = useOkapiKy();
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
@@ -42,12 +48,10 @@ const SimpleSearch = ({
   const { data, dataUpdatedAt, refetch } = useQuery(
     // If widget.configuration changes, this should refetch
     ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
-    async () => ky(pathBuilder(widgetDef, widgetConf, stripes))
-      .then((res) => {
-        return res.json();
-      })
+    () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
       .catch(async err => {
         const parsedError = await errorParser(err, intl);
+
         setErrorState({
           ...parsedError,
           isError: true
@@ -56,7 +60,6 @@ const SimpleSearch = ({
   );
 
   const simpleTableData = useMemo(() => data?.results || [], [data]);
-
 
   const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
 
@@ -85,7 +88,7 @@ const SimpleSearch = ({
     );
   };
 
-  const renderBadge = () => {
+  const renderBadge = useCallback(() => {
     return (
       <div className={css.countBadge}>
         <Badge>
@@ -96,9 +99,9 @@ const SimpleSearch = ({
         </Badge>
       </div>
     );
-  };
+  }, [data?.total]);
 
-  const displayWidgetBody = () => {
+  const displayWidgetBody = useCallback(() => {
     if (errorState.isError) {
       return (
         <ErrorBanner
@@ -128,14 +131,16 @@ const SimpleSearch = ({
         />
       </>
     );
-  };
+  }, [columns, data?.results?.length, errorState, onError, renderBadge, simpleTableData, widget.id]);
 
   return (
     <>
       {displayWidgetBody()}
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
-        onRefresh={() => refetch()}
+        onRefresh={() => {
+          refetch();
+        }}
         rightContent={urlLinkButton()}
         timestamp={timestamp}
         widgetId={widget.id}
@@ -145,6 +150,7 @@ const SimpleSearch = ({
   );
 };
 export default SimpleSearch;
+
 SimpleSearch.propTypes = {
   onError: PropTypes.func.isRequired,
   widget: PropTypes.shape({
