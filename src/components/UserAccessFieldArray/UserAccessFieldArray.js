@@ -12,7 +12,6 @@ import { AppIcon, useStripes } from '@folio/stripes/core';
 import {
   Button,
   ConfirmationModal,
-  ErrorModal,
   Icon,
   IconButton,
   Layout,
@@ -24,7 +23,8 @@ import {
   Pane,
   PaneFooter,
   Select,
-  TextLink
+  TextLink,
+  Tooltip
 } from '@folio/stripes/components';
 
 import { NewBox } from '@folio/stripes-erm-components';
@@ -319,11 +319,20 @@ const UserAccessFieldArray = ({
                 (item?.user?.id === userId && hasAdminPerm && !item.id)
               ) {
                 return (
-                  <IconButton
-                    icon="trash"
-                    marginBottom0
-                    onClick={item.onRemove}
-                  />
+                  <Tooltip
+                    id={`remove-user-access-${item.id}`}
+                    text={<FormattedMessage id="ui-dashboard.dashboardUsers.removeUser" values={{ name: renderUserName(item) }} />}
+                  >
+                    {({ ref, ariaIds }) => (
+                      <IconButton
+                        ref={ref}
+                        aria-labelledby={ariaIds.text}
+                        icon="trash"
+                        marginBottom0
+                        onClick={item.onRemove}
+                      />
+                    )}
+                  </Tooltip>
                 );
               }
               return '';

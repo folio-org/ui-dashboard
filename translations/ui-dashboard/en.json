@@ -206,5 +206,6 @@
   "dashboardUsers.removeUsers.message": "The following user(s) will be removed and no longer has access to the dashboard \"{name}\".",
   "dashboardUsers.removeUsers.finalMessage": "Select <strong>Save & close</strong> to go ahead with all updates or <strong>Cancel</strong> to continue editing",
   "dashboardUsers.duplicateUser": "Error: Duplicate user",
-  "dashboardUsers.duplicateUser.message": "<strong>{user}</strong> was not added as this user already has access to the dashboard <strong>{name}</strong>"
+  "dashboardUsers.duplicateUser.message": "<strong>{user}</strong> was not added as this user already has access to the dashboard <strong>{name}</strong>",
+  "dashboardUsers.removeUser": "Remove user \"{name}\""
 }
