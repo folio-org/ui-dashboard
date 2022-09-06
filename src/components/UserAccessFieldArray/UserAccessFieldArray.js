@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -42,13 +42,19 @@ const UserAccessFieldArray = ({
   },
   fields: {
     name: fieldsName,
-    value: fieldsValue
+    sortByName,
+    value: fieldsValue,
   },
   onClose,
   onSubmit,
   pristine,
   submitting
 }) => {
+  // Sort by name on mount
+  useEffect(() => {
+    sortByName();
+  }, [sortByName]);
+
   const { user: { user: { id: userId } = {} } = {} } = useStripes();
 
   // Set this state on clicking "save and close", and use the length of the array to render confirmation modal
@@ -421,6 +427,7 @@ UserAccessFieldArray.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   fields: PropTypes.object,
   pristine: PropTypes.bool,
+  sortBy: PropTypes.string.isRequired,
   submitting: PropTypes.bool
 };
 

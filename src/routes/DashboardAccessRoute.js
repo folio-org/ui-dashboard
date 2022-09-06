@@ -1,5 +1,9 @@
+import { useMemo, useState } from 'react';
+
 import PropTypes from 'prop-types';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+import orderBy from 'lodash/orderBy';
 
 import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
@@ -12,6 +16,8 @@ import { useChunkedUsers } from '../components/hooks';
 
 import UserAccessFieldArray from '../components/UserAccessFieldArray';
 
+const SORT_BY_NAME = [['user.personal.lastName', 'user.personal.firstName'], ['asc', 'asc']];
+
 const DashboardAccessRoute = ({
   history,
   match: {
@@ -21,6 +27,7 @@ const DashboardAccessRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
   // Load specific dashboard
   const { data: dashboard, isLoading: dashboardLoading } = useQuery(
@@ -29,8 +36,8 @@ const DashboardAccessRoute = ({
   );
 
   // Load dashboard users
-  const { data: dashboardAccess = [], isLoading: dashboardAccessLoading } = useQuery(
-    ['ui-dashboard', 'DashboardAccessRoute', 'dashboardAccess'],
+  const { data: dashboardAccess = [], isFetching: dashboardAccessLoading } = useQuery(
+    ['ERM', 'Dashboard', 'Users', dashId],
     () => ky(`servint/dashboard/${dashId}/users`).json(),
   );
 
@@ -44,7 +51,17 @@ const DashboardAccessRoute = ({
     (data) => ky.post(`servint/dashboard/${dashId}/users`, { json: data })
   );
 
-  if (dashboardLoading || areUsersLoading) {
+  const mappedDashboardAccess = useMemo(() => (
+    dashboardAccess.map(da => ({
+      access: da.access.value, // Allow us to receive and send refdata value instead of id
+      id: da.id,
+      user: users.find(usr => usr.id === da.user.id) ?? da.user.id, // If this is a flat id then we know we couldn't find the user
+    }))), [dashboardAccess, users]);
+
+  // Allow this state to change WITHOUT reinitialising form to enable sorting
+  const [initialAccess, setInitialAccess] = useState(mappedDashboardAccess);
+
+  if (dashboardLoading || areUsersLoading || dashboardAccessLoading) {
     return (
       <Loading />
     );
@@ -54,24 +71,28 @@ const DashboardAccessRoute = ({
     history.push(`/dashboard/${dashId}`);
   };
 
-  const doTheSubmit = (values) => (
-    postDashUsers(values.access).then(handleClose)
-  );
+  const doTheSubmit = (values) => {
+    postDashUsers(values.access).then(handleClose);
+    queryClient.invalidateQueries(['ERM', 'Dashboard', 'Users', dashId]);
+  };
 
   return (
     <Form
-      enableReinitialize
       // Manipulate initialValues into only the shape we need
       initialValues={{
-        access: dashboardAccess.map(da => ({
-          access: da.access.value, // Allow us to receive and send refdata value instead of id
-          id: da.id,
-          user: users.find(usr => usr.id === da.user.id) ?? da.user.id, // If this is a flat id then we know we couldn't find the user
-        }))
+        access: initialAccess
       }}
       keepDirtyOnReinitialize
       mutators={{
-        ...arrayMutators
+        ...arrayMutators,
+        sortByName: (_args, state, tools) => {
+          const access = tools.getIn(state, 'formState.values.access') || [];
+          const sortedAccess = orderBy(access, SORT_BY_NAME[0], SORT_BY_NAME[1]);
+
+          const newState = tools.setIn(state, 'formState.values.access', sortedAccess);
+          Object.assign(state, newState);
+          setInitialAccess(orderBy(mappedDashboardAccess, SORT_BY_NAME[0], SORT_BY_NAME[1]));
+        },
       }}
       navigationCheck
       onSubmit={doTheSubmit}
