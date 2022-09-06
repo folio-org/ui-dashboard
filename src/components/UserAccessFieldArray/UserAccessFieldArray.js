@@ -86,6 +86,7 @@ const UserAccessFieldArray = ({
       if (!item.user?.id) {
         return (
           <MessageBanner
+            key={`user-access-field-array-missing-user-banner-${item.user}`}
             dismissible
             type="error"
           >
@@ -97,6 +98,7 @@ const UserAccessFieldArray = ({
       if (!item.user.active) {
         return (
           <MessageBanner
+            key={`user-access-field-array-inactive-user-banner-${item.user.id}`}
             dismissible
             type="warning"
           >
@@ -112,6 +114,7 @@ const UserAccessFieldArray = ({
   return (
     <>
       <Pane
+        key="user-access-field-array-pane"
         appIcon={<AppIcon app="dashboard" />}
         centerContent
         defaultWidth="100%"
@@ -161,9 +164,13 @@ const UserAccessFieldArray = ({
         }
       >
         {renderMessageBanners()}
-        <DashboardAccessInfo dashId={dashId} />
+        <DashboardAccessInfo
+          key="user-access-field-array-dashboard-access-info"
+          dashId={dashId}
+        />
         {(hasAccess('manage') || hasAdminPerm) &&
           <Layout
+            key="user-access-field-array-lookup-user"
             className="display-flex flex-direction-column flex-align-items-end"
           >
             <UserLookupButton
@@ -305,7 +312,7 @@ const UserAccessFieldArray = ({
                         })
                       }
                     ]}
-                    fullWidth
+                    id={`${item.id}-access-field`}
                     marginBottom0
                     name={`${fieldsName}[${item.index}].access`}
                     parse={v => v}
@@ -334,7 +341,7 @@ const UserAccessFieldArray = ({
                         ref={ref}
                         aria-labelledby={ariaIds.text}
                         icon="trash"
-                        marginBottom0
+                        iconClassName={css.marginBottom0}
                         onClick={item.onRemove}
                       />
                     )}
@@ -349,6 +356,7 @@ const UserAccessFieldArray = ({
         />
       </Pane>
       <ConfirmationModal
+        key="user-access-field-array-confirmation-modal"
         confirmLabel={<FormattedMessage id="ui-dashboard.saveAndClose" />}
         heading={<FormattedMessage id="ui-dashboard.dashboardUsers.removeUsers" />}
         message={[
@@ -384,7 +392,7 @@ const UserAccessFieldArray = ({
         open={removedUsers?.length > 0}
       />
       <Modal
-        confirmLabel={<FormattedMessage id="ui-dashboard.saveAndClose" />}
+        key="user-access-field-array-warning-modal"
         footer={
           <ModalFooter>
             <Button
@@ -427,7 +435,6 @@ UserAccessFieldArray.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   fields: PropTypes.object,
   pristine: PropTypes.bool,
-  sortBy: PropTypes.string.isRequired,
   submitting: PropTypes.bool
 };
 

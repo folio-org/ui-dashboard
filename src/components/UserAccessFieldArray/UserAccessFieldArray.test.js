@@ -1,17 +1,21 @@
 import { FieldArray } from 'react-final-form-arrays';
 
+import { MemoryRouter } from 'react-router-dom';
+
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components';
 
-import { MultiColumnList } from '@folio/stripes-testing';
-
+import { MessageBanner, MultiColumnList, MultiColumnListHeader } from '@folio/stripes-testing';
 
 import UserAccessFieldArray from './UserAccessFieldArray';
 
 import translationsProperties from '../../../test/helpers';
+import { useDashboardAccess } from '../hooks';
 
 const onSubmit = jest.fn();
 const onClose = jest.fn();
+
+jest.mock('../hooks');
 
 // Not loving this, needs refactoring to newer pattern at some point
 const access = [
@@ -99,26 +103,174 @@ const access = [
 ];
 
 describe('UserAccessFieldArray', () => {
-  test('renders expected fields', () => {
-    renderWithIntl(
-      <TestForm
-        initialValues={{
-          access
-        }}
-        onSubmit={onSubmit}
-      >
-        <FieldArray
-          component={UserAccessFieldArray}
-          dashboard={{ id: '1234', name: 'test-dashboard' }}
-          name="access"
-          onClose={onClose}
-          onSubmit={onSubmit}
-        />
-      </TestForm>, translationsProperties
-    );
+  describe('UserAccessFieldArray with \'manage\' access', () => {
+    beforeEach(() => {
+      useDashboardAccess.mockImplementation(() => ({ hasAccess: () => true, hasAdminPerm: false }));
+      renderWithIntl(
+        <MemoryRouter>
+          <TestForm
+            initialValues={{
+              access
+            }}
+            mutators={{
+              sortByName: jest.fn()
+            }}
+            onSubmit={onSubmit}
+          >
+            <FieldArray
+              component={UserAccessFieldArray}
+              dashboard={{ id: '1234', name: 'test-dashboard' }}
+              name="access"
+              onClose={onClose}
+              onSubmit={onSubmit}
+            />
+          </TestForm>
+        </MemoryRouter>, translationsProperties
+      );
+    });
 
-    test('Renders an MCL', async () => {
+    test('Renders an error about removed user', async () => {
+      await MessageBanner('<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.').exists();
+    });
+
+    test('Renders a warning about inactive user', async () => {
+      await MessageBanner('<strong>Warning</strong>: user <strong>{user}</strong> is inactive and should be removed from this dashboard.').exists();
+    });
+
+    test('Renders an MCL with the expected headers', async () => {
       await MultiColumnList().exists();
+      await MultiColumnListHeader({ index: 0 }).has({ content: 'User' });
+      await MultiColumnListHeader({ index: 1 }).has({ content: 'Status' });
+      await MultiColumnListHeader({ index: 2 }).has({ content: 'Email' });
+      await MultiColumnListHeader({ index: 3 }).has({ content: 'Access level' });
+      await MultiColumnListHeader({ index: 4 }).has({ content: 'Remove' });
+    });
+  });
+
+  describe('UserAccessFieldArray without \'manage\' access', () => {
+    beforeEach(() => {
+      useDashboardAccess.mockImplementation(() => ({ hasAccess: () => false, hasAdminPerm: false }));
+      renderWithIntl(
+        <MemoryRouter>
+          <TestForm
+            initialValues={{
+              access
+            }}
+            mutators={{
+              sortByName: jest.fn()
+            }}
+            onSubmit={onSubmit}
+          >
+            <FieldArray
+              component={UserAccessFieldArray}
+              dashboard={{ id: '1234', name: 'test-dashboard' }}
+              name="access"
+              onClose={onClose}
+              onSubmit={onSubmit}
+            />
+          </TestForm>
+        </MemoryRouter>, translationsProperties
+      );
+    });
+
+    test('Renders an error about removed user', async () => {
+      await MessageBanner('<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.').exists();
+    });
+
+    test('Renders a warning about inactive user', async () => {
+      await MessageBanner('<strong>Warning</strong>: user <strong>{user}</strong> is inactive and should be removed from this dashboard.').exists();
+    });
+
+    test('Renders an MCL with the expected headers', async () => {
+      await MultiColumnList().exists();
+      await MultiColumnListHeader({ index: 0 }).has({ content: 'User' });
+      await MultiColumnListHeader({ index: 1 }).has({ content: 'Status' });
+      await MultiColumnListHeader({ index: 2 }).has({ content: 'Email' });
+      await MultiColumnListHeader({ index: 3 }).has({ content: 'Access level' });
+      await MultiColumnListHeader({ index: 4 }).absent();
+    });
+  });
+
+  describe('UserAccessFieldArray without \'manage\' access', () => {
+    beforeEach(() => {
+      useDashboardAccess.mockImplementation(() => ({ hasAccess: () => false, hasAdminPerm: true }));
+      renderWithIntl(
+        <MemoryRouter>
+          <TestForm
+            initialValues={{
+              access
+            }}
+            mutators={{
+              sortByName: jest.fn()
+            }}
+            onSubmit={onSubmit}
+          >
+            <FieldArray
+              component={UserAccessFieldArray}
+              dashboard={{ id: '1234', name: 'test-dashboard' }}
+              name="access"
+              onClose={onClose}
+              onSubmit={onSubmit}
+            />
+          </TestForm>
+        </MemoryRouter>, translationsProperties
+      );
+    });
+
+    test('Renders an error about removed user', async () => {
+      await MessageBanner('<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.').exists();
+    });
+
+    test('Renders a warning about inactive user', async () => {
+      await MessageBanner('<strong>Warning</strong>: user <strong>{user}</strong> is inactive and should be removed from this dashboard.').exists();
+    });
+
+    test('Renders a warning about access', async () => {
+      await MessageBanner('<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (Okapi gateway permission "servint.dashboard.admin").').exists();
+    });
+
+    test('Renders an MCL with the expected headers', async () => {
+      await MultiColumnList().exists();
+      await MultiColumnListHeader({ index: 0 }).has({ content: 'User' });
+      await MultiColumnListHeader({ index: 1 }).has({ content: 'Status' });
+      await MultiColumnListHeader({ index: 2 }).has({ content: 'Email' });
+      await MultiColumnListHeader({ index: 3 }).has({ content: 'Access level' });
+      await MultiColumnListHeader({ index: 4 }).has({ content: 'Remove' });
+    });
+  });
+
+  describe('UserAccessFieldArray with no removed or inactive users', () => {
+    beforeEach(() => {
+      useDashboardAccess.mockImplementation(() => ({ hasAccess: () => false, hasAdminPerm: false }));
+      renderWithIntl(
+        <MemoryRouter>
+          <TestForm
+            initialValues={{
+              access: access.slice(1, 3)
+            }}
+            mutators={{
+              sortByName: jest.fn()
+            }}
+            onSubmit={onSubmit}
+          >
+            <FieldArray
+              component={UserAccessFieldArray}
+              dashboard={{ id: '1234', name: 'test-dashboard' }}
+              name="access"
+              onClose={onClose}
+              onSubmit={onSubmit}
+            />
+          </TestForm>
+        </MemoryRouter>, translationsProperties
+      );
+    });
+
+    test('Does not render an error about removed user', async () => {
+      await MessageBanner('<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.').absent();
+    });
+
+    test('Does not render a warning about inactive user', async () => {
+      await MessageBanner('<strong>Warning</strong>: user <strong>{user}</strong> is inactive and should be removed from this dashboard.').absent();
     });
   });
 });
