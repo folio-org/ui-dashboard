@@ -2,10 +2,8 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect, useStripes } from '@folio/stripes/core';
-
 import {
-  ConfirmationModal, MessageBanner,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 
 import DashboardHeader from './DashboardHeader';
@@ -19,7 +17,8 @@ import DashboardAccessInfo from './DashboardAccessInfo';
 const propTypes = {
   dashboardId: PropTypes.string.isRequired,
   onCreate: PropTypes.func.isRequired,
-  onReorder: PropTypes.func.isRequired,
+  onReorder: PropTypes.func,
+  onUserAccess: PropTypes.func,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
   widgets: PropTypes.arrayOf(PropTypes.object),

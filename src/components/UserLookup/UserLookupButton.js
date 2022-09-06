@@ -1,6 +1,8 @@
-import { Pluggable } from '@folio/stripes/core';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { Pluggable } from '@folio/stripes/core';
 
 const UserLookupButton = ({
   buttonProps: passedButtonProps = {},
@@ -30,10 +32,17 @@ const UserLookupButton = ({
       }}
       selectUser={onResourceSelected}
       type="find-user"
+      {...pluggableProps}
     >
       <FormattedMessage id="stripes-erm-components.contacts.noUserPlugin" />
     </Pluggable>
   );
+};
+
+UserLookupButton.propTypes = {
+  buttonProps: PropTypes.object,
+  onResourceSelected: PropTypes.func.isRequired,
+  renderButton: PropTypes.func.isRequired
 };
 
 export default UserLookupButton;

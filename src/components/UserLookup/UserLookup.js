@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 

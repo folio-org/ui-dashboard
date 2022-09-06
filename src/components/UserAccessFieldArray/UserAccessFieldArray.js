@@ -176,7 +176,7 @@ const UserAccessFieldArray = ({
 
                   onUpdateField(deletedResourceIndex, addBackField);
                   // Check first the added back user is not a duplicate
-                } else if (items?.some(item => item.user.id === resource.id )) {
+                } else if (items?.some(item => item.user.id === resource.id)) {
                   setDuplicateUser(renderUserName({ user: resource }));
                 } else {
                   onAddField({

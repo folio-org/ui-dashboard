@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Button, IconButton } from '@folio/stripes-testing';
+import { IconButton } from '@folio/stripes-testing';
 import userEvent from '@testing-library/user-event';
 
 import '@folio/stripes-erm-components/test/jest/__mock__';

@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 
 import moment from 'moment';
 
