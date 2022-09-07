@@ -11,11 +11,12 @@ import DashboardContainer from '../components/DashboardContainer';
 import { ErrorPage } from '../components/ErrorComponents';
 
 const DashboardRoute = ({
+  dashboards,
   history,
   location,
   match: {
     params
-  }
+  },
 }) => {
   const ky = useOkapiKy();
   const [dashId, setDashId] = useState(params.dashId);
@@ -80,6 +81,7 @@ const DashboardRoute = ({
       <DashboardContainer
         key={`dashboard-${dashboard.id}`}
         dashboard={dashboard}
+        dashboards={dashboards}
         onChangeDash={setDashId}
         onCreateWidget={handleCreateWidget}
         onReorder={handleReorder}
@@ -101,6 +103,9 @@ const DashboardRoute = ({
 export default DashboardRoute;
 
 DashboardRoute.propTypes = {
+  dashboards: PropTypes.arrayOf(
+    PropTypes.object
+  ).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

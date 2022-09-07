@@ -56,6 +56,7 @@ const App = ({ history, location, match: { path } }) => {
     }
   ];
 
+
   return (
     <>
       <CommandList commands={renamedShortcuts}>
@@ -80,13 +81,43 @@ const App = ({ history, location, match: { path } }) => {
           </AppContextMenu>
           <Switch>
             <Route component={DashboardsRoute} path={`${path}/:dashId?`}>
-              <Switch>
-                <Route component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
-                <Route component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
-                <Route component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
-                <Route component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
-                <Route component={DashboardRoute} path={`${path}/:dashId`} />
-              </Switch>
+              {/*
+                * Set up like this as a function so DashboardsRoute
+                * can pass down information such as dashboards without
+                * us needing to fetch them again
+                */}
+              {(dashboardsProps) => {
+                // Pass each inner route all of dashboardsProps
+                const DashboardsRouterRoute = ({ component: Component, path: innerPath }) => (
+                  <Route
+                    path={innerPath}
+                    render={(routeProps) => (
+                      <Component
+                        {...routeProps}
+                        {...dashboardsProps}
+                      />
+                    )}
+                  />
+                );
+
+                DashboardsRouterRoute.propTypes = {
+                  path: PropTypes.string.isRequired,
+                  component: PropTypes.oneOfType([
+                    PropTypes.func,
+                    PropTypes.object,
+                  ])
+                };
+
+                return (
+                  <Switch>
+                    <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
+                    <DashboardsRouterRoute component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
+                    <DashboardsRouterRoute component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
+                    <DashboardsRouterRoute component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
+                    <DashboardsRouterRoute component={DashboardRoute} path={`${path}/:dashId`} />
+                  </Switch>
+                );
+              }}
             </Route>
           </Switch>
         </HasCommand>

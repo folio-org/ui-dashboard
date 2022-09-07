@@ -15,6 +15,10 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
+  dashboards: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
   onCreateWidget: PropTypes.func.isRequired,
   onReorder: PropTypes.func,
   onUserAccess: PropTypes.func,
@@ -25,6 +29,7 @@ const propTypes = {
 
 const DashboardContainer = ({
   dashboard,
+  dashboards,
   onCreateWidget,
   onReorder,
   onUserAccess,
@@ -38,6 +43,7 @@ const DashboardContainer = ({
         <Header
           key={`dashboard-header-${dashboard.id}`}
           dashboard={dashboard}
+          dashboards={dashboards}
           onCreateWidget={onCreateWidget}
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}

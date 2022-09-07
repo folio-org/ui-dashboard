@@ -77,7 +77,8 @@ const DashboardsRoute = ({
     return <Loading />;
   }
 
-  return children;
+  // See top level index.js for how we pass this information down to lower routes
+  return children({ dashboards });
 
   /*
     The following code is relevant for the future splash screen implementation?

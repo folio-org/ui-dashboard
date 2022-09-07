@@ -2,25 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import { useParams } from 'react-router';
+
 import {
-  Button, Headline, Layout,
+  Button,
+  ButtonGroup,
+  Headline,
+  Layout,
 } from '@folio/stripes/components';
 
 import ActionMenu from '../../ActionMenu';
 import css from './Header.css';
 import { useDashboardAccess } from '../../hooks';
-
-const propTypes = {
-  dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  onCreateDashboard: PropTypes.func.isRequired,
-  onCreateWidget: PropTypes.func.isRequired,
-  onManageDashboards: PropTypes.func,
-  onReorder: PropTypes.func,
-  onUserAccess: PropTypes.func
-};
 
 // This component will render the tab group for dashboards,
 // as well as the joint "dashboard" and "dashboards" actions
@@ -29,6 +22,7 @@ const Header = ({
     id: dashId,
     name: dashName
   },
+  dashboards,
   onCreateDashboard, // All dashboards
   onCreateWidget, // dashboard
   onManageDashboards, // All dashboards
@@ -36,6 +30,7 @@ const Header = ({
   onUserAccess // dashboard
 }) => {
   const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
+  const { dashId: currentDashboardId } = useParams();
 
   const getActionMenu = () => {
     const dashboardActions = [];
@@ -118,11 +113,36 @@ const Header = ({
 
   return (
     <div className={css.header}>
+      <div /> {/* Empty start item so we can get centre/end aligned */}
+      <ButtonGroup>
+        {dashboards?.map(dba => (
+          <Button
+            buttonStyle={dba.dashboard?.id === currentDashboardId ? 'primary' : 'default'}
+            to={`/dashboard/${dba.dashboard?.id}`}
+          >
+            {dba.dashboard?.name}
+          </Button>
+        ))}
+      </ButtonGroup>
       <ActionMenu actionMenu={getActionMenu} />
     </div>
   );
 };
 
-Header.propTypes = propTypes;
+Header.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  dashboards: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  })).isRequired,
+  onCreateDashboard: PropTypes.func.isRequired,
+  onCreateWidget: PropTypes.func.isRequired,
+  onManageDashboards: PropTypes.func,
+  onReorder: PropTypes.func,
+  onUserAccess: PropTypes.func
+};
 
 export default Header;
