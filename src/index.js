@@ -22,6 +22,8 @@ import PropTypes from 'prop-types';
 // and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
 import DashboardsRoute from './routes/DashboardsRoute';
 import DashboardRoute from './routes/DashboardRoute';
+import DashboardCreateRoute from './routes/DashboardCreateRoute';
+import DashboardEditRoute from './routes/DashboardEditRoute';
 import DashboardAccessRoute from './routes/DashboardAccessRoute';
 import DashboardOrderRoute from './routes/DashboardOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
@@ -110,7 +112,9 @@ const App = ({ history, location, match: { path } }) => {
 
                 return (
                   <Switch>
-                    <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/create`} />
+                    <DashboardsRouterRoute component={DashboardCreateRoute} path={`${path}/:dashId/create`} />
+                    <DashboardsRouterRoute component={DashboardEditRoute} path={`${path}/:dashId/edit`} />
+                    <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/createWidget`} />
                     <DashboardsRouterRoute component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
                     <DashboardsRouterRoute component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
                     <DashboardsRouterRoute component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />

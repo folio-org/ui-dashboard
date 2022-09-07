@@ -10,17 +10,13 @@ import WidgetForm from '../components/WidgetForm';
 import getComponentsFromType from '../components/getComponentsFromType';
 
 const WidgetEditRoute = ({
+  dashboard,
   history,
   match: {
     params
   }
 }) => {
   const ky = useOkapiKy();
-  // Query setup for the dashboard/definitions/POST/PUT
-  const { data: dashboard = {} } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getDash'],
-    () => ky(`servint/dashboard/${params.dashId}`).json()
-  );
 
   const { mutateAsync: putWidget } = useMutation(
     ['ui-dashboard', 'widgetCreateRoute', 'putWidget'],
@@ -143,6 +139,13 @@ const WidgetEditRoute = ({
 export default WidgetEditRoute;
 
 WidgetEditRoute.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }),
+  dashboardQuery: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

@@ -25,6 +25,8 @@ const Header = ({
   dashboards,
   onCreateDashboard, // All dashboards
   onCreateWidget, // dashboard
+  onDeleteDashboard, // dashboard
+  onEdit, // dashboard
   onManageDashboards, // All dashboards
   onReorder, // dashboard
   onUserAccess // dashboard
@@ -59,7 +61,20 @@ const Header = ({
           <FormattedMessage id="ui-dashboard.reorderWidgets" />
         </Button>
       );
+
+      dashboardActions.push(
+        <Button
+          key="clickable-editdashboard"
+          buttonStyle="dropdownItem"
+          disabled={!onEdit}
+          id="clickable-editdashboard"
+          onClick={onEdit}
+        >
+          <FormattedMessage id="ui-dashboard.editDashboard" />
+        </Button>
+      );
     }
+
     dashboardActions.push(
       <Button
         key="clickable-userAccess"
@@ -71,6 +86,19 @@ const Header = ({
         <FormattedMessage id="ui-dashboard.userAccess" />
       </Button>
     );
+
+    if (hasAccess('manage') || hasAdminPerm) {
+      dashboardActions.push(
+        <Button
+          key="clickable-delete-dashboard"
+          buttonStyle="dropdownItem"
+          id="clickable-delete-dashboard"
+          onClick={onDeleteDashboard}
+        >
+          <FormattedMessage id="ui-dashboard.deleteDashboard" />
+        </Button>
+      );
+    }
 
     allDashboardActions.push(
       <Button
@@ -114,16 +142,20 @@ const Header = ({
   return (
     <div className={css.header}>
       <div /> {/* Empty start item so we can get centre/end aligned */}
-      <ButtonGroup>
-        {dashboards?.map(dba => (
-          <Button
-            buttonStyle={dba.dashboard?.id === currentDashboardId ? 'primary' : 'default'}
-            to={`/dashboard/${dba.dashboard?.id}`}
-          >
-            {dba.dashboard?.name}
-          </Button>
-        ))}
-      </ButtonGroup>
+      {dashboards?.length > 1 &&
+        <ButtonGroup>
+          {dashboards?.map(dba => (
+            <Button
+              key={`clickable-tab-to-dashboard-${dba.dashboard?.id}`}
+              buttonStyle={dba.dashboard?.id === currentDashboardId ? 'primary' : 'default'}
+              marginBottom0
+              to={`/dashboard/${dba.dashboard?.id}`}
+            >
+              {dba.dashboard?.name}
+            </Button>
+          ))}
+        </ButtonGroup>
+      }
       <ActionMenu actionMenu={getActionMenu} />
     </div>
   );
@@ -140,6 +172,8 @@ Header.propTypes = {
   })).isRequired,
   onCreateDashboard: PropTypes.func.isRequired,
   onCreateWidget: PropTypes.func.isRequired,
+  onDeleteDashboard: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onManageDashboards: PropTypes.func,
   onReorder: PropTypes.func,
   onUserAccess: PropTypes.func

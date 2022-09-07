@@ -19,7 +19,10 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   })).isRequired,
+  onCreateDashboard: PropTypes.func.isRequired,
   onCreateWidget: PropTypes.func.isRequired,
+  onDeleteDashboard: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onReorder: PropTypes.func,
   onUserAccess: PropTypes.func,
   onWidgetDelete: PropTypes.func.isRequired,
@@ -30,7 +33,10 @@ const propTypes = {
 const DashboardContainer = ({
   dashboard,
   dashboards,
+  onCreateDashboard,
   onCreateWidget,
+  onDeleteDashboard,
+  onEdit,
   onReorder,
   onUserAccess,
   onWidgetDelete,
@@ -44,7 +50,10 @@ const DashboardContainer = ({
           key={`dashboard-header-${dashboard.id}`}
           dashboard={dashboard}
           dashboards={dashboards}
+          onCreateDashboard={onCreateDashboard}
           onCreateWidget={onCreateWidget}
+          onDeleteDashboard={onDeleteDashboard}
+          onEdit={onEdit}
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}
         />

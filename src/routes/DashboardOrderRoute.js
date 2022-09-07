@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 import Loading from '../components/Loading';
 import ReorderForm from '../components/ReorderForm';
 
 const DashboardOrderRoute = ({
+  dashboard,
+  dashboardQuery: {
+    isLoading: dashboardLoading
+  },
   history,
   match: {
     params: {
@@ -18,12 +22,6 @@ const DashboardOrderRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
-
-  // Load specific dashboard
-  const { data: dashboard, isLoading: dashboardLoading } = useQuery(
-    ['ERM', 'dashboard', dashId],
-    () => ky(`servint/dashboard/${dashId}`).json(),
-  );
 
   // The PUT for the dashboardOrdering
   const { mutateAsync: putDashOrder } = useMutation(
@@ -76,6 +74,13 @@ const DashboardOrderRoute = ({
 export default DashboardOrderRoute;
 
 DashboardOrderRoute.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }),
+  dashboardQuery: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

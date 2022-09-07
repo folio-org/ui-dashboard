@@ -11,6 +11,10 @@ import DashboardContainer from '../components/DashboardContainer';
 import { ErrorPage } from '../components/ErrorComponents';
 
 const DashboardRoute = ({
+  dashboard,
+  dashboardQuery: {
+    isLoading: dashboardLoading
+  },
   dashboards,
   history,
   location,
@@ -19,21 +23,13 @@ const DashboardRoute = ({
   },
 }) => {
   const ky = useOkapiKy();
-  const [dashId, setDashId] = useState(params.dashId);
-
   const queryClient = useQueryClient();
-
-  // Load specific dashboard -- for now will only be DEFAULT
-  const { data: dashboard, isLoading: dashboardLoading } = useQuery(
-    ['ERM', 'dashboard', dashId],
-    () => ky(`servint/dashboard/${dashId}`).json(),
-  );
 
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
   const { data: widgets, isLoading: widgetsLoading } = useQuery(
     // We need this to rerun when the dashboard updates
     ['ui-dashboard', 'dashboardRoute', 'widgets', dashboard],
-    () => ky(`servint/dashboard/${dashId}/widgets?sort=weight;asc&perPage=100`).json(),
+    () => ky(`servint/dashboard/${params.dashId}/widgets?sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
       enabled: (
@@ -49,8 +45,17 @@ const DashboardRoute = ({
     (widgetId) => ky.delete(`servint/widgets/instances/${widgetId}`)
   );
 
+  // The DELETE for the dashboard itself
+  const { mutateAsync: deleteDashboard } = useMutation(
+    ['ERM', 'Dashboard', 'deleteDashboard'],
+    () => ky.delete(`servint/dashboard/${params.dashId}`)
+      .then(() => {
+        queryClient.invalidateQueries(['ERM', 'Dashboards']);
+      })
+  );
+
   const handleCreateWidget = () => {
-    history.push(`${location.pathname}/create`);
+    history.push(`${location.pathname}/createWidget`);
   };
 
   const handleReorder = () => {
@@ -61,14 +66,28 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/userAccess`);
   };
 
+  const handleDashboardEdit = () => {
+    history.push(`${location.pathname}/edit`);
+  };
+
+  const handleCreateDashboard = () => {
+    history.push(`${location.pathname}/create`);
+  };
+
   const handleWidgetEdit = (id) => {
     history.push(`${location.pathname}/${id}/edit`);
+  };
+
+  // FIXME this needs a confirmation modal
+  const handleDeleteDashboard = () => {
+    deleteDashboard();
+    history.push('/dashboard');
   };
 
   const handleWidgetDelete = (id) => {
     deleteWidget(id).then(() => (
       // Make sure to refetch dashboard when we delete a widget
-      queryClient.invalidateQueries(['ERM', 'dashboard', dashId])
+      queryClient.invalidateQueries(['ERM', 'dashboard', params.dashId])
     ));
   };
 
@@ -82,8 +101,10 @@ const DashboardRoute = ({
         key={`dashboard-${dashboard.id}`}
         dashboard={dashboard}
         dashboards={dashboards}
-        onChangeDash={setDashId}
+        onCreateDashboard={handleCreateDashboard}
         onCreateWidget={handleCreateWidget}
+        onDeleteDashboard={handleDeleteDashboard}
+        onEdit={handleDashboardEdit}
         onReorder={handleReorder}
         onUserAccess={handleUserAccess}
         onWidgetDelete={handleWidgetDelete}
@@ -103,6 +124,13 @@ const DashboardRoute = ({
 export default DashboardRoute;
 
 DashboardRoute.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }),
+  dashboardQuery: PropTypes.shape({
+    isLoading: PropTypes.bool.isRequired,
+  }),
   dashboards: PropTypes.arrayOf(
     PropTypes.object
   ).isRequired,
