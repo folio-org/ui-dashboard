@@ -11,7 +11,7 @@ import arrayMutators from 'final-form-arrays';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import Loading from '../components/Dashboard/Loading';
+import Loading from '../components/Loading';
 import { useChunkedUsers } from '../components/hooks';
 
 import UserAccessFieldArray from '../components/UserAccessFieldArray';

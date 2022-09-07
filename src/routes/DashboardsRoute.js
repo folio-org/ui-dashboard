@@ -1,26 +1,39 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 
+import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
-import Loading from '../components/Dashboard/Loading';
-import { ErrorPage } from '../components/ErrorComponents';
+import Loading from '../components/Loading';
+// import { ErrorPage } from '../components/ErrorComponents';
+import { useDashboardAccessStore } from '../components/hooks';
 
 const DashboardsRoute = ({
+  children,
   history,
 }) => {
-  /*
-   * IMPORTANT this code uses react-query.
-   * At some point after Stripes' Iris release there is a possibility this will be removed in favour of SWR.
-   * A decision has not been made either way yet, so for now I've gone with react-query.
-   * Should that happen, the APIs seem quite similar so porting won't be too difficult.
-   */
+  const { dashId } = useParams();
+  const stripes = useStripes();
 
   const ky = useOkapiKy();
+
+  // If and only if we're within a route containing a dashId, fill out access in zustand store
+  const setAccess = useDashboardAccessStore(state => state.setAccess);
+  useQuery(
+    ['ui-dashboard', 'dashboardRoute', 'my-access', dashId],
+    () => ky(`servint/dashboard/${dashId}/my-access`).json()
+      .then(res => {
+        setAccess(dashId, res.access, stripes.hasPerm('servint.dashboards.admin'));
+      }),
+    {
+      enabled: !!dashId
+    }
+  );
+
   const myDashboardsQueryParams = useMemo(() => (
     generateKiwtQueryParams(
       {
@@ -42,6 +55,7 @@ const DashboardsRoute = ({
       {}
     )
   ), []);
+
   // At some point we might have a select for different dashboards here, hence this generic call as well as the specific one
   // For now ensure we always get the dashboards back from earliest to latest
   const { data: dashboards, isLoading: dashboardsLoading } = useQuery(
@@ -63,19 +77,27 @@ const DashboardsRoute = ({
     return <Loading />;
   }
 
-  // TODO We maybe need a container here to hold the tab options between dashboards
+  return children;
 
-  // If finished loading and we have no dashboards, error out
-  return (
-    <ErrorPage>
-      <FormattedMessage id="ui-dashboard.error.noDashboardsForUser" />
-    </ErrorPage>
-  );
+  /*
+    The following code is relevant for the future splash screen implementation?
+    // If finished loading and we have no dashboards, error out
+    return (
+      <ErrorPage>
+        <FormattedMessage id="ui-dashboard.error.noDashboardsForUser" />
+      </ErrorPage>
+    );
+  */
 };
 
 export default DashboardsRoute;
 
 DashboardsRoute.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

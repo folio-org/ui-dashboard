@@ -2,7 +2,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import DashboardHeader from './DashboardHeader';
+import Header from './Header';
 
 const onCreate = jest.fn();
 const onReorder = jest.fn();
@@ -16,11 +16,11 @@ jest.mock('../../hooks', () => ({
     .mockReturnValueOnce({ hasAccess: () => false, hasAdminPerm: true })
 }));
 
-describe('DashboardHeader', () => {
-  describe('DashboardHeader with \'edit\' access', () => {
+describe('Header', () => {
+  describe('Header with \'edit\' access', () => {
     beforeEach(() => {
       renderWithIntl(
-        <DashboardHeader
+        <Header
           dashId="1234"
           onCreate={onCreate}
           onReorder={onReorder}
@@ -38,10 +38,10 @@ describe('DashboardHeader', () => {
     });
   });
 
-  describe('DashboardHeader without \'edit\' access', () => {
+  describe('Header without \'edit\' access', () => {
     beforeEach(() => {
       renderWithIntl(
-        <DashboardHeader
+        <Header
           dashId="1234"
           onCreate={onCreate}
           onReorder={onReorder}
@@ -57,10 +57,10 @@ describe('DashboardHeader', () => {
     });
   });
 
-  describe('DashboardHeader without \'edit\' access but with admin perm', () => {
+  describe('Header without \'edit\' access but with admin perm', () => {
     beforeEach(() => {
       renderWithIntl(
-        <DashboardHeader
+        <Header
           dashId="1234"
           onCreate={onCreate}
           onReorder={onReorder}

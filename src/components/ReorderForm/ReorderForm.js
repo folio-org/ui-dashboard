@@ -21,7 +21,7 @@ import {
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
 import css from './ReorderForm.css';
-import { DashboardAccessInfo } from '../Dashboard';
+import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const ReorderForm = ({
   dashboard: {
@@ -117,7 +117,7 @@ const ReorderForm = ({
             footer={renderPaneFooter()}
             id="pane-reorder-form"
             onClose={onClose}
-            paneTitle={<FormattedMessage id="ui-dashboard.dashboard.reorderForm.paneTitle" />}
+            paneTitle={<FormattedMessage id="ui-dashboard.reorderWidgets" />}
           >
             <DashboardAccessInfo dashId={dashId} />
             <Layout className="marginTopHalf">

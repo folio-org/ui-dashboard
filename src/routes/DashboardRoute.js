@@ -5,8 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import Loading from '../components/Dashboard/Loading';
-import Dashboard from '../components/Dashboard/Dashboard';
+import Loading from '../components/Loading';
+import DashboardContainer from '../components/DashboardContainer';
 
 import { ErrorPage } from '../components/ErrorComponents';
 
@@ -48,7 +48,7 @@ const DashboardRoute = ({
     (widgetId) => ky.delete(`servint/widgets/instances/${widgetId}`)
   );
 
-  const handleCreate = () => {
+  const handleCreateWidget = () => {
     history.push(`${location.pathname}/create`);
   };
 
@@ -77,11 +77,11 @@ const DashboardRoute = ({
 
   if (dashboard) {
     return (
-      <Dashboard
+      <DashboardContainer
         key={`dashboard-${dashboard.id}`}
-        dashboardId={dashboard.id}
+        dashboard={dashboard}
         onChangeDash={setDashId}
-        onCreate={handleCreate}
+        onCreateWidget={handleCreateWidget}
         onReorder={handleReorder}
         onUserAccess={handleUserAccess}
         onWidgetDelete={handleWidgetDelete}

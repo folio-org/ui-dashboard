@@ -1,3 +1,9 @@
+/*
+ * This is a component which will hold the dashboard itself,
+ * along with the actions menu and dashboard tab groups.
+ * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
+ */
+
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -6,29 +12,25 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
-import DashboardHeader from './DashboardHeader';
 import NoWidgets from './NoWidgets';
 import css from './Dashboard.css';
 import { ErrorModal } from '../ErrorComponents';
 import { Widget } from '../Widget';
 import useWidgetDefinition from '../useWidgetDefinition';
-import DashboardAccessInfo from './DashboardAccessInfo';
+import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const propTypes = {
-  dashboardId: PropTypes.string.isRequired,
-  onCreate: PropTypes.func.isRequired,
-  onReorder: PropTypes.func,
-  onUserAccess: PropTypes.func,
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
   widgets: PropTypes.arrayOf(PropTypes.object),
 };
 
 const Dashboard = ({
-  dashboardId,
-  onCreate,
-  onReorder,
-  onUserAccess,
+  dashboard,
   onWidgetDelete,
   onWidgetEdit,
   widgets
@@ -109,14 +111,14 @@ const Dashboard = ({
     if (!widgets?.length) {
       return (
         <>
-          <DashboardAccessInfo dashId={dashboardId} />
+          <DashboardAccessInfo dashId={dashboard.id} />
           <NoWidgets />
         </>
       );
     }
     return (
       <>
-        <DashboardAccessInfo dashId={dashboardId} />
+        <DashboardAccessInfo dashId={dashboard.id} />
         <div className={css.widgetsContainer}>
           {widgets.map(w => (
             <RenderWidget
@@ -131,15 +133,8 @@ const Dashboard = ({
 
   return (
     <>
-      <div className={css.dashboard}>
-        <DashboardHeader
-          key={`dashboard-header-${dashboardId}`}
-          dashId={dashboardId}
-          onCreate={onCreate}
-          onReorder={widgets?.length > 1 ? onReorder : null}
-          onUserAccess={onUserAccess}
-        />
-        <div className={css.dashboardContent}>{dashboardContents()}</div>
+      <div className={css.dashboardContent}>
+        {dashboardContents()}
       </div>
       <ConfirmationModal
         buttonStyle="danger"

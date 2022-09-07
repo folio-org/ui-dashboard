@@ -24,7 +24,7 @@ import {
   checkScope,
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import { DashboardAccessInfo } from '../Dashboard';
+import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const propTypes = {
   data: PropTypes.shape({

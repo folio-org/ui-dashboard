@@ -1,6 +1,6 @@
 @import '@folio/stripes-components/lib/variables.css';
 
-.dashboardHeader {
+.header {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
