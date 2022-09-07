@@ -1,12 +1,21 @@
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import {
+  HeadlineInteractor as Headline,
+  renderWithIntl
+} from '@folio/stripes-erm-components';
 import { Button } from '@folio/stripes-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import Header from './Header';
 
-const onCreate = jest.fn();
+const onCreateWidget = jest.fn();
 const onReorder = jest.fn();
 const onUserAccess = jest.fn();
+
+const dashboard = {
+  id: '1234',
+  name: 'testDashboard'
+};
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -21,8 +30,8 @@ describe('Header', () => {
     beforeEach(() => {
       renderWithIntl(
         <Header
-          dashId="1234"
-          onCreate={onCreate}
+          dashboard={dashboard}
+          onCreateWidget={onCreateWidget}
           onReorder={onReorder}
           onUserAccess={onUserAccess}
         />,
@@ -30,10 +39,11 @@ describe('Header', () => {
       );
     });
 
-    test('renders the expected action button dropdown', async () => {
+    test('renders the expected dashboard action button dropdown', async () => {
       await Button('Actions').click();
-      await Button('New').exists();
-      await Button('Edit widget display order').exists();
+      await Headline('testDashboard').exists();
+      await Button('New widget').exists();
+      await Button('Order widgets').exists();
       await Button('User access').exists();
     });
   });
@@ -42,8 +52,8 @@ describe('Header', () => {
     beforeEach(() => {
       renderWithIntl(
         <Header
-          dashId="1234"
-          onCreate={onCreate}
+          dashboard={dashboard}
+          onCreateWidget={onCreateWidget}
           onReorder={onReorder}
           onUserAccess={onUserAccess}
         />,
@@ -51,8 +61,11 @@ describe('Header', () => {
       );
     });
 
-    test('renders the expected action button dropdown', async () => {
+    test('renders the expected dashboard action button dropdown', async () => {
       await Button('Actions').click();
+      await Headline('testDashboard').exists();
+      await Button('New widget').absent();
+      await Button('Order widgets').absent();
       await Button('User access').exists();
     });
   });
@@ -61,8 +74,8 @@ describe('Header', () => {
     beforeEach(() => {
       renderWithIntl(
         <Header
-          dashId="1234"
-          onCreate={onCreate}
+          dashboard={dashboard}
+          onCreateWidget={onCreateWidget}
           onReorder={onReorder}
           onUserAccess={onUserAccess}
         />,
@@ -70,10 +83,11 @@ describe('Header', () => {
       );
     });
 
-    test('renders the expected action button dropdown', async () => {
+    test('renders the expected dashboard action button dropdown', async () => {
       await Button('Actions').click();
-      await Button('New').exists();
-      await Button('Edit widget display order').exists();
+      await Headline('testDashboard').exists();
+      await Button('New widget').exists();
+      await Button('Order widgets').exists();
       await Button('User access').exists();
     });
   });
