@@ -15,6 +15,7 @@ import css from './DragAndDropFieldArray.css';
  */
 const DragAndDropFieldArray = ({
   draggableDivStyle = () => null,
+  getDragHandleProps = () => {},
   fields,
   children,
   renderHandle
@@ -74,8 +75,10 @@ const DragAndDropFieldArray = ({
                         {isRenderHandle &&
                           <div
                             className={css.handle}
+                            data-handle
                             data-testid={name}
                             {...draggableProvided.dragHandleProps}
+                            {...getDragHandleProps({ name, index, item: fields.value[index] })}
                           >
                             {renderHandle({ name, index, item: fields.value[index] })}
                           </div>

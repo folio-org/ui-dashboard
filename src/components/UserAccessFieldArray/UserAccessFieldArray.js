@@ -213,7 +213,7 @@ const UserAccessFieldArray = ({
             user: <FormattedMessage id="ui-dashboard.dashboardUsers.user" />,
             status: <FormattedMessage id="ui-dashboard.dashboardUsers.status" />,
             email: <FormattedMessage id="ui-dashboard.dashboardUsers.email" />,
-            accessLevel: <FormattedMessage id="ui-dashboard.dashboardUsers.accessLevel" />,
+            accessLevel: <FormattedMessage id="ui-dashboard.accessLevel" />,
             remove: <FormattedMessage id="ui-dashboard.dashboardUsers.remove" />,
           }}
           columnWidths={{
@@ -296,19 +296,19 @@ const UserAccessFieldArray = ({
                       {
                         value: 'view',
                         label: intl.formatMessage({
-                          id: 'ui-dashboard.dashboardUsers.accessLevel.view'
+                          id: 'ui-dashboard.accessLevel.view'
                         })
                       },
                       {
                         value: 'edit',
                         label: intl.formatMessage({
-                          id: 'ui-dashboard.dashboardUsers.accessLevel.edit'
+                          id: 'ui-dashboard.accessLevel.edit'
                         })
                       },
                       {
                         value: 'manage',
                         label: intl.formatMessage({
-                          id: 'ui-dashboard.dashboardUsers.accessLevel.manage'
+                          id: 'ui-dashboard.accessLevel.manage'
                         })
                       }
                     ]}
