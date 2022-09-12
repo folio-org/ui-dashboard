@@ -39,7 +39,7 @@ const DashboardAccessRoute = ({
 
   // From the dashboard access, we need to fetch user information.
   // Batch fetch all users
-  const { users, isLoading: areUsersLoading } = useChunkedUsers(dashboardUsers?.map(da => da?.user?.id), { enabled: !dashboardAccessLoading && dashboardAccess.length });
+  const { users, isLoading: areUsersLoading } = useChunkedUsers(dashboardUsers?.map(da => da?.user?.id), { enabled: !dashboardUsersLoading && dashboardUsers.length });
 
   // The POST for setting dashboard users
   const { mutateAsync: postDashUsers } = useMutation(

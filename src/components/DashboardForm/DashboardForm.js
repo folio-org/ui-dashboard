@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Col,
+  InfoPopover,
   Pane,
   PaneFooter,
   Paneset,
@@ -15,7 +16,17 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 import { Field } from 'react-final-form';
 
-import { requiredValidator as required } from '@folio/stripes-erm-components';
+import { composeValidators as compose, requiredValidator as required } from '@folio/stripes-erm-components';
+
+// Constant for linting
+const MAX_DASHBOARD_NAME_LENGTH = 25;
+const maxLength = (value) => {
+  if (value?.length > MAX_DASHBOARD_NAME_LENGTH) {
+    return <FormattedMessage id="ui-dashboard.dashboard.name.tooLong" />;
+  }
+
+  return null;
+};
 
 const DashboardForm = ({
   handlers: {
@@ -75,10 +86,20 @@ const DashboardForm = ({
           <Col xs={3}>
             <Field
               component={TextField}
-              label={<FormattedMessage id="ui-dashboard.dashboard.name" />}
+              label={
+                <>
+                  <FormattedMessage id="ui-dashboard.dashboard.name" />
+                  <InfoPopover
+                    content={<FormattedMessage id="ui-dashboard.dashboard.name.info" />}
+                  />
+                </>
+              }
               name="name"
               required
-              validate={required}
+              validate={compose(
+                required,
+                maxLength
+              )}
             />
           </Col>
           <Col xs={6}>

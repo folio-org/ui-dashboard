@@ -19,7 +19,8 @@ const DashboardEditRoute = ({
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
     (data) => ky.put(`servint/dashboard/${params.dashId}`, { json: data }).then(() => {
-      queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId])
+      queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
+      queryClient.invalidateQueries(['ERM', 'Dashboards']);
     })
   );
 
