@@ -28,7 +28,7 @@ const DashboardRoute = ({
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
   const { data: widgets, isLoading: widgetsLoading } = useQuery(
     // We need this to rerun when the dashboard updates
-    ['ui-dashboard', 'dashboardRoute', 'widgets', dashboard],
+    ['ERM', 'Dashboard', params.dashId, 'Widgets'],
     () => ky(`servint/dashboard/${params.dashId}/widgets?sort=weight;asc&perPage=100`).json(),
     {
       /* Once the dashboard has been fetched, we can then fetch the ordered list of widgets from it */
@@ -41,8 +41,11 @@ const DashboardRoute = ({
 
   // The DELETE for the widgets
   const { mutateAsync: deleteWidget } = useMutation(
-    ['ui-dashboard', 'dashboardRoute', 'deleteWidget'],
-    (widgetId) => ky.delete(`servint/widgets/instances/${widgetId}`)
+    ['ERM', 'Dashboard', params.dashId, 'deleteWidget'],
+    (widgetId) => ky.delete(`servint/widgets/instances/${widgetId}`).then(() => (
+      // Make sure to refetch dashboard when we delete a widget
+      queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId])
+    ))
   );
 
   // The DELETE for the dashboard itself
@@ -84,13 +87,6 @@ const DashboardRoute = ({
     history.push('/dashboard');
   };
 
-  const handleWidgetDelete = (id) => {
-    deleteWidget(id).then(() => (
-      // Make sure to refetch dashboard when we delete a widget
-      queryClient.invalidateQueries(['ERM', 'dashboard', params.dashId])
-    ));
-  };
-
   if (dashboardLoading || widgetsLoading) {
     return <Loading />;
   }
@@ -107,7 +103,7 @@ const DashboardRoute = ({
         onEdit={handleDashboardEdit}
         onReorder={handleReorder}
         onUserAccess={handleUserAccess}
-        onWidgetDelete={handleWidgetDelete}
+        onWidgetDelete={deleteWidget}
         onWidgetEdit={handleWidgetEdit}
         widgets={widgets}
       />

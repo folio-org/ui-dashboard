@@ -25,7 +25,7 @@ import DashboardRoute from './routes/DashboardRoute';
 import DashboardCreateRoute from './routes/DashboardCreateRoute';
 import DashboardEditRoute from './routes/DashboardEditRoute';
 import DashboardAccessRoute from './routes/DashboardAccessRoute';
-import DashboardOrderRoute from './routes/DashboardOrderRoute';
+import WidgetOrderRoute from './routes/WidgetOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 import WidgetEditRoute from './routes/WidgetEditRoute';
 
@@ -117,7 +117,7 @@ const App = ({ history, location, match: { path } }) => {
                     <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/createWidget`} />
                     <DashboardsRouterRoute component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
                     <DashboardsRouterRoute component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
-                    <DashboardsRouterRoute component={DashboardOrderRoute} path={`${path}/:dashId/editOrder`} />
+                    <DashboardsRouterRoute component={WidgetOrderRoute} path={`${path}/:dashId/editOrder`} />
                     <DashboardsRouterRoute component={DashboardRoute} path={`${path}/:dashId`} />
                   </Switch>
                 );

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
 import Loading from '../components/Loading';
 import ReorderForm from '../components/ReorderForm';
 
-const DashboardOrderRoute = ({
+const WidgetOrderRoute = ({
   dashboard,
   dashboardQuery: {
     isLoading: dashboardLoading
@@ -22,11 +22,16 @@ const DashboardOrderRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
+  // TODO we can maybe combine this with the "EditDashboard" page, since they use the same call
   // The PUT for the dashboardOrdering
   const { mutateAsync: putDashOrder } = useMutation(
-    ['ui-dashboard', 'dashboardOrderRoute', 'putDashboard'],
-    (data) => ky.put(`servint/dashboard/${dashId}`, { json: data })
+    ['ERM', 'Dashboard', dashId, 'putDashboard'],
+    (data) => ky.put(`servint/dashboard/${dashId}`, { json: data }).then(() => {
+      queryClient.invalidateQueries(['ERM', 'Dashboard', dashId]);
+      queryClient.invalidateQueries(['ERM', 'Dashboards']);
+    })
   );
 
   if (dashboardLoading) {
@@ -71,12 +76,13 @@ const DashboardOrderRoute = ({
   );
 };
 
-export default DashboardOrderRoute;
+export default WidgetOrderRoute;
 
-DashboardOrderRoute.propTypes = {
+WidgetOrderRoute.propTypes = {
   dashboard: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    widgets: PropTypes.arrayOf(PropTypes.object),
   }),
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,

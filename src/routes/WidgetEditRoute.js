@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm';
 import getComponentsFromType from '../components/getComponentsFromType';
@@ -17,10 +17,13 @@ const WidgetEditRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: putWidget } = useMutation(
-    ['ui-dashboard', 'widgetCreateRoute', 'putWidget'],
-    (data) => ky.put(`servint/widgets/instances/${params.widgetId}`, { json: data })
+    ['ERM', 'Dashboard', params.dashId, 'putWidget'],
+    (data) => ky.put(`servint/widgets/instances/${params.widgetId}`, { json: data }).then(() => {
+      queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
+    })
   );
 
   // If we have a widgetId then fetch that widget
@@ -35,8 +38,15 @@ const WidgetEditRoute = ({
   );
 
   // Fetch list of widgetDefinitions (Should only be 1 if widget already exists)
+
+  // Construct NS like this so that if widget does NOT exist, we can reuse cache from call in WidgetCreateRoute
+  const queryNS = ['ERM', 'WidgetDefinitions'];
+  if (widget?.id) {
+    queryNS.push(widget?.id);
+  }
+
   const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs', widget?.id],
+    queryNS,
     () => ky(`servint/widgets/definitions/global${widget ? '?name=' + widget.definition?.name + '&version=' + widget.definition?.version : ''}`).json()
   );
   const [selectedDefinition, setSelectedDef] = useState();

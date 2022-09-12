@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import WidgetForm from '../components/WidgetForm';
 import getComponentsFromType from '../components/getComponentsFromType';
@@ -17,14 +17,15 @@ const WidgetCreateRoute = ({
   }
 }) => {
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: postWidget } = useMutation(
-    ['ui-dashboard', 'widgetCreateRoute', 'postWidget'],
+    ['ERM', 'Dashboard', params.dashId, 'postWidget'],
     (data) => ky.post('servint/widgets/instances', { json: data })
   );
 
   const { data: widgetDefinitions } = useQuery(
-    ['ui-dashboard', 'widgetCreateRoute', 'getWidgetDefs'],
+    ['ERM', 'WidgetDefinitions'],
     () => ky('servint/widgets/definitions/global').json()
   );
   const [selectedDefinition, setSelectedDef] = useState();
@@ -69,7 +70,8 @@ const WidgetCreateRoute = ({
     // New widget, POST and close
     postWidget(submitValue)
       .then(data => data.json())
-      .then(({ id }) => handleClose(id));
+      .then(({ id }) => handleClose(id))
+      .then(() => queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]));
   };
 
   return (
