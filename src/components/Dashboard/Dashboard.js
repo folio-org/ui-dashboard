@@ -138,7 +138,7 @@ const Dashboard = ({
       </div>
       <ConfirmationModal
         buttonStyle="danger"
-        confirmLabel={<FormattedMessage id="ui-dashboard.dashboard.delete" />}
+        confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
         data-test-delete-confirmation-modal
         heading={<FormattedMessage id="ui-dashboard.dashboard.deleteWidget" />}
         id="delete-agreement-confirmation"

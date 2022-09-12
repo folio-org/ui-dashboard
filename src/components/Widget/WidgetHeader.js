@@ -90,7 +90,7 @@ const WidgetHeader = ({
         onClick={() => onWidgetDelete(widgetId, name)}
       >
         <Icon icon="trash">
-          <FormattedMessage id="ui-dashboard.widgetHeader.deleteButton" />
+          <FormattedMessage id="ui-dashboard.delete" />
         </Icon>
       </Button>
     </DropdownMenu>

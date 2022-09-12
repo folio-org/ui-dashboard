@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
+import { ConfirmationModal } from '@folio/stripes/components';
 
 import Loading from '../components/Loading';
 import DashboardContainer from '../components/DashboardContainer';
@@ -24,6 +25,8 @@ const DashboardRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+
+  const [deleteDashboardModal, setDeleteDashboardModal] = useState(false);
 
   // Fetching widgets separately allows us to sort them by weighting on fetch, and maybe paginate later on if necessary
   const { data: widgets, isLoading: widgetsLoading } = useQuery(
@@ -81,32 +84,49 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/${id}/edit`);
   };
 
-  // FIXME this needs a confirmation modal
-  const handleDeleteDashboard = () => {
-    deleteDashboard();
-    history.push('/dashboard');
-  };
-
   if (dashboardLoading || widgetsLoading) {
     return <Loading />;
   }
 
   if (dashboard) {
     return (
-      <DashboardContainer
-        key={`dashboard-${dashboard.id}`}
-        dashboard={dashboard}
-        dashboards={dashboards}
-        onCreateDashboard={handleCreateDashboard}
-        onCreateWidget={handleCreateWidget}
-        onDeleteDashboard={handleDeleteDashboard}
-        onEdit={handleDashboardEdit}
-        onReorder={handleReorder}
-        onUserAccess={handleUserAccess}
-        onWidgetDelete={deleteWidget}
-        onWidgetEdit={handleWidgetEdit}
-        widgets={widgets}
-      />
+      <>
+        <DashboardContainer
+          key={`dashboard-${dashboard.id}`}
+          dashboard={dashboard}
+          dashboards={dashboards}
+          onCreateDashboard={handleCreateDashboard}
+          onCreateWidget={handleCreateWidget}
+          onDeleteDashboard={() => setDeleteDashboardModal(true)}
+          onEdit={handleDashboardEdit}
+          onReorder={handleReorder}
+          onUserAccess={handleUserAccess}
+          onWidgetDelete={deleteWidget}
+          onWidgetEdit={handleWidgetEdit}
+          widgets={widgets}
+        />
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-dashboard.deleteDashboard" />}
+          id="delete-dashboard-confirmation"
+          message={
+            <FormattedMessage
+              id="ui-dashboard.deleteDashboard.message"
+              values={{ name: dashboard.name }}
+            />
+          }
+          onCancel={() => {
+            setDeleteDashboardModal(false);
+          }}
+          onConfirm={() => {
+            deleteDashboard();
+            history.push('/dashboard');
+          }}
+          open={deleteDashboardModal}
+        />
+      </>
     );
   }
 
@@ -121,8 +141,8 @@ export default DashboardRoute;
 
 DashboardRoute.propTypes = {
   dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    id: PropTypes.string,
+    name: PropTypes.string
   }),
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,

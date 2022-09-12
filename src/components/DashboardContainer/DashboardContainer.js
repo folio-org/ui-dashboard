@@ -16,8 +16,10 @@ const propTypes = {
     name: PropTypes.string.isRequired
   }).isRequired,
   dashboards: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    dashboard: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    }).isRequired
   })).isRequired,
   onCreateDashboard: PropTypes.func.isRequired,
   onCreateWidget: PropTypes.func.isRequired,
