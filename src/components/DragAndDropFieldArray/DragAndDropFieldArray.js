@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import css from './DragAndDropFieldArray.css';
@@ -76,23 +77,24 @@ const DragAndDropFieldArray = ({
                             data-testid={name}
                             {...draggableProvided.dragHandleProps}
                           >
-                            {renderHandle(name, index)}
+                            {renderHandle({ name, index, item: fields.value[index] })}
                           </div>
                         }
                         {/* Actual dnd content, passed a bunch of props as a function */}
                         <div
                           className={css.content}
                         >
-                          {children(
+                          {children({
                             name,
                             index,
-                            {
+                            droppable: {
                               droppableProvided,
                               droppableSnapshot
                             },
                             draggable,
-                            fields
-                          )}
+                            fields,
+                            item: fields.value[index]
+                          })}
                         </div>
                       </div>
                     );

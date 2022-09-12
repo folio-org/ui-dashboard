@@ -29,10 +29,6 @@ const DashboardsRoute = ({
       {
         sort: [
           {
-            path: 'defaultUserDashboard',
-            direction: 'desc'
-          },
-          {
             path: 'userDashboardWeight'
           },
           {
@@ -55,11 +51,12 @@ const DashboardsRoute = ({
 
   useEffect(() => {
     if (!dashboardsLoading && dashboards && !params.dashId) {
-      /*
-       * NOTE this simply pushes the user to the first dashboard in their list,
-       * which initially should only be a single dashboard, DEFAULT
+      /* Once dashboards have loaded, push user to their default,
+       * or failing that the first dashboard in list
        */
-      history.push(`/dashboard/${dashboards[0]?.dashboard?.id}`);
+      const pushDashboard = dashboards?.find(dshb => !!dshb.defaultUserDashboard) ?? dashboards[0];
+
+      history.push(`/dashboard/${pushDashboard?.dashboard?.id}`);
     }
   }, [dashboards, history, dashboardsLoading, params.dashId]);
 

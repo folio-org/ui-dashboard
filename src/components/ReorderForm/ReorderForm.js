@@ -20,7 +20,7 @@ import {
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
-import css from './ReorderForm.css';
+import css from '../DragAndDropFieldArray/DragAndDropFieldArray.css';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const ReorderForm = ({
@@ -125,7 +125,7 @@ const ReorderForm = ({
                 component={DragAndDropFieldArray}
                 draggableDivStyle={getDraggableDivStyle}
                 name="widgets"
-                renderHandle={(name, index) => (
+                renderHandle={({ name, index }) => (
                   <Icon
                     ariaLabel={
                   intl.formatMessage(
@@ -137,8 +137,8 @@ const ReorderForm = ({
                   />
                 )}
               >
-                {(name) => {
-                  return widgetNameFromName(name);
+                {({ item }) => {
+                  return item?.name;
                 }}
               </FieldArray>
             </Layout>

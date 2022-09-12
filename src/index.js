@@ -140,7 +140,6 @@ const App = ({ history, location, match: { path } }) => {
             />
             {/*
               Can go back to using Stripes Route if that propType change happens
-              FIXME put a PR in to change PropType
             */}
             {/* <Route component={DashboardsRoute} path={`${path}/:dashId?`}>
               {(dashboardsProps) => {

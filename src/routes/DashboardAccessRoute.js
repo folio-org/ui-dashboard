@@ -69,6 +69,7 @@ const DashboardAccessRoute = ({
 
   const doTheSubmit = (values) => {
     postDashUsers(values.access).then(handleClose);
+    queryClient.invalidateQueries(['ERM', 'Dashboards']);
     queryClient.invalidateQueries(['ERM', 'Dashboard', 'Users', dashId]);
   };
 

@@ -72,6 +72,10 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/userAccess`);
   };
 
+  const handleManageDashboards = () => {
+    history.push(`${location.pathname}/manageDashboards`);
+  };
+
   const handleDashboardEdit = () => {
     history.push(`${location.pathname}/edit`);
   };
@@ -99,6 +103,7 @@ const DashboardRoute = ({
           onCreateWidget={handleCreateWidget}
           onDeleteDashboard={() => setDeleteDashboardModal(true)}
           onEdit={handleDashboardEdit}
+          onManageDashboards={handleManageDashboards}
           onReorder={handleReorder}
           onUserAccess={handleUserAccess}
           onWidgetDelete={deleteWidget}

@@ -35,7 +35,7 @@ const SimpleSearchResults = ({
   id
 }) => {
   const intl = useIntl();
-  const renderResultField = (fieldName, index, _droppable, _draggable, fields) => {
+  const renderResultField = ({ name: fieldName, index, fields }) => {
     return (
       <div className={css.resultLine}>
         <Row key={`simple-search-result-array-${fieldName}`}>
