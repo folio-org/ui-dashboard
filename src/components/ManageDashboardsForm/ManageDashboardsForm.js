@@ -4,22 +4,25 @@ import classNames from 'classnames';
 
 import { FormattedMessage } from 'react-intl';
 
-import { useForm, useFormState } from 'react-final-form';
+import { Field, useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { AppIcon } from '@folio/stripes/core';
 import {
   Button,
+  Col,
   Icon,
   Layout,
   Pane,
   PaneFooter,
-  Paneset
+  Paneset,
+  Row
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray from '../DragAndDropFieldArray';
 
-import css from '../ReorderForm/ReorderForm.css';
+import dndCSS from '../DragAndDropFieldArray/DragAndDropFieldArray.css';
+import css from './ManageDashboardsForm.css';
 
 const ManageDashboardsForm = ({
   dashboards,
@@ -75,9 +78,9 @@ const ManageDashboardsForm = ({
 
   const getDraggableDivStyle = (draggable) => {
     return (classNames(
-      css.draggableBox,
+      dndCSS.defaultDraggableBox,
       draggable.draggableProvided.draggableProps.style,
-      { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
+      { [dndCSS.pickedUp]: draggable.draggableSnapshot.isDragging }
     ));
   };
 
@@ -110,8 +113,27 @@ const ManageDashboardsForm = ({
               />
             )}
           >
-            {({ item }) => {
-              return item?.dashboard?.name;
+            {({ name: fieldName, index, item, fields }) => {
+              return (
+                <Row key={`dashboard-order-array-${fieldName}`}>
+                  <Col className={css.colStyles} xs={8}>
+                    {/* Render dash name + desc */}
+                    <strong>
+                      {item?.dashboard?.name}
+                    </strong>
+                    {item?.dashboard?.description ? 
+                      `: ${item?.dashboard?.description}` :
+                      null
+                    }
+                  </Col>
+                  <Col className={css.colStyles} xs={2}>
+                    {item?.access?.label ?? item?.access?.value}
+                  </Col>
+                  <Col xs={2}>
+                    DEFAULT STUFF GOES HERE
+                  </Col>
+                </Row>
+              );
             }}
           </FieldArray>
         </Layout>

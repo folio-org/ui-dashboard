@@ -1,0 +1,7 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.colStyles {
+  align-self: center;
+  height: auto;
+  margin-bottom: 0;
+}

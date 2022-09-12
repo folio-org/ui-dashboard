@@ -79,7 +79,7 @@ const ReorderForm = ({
 
   const getDraggableDivStyle = (draggable) => {
     return (classnames(
-      css.draggableBox,
+      css.defaultDraggableBox,
       draggable.draggableProvided.draggableProps.style,
       { [css.pickedUp]: draggable.draggableSnapshot.isDragging }
     ));
