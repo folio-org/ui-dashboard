@@ -1,4 +1,3 @@
-import contains from 'dom-helpers/query/contains';
 import matches from 'dom-helpers/query/matches';
 
 const getHandles = (container = document) => {

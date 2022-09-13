@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import PropTypes from 'prop-types';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import orderBy from 'lodash/orderBy';
 

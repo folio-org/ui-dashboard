@@ -11,9 +11,6 @@ import ManageDashboardsForm from '../components/ManageDashboardsForm';
 
 const DashboardsManageRoute = ({
   dashboards,
-  dashboardsQuery: {
-    isFetching: dashboardsLoading
-  } = {},
   history,
   match: {
     params: {

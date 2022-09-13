@@ -122,9 +122,10 @@ const DragAndDropFieldArray = ({
 };
 
 DragAndDropFieldArray.propTypes = {
+  children: PropTypes.func,
   draggableDivStyle: PropTypes.func,
   fields: PropTypes.object.isRequired,
-  children: PropTypes.func,
+  getDragHandleProps: PropTypes.func,
   renderHandle: PropTypes.func
 };
 
