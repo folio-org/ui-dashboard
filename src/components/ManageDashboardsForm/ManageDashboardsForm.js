@@ -169,12 +169,12 @@ const ManageDashboardsForm = ({
                   name="dashboards"
                   renderHandle={({ index, item }) => (
                     <Icon
-                      ariaLabel={
-                        intl.formatMessage(
+                      {...{
+                        'aria-label': intl.formatMessage(
                           { id: 'ui-dashboard.userDashboards.dashboardOrder.dragAndDropHandleAria' },
                           { index: index + 1, dashboard: item?.dashboard?.name }
                         )
-                      }
+                      }}
                       icon="drag-drop"
                     />
                   )}

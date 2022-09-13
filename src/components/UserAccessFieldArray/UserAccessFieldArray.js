@@ -320,7 +320,7 @@ const UserAccessFieldArray = ({
                 );
               }
 
-              return <FormattedMessage id={`ui-dashboard.dashboardUsers.accessLevel.${item.access}`} />;
+              return <FormattedMessage id={`ui-dashboard.accessLevel.${item.access}`} />;
             },
             remove: item => {
               if (
