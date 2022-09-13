@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Route as RouterRoute, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { AppContextMenu, Route } from '@folio/stripes/core';
 
 import {
@@ -83,65 +83,7 @@ const App = ({ history, location, match: { path } }) => {
             )}
           </AppContextMenu>
           <Switch>
-            {/*
-              Using the vanilla Route from react-router-dom because
-              Stripes' PropTypes specify children MUST be node type...
-            */}
-            <RouterRoute
-              path={`${path}/:dashId?`}
-              render={innerProps => {
-                /*
-                 * Set up like this as a function so DashboardsRoute
-                 * can pass down information such as dashboards without
-                 * us needing to fetch them again
-                 */
-                return (
-                  <DashboardsRoute
-                    {...innerProps}
-                  >
-                    {(dashboardsProps) => {
-                    // Pass each inner route all of dashboardsProps
-                      const DashboardsRouterRoute = ({ component: Component, path: innerPath }) => (
-                        <Route
-                          path={innerPath}
-                          render={(routeProps) => (
-                            <Component
-                              {...routeProps}
-                              {...dashboardsProps}
-                            />
-                          )}
-                        />
-                      );
-
-                      DashboardsRouterRoute.propTypes = {
-                        path: PropTypes.string.isRequired,
-                        component: PropTypes.oneOfType([
-                          PropTypes.func,
-                          PropTypes.object,
-                        ])
-                      };
-
-                      return (
-                        <Switch>
-                          <DashboardsRouterRoute component={DashboardCreateRoute} path={`${path}/:dashId/create`} />
-                          <DashboardsRouterRoute component={DashboardEditRoute} path={`${path}/:dashId/edit`} />
-                          <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/createWidget`} />
-                          <DashboardsRouterRoute component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
-                          <DashboardsRouterRoute component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
-                          <DashboardsRouterRoute component={DashboardsManageRoute} path={`${path}/:dashId/manageDashboards`} />
-                          <DashboardsRouterRoute component={WidgetOrderRoute} path={`${path}/:dashId/editOrder`} />
-                          <DashboardsRouterRoute component={DashboardRoute} path={`${path}/:dashId`} />
-                        </Switch>
-                      );
-                    }}
-                  </DashboardsRoute>
-                );
-              }}
-            />
-            {/*
-              Can go back to using Stripes Route if that propType change happens
-            */}
-            {/* <Route component={DashboardsRoute} path={`${path}/:dashId?`}>
+            <Route component={DashboardsRoute} path={`${path}/:dashId?`}>
               {(dashboardsProps) => {
                 // Pass each inner route all of dashboardsProps
                 const DashboardsRouterRoute = ({ component: Component, path: innerPath }) => (
@@ -177,8 +119,7 @@ const App = ({ history, location, match: { path } }) => {
                   </Switch>
                 );
               }}
-            </Route> */
-            }
+            </Route>
           </Switch>
         </HasCommand>
       </CommandList>

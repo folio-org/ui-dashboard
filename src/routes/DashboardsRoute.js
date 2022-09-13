@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
 
 import { useParams } from 'react-router';
 import { useQuery } from 'react-query';
@@ -9,7 +8,6 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import Loading from '../components/Loading';
-// import { ErrorPage } from '../components/ErrorComponents';
 import { useDashboardAccessStore } from '../components/hooks';
 
 const DashboardsRoute = ({
@@ -119,16 +117,6 @@ const DashboardsRoute = ({
     dashboard,
     dashboardQuery: restOfDashboardQuery
   });
-
-  /*
-    The following code is relevant for the future splash screen implementation?
-    // If finished loading and we have no dashboards, error out
-    return (
-      <ErrorPage>
-        <FormattedMessage id="ui-dashboard.error.noDashboardsForUser" />
-      </ErrorPage>
-    );
-  */
 };
 
 export default DashboardsRoute;
