@@ -14,7 +14,7 @@ import {
   TextField
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 
 import { composeValidators as compose, requiredValidator as required } from '@folio/stripes-erm-components';
 
@@ -35,8 +35,8 @@ const DashboardForm = ({
   },
   pristine,
   submitting,
-  values
 }) => {
+  const { values } = useFormState();
   const renderPaneFooter = () => {
     return (
       <PaneFooter
@@ -94,6 +94,7 @@ const DashboardForm = ({
                   />
                 </>
               }
+              maxLength={25}
               name="name"
               required
               validate={compose(

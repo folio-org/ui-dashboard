@@ -114,7 +114,7 @@ const ManageDashboardsForm = ({
         footer={renderPaneFooter()}
         id="pane-reorder-form"
         onClose={onClose}
-        paneTitle={<FormattedMessage id="ui-dashboard.reorderWidgets" />}
+        paneTitle={<FormattedMessage id="ui-dashboard.manageDashboards" />}
       >
         <Layout className="marginTopHalf">
           <KeyValue
