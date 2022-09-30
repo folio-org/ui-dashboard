@@ -58,9 +58,7 @@ const Header = ({
           id="clickable-reorderdashboard"
           onClick={onReorder}
         >
-          <Headline faded margin="none" size="small">
-            <FormattedMessage id="ui-dashboard.reorderWidgets" />
-          </Headline>
+          <FormattedMessage id="ui-dashboard.reorderWidgets" />
         </Button>
       );
 
