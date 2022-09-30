@@ -8,7 +8,7 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import Loading from '../components/Loading';
-import { useDashboardAccessStore } from '../components/hooks';
+import { useChunkedUsers, useDashboardAccessStore } from '../components/hooks';
 
 const DashboardsRoute = ({
   children,
@@ -103,6 +103,16 @@ const DashboardsRoute = ({
     }
   );
 
+  // From the dashboard access, we need to fetch user information.
+  // Batch fetch all users
+  const { users, isLoading: areUsersLoading } = useChunkedUsers(dashboardUsers?.map(da => da?.user?.id), { enabled: !restOfDashboardUsersQuery?.isFetching && dashboardUsers.length });
+  const mappedDashboardUsers = useMemo(() => (
+    dashboardUsers.map(da => ({
+      access: da.access.value, // Allow us to receive and send refdata value instead of id
+      id: da.id,
+      user: users.find(usr => usr.id === da.user.id) ?? da.user.id, // If this is a flat id then we know we couldn't find the user
+    }))
+  ), [dashboardUsers, users]);
 
   // If we're still loading the initial list of all dashboards for this user, show a loading screen
   if (dashboardsLoading) {
@@ -111,7 +121,8 @@ const DashboardsRoute = ({
 
   // See top level index.js for how we pass this information down to lower routes
   return children({
-    dashboardUsers, // A list of the users for a given dashboard
+    areUsersLoading,
+    dashboardUsers: mappedDashboardUsers, // A list of the users for a given dashboard
     dashboardUsersQuery: restOfDashboardUsersQuery,
     dashboards,
     dashboard,

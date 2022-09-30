@@ -26,6 +26,8 @@
   "deleteDashboard": "Delete dashboard",
   "deleteDashboardHeader": "Delete dashboard - {name}",
   "deleteDashboard.message": "Dashboard <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "deleteDashboard.messageMultiUsers": "Deleting the dashboard <strong>{name}</strong> will remove access for one or more users. Select \"Delete\" to go ahead.",
+  "users": "Users",
   "manageDashboards": "Manage dashboards",
   "accessLevel": "Access level",
   "accessLevel.view": "View",
