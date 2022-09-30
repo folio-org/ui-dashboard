@@ -25,6 +25,7 @@ import {
 } from '@folio/stripes/components';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import DashboardAccessInfo from '../DashboardAccessInfo';
+import DashboardMultipleUserInfo from '../DashboardMultipleUserInfo';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -48,6 +49,7 @@ const propTypes = {
 const WidgetForm = ({
   data: {
     dashId,
+    dashboardUsers = [],
     initialValues,
     name,
     params,
@@ -154,6 +156,7 @@ const WidgetForm = ({
             }
           >
             <DashboardAccessInfo dashId={dashId} />
+            <DashboardMultipleUserInfo dashboardUsers={dashboardUsers} />
             <Row>
               <Col xs={6}>
                 <KeyValue

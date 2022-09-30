@@ -8,6 +8,7 @@ import DashboardForm from '../components/DashboardForm';
 
 const DashboardEditRoute = ({
   dashboard,
+  dashboardUsers,
   history,
   match: {
     params
@@ -15,6 +16,8 @@ const DashboardEditRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+
+  console.log("DashboardUsers: %o", dashboardUsers)
 
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
@@ -44,6 +47,7 @@ const DashboardEditRoute = ({
         return (
           <form onSubmit={handleSubmit}>
             <DashboardForm
+              dashboardUsers={dashboardUsers}
               handlers={{
                 onClose: () => handleClose(),
                 onSubmit: handleSubmit,

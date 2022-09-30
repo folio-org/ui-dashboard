@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
+import { Field, useFormState } from 'react-final-form';
+
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   Button,
@@ -15,10 +18,10 @@ import {
   TextField,
   checkScope,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
-import { Field } from 'react-final-form';
 
 import { composeValidators as compose, requiredValidator as required } from '@folio/stripes-erm-components';
+
+import DashboardMultipleUserInfo from '../DashboardMultipleUserInfo';
 
 // Constant for linting
 const MAX_DASHBOARD_NAME_LENGTH = 25;
@@ -31,14 +34,16 @@ const maxLength = (value) => {
 };
 
 const DashboardForm = ({
+  dashboardUsers = [],
   handlers: {
     onClose,
     onSubmit
   },
   pristine,
-  submitting,
-  values
+  submitting
 }) => {
+  const { values } = useFormState();
+
   const renderPaneFooter = () => {
     return (
       <PaneFooter
@@ -108,6 +113,7 @@ const DashboardForm = ({
               <FormattedMessage id="ui-dashboard.newDashboard" />
           }
         >
+          <DashboardMultipleUserInfo dashboardUsers={dashboardUsers} />
           <Row>
             <Col xs={3}>
               <Field

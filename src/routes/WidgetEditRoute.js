@@ -11,6 +11,7 @@ import getComponentsFromType from '../components/getComponentsFromType';
 
 const WidgetEditRoute = ({
   dashboard,
+  dashboardUsers = [],
   history,
   match: {
     params
@@ -125,6 +126,7 @@ const WidgetEditRoute = ({
             <WidgetForm
               data={{
                 dashId: params.dashId,
+                dashboardUsers,
                 // Pass initialValues in here so we can manually initialize when they're fetched
                 initialValues,
                 name: widget?.name,
