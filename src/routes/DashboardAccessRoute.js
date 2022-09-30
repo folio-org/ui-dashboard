@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import PropTypes from 'prop-types';
 import { useMutation, useQueryClient } from 'react-query';
@@ -9,7 +10,7 @@ import { Form } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import Loading from '../components/Loading';
 
@@ -36,11 +37,15 @@ const DashboardAccessRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const callout = useCallout();
 
   // The POST for setting dashboard users
   const { mutateAsync: postDashUsers } = useMutation(
     ['ERM', 'dashboard', 'postUsers'],
-    (data) => ky.post(`servint/dashboard/${dashId}/users`, { json: data })
+    (data) => ky.post(`servint/dashboard/${dashId}/users`, { json: data }).json()
+      .then(() => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboardUsers.edit.success" values={{ dashboardName: dashboard.name }} /> });
+      })
   );
 
   // Allow this state to change WITHOUT reinitialising form to enable sorting

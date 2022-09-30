@@ -1,8 +1,10 @@
-import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
+import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
+
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -16,15 +18,17 @@ const DashboardEditRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
-
-  console.log("DashboardUsers: %o", dashboardUsers)
+  const callout = useCallout();
 
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
-    (data) => ky.put(`servint/dashboard/${params.dashId}`, { json: data }).then(() => {
-      queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
-      queryClient.invalidateQueries(['ERM', 'Dashboards']);
-    })
+    (data) => ky.put(`servint/dashboard/${params.dashId}`, { json: data }).json()
+      .then(res => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
+
+        queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
+        queryClient.invalidateQueries(['ERM', 'Dashboards']);
+      })
   );
 
   const handleClose = () => {

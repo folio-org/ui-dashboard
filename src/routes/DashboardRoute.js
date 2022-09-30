@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 import {
   ConfirmationModal,
 } from '@folio/stripes/components';
@@ -28,6 +28,7 @@ const DashboardRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const callout = useCallout();
 
   const [deleteDashboardModal, setDeleteDashboardModal] = useState(false);
 
@@ -59,6 +60,8 @@ const DashboardRoute = ({
     ['ERM', 'Dashboard', 'deleteDashboard'],
     () => ky.delete(`servint/dashboard/${params.dashId}`)
       .then(() => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.delete.success" values={{ dashboardName: dashboard.name }} /> });
+
         queryClient.invalidateQueries(['ERM', 'Dashboards']);
       })
   );

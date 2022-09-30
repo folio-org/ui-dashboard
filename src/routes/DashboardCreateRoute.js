@@ -1,8 +1,11 @@
-import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { Form } from 'react-final-form';
 
 import { useMutation, useQueryClient } from 'react-query';
+
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -14,12 +17,14 @@ const DashboardCreateRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const callout = useCallout();
 
   const { mutateAsync: postDashboard } = useMutation(
     ['ERM', 'Dashboard', 'postDashboard'],
     (data) => ky.post('servint/dashboard', { json: data })
       .json()
       .then(res => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.create.success" values={{ dashboardName: res.name }} /> });
         history.push(`/dashboard/${res.id}`); // Will redirect user to new board
         queryClient.invalidateQueries(['ERM', 'Dashboards']);
       })

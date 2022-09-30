@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 
+import { FormattedMessage } from 'react-intl';
+
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQueryClient } from 'react-query';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import ManageDashboardsForm from '../components/ManageDashboardsForm';
 
@@ -20,6 +22,7 @@ const DashboardsManageRoute = ({
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+  const callout = useCallout();
 
   const handleClose = () => {
     history.push(`/dashboard/${dashId}`);
@@ -28,6 +31,8 @@ const DashboardsManageRoute = ({
   const { mutateAsync: putUserDashboards } = useMutation(
     ['ERM', 'Dashboards', 'putUserDashboards'],
     (data) => ky.put('servint/dashboard/my-dashboards', { json: data }).then(() => {
+      callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.userDashboards.edit.success" /> });
+
       queryClient.invalidateQueries(['ERM', 'Dashboards']);
     })
   );

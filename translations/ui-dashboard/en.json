@@ -49,6 +49,9 @@
   "dashboard.close": "Close",
   "dashboard.copy": "Copy",
   "dashboard.copied": "Copied",
+  "dashboard.create.success": "<strong>Dashboard created:</strong> {dashboardName}",
+  "dashboard.edit.success": "<strong>Dashboard updated:</strong> {dashboardName}",
+  "dashboard.delete.success": "<strong>Dashboard deleted:</strong> {dashboardName}",
   "widgetHeader.actionsButtonLabel": "Actions for widget: {widgetName}",
   "widgetHeader.editButtonLabel": "Edit widget: {widgetName}",
   "widgetHeader.editButton": "Edit",
@@ -224,7 +227,9 @@
   "dashboardUsers.duplicateUser": "Error: Duplicate user",
   "dashboardUsers.duplicateUser.message": "<strong>{user}</strong> was not added as this user already has access to the dashboard <strong>{name}</strong>",
   "dashboardUsers.removeUser": "Remove user \"{name}\"",
+  "dashboardUsers.edit.success": "<strong>User access details updated:</strong> {dashboardName}",
   "userDashboards.dashboardOrder": "Dashboard menu order",
   "userDashboards.dashboardOrder.dragAndDropHandleAria": "Change order of {dashboard} ({index})",
-  "userDashboards.default.info": "The default dashboard is the one that will display by default when you first open the dashboard app"
+  "userDashboards.default.info": "The default dashboard is the one that will display by default when you first open the dashboard app",
+  "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards."
 }
