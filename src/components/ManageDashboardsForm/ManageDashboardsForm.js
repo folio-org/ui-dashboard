@@ -164,6 +164,7 @@ const ManageDashboardsForm = ({
                       >
                         <Headline margin="none" size="medium">
                           <FormattedMessage id="ui-dashboard.default" />
+                          <InfoPopover content={<FormattedMessage id="ui-dashboard.userDashboards.default.info" />} />
                         </Headline>
                       </Col>
                     </Row>

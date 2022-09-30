@@ -158,6 +158,7 @@ WidgetEditRoute.propTypes = {
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
   }),
+  dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

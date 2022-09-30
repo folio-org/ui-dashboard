@@ -143,6 +143,7 @@ const DashboardForm = ({
 };
 
 DashboardForm.propTypes = {
+  dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,

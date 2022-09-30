@@ -14,6 +14,7 @@ const WidgetOrderRoute = ({
   dashboardQuery: {
     isLoading: dashboardLoading
   },
+  dashboardUsers = [],
   history,
   match: {
     params: {
@@ -67,6 +68,7 @@ const WidgetOrderRoute = ({
         <form onSubmit={handleSubmit}>
           <ReorderForm
             dashboard={dashboard}
+            dashboardUsers={dashboardUsers}
             onClose={handleClose}
             onSubmit={handleSubmit}
           />
@@ -87,6 +89,7 @@ WidgetOrderRoute.propTypes = {
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
   }),
+  dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,

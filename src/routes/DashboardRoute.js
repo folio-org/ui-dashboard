@@ -168,6 +168,7 @@ DashboardRoute.propTypes = {
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
   }),
+  dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   dashboards: PropTypes.arrayOf(
     PropTypes.object
   ).isRequired,
