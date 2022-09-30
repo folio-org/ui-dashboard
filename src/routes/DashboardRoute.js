@@ -114,7 +114,11 @@ const DashboardRoute = ({
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
           data-test-delete-confirmation-modal
-          heading={<FormattedMessage id="ui-dashboard.deleteDashboard" />}
+          heading={
+            <FormattedMessage
+              id="ui-dashboard.deleteDashboardHeader"
+              values={{ name: dashboard.name }}
+            />}
           id="delete-dashboard-confirmation"
           message={
             <FormattedMessage

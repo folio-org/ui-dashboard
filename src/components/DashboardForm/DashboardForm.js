@@ -82,14 +82,7 @@ const DashboardForm = ({
           onSubmit();
         }
       }
-    },
-    {
-      name: 'close',
-      handler: (e) => {
-        e.preventDefault();
-        onClose();
-      }
-    },
+    }
   ];
 
   return (
@@ -126,6 +119,7 @@ const DashboardForm = ({
                     />
                   </>
                 }
+                maxLength={25}
                 name="name"
                 required
                 validate={compose(
