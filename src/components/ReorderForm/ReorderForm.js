@@ -164,5 +164,3 @@ ReorderForm.propTypes = {
 };
 
 export default ReorderForm;
-
-
