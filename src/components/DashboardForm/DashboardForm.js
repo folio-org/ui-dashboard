@@ -5,13 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Col,
+  HasCommand,
   InfoPopover,
   Pane,
   PaneFooter,
   Paneset,
   Row,
   TextArea,
-  TextField
+  TextField,
+  checkScope,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { Field } from 'react-final-form';
@@ -66,52 +68,77 @@ const DashboardForm = ({
     );
   };
 
-  return (
-    <Paneset>
-      <Pane
-        appIcon={<AppIcon app="dashboard" />}
-        centerContent
-        defaultWidth="100%"
-        dismissible
-        footer={renderPaneFooter()}
-        id="pane-dashboard-form"
-        onClose={onClose}
-        paneTitle={
-          values?.id ?
-            <FormattedMessage id="ui-dashboard.editDashboard" /> :
-            <FormattedMessage id="ui-dashboard.newDashboard" />
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: (e) => {
+        e.preventDefault();
+        if (!pristine && !submitting) {
+          onSubmit();
         }
-      >
-        <Row>
-          <Col xs={3}>
-            <Field
-              component={TextField}
-              label={
-                <>
-                  <FormattedMessage id="ui-dashboard.dashboard.name" />
-                  <InfoPopover
-                    content={<FormattedMessage id="ui-dashboard.dashboard.name.info" />}
-                  />
-                </>
-              }
-              name="name"
-              required
-              validate={compose(
-                required,
-                maxLength
-              )}
-            />
-          </Col>
-          <Col xs={6}>
-            <Field
-              component={TextArea}
-              label={<FormattedMessage id="ui-dashboard.dashboard.description" />}
-              name="description"
-            />
-          </Col>
-        </Row>
-      </Pane>
-    </Paneset>
+      }
+    },
+    {
+      name: 'close',
+      handler: (e) => {
+        e.preventDefault();
+        onClose();
+      }
+    },
+  ];
+
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="dashboard" />}
+          centerContent
+          defaultWidth="100%"
+          dismissible
+          footer={renderPaneFooter()}
+          id="pane-dashboard-form"
+          onClose={onClose}
+          paneTitle={
+            values?.id ?
+              <FormattedMessage id="ui-dashboard.editDashboard" /> :
+              <FormattedMessage id="ui-dashboard.newDashboard" />
+          }
+        >
+          <Row>
+            <Col xs={3}>
+              <Field
+                component={TextField}
+                label={
+                  <>
+                    <FormattedMessage id="ui-dashboard.dashboard.name" />
+                    <InfoPopover
+                      content={<FormattedMessage id="ui-dashboard.dashboard.name.info" />}
+                    />
+                  </>
+                }
+                name="name"
+                required
+                validate={compose(
+                  required,
+                  maxLength
+                )}
+              />
+            </Col>
+            <Col xs={6}>
+              <Field
+                component={TextArea}
+                label={<FormattedMessage id="ui-dashboard.dashboard.description" />}
+                name="description"
+              />
+            </Col>
+          </Row>
+        </Pane>
+      </Paneset>
+    </HasCommand>
   );
 };
 

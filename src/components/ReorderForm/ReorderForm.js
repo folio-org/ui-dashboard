@@ -117,7 +117,7 @@ const ReorderForm = ({
             footer={renderPaneFooter()}
             id="pane-reorder-form"
             onClose={onClose}
-            paneTitle={<FormattedMessage id="ui-dashboard.reorderWidgets" />}
+            paneTitle={<FormattedMessage id="ui-dashboard.manageWidgets" />}
           >
             <DashboardAccessInfo dashId={dashId} />
             <Layout className="marginTopHalf">

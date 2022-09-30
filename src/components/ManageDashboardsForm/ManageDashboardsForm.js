@@ -13,8 +13,10 @@ import { AppIcon } from '@folio/stripes/core';
 import {
   Button,
   Col,
+  HasCommand,
   Headline,
   Icon,
+  InfoPopover,
   KeyValue,
   Layout,
   Pane,
@@ -22,6 +24,7 @@ import {
   Paneset,
   RadioButton,
   Row,
+  checkScope
 } from '@folio/stripes/components';
 
 import DragAndDropFieldArray, { getHandles } from '../DragAndDropFieldArray';
@@ -104,148 +107,167 @@ const ManageDashboardsForm = ({
         element === document.activeElement;
     });
 
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: (e) => {
+        e.preventDefault();
+        if (!pristine && !submitting) {
+          onSubmit();
+        }
+      }
+    },
+  ];
+
   return (
-    <Paneset>
-      <Pane
-        appIcon={<AppIcon app="dashboard" />}
-        centerContent
-        defaultWidth="100%"
-        dismissible
-        footer={renderPaneFooter()}
-        id="pane-reorder-form"
-        onClose={onClose}
-        paneTitle={<FormattedMessage id="ui-dashboard.reorderWidgets" />}
-      >
-        <Layout className="marginTopHalf">
-          <KeyValue
-            label={<FormattedMessage id="ui-dashboard.userDashboards.dashboardOrder" />}
-            value={
-              <>
-                <Layout className="padding-all-gutter">
-                  <Row>
-                    <Col xs={8} />
-                    <Col
-                      className={classNames(
-                        css.colStyles,
-                        css.colFlexCentre
-                      )}
-                      xs={2}
-                    >
-                      <Headline margin="none" size="medium">
-                        <FormattedMessage id="ui-dashboard.accessLevel" />
-                      </Headline>
-                    </Col>
-                    <Col
-                      className={classNames(
-                        css.colStyles,
-                        css.colFlexCentre
-                      )}
-                      xs={2}
-                    >
-                      <Headline margin="none" size="medium">
-                        <FormattedMessage id="ui-dashboard.default" />
-                      </Headline>
-                    </Col>
-                  </Row>
-                </Layout>
-                <FieldArray
-                  component={DragAndDropFieldArray}
-                  draggableDivStyle={getDraggableDivStyle}
-                  // Set up keyboard handler to ensure handles are tabbed through FIRST
-                  getDragHandleProps={({ index }) => ({
-                    onKeyDown: (e) => {
-                      if (e.code === 'Tab' && e.shiftKey && index !== 0) {
-                        e.preventDefault();
-                        handles[index - 1].focus();
-                      } else if (e.code === 'Tab' && !e.shiftKey && index !== (values?.dashboards?.length - 1)) {
-                        e.preventDefault();
-                        handles[index + 1].focus();
-                      } else if (e.code === 'Tab' && index === (values?.dashboards?.length - 1)) {
-                        e.preventDefault();
-                        radioButtons[0].focus();
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="dashboard" />}
+          centerContent
+          defaultWidth="100%"
+          dismissible
+          footer={renderPaneFooter()}
+          id="pane-reorder-form"
+          onClose={onClose}
+          paneTitle={<FormattedMessage id="ui-dashboard.manageDashboards" />}
+        >
+          <Layout className="marginTopHalf">
+            <KeyValue
+              label={<FormattedMessage id="ui-dashboard.userDashboards.dashboardOrder" />}
+              value={
+                <>
+                  <Layout className="padding-all-gutter">
+                    <Row>
+                      <Col xs={8} />
+                      <Col
+                        className={classNames(
+                          css.colStyles,
+                          css.colFlexCentre
+                        )}
+                        xs={2}
+                      >
+                        <Headline margin="none" size="medium">
+                          <FormattedMessage id="ui-dashboard.accessLevel" />
+                        </Headline>
+                      </Col>
+                      <Col
+                        className={classNames(
+                          css.colStyles,
+                          css.colFlexCentre
+                        )}
+                        xs={2}
+                      >
+                        <Headline margin="none" size="medium">
+                          <FormattedMessage id="ui-dashboard.default" />
+                          <InfoPopover content={<FormattedMessage id="ui-dashboard.userDashboards.default.info" />} />
+                        </Headline>
+                      </Col>
+                    </Row>
+                  </Layout>
+                  <FieldArray
+                    component={DragAndDropFieldArray}
+                    draggableDivStyle={getDraggableDivStyle}
+                    // Set up keyboard handler to ensure handles are tabbed through FIRST
+                    getDragHandleProps={({ index }) => ({
+                      onKeyDown: (e) => {
+                        if (e.code === 'Tab' && e.shiftKey && index !== 0) {
+                          e.preventDefault();
+                          handles[index - 1].focus();
+                        } else if (e.code === 'Tab' && !e.shiftKey && index !== (values?.dashboards?.length - 1)) {
+                          e.preventDefault();
+                          handles[index + 1].focus();
+                        } else if (e.code === 'Tab' && index === (values?.dashboards?.length - 1)) {
+                          e.preventDefault();
+                          radioButtons[0].focus();
+                        }
                       }
-                    }
-                  })}
-                  name="dashboards"
-                  renderHandle={({ index, item }) => (
-                    <Icon
-                      {...{
-                        'aria-label': intl.formatMessage(
-                          { id: 'ui-dashboard.userDashboards.dashboardOrder.dragAndDropHandleAria' },
-                          { index: index + 1, dashboard: item?.dashboard?.name }
-                        )
-                      }}
-                      icon="drag-drop"
-                    />
-                  )}
-                >
-                  {({ name: fieldName, index, item, fields }) => {
-                    return (
-                      <Row key={`dashboard-order-array-${fieldName}`}>
-                        <Col className={css.colStyles} xs={8}>
-                          {/* Render dash name + desc */}
-                          <strong>
-                            {item?.dashboard?.name}
-                          </strong>
-                          {item?.dashboard?.description ?
-                            `: ${item?.dashboard?.description}` :
-                            null
-                          }
-                        </Col>
-                        <Col
-                          className={classNames(
-                            css.colStyles,
-                            css.colFlexCentre
-                          )}
-                          xs={2}
-                        >
-                          <FormattedMessage id={`ui-dashboard.accessLevel.${item?.access?.value}`} />
-                        </Col>
-                        <Col
-                          className={classNames(
-                            css.colStyles,
-                            css.colFlexCentre
-                          )}
-                          xs={2}
-                        >
-                          <RadioButton
-                            checked={item?.defaultUserDashboard}
-                            className={css.radioButton}
-                            data-dash-radio
-                            inline
-                            onChange={() => {
-                              fields.forEach(f => {
-                                if (f !== fieldName) {
-                                  change(`${f}.defaultUserDashboard`, false);
+                    })}
+                    name="dashboards"
+                    renderHandle={({ index, item }) => (
+                      <Icon
+                        {...{
+                          'aria-label': intl.formatMessage(
+                            { id: 'ui-dashboard.userDashboards.dashboardOrder.dragAndDropHandleAria' },
+                            { index: index + 1, dashboard: item?.dashboard?.name }
+                          )
+                        }}
+                        icon="drag-drop"
+                      />
+                    )}
+                  >
+                    {({ name: fieldName, index, item, fields }) => {
+                      return (
+                        <Row key={`dashboard-order-array-${fieldName}`}>
+                          <Col className={css.colStyles} xs={8}>
+                            {/* Render dash name + desc */}
+                            <strong>
+                              {item?.dashboard?.name}
+                            </strong>
+                            {item?.dashboard?.description ?
+                              `: ${item?.dashboard?.description}` :
+                              null
+                            }
+                          </Col>
+                          <Col
+                            className={classNames(
+                              css.colStyles,
+                              css.colFlexCentre
+                            )}
+                            xs={2}
+                          >
+                            <FormattedMessage id={`ui-dashboard.accessLevel.${item?.access?.value}`} />
+                          </Col>
+                          <Col
+                            className={classNames(
+                              css.colStyles,
+                              css.colFlexCentre
+                            )}
+                            xs={2}
+                          >
+                            <RadioButton
+                              checked={item?.defaultUserDashboard}
+                              className={css.radioButton}
+                              data-dash-radio
+                              inline
+                              onChange={() => {
+                                fields.forEach(f => {
+                                  if (f !== fieldName) {
+                                    change(`${f}.defaultUserDashboard`, false);
+                                  }
+                                });
+                                change(`${fieldName}.defaultUserDashboard`, true);
+                              }}
+                              // Set up key handler to ensure radio buttons are tabbed through separately to handles
+                              onKeyDown={(e) => {
+                                if (e.code === 'Tab' && e.shiftKey && index === 0) {
+                                  e.preventDefault();
+                                  handles[handles.length - 1].focus();
+                                } else if (e.code === 'Tab' && e.shiftKey && index !== 0) {
+                                  e.preventDefault();
+                                  radioButtons[index - 1].focus();
+                                } else if (e.code === 'Tab' && !e.shiftKey && index !== (values?.dashboards?.length - 1)) {
+                                  e.preventDefault();
+                                  radioButtons[index + 1].focus();
                                 }
-                              });
-                              change(`${fieldName}.defaultUserDashboard`, true);
-                            }}
-                            // Set up key handler to ensure radio buttons are tabbed through separately to handles
-                            onKeyDown={(e) => {
-                              if (e.code === 'Tab' && e.shiftKey && index === 0) {
-                                e.preventDefault();
-                                handles[handles.length - 1].focus();
-                              } else if (e.code === 'Tab' && e.shiftKey && index !== 0) {
-                                e.preventDefault();
-                                radioButtons[index - 1].focus();
-                              } else if (e.code === 'Tab' && !e.shiftKey && index !== (values?.dashboards?.length - 1)) {
-                                e.preventDefault();
-                                radioButtons[index + 1].focus();
-                              }
-                            }}
-                          />
-                        </Col>
-                      </Row>
-                    );
-                  }}
-                </FieldArray>
-              </>
-            }
-          />
-        </Layout>
-      </Pane>
-    </Paneset>
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                      );
+                    }}
+                  </FieldArray>
+                </>
+              }
+            />
+          </Layout>
+        </Pane>
+      </Paneset>
+    </HasCommand>
   );
 };
 

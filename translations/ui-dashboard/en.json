@@ -15,9 +15,11 @@
   "httpError": "HTTPError: {errorCode} {errorText}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "loading": "Loading",
-  "reorderWidgets": "Order widgets",
+  "manageWidgets": "Manage widgets",
   "newWidget": "New widget",
   "userAccess": "User access",
+  "viewUserAccess": "View user access",
+  "manageUserAccess": "Manage user access",
   "allDashboards": "All dashboards",
   "newDashboard": "New dashboard",
   "editDashboard": "Edit dashboard",
@@ -219,5 +221,6 @@
   "dashboardUsers.duplicateUser.message": "<strong>{user}</strong> was not added as this user already has access to the dashboard <strong>{name}</strong>",
   "dashboardUsers.removeUser": "Remove user \"{name}\"",
   "userDashboards.dashboardOrder": "Dashboard menu order",
-  "userDashboards.dashboardOrder.dragAndDropHandleAria": "Change order of {dashboard} ({index})"
+  "userDashboards.dashboardOrder.dragAndDropHandleAria": "Change order of {dashboard} ({index})",
+  "userDashboards.default.info": "The default dashboard is the one that will display by default when you first open the dashboard app"
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +7,7 @@ import {
   Button,
   ButtonGroup,
   Headline,
+  Icon,
   Layout,
 } from '@folio/stripes/components';
 
@@ -46,7 +46,11 @@ const Header = ({
           id="clickable-new-widget"
           onClick={onCreateWidget}
         >
-          <FormattedMessage id="ui-dashboard.newWidget" />
+          <Icon
+            icon="plus-sign"
+          >
+            <FormattedMessage id="ui-dashboard.newWidget" />
+          </Icon>
         </Button>
       );
 
@@ -58,7 +62,11 @@ const Header = ({
           id="clickable-reorderdashboard"
           onClick={onReorder}
         >
-          <FormattedMessage id="ui-dashboard.reorderWidgets" />
+          <Icon
+            icon="gear"
+          >
+            <FormattedMessage id="ui-dashboard.manageWidgets" />
+          </Icon>
         </Button>
       );
 
@@ -70,7 +78,11 @@ const Header = ({
           id="clickable-editdashboard"
           onClick={onEdit}
         >
-          <FormattedMessage id="ui-dashboard.editDashboard" />
+          <Icon
+            icon="edit"
+          >
+            <FormattedMessage id="ui-dashboard.editDashboard" />
+          </Icon>
         </Button>
       );
     }
@@ -83,7 +95,14 @@ const Header = ({
         id="clickable-userAccess"
         onClick={onUserAccess}
       >
-        <FormattedMessage id="ui-dashboard.userAccess" />
+        <Icon
+          icon="profile"
+        >
+          {(hasAccess('manage') || hasAdminPerm) ?
+            <FormattedMessage id="ui-dashboard.manageUserAccess" /> :
+            <FormattedMessage id="ui-dashboard.viewUserAccess" />
+          }
+        </Icon>
       </Button>
     );
 
@@ -95,7 +114,11 @@ const Header = ({
           id="clickable-delete-dashboard"
           onClick={onDeleteDashboard}
         >
-          <FormattedMessage id="ui-dashboard.deleteDashboard" />
+          <Icon
+            icon="trash"
+          >
+            <FormattedMessage id="ui-dashboard.deleteDashboard" />
+          </Icon>
         </Button>
       );
     }
@@ -108,7 +131,11 @@ const Header = ({
         id="clickable-new-dashboard"
         onClick={onCreateDashboard}
       >
-        <FormattedMessage id="ui-dashboard.newDashboard" />
+        <Icon
+          icon="plus-sign"
+        >
+          <FormattedMessage id="ui-dashboard.newDashboard" />
+        </Icon>
       </Button>
     );
 
@@ -120,7 +147,11 @@ const Header = ({
         id="clickable-manage-dashboards"
         onClick={onManageDashboards}
       >
-        <FormattedMessage id="ui-dashboard.manageDashboards" />
+        <Icon
+          icon="gear"
+        >
+          <FormattedMessage id="ui-dashboard.manageDashboards" />
+        </Icon>
       </Button>
     );
 
