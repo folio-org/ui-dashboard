@@ -1,6 +1,11 @@
 # Change history for ui-dashboard
-## 3.0.0 In progress
+## 3.0.0 2022-10-26
+  * ERM-2350 When the user only has one dashboard, display the dashboard name in a header
+  * ERM-2349 UX improvements for managed dashboards
+  * ERM-2348 Dashboard management minor issues
+  * ERM-2319 stripes-erm-components should be a peer
   * ERM-2312 Managed Dashboards: backend model (refactor to avoid regressions)
+  * ERM-2154 update outdated dependencies in ui-dashboard
   * Bump to stripes-erm-components ^7.0.0
 
 ## 2.2.0 2022-07-04
