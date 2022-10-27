@@ -1,6 +1,6 @@
 {
   "name": "@folio/dashboard",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Dashboard app for configurable FOLIO widgets",
   "main": "src/index.js",
   "repository": "",
