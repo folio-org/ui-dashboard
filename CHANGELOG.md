@@ -1,4 +1,6 @@
 # Change history for ui-dashboard
+## 3.1.0 In progress
+
 ## 3.0.3 2022-10-26
   * ERM-2350 When the user only has one dashboard, display the dashboard name in a header
   * ERM-2349 UX improvements for managed dashboards
