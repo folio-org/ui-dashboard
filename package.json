@@ -137,7 +137,7 @@
     "zustand": "^4.0.0"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^2.8.2",
+    "@k-int/stripes-kint-components": "^4.0.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.19.0",
     "final-form-arrays": "^3.0.1",
