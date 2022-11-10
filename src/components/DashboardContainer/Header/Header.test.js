@@ -1,11 +1,11 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 
 import { StaticRouter as Router } from 'react-router-dom';
 
 import {
   HeadlineInteractor as Headline,
   renderWithIntl
-} from '@folio/stripes-erm-components';
+} from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../../test/helpers';

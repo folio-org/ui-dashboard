@@ -4,8 +4,9 @@ import moment from 'moment';
 import { IconButton } from '@folio/stripes-testing';
 import userEvent from '@testing-library/user-event';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 
 import WidgetFooter from './WidgetFooter';

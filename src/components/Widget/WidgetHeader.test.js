@@ -1,8 +1,9 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import { Dropdown } from '@folio/stripes-testing';
 
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
 import WidgetHeader from './WidgetHeader';
 import translationsProperties from '../../../test/helpers';
 

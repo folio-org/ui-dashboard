@@ -1,4 +1,3 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
 import tokens from '../../../../tokens';
 import simpleSearchPathBuilder from './simpleSearchPathBuilder';
 

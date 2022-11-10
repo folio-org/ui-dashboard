@@ -2,8 +2,8 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { MemoryRouter } from 'react-router-dom';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components';
+
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
 import { MessageBanner, MultiColumnList, MultiColumnListHeader } from '@folio/stripes-testing';
 
