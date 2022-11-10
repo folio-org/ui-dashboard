@@ -378,7 +378,7 @@ const widgetConfMe = {
 describe('simpleSearchPathBuilder', () => {
   test('simpleSearchPathBuilder function works as expected for just sort', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfSort, stripes);
-    expect(output).toBe('erm/sas?sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?sort=id%3Basc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected for just match', () => {
@@ -393,22 +393,22 @@ describe('simpleSearchPathBuilder', () => {
 
   test('simpleSearchPathBuilder function works as expected for a single value', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatus, stripes);
-    expect(output).toBe('erm/sas?filters=agreementStatus.value==draft&sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?filters=agreementStatus.value%3D%3Ddraft&sort=id%3Basc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected for two values on one filter', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatusTwoValues, stripes);
-    expect(output).toBe('erm/sas?filters=agreementStatus.value==draft%7C%7CagreementStatus.value!=closed&sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?filters=agreementStatus.value%3D%3Ddraft%7C%7CagreementStatus.value!%3Dclosed&sort=id%3Basc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected for one values on two filters', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatusAndName, stripes);
-    expect(output).toBe('erm/sas?filters=agreementStatus.value==draft&filters=name==wibble&sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?filters=agreementStatus.value%3D%3Ddraft&filters=name%3D%3Dwibble&sort=id%3Basc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected for match, filters and sort', () => {
     const output = simpleSearchPathBuilder(widgetDef, widgetConfStatusNameAndMatch, stripes);
-    expect(output).toBe('erm/sas?match=name&match=description&term=abc&filters=agreementStatus.value==draft&sort=id;asc&stats=true');
+    expect(output).toBe('erm/sas?match=name&match=description&term=abc&filters=agreementStatus.value%3D%3Ddraft&sort=id%3Basc&stats=true');
   });
 
   test('simpleSearchPathBuilder function works as expected with special comparators', () => {
@@ -419,12 +419,12 @@ describe('simpleSearchPathBuilder', () => {
   test('simpleSearchPathBuilder function works as expected with date tokens', () => {
     const today = tokens('{{currentDate}}', stripes);
     const output = simpleSearchPathBuilder(widgetDef, widgetConfToday, stripes);
-    expect(output).toBe(`erm/sas?filters=startDate==${today}&stats=true`);
+    expect(output).toBe(`erm/sas?filters=startDate%3D%3D${today}&stats=true`);
   });
 
   test('simpleSearchPathBuilder function works as expected with user tokens', () => {
     const me = tokens('{{currentUser}}', stripes);
     const output = simpleSearchPathBuilder(widgetDef, widgetConfMe, stripes);
-    expect(output).toBe(`erm/sas?filters=contacts.user!=${me}&stats=true`);
+    expect(output).toBe(`erm/sas?filters=contacts.user!%3D${me}&stats=true`);
   });
 });
