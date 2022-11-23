@@ -45,7 +45,7 @@ const App = ({ history, location, match: { path } }) => {
     ]);
 
   const goToNew = () => {
-    history.push(`${location.pathname}/create`);
+    history.push(`${location.pathname}/createWidget`);
   };
 
   const shortcuts = [
