@@ -184,20 +184,22 @@ const Header = ({
 
     if (dashboards?.length > 1) {
       return (
-        <ResponsiveButtonGroup
-          fullWidth
-          selectedIndex={selectedIndex}
-        >
-          {dashboards?.map(dba => (
-            <Button
-              key={`clickable-tab-to-dashboard-${dba.dashboard?.id}`}
-              marginBottom0
-              to={`/dashboard/${dba.dashboard?.id}`}
-            >
-              {dba.dashboard?.name}
-            </Button>
-          ))}
-        </ResponsiveButtonGroup>
+        <div className={css.buttonContainer}>
+          <ResponsiveButtonGroup
+            marginBottom0
+            selectedIndex={selectedIndex}
+          >
+            {dashboards?.map(dba => (
+              <Button
+                key={`clickable-tab-to-dashboard-${dba.dashboard?.id}`}
+                marginBottom0
+                to={`/dashboard/${dba.dashboard?.id}`}
+              >
+                {dba.dashboard?.name}
+              </Button>
+            ))}
+          </ResponsiveButtonGroup>
+        </div>
       );
     }
 
