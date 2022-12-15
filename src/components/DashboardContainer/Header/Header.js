@@ -206,26 +206,6 @@ const Header = ({
     return (<div />);
   };
 
-  // const button = [];
-  // if (dashboards?.length > 1) {
-  //   button.push(
-  //     <Button
-  //       key="clickable-tab-to-dashboard"
-  //       id="clickable-tab-to-dashboard"
-  //       to={}
-  //     />
-  //   );
-  // }
-
-  // return button.length ?
-  //   <ResponsiveButtonGroup
-  //     fullWidth
-  //     selectedIndex={selectedIndex}
-  //   >
-  //     {button}
-  //   </ResponsiveButtonGroup>
-  //   : null;
-
   return (
     <div className={css.header}>
       <div /> {/* Empty start item so we can get centre/end aligned */}
