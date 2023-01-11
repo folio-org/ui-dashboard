@@ -1,4 +1,4 @@
-import shallow from 'zustand/shallow';
+import { shallow } from 'zustand/shallow';
 import useDashboardAccessStore from './useDashboardAccessStore';
 
 // Export these in one go, to make imports slighly nicer
