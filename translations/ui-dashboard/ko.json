@@ -27,7 +27,7 @@
     "simpleSearchForm.results.addResult": "열 추가",
     "simpleSearchForm.sort": "정렬",
     "simpleSearchForm.sort.sortBy": "정렬 기준",
-    "simpleSearchForm.sort.sortDirection": "정렬 방향",
+    "simpleSearchForm.sort.sortDirection": "정렬 기준",
     "simpleSearchForm.configurableProperties.numberOfRows": "행 수",
     "simpleSearchForm.configurableProperties.urlLink": "URL 링크",
     "simpleSearch.widget.nFoundBadge": "{total} 발견",
