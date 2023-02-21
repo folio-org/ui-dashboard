@@ -85,7 +85,11 @@ const SimpleSearchUUIDFilterField = ({
 };
 
 SimpleSearchUUIDFilterField.propTypes = {
-  filterComponent: PropTypes.object,
+  filterComponent: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   filterComponentProps: PropTypes.object,
   input: PropTypes.shape({
     name: PropTypes.string.isRequired

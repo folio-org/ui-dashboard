@@ -79,7 +79,11 @@ SimpleSearchFilterRuleArray.propTypes = {
     push: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired
   }).isRequired,
-  filterComponent: PropTypes.object,
+  filterComponent: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.func,
+  ]),
   filterComponentProps: PropTypes.object,
   selectedFilterColumn: PropTypes.object
 };

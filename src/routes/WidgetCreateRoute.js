@@ -113,7 +113,7 @@ export default WidgetCreateRoute;
 
 WidgetCreateRoute.propTypes = {
   dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     name: PropTypes.string.isRequired
   }),
   dashboardQuery: PropTypes.shape({

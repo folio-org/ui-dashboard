@@ -24,7 +24,7 @@ const SimpleSearchFilterArray = ({
     return (
       <div data-testid="simple-search-filter-array">
         {fields.map((fieldName, index) => (
-          <>
+          <div key={`simple-search-filter-array-${fieldName}-orAnd[${index}]-container`}>
             <div
               key={`simple-search-filter-array-${fieldName}-orAnd[${index}]`}
               className={css.orAnd}
@@ -52,7 +52,7 @@ const SimpleSearchFilterArray = ({
                 />
               </>
             </EditCard>
-          </>
+          </div>
         ))}
       </div>
     );
@@ -64,7 +64,7 @@ const SimpleSearchFilterArray = ({
       label={<FormattedMessage id={headerId} />}
     >
       {renderFilterFields()}
-      <Button id={addButtonId} onClick={() => fields.push({})}>
+      <Button key="SimpleSearchFilterArrayButton" id={addButtonId} onClick={() => fields.push({})}>
         <FormattedMessage id={addLabelId} />
       </Button>
     </Accordion>
