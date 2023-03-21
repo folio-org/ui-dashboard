@@ -89,7 +89,7 @@
     "simpleSearchForm.results.column": "Sloupec",
     "simpleSearchForm.results.label": "Štítek",
     "error": "Došlo k chybě.",
-    "error.noDashWithThatName": "Nástěnka {name} nebyla nalezena. Zkontrolujte URL.",
+    "error.noDashWithThatName": "Nástěnka {name} nebyla nalezena. Zkontrolujte prosím URL.",
     "error.noDashboardsForUser": "Pro tohoto uživatele neexistují žádné ovládací panely.",
     "error.noWidgetComponentForType": "Žádná komponenta widgetu pro typ: {widgetType}",
     "error.noWidgetFormComponentForType": "Žádná komponenta formuláře widgetu pro typ: {widgetType}",
