@@ -92,7 +92,6 @@ const SimpleSearch = ({
         )}
         className={css.linkText}
         href={validateURL(urlLink) ? urlLink : ''}
-
         rel="noopener noreferrer"
         target="_blank"
       >
