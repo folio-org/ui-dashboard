@@ -8,6 +8,8 @@ import {
   TextField
 } from '@folio/stripes/components';
 
+import { validateURL } from '../../../utilities';
+
 const SimpleSearchConfigurableProperties = ({
   configurableProperties: {
     urlLink = {}
@@ -15,13 +17,15 @@ const SimpleSearchConfigurableProperties = ({
 }) => {
   return (
     <>
-      { (urlLink.configurable || urlLink.defValue) &&
+      {(urlLink.configurable || urlLink.defValue) &&
         // If urlLink is non configurable and has no defValue then we don't need it on the form
         <Field
           name="configurableProperties.urlLink"
+          validate={validateURL}
         >
           {({ ...fieldRenderProps }) => {
             if (urlLink.configurable) {
+              // console.log('urlLink %o', urlLink);
               return (
                 <TextField
                   {...fieldRenderProps}

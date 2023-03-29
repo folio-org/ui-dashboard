@@ -71,6 +71,7 @@
   "tokenUserPicker.me": "Me (relative)",
   "tokenUserPicker.user": "Fixed user",
   "tokenUserPicker.validation.invalidUser": "Please choose a user to continue",
+  "simpleSearchForm.error.invalidURL": "Please enter a valid URL (starts with \"https://\", \"http://\" or \"/\"",
   "simpleSearchForm.filters": "Filters",
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",
