@@ -25,7 +25,6 @@ const SimpleSearchConfigurableProperties = ({
         >
           {({ ...fieldRenderProps }) => {
             if (urlLink.configurable) {
-              // console.log('urlLink %o', urlLink);
               return (
                 <TextField
                   {...fieldRenderProps}
