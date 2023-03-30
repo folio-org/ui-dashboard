@@ -81,7 +81,9 @@ const SimpleSearch = ({
           }
         )}
         className={css.linkText}
-        href={urlLink}
+        href={encodeURI(urlLink)}
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
       </a>
