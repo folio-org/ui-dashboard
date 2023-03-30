@@ -1,4 +1,8 @@
 # Change history for ui-dashboard
+
+## 4.0.1 2023-03-30
+  * SI-12 Potential CROSS SITE SCRIPTING (XSS) vulnerability
+    * This fix does not prevent saves to the DB, only prevents running of javascript in client on url click for now. Further changes scheduled for a future release
 ## 4.0.0 2023-02-22
   * ERM-2575 fix deprecated default export from 'zustand' in ui-dashboard
   * ERM-2563 Increment ui-dashboard to Stripes v8
