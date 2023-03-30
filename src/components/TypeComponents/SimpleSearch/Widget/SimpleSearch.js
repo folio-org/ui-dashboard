@@ -65,6 +65,14 @@ const SimpleSearch = ({
 
   const { configurableProperties: { urlLink } = {} } = widgetConf;
 
+  const validateURL = () => {
+    const encodedUrlLink = encodeURIComponent(urlLink);
+    const baseUrl = window.location.origin;
+    const parsed = new URL(encodedUrlLink, baseUrl);
+    // validate the URL using the http, https or / to avoid URL-based malicious script injection
+    return ['https:', 'http:'].includes(parsed.protocol);
+  };
+
   const urlLinkButton = () => {
     if (!urlLink) {
       return null;
@@ -81,7 +89,9 @@ const SimpleSearch = ({
           }
         )}
         className={css.linkText}
-        href={urlLink}
+        href={validateURL() ? urlLink : ''}
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
       </a>
