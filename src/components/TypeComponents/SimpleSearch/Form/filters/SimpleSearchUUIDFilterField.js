@@ -14,7 +14,7 @@ import {
 
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
-import isComparatorSpecialCase from '../../../utilities';
+import { isComparatorSpecialCase } from '../../../utilities';
 
 
 const SimpleSearchUUIDFilterField = ({
