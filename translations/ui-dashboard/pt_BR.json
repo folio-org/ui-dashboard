@@ -232,5 +232,7 @@
     "dashboardUsers.multipleUsersWarning": "Este painel de controle é compartilhado. Quaisquer alterações serão visíveis para todos os usuários com acesso.",
     "dashboardUsers.edit.success": "<strong> Detalhes de acesso do usuário atualizados: </strong> {dashboardName}",
     "userDashboards.default.info": "O painel de controle padrão é o que será exibido quando você abrir o aplicativo do <strong>Painel de Controle</strong> pela primeira vez.",
-    "userDashboards.edit.success": "<strong>Atualizações salvas:</strong> Gerenciar painel de controle."
+    "userDashboards.edit.success": "<strong>Atualizações salvas:</strong> Gerenciar painel de controle.",
+    "simpleSearchForm.error.invalidURL": "Por favor, insira um URL válido",
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
 }

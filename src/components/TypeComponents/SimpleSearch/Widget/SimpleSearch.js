@@ -65,15 +65,6 @@ const SimpleSearch = ({
 
   const { configurableProperties: { urlLink } = {} } = widgetConf;
 
-  const validateURL = () => {
-    const encodedUrlLink = encodeURI(urlLink);
-    const baseUrl = 'http://localhost:3000';
-    const parsed = new URL(encodedUrlLink, baseUrl);
-
-    // validate the URL using the http, https or / to avoid URL-based malicious script injection
-    return ['https:', 'http:'].includes(parsed.protocol);
-  };
-
   const urlLinkButton = () => {
     if (!urlLink) {
       return null;
@@ -90,7 +81,7 @@ const SimpleSearch = ({
           }
         )}
         className={css.linkText}
-        href={validateURL() ? urlLink : ''}
+        href={encodeURI(urlLink)}
         rel="noopener noreferrer"
         target="_blank"
       >

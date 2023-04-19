@@ -232,5 +232,7 @@
     "dashboardUsers.multipleUsersWarning": "Tato nástěnka je sdílená. Všechny provedené změny budou viditelné pro všechny uživatele s přístupem.",
     "dashboardUsers.edit.success": "<strong>Aktualizovány přístupové údaje uživatele:</strong> {dashboardName}",
     "userDashboards.default.info": "Výchozí nástěnka je ta, která se ve výchozím nastavení zobrazí při prvním otevření aplikace Nástěnka.",
-    "userDashboards.edit.success": "<strong>Aktualizace uloženy:</strong> Správa nástěnek."
+    "userDashboards.edit.success": "<strong>Aktualizace uloženy:</strong> Správa nástěnek.",
+    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
 }

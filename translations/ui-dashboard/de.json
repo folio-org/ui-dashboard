@@ -232,5 +232,7 @@
     "dashboardUsers.multipleUsersWarning": "Dieses Dashboard wird freigegeben. Alle vorgenommenen Änderungen werden für alle Personen mit Zugriff sichtbar sein.",
     "dashboardUsers.edit.success": "<strong>Personenzugangsdaten aktualisiert:</strong> {dashboardName}",
     "userDashboards.default.info": "Das Standard-Dashboard ist dasjenige, das standardmäßig angezeigt wird, wenn die Dashboard-App zum ersten Mal geöffnet wird",
-    "userDashboards.edit.success": "<strong>Aktualisierungen gespeichert:</strong> Dashboards verwalten"
+    "userDashboards.edit.success": "<strong>Aktualisierungen gespeichert:</strong> Dashboards verwalten",
+    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
 }

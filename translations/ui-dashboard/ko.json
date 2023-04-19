@@ -232,5 +232,7 @@
     "dashboardUsers.multipleUsersWarning": "이 대시보드는 공유됩니다. 모든 변경 사항은 액세스 권한이 있는 모든 사용자에게 표시됩니다.",
     "dashboardUsers.edit.success": "<strong> 사용자 액세스 세부정보 업데이트: </strong> {dashboardName}",
     "userDashboards.default.info": "기본 대시보드는 대시보드 앱을 처음 열 때 기본적으로 표시되는 대시보드입니다.",
-    "userDashboards.edit.success": "<strong> 업데이트 저장: </strong> 대시보드 관리"
+    "userDashboards.edit.success": "<strong> 업데이트 저장: </strong> 대시보드 관리",
+    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
 }

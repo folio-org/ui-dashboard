@@ -87,7 +87,7 @@
     "dashboard.reorderForm.widget.widgetname": "ウィジェット名",
     "simpleSearchForm.filters.uuidFilterField.absoluteValueWarning": "A user UUID or current user token must be input",
     "simpleSearchForm.results.column": "Column",
-    "simpleSearchForm.results.label": "Label",
+    "simpleSearchForm.results.label": "ラベル",
     "error": "An error occurred.",
     "error.noDashWithThatName": "ダッシュボード {name} が見つかりません。 URLを確認してください。",
     "error.noDashboardsForUser": "このユーザーにはダッシュボードが存在しません。",
@@ -232,5 +232,7 @@
     "dashboardUsers.multipleUsersWarning": "This dashboard is shared. Any changes made will be visible to all users with access.",
     "dashboardUsers.edit.success": "<strong>User access details updated:</strong> {dashboardName}",
     "userDashboards.default.info": "The default dashboard is the one that will display by default when you first open the dashboard app",
-    "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards."
+    "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards.",
+    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
 }

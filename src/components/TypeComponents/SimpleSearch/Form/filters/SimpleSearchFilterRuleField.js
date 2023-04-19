@@ -14,7 +14,7 @@ import {
 import { get } from 'lodash';
 import { requiredValidator } from '@folio/stripes-erm-components';
 import SimpleSearchUUIDFilterField from './SimpleSearchUUIDFilterField';
-import isComparatorSpecialCase from '../../../utilities';
+import { isComparatorSpecialCase } from '../../../utilities';
 
 const SimpleSearchFilterRuleField = ({
   filterComponent,
@@ -27,11 +27,13 @@ const SimpleSearchFilterRuleField = ({
   const intl = useIntl();
 
   const selectifiedComparators = comparators.map(
-    sfcc => ({ value: sfcc,
+    sfcc => ({
+      value: sfcc,
       label: intl.formatMessage({
         id: `ui-dashboard.simpleSearchForm.filters.filterField.comparator.${valueType}.${sfcc}`,
         defaultMessage: sfcc
-      }) })
+      })
+    })
   );
 
   useEffect(() => {
