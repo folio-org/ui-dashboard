@@ -4,7 +4,7 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -18,6 +18,9 @@ import { ErrorModal } from '../ErrorComponents';
 import { Widget } from '../Widget';
 import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
+
+import { Responsive, WidthProvider } from "react-grid-layout";
+const ReactGridLayout = WidthProvider(Responsive);
 
 const propTypes = {
   dashboard: PropTypes.shape({
@@ -71,6 +74,30 @@ const Dashboard = ({
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
 
+  /* const dashboardContents = () => {
+    if (!widgets?.length) {
+      return (
+        <>
+          <DashboardAccessInfo dashId={dashboard.id} />
+          <NoWidgets />
+        </>
+      );
+    }
+    return (
+      <>
+        <DashboardAccessInfo dashId={dashboard.id} />
+        <div className={css.widgetsContainer}>
+          {widgets.map(w => (
+            <RenderWidget
+              key={`widget-${w.id}`}
+              widget={w}
+            />
+          ))}
+        </div>
+      </>
+    );
+  }; */
+
   const RenderWidget = ({ widget }) => {
     const {
       specificWidgetDefinition,
@@ -79,7 +106,6 @@ const Dashboard = ({
       widget.definition?.name,
       widget.definition?.version
     );
-
 
     return (
       <Widget
@@ -107,27 +133,74 @@ const Dashboard = ({
     }).isRequired,
   };
 
+  const resizeHandles = ['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne'];
+
+/*   const layout = [
+    { i: 'widget-d6b7c3ec-9754-43b1-9ecd-7807c46a3ca3', x: 0, y: 0, w: 1, h: 2, resizeHandles },
+    { i: 'widget-cc5f4a6c-3f2e-4984-b4ba-9ed543846b73', x: 1, y: 1, w: 3, h: 2, resizeHandles },
+    { i: 'widget-4154803c-1751-439b-a547-a35c069854d7', x: 4, y: 0, w: 1, h: 2, resizeHandles }
+  ]; */
+
+/*   const layout = widgets.map((w, i) => ({
+    i: w.id,
+    x: (i * 4) % 12,
+    w: 4,
+    y: 0,
+    h: 1
+  })); */
+
+  //console.log("layout: %o", layout);
+
+  const widgetArray = useMemo(() => widgets.map((w, i) => (
+    <div
+      key={w.id}
+      data-grid={{
+        x: (i * 4) % 12,
+        minH: 5,
+        minW: 4,
+        w: 4,
+        y: 0,
+        h: 5
+      }}
+      style={{
+        backgroundColor: 'grey',
+      }}
+    >
+      {w.id}
+      {/* <RenderWidget
+        widget={w}
+      /> */}
+    </div>
+  )), [widgets]);
+
   const dashboardContents = () => {
-    if (!widgets?.length) {
-      return (
-        <>
-          <DashboardAccessInfo dashId={dashboard.id} />
-          <NoWidgets />
-        </>
-      );
-    }
     return (
-      <>
-        <DashboardAccessInfo dashId={dashboard.id} />
-        <div className={css.widgetsContainer}>
-          {widgets.map(w => (
-            <RenderWidget
-              key={`widget-${w.id}`}
-              widget={w}
-            />
-          ))}
-        </div>
-      </>
+      <ReactGridLayout
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+        className="layout"
+        cols={{ lg: 16, md: 12, sm: 8, xs: 4 }}
+        //layout={layout}
+        resizeHandle={
+          <span
+            className="react-resizable-handle"
+            style={{
+              display: 'flex',
+              position:'absolute',
+              bottom: 0,
+              right: 0,
+              height: '20px',
+              width: '20px',
+              backgroundColor: 'orange'
+            }}
+            styles={{
+              height: '100%'
+            }}
+          />
+        }
+        rowHeight={30}
+      >
+        {widgetArray}
+      </ReactGridLayout>
     );
   };
 
