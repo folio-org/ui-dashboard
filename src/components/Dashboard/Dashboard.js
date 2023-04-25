@@ -156,29 +156,28 @@ const Dashboard = ({
       key={w.id}
       data-grid={{
         x: (i * 4) % 12,
-        minH: 5,
+        minH: 10,
         minW: 4,
         w: 4,
         y: 0,
-        h: 5
+        h: 10
       }}
       style={{
         backgroundColor: 'grey',
       }}
     >
-      {w.id}
-      {/* <RenderWidget
+      <RenderWidget
         widget={w}
-      /> */}
+      />
     </div>
   )), [widgets]);
 
   const dashboardContents = () => {
     return (
       <ReactGridLayout
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480 }}
+        breakpoints={{ lg: 1200, md: 996, sm: 768 }}
         className="layout"
-        cols={{ lg: 16, md: 12, sm: 8, xs: 4 }}
+        cols={{ lg: 12, md: 8, sm: 4 }}
         //layout={layout}
         resizeHandle={
           <span

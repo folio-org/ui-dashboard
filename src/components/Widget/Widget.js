@@ -19,7 +19,8 @@ const Widget = ({
       handler: () => onWidgetEdit(widget.id),
     }
   ];
-
+  // FIXME we might need to pass the footer in separately
+  // so we can ensure that always renders at bottom
   return (
     <HasCommand
       commands={shortcuts}

@@ -15,10 +15,12 @@
 
 .widgetsContainer {
   display: flex;
+  height: 100%;
+  width: 100%;
   flex-wrap: wrap;
 }
 
-.widget {
+/* .widget {
   min-width: 300px;
   width: 50%;
   padding-bottom: 50%;
@@ -27,3 +29,4 @@
   @media (--x-large) { width: 33%; }
   @media (min-width: 1921px) { width: 25%; }
 }
+ */
