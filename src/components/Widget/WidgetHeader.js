@@ -108,6 +108,15 @@ const WidgetHeader = ({
     <div
       className={css.header}
     >
+      <div
+        className="widget-drag-handle"
+        style={{
+          height: 'auto',
+          'align-self': 'center'
+        }}
+      >
+        <Icon icon="drag-drop" />
+      </div>
       <span className={css.widgetTitle}>
         <Headline
           key={`widget-header-headline-${widgetId}`}

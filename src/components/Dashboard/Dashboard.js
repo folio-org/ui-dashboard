@@ -113,6 +113,7 @@ const Dashboard = ({
         onWidgetDelete={setupConfirmationModal}
         onWidgetEdit={onWidgetEdit}
         widget={widget}
+        widgetDef={specificWidgetDefinition?.definition}
       >
         <WidgetComponent
           key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
@@ -134,34 +135,16 @@ const Dashboard = ({
     }).isRequired,
   };
 
-  const resizeHandles = ['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne'];
-
-/*   const layout = [
-    { i: 'widget-d6b7c3ec-9754-43b1-9ecd-7807c46a3ca3', x: 0, y: 0, w: 1, h: 2, resizeHandles },
-    { i: 'widget-cc5f4a6c-3f2e-4984-b4ba-9ed543846b73', x: 1, y: 1, w: 3, h: 2, resizeHandles },
-    { i: 'widget-4154803c-1751-439b-a547-a35c069854d7', x: 4, y: 0, w: 1, h: 2, resizeHandles }
-  ]; */
-
-/*   const layout = widgets.map((w, i) => ({
-    i: w.id,
-    x: (i * 4) % 12,
-    w: 4,
-    y: 0,
-    h: 1
-  })); */
-
-  //console.log("layout: %o", layout);
-
   const widgetArray = useMemo(() => widgets.map((w, i) => (
     <div
       key={w.id}
       data-grid={{
         x: (i * 4) % 12,
-        minH: 10,
+        minH: 5,
         minW: 4,
         w: 4,
         y: 0,
-        h: 10
+        h: 5
       }}
       style={{
         backgroundColor: 'grey',
@@ -179,6 +162,7 @@ const Dashboard = ({
         breakpoints={{ lg: 1200, md: 996, sm: 768 }}
         className="layout"
         cols={{ lg: 12, md: 8, sm: 4 }}
+        draggableHandle=".widget-drag-handle"
         //layout={layout}
         resizeHandle={
           <span

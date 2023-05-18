@@ -12,7 +12,8 @@ const Widget = ({
   footerComponent: FooterComponent,
   onWidgetDelete,
   onWidgetEdit,
-  widget
+  widget,
+  widgetDef
 }) => {
   const shortcuts = [
     {
@@ -44,9 +45,12 @@ const Widget = ({
           >
             {children}
           </div>
-          <FooterComponent
-            widget={widget}
-          />
+          {FooterComponent &&
+            <FooterComponent
+              widget={widget}
+              widgetDef={widgetDef}
+            />
+          }
         </div>
       </div>
     </HasCommand>

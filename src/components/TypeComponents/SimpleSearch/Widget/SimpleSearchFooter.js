@@ -1,28 +1,27 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQueryClient } from 'react-query';
 import moment from 'moment';
 
-import simpleSearchQueryKey from './simpleSearchQueryKey';
 import { WidgetFooter } from '../../../Widget';
 
 import css from './SimpleSearch.css';
+import useSimpleSearchQuery from './useSimpleSearchQuery';
 
 const SimpleSearchFooter = ({
-  widget
+  widget,
+  widgetDef
 }) => {
   const intl = useIntl();
-
-  const queryKey = simpleSearchQueryKey(widget);
-  const queryClient = useQueryClient();
-  const queryState = queryClient.getQueryState(queryKey);
-
   const widgetConf = JSON.parse(widget.configuration);
 
-  const refetch = () => queryClient.invalidateQueries(queryKey);
+  // Grab from the same query cache as the widget itself
+  const { dataUpdatedAt, refetch } = useSimpleSearchQuery({
+    widget,
+    widgetDef
+  });
 
-  const timestamp = queryState?.dataUpdatedAt ? moment(queryState?.dataUpdatedAt).format('hh:mm a') : '';
+  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
   const { configurableProperties: { urlLink } = {} } = widgetConf;
 
   const urlLinkButton = () => {
