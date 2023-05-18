@@ -51,9 +51,9 @@
 }
 
 .body {
-  margin-bottom: 0;
   overflow: auto;
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 

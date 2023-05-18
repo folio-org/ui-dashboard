@@ -101,7 +101,7 @@ const Dashboard = ({
   const RenderWidget = ({ widget }) => {
     const {
       specificWidgetDefinition,
-      componentBundle: { WidgetComponent },
+      componentBundle: { WidgetComponent, FooterComponent },
     } = useWidgetDefinition(
       widget.definition?.name,
       widget.definition?.version
@@ -109,6 +109,7 @@ const Dashboard = ({
 
     return (
       <Widget
+        footerComponent={FooterComponent}
         onWidgetDelete={setupConfirmationModal}
         onWidgetEdit={onWidgetEdit}
         widget={widget}

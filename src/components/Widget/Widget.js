@@ -9,6 +9,7 @@ import css from './Widget.css';
 
 const Widget = ({
   children,
+  footerComponent: FooterComponent,
   onWidgetDelete,
   onWidgetEdit,
   widget
@@ -43,6 +44,9 @@ const Widget = ({
           >
             {children}
           </div>
+          <FooterComponent
+            widget={widget}
+          />
         </div>
       </div>
     </HasCommand>

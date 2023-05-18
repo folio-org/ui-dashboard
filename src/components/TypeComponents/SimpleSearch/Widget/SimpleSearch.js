@@ -1,9 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery, useQueryClient } from 'react-query';
-
-import moment from 'moment';
+import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { Badge } from '@folio/stripes/components';
@@ -109,12 +107,7 @@ const SimpleSearch = ({
   }, [columns, data?.results?.length, errorState, onError, renderBadge, simpleTableData, widget.id]);
 
   return (
-    <>
-      <WidgetBody>
-        {displayWidgetBody()}
-      </WidgetBody>
-      <SimpleSearchFooter widget={widget} />
-    </>
+    displayWidgetBody()
   );
 };
 export default SimpleSearch;

@@ -16,6 +16,7 @@ import ErrorComponent from './ErrorComponents/ErrorComponent';
 import SimpleSearch from './TypeComponents/SimpleSearch/Widget/SimpleSearch';
 import SimpleSearchForm from './TypeComponents/SimpleSearch/Form/SimpleSearchForm';
 import css from './Style.css';
+import SimpleSearchFooter from './TypeComponents/SimpleSearch/Widget/SimpleSearchFooter';
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
@@ -47,6 +48,7 @@ const getComponentsFromType = (widgetType = '', isLoading = false) => {
   switch (widgetType) {
     case 'SimpleSearch': {
       componentBundle.WidgetComponent = SimpleSearch;
+      componentBundle.FooterComponent = SimpleSearchFooter;
       componentBundle.WidgetFormComponent = SimpleSearchForm;
 
       componentBundle.submitManipulation = simpleSearchSubmitManipulation;

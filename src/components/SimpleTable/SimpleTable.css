@@ -1,8 +1,7 @@
 @import '@folio/stripes-components/lib/variables.css';
  
 .tableContainer { 
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto;
 }
 
 .table {
