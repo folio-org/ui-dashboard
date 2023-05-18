@@ -68,7 +68,7 @@ const ResizedTable = ({ columns, data, widgetId }) => {
          */
       }
       <table className={css.table}>
-        <thead>
+        <thead className={css.thead}>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => {
