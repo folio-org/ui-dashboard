@@ -1,6 +1,6 @@
 @import '@folio/stripes-components/lib/variables';
 
-.footerContainer {
+.footer {
   display: flex;
   justify-content: space-between;
   padding: 3px 0px;

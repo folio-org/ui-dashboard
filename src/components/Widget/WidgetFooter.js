@@ -15,7 +15,7 @@ const WidgetFooter = ({
   const intl = useIntl();
   return (
     <div
-      className={css.footerContainer}
+      className={css.footer}
     >
       <div
         key={`widget-footer-${widgetId}-left-content`}

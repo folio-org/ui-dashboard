@@ -65,3 +65,8 @@
 .negative {
   background-color: var(--bg-hover);
 }
+
+.footerContainer {
+  display: flex;
+  width: 90%;
+}

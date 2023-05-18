@@ -45,12 +45,14 @@ const Widget = ({
           >
             {children}
           </div>
-          {FooterComponent &&
-            <FooterComponent
-              widget={widget}
-              widgetDef={widgetDef}
-            />
-          }
+          <div className={css.footerContainer}>
+            {FooterComponent &&
+              <FooterComponent
+                widget={widget}
+                widgetDef={widgetDef}
+              />
+            }
+          </div>
         </div>
       </div>
     </HasCommand>

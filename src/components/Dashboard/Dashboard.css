@@ -30,3 +30,7 @@
   @media (min-width: 1921px) { width: 25%; }
 }
  */
+
+.rotate {
+  transform: rotate(315deg);
+}

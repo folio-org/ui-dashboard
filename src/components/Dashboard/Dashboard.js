@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  ConfirmationModal,
+  ConfirmationModal, Icon,
 } from '@folio/stripes/components';
 
 import NoWidgets from './NoWidgets';
@@ -20,6 +20,7 @@ import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
 import { Responsive, WidthProvider } from "react-grid-layout";
+
 const ReactGridLayout = WidthProvider(Responsive);
 
 const propTypes = {
@@ -98,7 +99,7 @@ const Dashboard = ({
     );
   }; */
 
-  const RenderWidget = ({ widget }) => {
+  const RenderWidget = ({ children, widget }) => {
     const {
       specificWidgetDefinition,
       componentBundle: { WidgetComponent, FooterComponent },
@@ -146,9 +147,6 @@ const Dashboard = ({
         y: 0,
         h: 5
       }}
-      style={{
-        backgroundColor: 'grey',
-      }}
     >
       <RenderWidget
         widget={w}
@@ -163,23 +161,27 @@ const Dashboard = ({
         className="layout"
         cols={{ lg: 12, md: 8, sm: 4 }}
         draggableHandle=".widget-drag-handle"
-        //layout={layout}
         resizeHandle={
-          <span
+          <div
             className="react-resizable-handle"
             style={{
               display: 'flex',
               position:'absolute',
               bottom: 0,
               right: 0,
-              height: '20px',
-              width: '20px',
-              backgroundColor: 'orange'
+              cursor: 'se-resize',
+              padding: '5px'
             }}
             styles={{
               height: '100%'
             }}
-          />
+          >
+            <Icon
+              icon="caret-down"
+              // TODO this is clearly not ideal, we should add a corner icon
+              iconClassName={css.rotate}
+            />
+          </div>
         }
         rowHeight={30}
       >

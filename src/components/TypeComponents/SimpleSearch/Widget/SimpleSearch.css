@@ -3,6 +3,7 @@
 .countBadge {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: var(--gutter-static-one-third);
 }
 
 .linkText {
