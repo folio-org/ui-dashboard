@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import moment from 'moment';
 
@@ -11,10 +11,12 @@ import { Badge } from '@folio/stripes/components';
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
 import SimpleTable from '../../../SimpleTable';
-import { WidgetFooter } from '../../../Widget';
+import { WidgetBody } from '../../../Widget';
 import { ErrorBanner, errorParser } from '../../../ErrorComponents';
 
 import css from './SimpleSearch.css';
+import simpleSearchQueryKey from './simpleSearchQueryKey';
+import SimpleSearchFooter from './SimpleSearchFooter';
 
 const DEFAULT_ERROR_STATE = {
   isError: false,
@@ -45,9 +47,9 @@ const SimpleSearch = ({
   // We need to pass the stripes object into the pathBuilder, so it can use that for currentUser token
   const stripes = useStripes();
 
-  const { data, dataUpdatedAt, refetch } = useQuery(
+  const { data } = useQuery(
     // If widget.configuration changes, this should refetch
-    ['ui-dashboard', 'simpleSearch', widget.id, widget.configuration],
+    simpleSearchQueryKey(widget),
     () => ky(pathBuilder(widgetDef, widgetConf, stripes)).json()
       .catch(async err => {
         const parsedError = await errorParser(err, intl);
@@ -60,35 +62,6 @@ const SimpleSearch = ({
   );
 
   const simpleTableData = useMemo(() => data?.results || [], [data]);
-
-  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
-
-  const { configurableProperties: { urlLink } = {} } = widgetConf;
-
-  const urlLinkButton = () => {
-    if (!urlLink) {
-      return null;
-    }
-    return (
-      <a
-        aria-label={intl.formatMessage(
-          { id: 'ui-dashboard.simpleSearch.widget.linkTextForWidget' },
-          {
-            linkText: intl.formatMessage({
-              id: 'ui-dashboard.simpleSearch.widget.linkText',
-            }),
-            widgetName: widget.name,
-          }
-        )}
-        className={css.linkText}
-        href={encodeURI(urlLink)}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <FormattedMessage id="ui-dashboard.simpleSearch.widget.linkText" />
-      </a>
-    );
-  };
 
   const renderBadge = useCallback(() => {
     return (
@@ -137,17 +110,10 @@ const SimpleSearch = ({
 
   return (
     <>
-      {displayWidgetBody()}
-      <WidgetFooter
-        key={`widget-footer-${widget.id}`}
-        onRefresh={() => {
-          refetch();
-        }}
-        rightContent={urlLinkButton()}
-        timestamp={timestamp}
-        widgetId={widget.id}
-        widgetName={widget.name}
-      />
+      <WidgetBody>
+        {displayWidgetBody()}
+      </WidgetBody>
+      <SimpleSearchFooter widget={widget} />
     </>
   );
 };
