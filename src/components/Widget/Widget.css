@@ -68,5 +68,6 @@
 
 .footerContainer {
   display: flex;
-  width: 90%;
+  width: 100%;
+  padding-right: var(--gutter-static-two-thirds);
 }
