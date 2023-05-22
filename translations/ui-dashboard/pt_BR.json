@@ -234,5 +234,5 @@
     "userDashboards.default.info": "O painel de controle padrão é o que será exibido quando você abrir o aplicativo do <strong>Painel de Controle</strong> pela primeira vez.",
     "userDashboards.edit.success": "<strong>Atualizações salvas:</strong> Gerenciar painel de controle.",
     "simpleSearchForm.error.invalidURL": "Por favor, insira um URL válido",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL.tooltip": "começa com \"https://\", \"http://\" ou \"/\" e não contém caracteres especiais não permitidos em URLs"
 }

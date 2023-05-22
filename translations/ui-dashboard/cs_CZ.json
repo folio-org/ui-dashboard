@@ -27,7 +27,7 @@
     "simpleSearchForm.results.addResult": "Přidat sloupec",
     "simpleSearchForm.sort": "Seřadit",
     "simpleSearchForm.sort.sortBy": "Seřadit podle",
-    "simpleSearchForm.sort.sortDirection": "Směr řazení",
+    "simpleSearchForm.sort.sortDirection": "Směr seřazení",
     "simpleSearchForm.configurableProperties.numberOfRows": "Počet řádků",
     "simpleSearchForm.configurableProperties.urlLink": "URL odkaz",
     "simpleSearch.widget.nFoundBadge": "{total} nalezeno",
@@ -233,6 +233,6 @@
     "dashboardUsers.edit.success": "<strong>Aktualizovány přístupové údaje uživatele:</strong> {dashboardName}",
     "userDashboards.default.info": "Výchozí nástěnka je ta, která se ve výchozím nastavení zobrazí při prvním otevření aplikace Nástěnka.",
     "userDashboards.edit.success": "<strong>Aktualizace uloženy:</strong> Správa nástěnek.",
-    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL": "Zadejte prosím platnou adresu URL",
+    "simpleSearchForm.error.invalidURL.tooltip": "začíná na \"https://\", \"http://\" nebo \"/\" a neobsahuje speciální znaky, které nejsou v adresách URL povoleny"
 }

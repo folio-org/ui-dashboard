@@ -233,6 +233,6 @@
     "dashboardUsers.edit.success": "<strong>用户访问详情已更新： </strong> {dashboardName}",
     "userDashboards.default.info": "默认仪表板是首次打开仪表板应用程序时默认显示的仪表板",
     "userDashboards.edit.success": "<strong>已保存更新： </strong>管理仪表板。",
-    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL": "请输入有效网址",
+    "simpleSearchForm.error.invalidURL.tooltip": "以“https://”、“http://”或“/”开头，并且不包含 URL 中不允许的特殊字符"
 }
