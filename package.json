@@ -29,7 +29,7 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "servint": "2.0"
+      "servint": "2.0 3.0"
     },
     "stripesDeps": [
       "@folio/stripes-erm-components",
