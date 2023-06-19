@@ -140,8 +140,8 @@ const SimpleSearch = ({
       {displayWidgetBody()}
       <WidgetFooter
         key={`widget-footer-${widget.id}`}
-        onRefresh={() => {
-          refetch();
+        onRefresh={async () => {
+          await refetch();
         }}
         rightContent={urlLinkButton()}
         timestamp={timestamp}
