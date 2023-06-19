@@ -32,7 +32,7 @@ const SimpleSearchForm = ({
     sort: {
       columns: sortColumns = []
     } = {},
-  } = specificWidgetDefinition?.definition;
+  } = specificWidgetDefinition?.definition ?? {};
 
   const accordionStatusRef = useRef();
 
