@@ -73,6 +73,7 @@
   "tokenUserPicker.validation.invalidUser": "Please choose a user to continue",
   "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
   "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
+  "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long.",
   "simpleSearchForm.filters": "Filters",
   "simpleSearchForm.filters.addFilter": "Add filter",
   "simpleSearchForm.filters.removeFilter": "Remove filter {index}",

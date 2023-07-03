@@ -7,7 +7,9 @@ import {
   TextField
 } from '@folio/stripes/components';
 
-import { validateURL } from '../../../utilities';
+import { composeValidators } from '@folio/stripes-erm-components';
+
+import { validateInputSize, validateURL } from '../../../utilities';
 
 const SimpleSearchConfigurableProperties = ({
   configurableProperties: {
@@ -20,7 +22,10 @@ const SimpleSearchConfigurableProperties = ({
         // If urlLink is non configurable and has no defValue then we don't need it on the form
         <Field
           name="configurableProperties.urlLink"
-          validate={validateURL}
+          validate={composeValidators(
+            validateURL,
+            validateInputSize
+          )}
         >
           {({ ...fieldRenderProps }) => {
             if (urlLink.configurable) {
