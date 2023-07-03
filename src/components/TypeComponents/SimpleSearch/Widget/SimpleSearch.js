@@ -7,6 +7,7 @@ import moment from 'moment';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { Badge } from '@folio/stripes/components';
+import { recursiveUrlDecoding } from '@folio/stripes-erm-components';
 
 import pathBuilder from './simpleSearchPathBuilder';
 import columnParser from './simpleSearchColumnParser';
@@ -69,6 +70,7 @@ const SimpleSearch = ({
     if (!urlLink) {
       return null;
     }
+
     return (
       <a
         aria-label={intl.formatMessage(
@@ -81,7 +83,7 @@ const SimpleSearch = ({
           }
         )}
         className={css.linkText}
-        href={encodeURI(urlLink)}
+        href={encodeURI(recursiveUrlDecoding(urlLink))}
         rel="noopener noreferrer"
         target="_blank"
       >
