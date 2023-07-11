@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 
+import { recursiveUrlDecoding } from '@folio/stripes-erm-components';
+
 import { WidgetFooter } from '../../../Widget';
 
 import css from './SimpleSearch.css';
@@ -40,7 +42,7 @@ const SimpleSearchFooter = ({
           }
         )}
         className={css.linkText}
-        href={encodeURI(urlLink)}
+        href={encodeURI(recursiveUrlDecoding(urlLink))}
         rel="noopener noreferrer"
         target="_blank"
       >

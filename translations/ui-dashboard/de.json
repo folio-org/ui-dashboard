@@ -234,5 +234,5 @@
     "userDashboards.default.info": "Das Standard-Dashboard ist dasjenige, das standardmäßig angezeigt wird, wenn die Dashboard-App zum ersten Mal geöffnet wird",
     "userDashboards.edit.success": "<strong>Aktualisierungen gespeichert:</strong> Dashboards verwalten",
     "simpleSearchForm.error.invalidURL": "Bitte gültige URL eingeben",
-    "simpleSearchForm.error.invalidURL.tooltip": "beginnt mit \"https://\", \"http://\" oder \"/\" und enthält keine Sonderzeichen, die in URLs nicht erlaubt sind"
+    "simpleSearchForm.error.invalidURL.tooltip": "beginnt mit \"https://\", \"http://\" oder \"/\" und enthält keine Sonderzeichen, die in URLs nicht zulässig sind"
 }

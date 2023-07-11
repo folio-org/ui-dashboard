@@ -46,5 +46,14 @@ const validateURL = (value) => {
   }
   return undefined;
 };
-export default validateURL;
+
+const validateInputSize = (value) => {
+  if (value && value.length > 2048) {
+    return (
+      <FormattedMessage id="ui-dashboard.simpleSearchForm.error.invalidInputSize" />
+    );
+  }
+  return undefined;
+};
+export { validateInputSize, validateURL };
 
