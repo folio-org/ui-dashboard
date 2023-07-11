@@ -6,9 +6,10 @@ import { useQuery } from 'react-query';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useChunkedUsers } from '@folio/stripes-erm-components';
 
 import Loading from '../components/Loading';
-import { useChunkedUsers, useDashboardAccessStore } from '../components/hooks';
+import { useDashboardAccessStore } from '../components/hooks';
 
 const DashboardsRoute = ({
   children,
