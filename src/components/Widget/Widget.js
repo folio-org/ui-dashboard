@@ -13,7 +13,8 @@ const Widget = ({
   onWidgetDelete,
   onWidgetEdit,
   widget,
-  widgetDef
+  widgetDef,
+  widgetMoveHandler
 }) => {
   const shortcuts = [
     {
@@ -38,6 +39,7 @@ const Widget = ({
             onWidgetDelete={onWidgetDelete}
             onWidgetEdit={onWidgetEdit}
             widgetId={widget.id}
+            widgetMoveHandler={widgetMoveHandler}
           />
           <div
             key={`widget-body-${widget.id}`}

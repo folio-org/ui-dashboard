@@ -4,7 +4,7 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { forwardRef, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -75,6 +75,36 @@ const Dashboard = ({
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
 
+  const [movingWidget, setMovingWidget] = useState();
+
+  const widgetMoveHandler = useCallback((e, widgetId) => {
+    console.log("E: %o", e);
+    console.log("Current widget: %o", widgetId);
+    console.log("Moving widget: %o", movingWidget);
+
+    if (movingWidget !== widgetId) {
+      console.log("NOT THE CURRENT MOVING WIDGET")
+      // Embdedded if here so we can ignore this logic in each case of the switch below
+      if (e.code === 'Space') {
+        console.log("SET AS THE CURRENT MOVING WIDGET")
+        setMovingWidget(widgetId);
+      }
+    } else {
+      switch (e.code) {
+        case 'Space':
+          console.log("UNSET AS THE CURRENT MOVING WIDGET")
+          setMovingWidget();
+          break;
+        case 'ArrowRight':
+          alert("RIGHT ARROW CLICKED")
+          break;
+        default:
+          break;
+      }
+    }
+  }, [movingWidget]);
+
+
   /* const dashboardContents = () => {
     if (!widgets?.length) {
       return (
@@ -115,6 +145,7 @@ const Dashboard = ({
         onWidgetEdit={onWidgetEdit}
         widget={widget}
         widgetDef={specificWidgetDefinition?.definition}
+        widgetMoveHandler={widgetMoveHandler}
       >
         <WidgetComponent
           key={`${specificWidgetDefinition?.typeName}-${widget.id}`}

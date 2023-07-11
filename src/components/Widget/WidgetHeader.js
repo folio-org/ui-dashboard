@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation, useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ const WidgetHeader = ({
   onWidgetDelete,
   onWidgetEdit,
   widgetId,
+  widgetMoveHandler
 }) => {
   const intl = useIntl();
   let widgetFocusRef = useRef(null);
@@ -104,16 +105,29 @@ const WidgetHeader = ({
     />
   );
 
+  const dragHandleRef = useRef();
+  const internalMoveHandler = useCallback(e => widgetMoveHandler(e, widgetId), [widgetId, widgetMoveHandler]);
+
+  useEffect(() => {
+    dragHandleRef.current.addEventListener('keydown', internalMoveHandler);
+    return () => {
+      dragHandleRef.current.removeEventListener('keydown', internalMoveHandler);
+    };
+  }, [internalMoveHandler]);
+
   return (
     <div
       className={css.header}
     >
       <div
+        ref={dragHandleRef}
         className="widget-drag-handle"
         style={{
           height: 'auto',
           'align-self': 'center'
         }}
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
       >
         <Icon icon="drag-drop" />
       </div>
