@@ -1,11 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 
-import { IconButton } from '@folio/stripes-testing';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { IconButton, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
 

@@ -2,11 +2,13 @@
 
 import { StaticRouter as Router } from 'react-router-dom';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
-  HeadlineInteractor as Headline,
+  Button,
+  Headline,
   renderWithIntl
 } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import Header from './Header';
@@ -108,7 +110,9 @@ describe('Header', () => {
     });
 
     test('renders the expected dashboard action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('My dashboard').exists();
       await Button('New widget').exists();
       await Button('Edit dashboard').exists();
@@ -118,7 +122,9 @@ describe('Header', () => {
     });
 
     test('renders the expected all dashboards action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('All dashboards').exists();
       await Button('New dashboard').exists();
       await Button('Manage dashboards').exists();
@@ -138,7 +144,9 @@ describe('Header', () => {
     });
 
     test('renders the expected dashboard action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('My dashboard').exists();
       await Headline('All dashboards').exists();
       await Button('New widget').exists();
@@ -149,7 +157,9 @@ describe('Header', () => {
     });
 
     test('renders the expected all dashboards action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('All dashboards').exists();
       await Button('New dashboard').exists();
       await Button('Manage dashboards').exists();
@@ -169,7 +179,9 @@ describe('Header', () => {
     });
 
     test('renders the expected dashboard action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('My dashboard').exists();
       await Headline('All dashboards').exists();
       await Button('New widget').absent();
@@ -180,7 +192,9 @@ describe('Header', () => {
     });
 
     test('renders the expected all dashboards action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('All dashboards').exists();
       await Button('New dashboard').exists();
       await Button('Manage dashboards').exists();
@@ -200,7 +214,9 @@ describe('Header', () => {
     });
 
     test('renders the expected dashboard action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('My dashboard').exists();
       await Headline('All dashboards').exists();
       await Button('New widget').exists();
@@ -211,7 +227,9 @@ describe('Header', () => {
     });
 
     test('renders the expected all dashboards action button dropdown', async () => {
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+      });
       await Headline('All dashboards').exists();
       await Button('New dashboard').exists();
       await Button('Manage dashboards').exists();

@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { Dropdown } from '@folio/stripes-testing';
+import { Dropdown, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import WidgetHeader from './WidgetHeader';
 import translationsProperties from '../../../test/helpers';
 
@@ -105,7 +104,9 @@ describe('WidgetHeader', () => {
     );
 
     const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-    await actionsButton.choose('Edit');
+    await waitFor(async () => {
+      await actionsButton.choose('Edit');
+    });
 
     expect(onWidgetEdit.mock.calls.length).toBe(1);
   });
@@ -122,7 +123,9 @@ describe('WidgetHeader', () => {
     );
 
     const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-    await actionsButton.choose('Delete');
+    await waitFor(async () => {
+      await actionsButton.choose('Delete');
+    });
 
     expect(onWidgetDelete.mock.calls.length).toBe(1);
   });
