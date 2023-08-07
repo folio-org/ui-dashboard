@@ -63,7 +63,7 @@ const getDefaultRenderFunction = ({ accessPath, arrayDisplayPath, name, valueTyp
           const array = get(data, accessPath);
 
           if (arrayDisplayPath) {
-            return array.map(a => get(a, arrayDisplayPath)).join(', ');
+            return array?.map(a => get(a, arrayDisplayPath)).join(', ') || [];
           }
           return array.join(', ');
         };
