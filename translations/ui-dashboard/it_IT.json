@@ -234,5 +234,6 @@
     "userDashboards.default.info": "La dashboard predefinita è quella che verrà visualizzata per impostazione predefinita quando apri per la prima volta l'app dashboard",
     "userDashboards.edit.success": "<strong> Aggiornamenti salvati: </strong> gestisci dashboard.",
     "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
+    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
 }

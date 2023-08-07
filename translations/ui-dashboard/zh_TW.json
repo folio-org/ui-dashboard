@@ -234,5 +234,6 @@
     "userDashboards.default.info": "The default dashboard is the one that will display by default when you first open the dashboard app",
     "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards.",
     "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
+    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
 }

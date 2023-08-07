@@ -2,10 +2,13 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { MemoryRouter } from 'react-router-dom';
 
-
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-
-import { MessageBanner, MultiColumnList, MultiColumnListHeader } from '@folio/stripes-testing';
+import {
+  MessageBanner,
+  MultiColumnList,
+  MultiColumnListHeader,
+  renderWithIntl,
+  TestForm
+} from '@folio/stripes-erm-testing';
 
 import UserAccessFieldArray from './UserAccessFieldArray';
 

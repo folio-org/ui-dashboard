@@ -234,5 +234,6 @@
     "userDashboards.default.info": "El cuadro de mandos por defecto es el que se mostrará por defecto al abrir por primera vez la aplicación del cuadro de mandos",
     "userDashboards.edit.success": "<strong>Actualizaciones guardadas:</strong> Gestionar cuadros de mando.",
     "simpleSearchForm.error.invalidURL": "Introduzca una URL válida",
-    "simpleSearchForm.error.invalidURL.tooltip": "empieza por \"https://\", \"http://\" o \"/\" y no contiene caracteres especiales no permitidos en las URL."
+    "simpleSearchForm.error.invalidURL.tooltip": "empieza por \"https://\", \"http://\" o \"/\" y no contiene caracteres especiales no permitidos en las URL.",
+    "simpleSearchForm.error.invalidInputSize": "La URL sólo puede tener 2048 caracteres."
 }

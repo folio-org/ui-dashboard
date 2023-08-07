@@ -234,5 +234,6 @@
     "userDashboards.default.info": "Výchozí nástěnka je ta, která se ve výchozím nastavení zobrazí při prvním otevření aplikace Nástěnka.",
     "userDashboards.edit.success": "<strong>Aktualizace uloženy:</strong> Správa nástěnek.",
     "simpleSearchForm.error.invalidURL": "Zadejte prosím platnou adresu URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "začíná na \"https://\", \"http://\" nebo \"/\" a neobsahuje speciální znaky, které nejsou v adresách URL povoleny"
+    "simpleSearchForm.error.invalidURL.tooltip": "začíná na \"https://\", \"http://\" nebo \"/\" a neobsahuje speciální znaky, které nejsou v adresách URL povoleny",
+    "simpleSearchForm.error.invalidInputSize": "URL může mít pouze 2048 znaků."
 }

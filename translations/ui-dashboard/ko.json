@@ -234,5 +234,6 @@
     "userDashboards.default.info": "기본 대시보드는 대시보드 앱을 처음 열 때 기본적으로 표시되는 대시보드입니다.",
     "userDashboards.edit.success": "<strong> 업데이트 저장: </strong> 대시보드 관리",
     "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs"
+    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
+    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
 }
