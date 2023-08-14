@@ -3,11 +3,19 @@
   "parser": "@babel/eslint-parser",
   "rules": {
     "react/jsx-sort-props": "error",
-    "react/react-in-jsx-scope": "off"
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "(React|^_)"
+      }
+    ]
   },
   "env": {
-    "jest/globals": true
+    "jest": true
   },
-  "plugins": ["jest"]
+  "plugins": [
+    "testing-library",
+    "jest-dom"
+  ]
 }
-

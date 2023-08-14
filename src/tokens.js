@@ -10,7 +10,7 @@ import moment from 'moment';
 function tokens(valueString, stripes, options = {}) {
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
 
-  const tokenMatch = valueString.toString().match(/\{\{(.*)\}\}/)?.[1];
+  const tokenMatch = valueString?.toString()?.match(/\{\{(.*)\}\}/)?.[1];
 
   // ZERO TOKEN MATCH
   if (!tokenMatch) {

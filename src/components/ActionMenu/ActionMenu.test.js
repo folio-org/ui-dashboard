@@ -1,8 +1,7 @@
-import React from 'react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import ActionMenu from './ActionMenu';
 
@@ -20,7 +19,9 @@ describe('UrlCustomizer', () => {
 
   test('renders the expected action button', async () => {
     await Button('Actions').exists();
-    await Button('Actions').click();
+    await waitFor(async () => {
+      await Button('Actions').click();
+    });
   });
 });
 
