@@ -134,6 +134,12 @@ const TokenDatePicker = ({
     const relativeToken = tokenise('date', { offset, offsetSign, timeUnit });
     const todayToken = tokenise('date');
 
+    // the following is relevant when switching from a string to a date filter
+    if (dateValue === 'Invalid date') {
+      setDateValue('');
+      setRadioValue(RADIO_VALUE_TODAY);
+    }
+
     if (offsetValidation(offset, radioValue)) {
       changeOutputValue(ERROR_INVALID_OFFSET);
     } else if (dateValidation(dateValue, radioValue, dateMoment, acceptedFormat)) {
