@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { createWithEqualityFn } from 'zustand/traditional';
 
-const useDashboardAccessStore = create((set, get) => ({
+const useDashboardAccessStore = createWithEqualityFn((set, get) => ({
   dashboards: {},
   setAccess: (dashId, access, hasAdminPerm) => set(state => {
     return {

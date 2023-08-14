@@ -235,5 +235,5 @@
     "userDashboards.edit.success": "<strong>已保存更新： </strong>管理仪表板。",
     "simpleSearchForm.error.invalidURL": "请输入有效网址",
     "simpleSearchForm.error.invalidURL.tooltip": "以“https://”、“http://”或“/”开头，并且不包含 URL 中不允许的特殊字符",
-    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
+    "simpleSearchForm.error.invalidInputSize": "URL 的长度只能是 2048 字符。"
 }
