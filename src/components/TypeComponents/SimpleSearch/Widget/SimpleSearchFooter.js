@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { recursiveUrlDecoding } from '@folio/stripes-erm-components';
 
-import { WidgetFooter } from '../../../Widget';
+import WidgetFooter from '../../../Widget/WidgetFooter';
 
 import css from './SimpleSearch.css';
 import useSimpleSearchQuery from './useSimpleSearchQuery';
@@ -67,6 +67,7 @@ const SimpleSearchFooter = ({
 
 
 SimpleSearchFooter.propTypes = {
+  widgetDef: PropTypes.object,
   widget: PropTypes.shape({
     configuration: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

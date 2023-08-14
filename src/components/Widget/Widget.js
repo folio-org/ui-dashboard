@@ -4,30 +4,34 @@ import classnames from 'classnames';
 
 import { HasCommand, checkScope } from '@folio/stripes/components';
 
+import useWidgetDefinition from '../useWidgetDefinition';
 import WidgetHeader from './WidgetHeader';
-
 import css from './Widget.css';
 
+
 const Widget = ({
-  children,
-  footerComponent: FooterComponent,
   grabbed,
+  onError,
   onWidgetDelete,
   onWidgetEdit,
   widget,
-  widgetDef,
   widgetMoveHandler
 }) => {
+  const {
+    specificWidgetDefinition: { definition: widgetDef, typeName },
+    componentBundle: { WidgetComponent, FooterComponent },
+  } = useWidgetDefinition(
+    widget.definition?.name,
+    widget.definition?.version
+  );
+
   const shortcuts = [
     {
       name: 'edit',
       handler: () => onWidgetEdit(widget.id),
     }
   ];
-  // FIXME we might need to pass the footer in separately
-  // so we can ensure that always renders at bottom
 
-  console.log("GRABBED? %o", grabbed, "For widgetID: %o", widget.id)
   return (
     <HasCommand
       commands={shortcuts}
@@ -56,7 +60,12 @@ const Widget = ({
             key={`widget-body-${widget.id}`}
             className={css.body}
           >
-            {children}
+            <WidgetComponent
+              key={`${typeName}-${widget.id}`}
+              onError={onError}
+              widget={widget}
+              widgetDef={widgetDef}
+            />
           </div>
           <div className={css.footerContainer}>
             {FooterComponent &&
@@ -73,15 +82,17 @@ const Widget = ({
 };
 
 Widget.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
+  grabbed: PropTypes.bool,
+  onError: PropTypes.func.isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
   widget: PropTypes.shape({
+    definition: PropTypes.shape({
+      name: PropTypes.string,
+      version: PropTypes.string,
+    }),
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
   }).isRequired,
   widgetMoveHandler: PropTypes.func.isRequired
 };

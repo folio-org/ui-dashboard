@@ -12,7 +12,12 @@ import simpleSearchCreateInitialValues from './TypeComponents/SimpleSearch/Form/
 // and https://folio-project.slack.com/archives/CAYCU07SN/p1612187220027000
 import ErrorComponent from './ErrorComponents/ErrorComponent';
 // SimpleSearch components/functions
-import { SimpleSearch, SimpleSearchFooter, SimpleSearchForm } from './TypeComponents/SimpleSearch';
+import {
+  SimpleSearch,
+  SimpleSearchFooter,
+  SimpleSearchForm
+} from './TypeComponents/SimpleSearch';
+
 import css from './Style.css';
 
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,

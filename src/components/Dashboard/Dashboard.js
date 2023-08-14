@@ -21,55 +21,7 @@ import { Widget } from '../Widget';
 import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
-
 const ReactGridLayout = WidthProvider(Responsive);
-
-const RenderWidget = ({
-  //children, // Is this needed?
-  handleError,
-  movingWidget,
-  onWidgetEdit,
-  setupConfirmationModal,
-  widget,
-  widgetMoveHandler,
-}) => {
-  const {
-    specificWidgetDefinition,
-    componentBundle: { WidgetComponent, FooterComponent },
-  } = useWidgetDefinition(
-    widget.definition?.name,
-    widget.definition?.version
-  );
-
-  return (
-    <Widget
-      footerComponent={FooterComponent}
-      grabbed={widget.id === movingWidget}
-      onWidgetDelete={setupConfirmationModal}
-      onWidgetEdit={onWidgetEdit}
-      widget={widget}
-      widgetDef={specificWidgetDefinition?.definition}
-      widgetMoveHandler={widgetMoveHandler}
-    >
-      <WidgetComponent
-        key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
-        onError={handleError}
-        widget={widget}
-        widgetDef={specificWidgetDefinition?.definition}
-      />
-    </Widget>
-  );
-};
-
-RenderWidget.propTypes = {
-  widget: PropTypes.shape({
-    definition: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      version: PropTypes.string.isRequired,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 const propTypes = {
   dashboard: PropTypes.shape({
@@ -101,14 +53,14 @@ const Dashboard = ({
   });
 
   // This takes an error and a stacktrace to pass to the modal, and opens it
-  const handleError = (err, stack) => {
+  const handleError = useCallback((err, stack) => {
     setErrorState({
       ...errorState,
       errorMessage: err,
       errorModalOpen: true,
       errorStack: stack
     });
-  };
+  }, [errorState]);
 
   const handleHideModal = () => {
     setErrorState({
@@ -124,8 +76,6 @@ const Dashboard = ({
   };
 
   const [movingWidget, setMovingWidget] = useState();
-  console.log("Moving widget (external): %o", movingWidget);
-
   const widgetMoveHandler = useCallback((e, widgetId) => {
     if (movingWidget !== widgetId) {
       // Embdedded if here so we can ignore this logic in each case of the switch below
@@ -185,11 +135,11 @@ const Dashboard = ({
         h: 5
       }}
     >
-      <RenderWidget
-        handleError={handleError}
-        movingWidget={movingWidget}
+      <Widget
+        grabbed={movingWidget === w.id}
+        onError={handleError}
+        onWidgetDelete={setupConfirmationModal}
         onWidgetEdit={onWidgetEdit}
-        setupConfirmationModal={setupConfirmationModal}
         widget={w}
         widgetMoveHandler={widgetMoveHandler}
       />
