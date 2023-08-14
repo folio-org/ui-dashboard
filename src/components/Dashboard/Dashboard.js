@@ -4,9 +4,11 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { forwardRef, useCallback, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import {
   ConfirmationModal, Icon,
@@ -19,9 +21,55 @@ import { Widget } from '../Widget';
 import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
-import { Responsive, WidthProvider } from "react-grid-layout";
 
 const ReactGridLayout = WidthProvider(Responsive);
+
+const RenderWidget = ({
+  //children, // Is this needed?
+  handleError,
+  movingWidget,
+  onWidgetEdit,
+  setupConfirmationModal,
+  widget,
+  widgetMoveHandler,
+}) => {
+  const {
+    specificWidgetDefinition,
+    componentBundle: { WidgetComponent, FooterComponent },
+  } = useWidgetDefinition(
+    widget.definition?.name,
+    widget.definition?.version
+  );
+
+  return (
+    <Widget
+      footerComponent={FooterComponent}
+      grabbed={widget.id === movingWidget}
+      onWidgetDelete={setupConfirmationModal}
+      onWidgetEdit={onWidgetEdit}
+      widget={widget}
+      widgetDef={specificWidgetDefinition?.definition}
+      widgetMoveHandler={widgetMoveHandler}
+    >
+      <WidgetComponent
+        key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
+        onError={handleError}
+        widget={widget}
+        widgetDef={specificWidgetDefinition?.definition}
+      />
+    </Widget>
+  );
+};
+
+RenderWidget.propTypes = {
+  widget: PropTypes.shape({
+    definition: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      version: PropTypes.string.isRequired,
+    }).isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const propTypes = {
   dashboard: PropTypes.shape({
@@ -76,23 +124,20 @@ const Dashboard = ({
   };
 
   const [movingWidget, setMovingWidget] = useState();
+  console.log("Moving widget (external): %o", movingWidget);
 
   const widgetMoveHandler = useCallback((e, widgetId) => {
-    console.log("E: %o", e);
-    console.log("Current widget: %o", widgetId);
-    console.log("Moving widget: %o", movingWidget);
-
     if (movingWidget !== widgetId) {
-      console.log("NOT THE CURRENT MOVING WIDGET")
       // Embdedded if here so we can ignore this logic in each case of the switch below
       if (e.code === 'Space') {
-        console.log("SET AS THE CURRENT MOVING WIDGET")
+        // Set as the current moving widget
         setMovingWidget(widgetId);
       }
     } else {
       switch (e.code) {
         case 'Space':
-          console.log("UNSET AS THE CURRENT MOVING WIDGET")
+        case 'Tab':
+          // Unset as the current moving widget
           setMovingWidget();
           break;
         case 'ArrowRight':
@@ -103,7 +148,6 @@ const Dashboard = ({
       }
     }
   }, [movingWidget]);
-
 
   /* const dashboardContents = () => {
     if (!widgets?.length) {
@@ -129,44 +173,6 @@ const Dashboard = ({
     );
   }; */
 
-  const RenderWidget = ({ children, widget }) => {
-    const {
-      specificWidgetDefinition,
-      componentBundle: { WidgetComponent, FooterComponent },
-    } = useWidgetDefinition(
-      widget.definition?.name,
-      widget.definition?.version
-    );
-
-    return (
-      <Widget
-        footerComponent={FooterComponent}
-        onWidgetDelete={setupConfirmationModal}
-        onWidgetEdit={onWidgetEdit}
-        widget={widget}
-        widgetDef={specificWidgetDefinition?.definition}
-        widgetMoveHandler={widgetMoveHandler}
-      >
-        <WidgetComponent
-          key={`${specificWidgetDefinition?.typeName}-${widget.id}`}
-          onError={handleError}
-          widget={widget}
-          widgetDef={specificWidgetDefinition?.definition}
-        />
-      </Widget>
-    );
-  };
-
-  RenderWidget.propTypes = {
-    widget: PropTypes.shape({
-      definition: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        version: PropTypes.string.isRequired,
-      }).isRequired,
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  };
-
   const widgetArray = useMemo(() => widgets.map((w, i) => (
     <div
       key={w.id}
@@ -180,10 +186,15 @@ const Dashboard = ({
       }}
     >
       <RenderWidget
+        handleError={handleError}
+        movingWidget={movingWidget}
+        onWidgetEdit={onWidgetEdit}
+        setupConfirmationModal={setupConfirmationModal}
         widget={w}
+        widgetMoveHandler={widgetMoveHandler}
       />
     </div>
-  )), [widgets]);
+  )), [handleError, movingWidget, onWidgetEdit, widgetMoveHandler, widgets]);
 
   const dashboardContents = () => {
     return (

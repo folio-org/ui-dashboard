@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useLocation, useParams } from 'react-router-dom';
@@ -105,23 +105,17 @@ const WidgetHeader = ({
     />
   );
 
-  const dragHandleRef = useRef();
   const internalMoveHandler = useCallback(e => widgetMoveHandler(e, widgetId), [widgetId, widgetMoveHandler]);
-
-  useEffect(() => {
-    dragHandleRef.current.addEventListener('keydown', internalMoveHandler);
-    return () => {
-      dragHandleRef.current.removeEventListener('keydown', internalMoveHandler);
-    };
-  }, [internalMoveHandler]);
 
   return (
     <div
       className={css.header}
     >
       <div
-        ref={dragHandleRef}
+        aria-grabbed={false}
         className="widget-drag-handle"
+        onKeyDown={internalMoveHandler}
+        role="menuitem" // This feels wrong, but there is no role for handle?
         style={{
           height: 'auto',
           'align-self': 'center'
@@ -151,7 +145,8 @@ WidgetHeader.propTypes = {
   name: PropTypes.string.isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
-  widgetId: PropTypes.string.isRequired
+  widgetId: PropTypes.string.isRequired,
+  widgetMoveHandler: PropTypes.func.isRequired
 };
 
 export default WidgetHeader;

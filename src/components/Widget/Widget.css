@@ -71,3 +71,8 @@
   width: 100%;
   padding-right: var(--gutter-static-two-thirds);
 }
+
+/* Come up with better grabbed css later */
+.grabbed {
+  border: 5px solid red;
+}
