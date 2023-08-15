@@ -99,41 +99,21 @@ const Dashboard = ({
     }
   }, [movingWidget]);
 
-  /* const dashboardContents = () => {
-    if (!widgets?.length) {
-      return (
-        <>
-          <DashboardAccessInfo dashId={dashboard.id} />
-          <NoWidgets />
-        </>
-      );
+  const layout = useMemo(() => widgets.map((w, i) => (
+    {
+      x: (i * 4) % 12,
+      minH: 5,
+      minW: 4,
+      w: 4,
+      y: 0,
+      h: 5,
+      i: w.id
     }
-    return (
-      <>
-        <DashboardAccessInfo dashId={dashboard.id} />
-        <div className={css.widgetsContainer}>
-          {widgets.map(w => (
-            <RenderWidget
-              key={`widget-${w.id}`}
-              widget={w}
-            />
-          ))}
-        </div>
-      </>
-    );
-  }; */
+  )), [widgets]);
 
   const widgetArray = useMemo(() => widgets.map((w, i) => (
     <div
       key={w.id}
-      data-grid={{
-        x: (i * 4) % 12,
-        minH: 5,
-        minW: 4,
-        w: 4,
-        y: 0,
-        h: 5
-      }}
     >
       <Widget
         grabbed={movingWidget === w.id}
@@ -147,38 +127,51 @@ const Dashboard = ({
   )), [handleError, movingWidget, onWidgetEdit, widgetMoveHandler, widgets]);
 
   const dashboardContents = () => {
+    if (!widgets?.length) {
+      return (
+        <>
+          <DashboardAccessInfo dashId={dashboard.id} />
+          <NoWidgets />
+        </>
+      );
+    }
+
     return (
-      <ReactGridLayout
-        breakpoints={{ lg: 1200, md: 996, sm: 768 }}
-        className="layout"
-        cols={{ lg: 12, md: 8, sm: 4 }}
-        draggableHandle=".widget-drag-handle"
-        resizeHandle={
-          <div
-            className="react-resizable-handle"
-            style={{
-              display: 'flex',
-              position:'absolute',
-              bottom: 0,
-              right: 0,
-              cursor: 'se-resize',
-              padding: '5px'
-            }}
-            styles={{
-              height: '100%'
-            }}
-          >
-            <Icon
-              icon="caret-down"
-              // TODO this is clearly not ideal, we should add a corner icon
-              iconClassName={css.rotate}
-            />
-          </div>
-        }
-        rowHeight={30}
-      >
-        {widgetArray}
-      </ReactGridLayout>
+      <>
+        <DashboardAccessInfo dashId={dashboard.id} />
+        <ReactGridLayout
+          breakpoints={{ lg: 1200, md: 996, sm: 768 }}
+          className="layout"
+          cols={{ lg: 12, md: 8, sm: 4 }}
+          draggableHandle=".widget-drag-handle"
+          layouts={{ lg: layout }}
+          resizeHandle={
+            <div
+              className="react-resizable-handle"
+              style={{
+                display: 'flex',
+                position:'absolute',
+                bottom: 0,
+                right: 0,
+                cursor: 'se-resize',
+                padding: '5px'
+              }}
+              styles={{
+                height: '100%'
+              }}
+            >
+              <Icon
+                icon="caret-down"
+                // TODO this is clearly not ideal, we should add a corner icon
+                iconClassName={css.rotate}
+              />
+            </div>
+          }
+          rowHeight={30}
+        >
+          {widgetArray}
+        </ReactGridLayout>
+      </>
     );
   };
 

@@ -118,7 +118,7 @@ const WidgetHeader = ({
         role="menuitem" // This feels wrong, but there is no role for handle?
         style={{
           height: 'auto',
-          'align-self': 'center'
+          alignSelf: 'center'
         }}
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
