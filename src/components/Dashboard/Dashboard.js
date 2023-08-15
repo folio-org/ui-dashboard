@@ -8,6 +8,7 @@ import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'r
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
+import orderBy from 'lodash/orderBy';
 
 import { Responsive, WidthProvider, utils } from 'react-grid-layout';
 
@@ -233,7 +234,14 @@ const Dashboard = ({
     }
   }, [movingWidget, moveWidget]);
 
-  const widgetArray = useMemo(() => widgets.map((w, i) => (
+  const widgetArray = useMemo(() => orderBy(
+    // Order widgets by y then x so tab order always makes sense
+    widgets,
+    [
+      w => layouts?.[breakpointState[0]]?.find(lw => lw.i === w.id)?.y,
+      w => layouts?.[breakpointState[0]]?.find(lw => lw.i === w.id)?.x
+    ]
+  ).map((w, _i) => (
     <div
       key={w.id}
       id={w.id}
@@ -247,7 +255,15 @@ const Dashboard = ({
         widgetMoveHandler={widgetMoveHandler}
       />
     </div>
-  )), [handleError, movingWidget, onWidgetEdit, widgetMoveHandler, widgets]);
+  )), [
+    breakpointState,
+    handleError,
+    layouts,
+    movingWidget,
+    onWidgetEdit,
+    widgetMoveHandler,
+    widgets
+  ]);
 
   const dashboardContents = () => {
     if (!widgets?.length) {
