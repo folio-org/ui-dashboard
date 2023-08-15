@@ -4,9 +4,10 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { Responsive, WidthProvider } from 'react-grid-layout';
 
@@ -22,6 +23,10 @@ import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const ReactGridLayout = WidthProvider(Responsive);
+
+const WIDGET_MARGIN = 20;
+const COLUMNS = { lg: 12, md: 8, sm: 4 };
+const WIDGET_MINS = { x: 4, y: 5 };
 
 const propTypes = {
   dashboard: PropTypes.shape({
@@ -76,44 +81,105 @@ const Dashboard = ({
   };
 
   const [movingWidget, setMovingWidget] = useState();
+  const [layouts, setLayouts] = useState({
+    lg: widgets.map((w, i) => (
+      {
+        x: (i * WIDGET_MINS.x) % COLUMNS?.lg,
+        minH: WIDGET_MINS.y,
+        minW: WIDGET_MINS.x,
+        w: WIDGET_MINS.x,
+        y: 0,
+        h: WIDGET_MINS.y,
+        i: w.id
+      }
+    ))
+  });
+
+  // Assume large until proven otherwise
+  const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
+  const moveWidget = useCallback((x, y) => {
+    const newLayout = {
+      ...layouts,
+      [breakpointState[0]]: layouts?.[breakpointState[0]]?.map((layoutObj) => {
+        if (layoutObj?.i !== movingWidget) {
+          return layoutObj;
+        }
+
+        let newX = layoutObj.x + x;
+        // Don't go off the left of screen
+        if (newX > 0) {
+          // Don't go too far to right
+          if (newX + layoutObj.w > breakpointState[1]) {
+            newX = layoutObj.x;
+          }
+        } else {
+          newX = 0;
+        }
+
+        let newY = layoutObj.y + y;
+        // Don't go off the top of screen
+        if (newY <= 0) {
+          newY = 0;
+        }
+
+        const newLayoutObj = {
+          ...layoutObj,
+          x: newX,
+          y: newY,
+        };
+
+        return (newLayoutObj);
+      })
+    };
+
+    setLayouts(newLayout);
+  }, [breakpointState, layouts, movingWidget]);
+
+  console.log("LAYOUTS: %o", layouts)
+
+
   const widgetMoveHandler = useCallback((e, widgetId) => {
     if (movingWidget !== widgetId) {
       // Embdedded if here so we can ignore this logic in each case of the switch below
       if (e.code === 'Space') {
+        // Prevent screen jumping to bottom
+        e.preventDefault();
         // Set as the current moving widget
         setMovingWidget(widgetId);
       }
     } else {
       switch (e.code) {
         case 'Space':
-        case 'Tab':
-          // Unset as the current moving widget
+          // Prevent screen jumping to bottom
+          e.preventDefault();
           setMovingWidget();
           break;
+        case 'Tab':
+          // Lock Tab when grabbed
+          e.preventDefault();
+          break;
         case 'ArrowRight':
-          alert("RIGHT ARROW CLICKED")
+          moveWidget(1, 0);
+          break;
+        case 'ArrowLeft':
+          moveWidget(-1, 0);
+          break;
+        case 'ArrowUp':
+          moveWidget(0, -5);
+          break;
+        case 'ArrowDown':
+          moveWidget(0, 5);
           break;
         default:
           break;
       }
     }
-  }, [movingWidget]);
-
-  const layout = useMemo(() => widgets.map((w, i) => (
-    {
-      x: (i * 4) % 12,
-      minH: 5,
-      minW: 4,
-      w: 4,
-      y: 0,
-      h: 5,
-      i: w.id
-    }
-  )), [widgets]);
+  }, [movingWidget, moveWidget]);
 
   const widgetArray = useMemo(() => widgets.map((w, i) => (
     <div
       key={w.id}
+      id={w.id}
     >
       <Widget
         grabbed={movingWidget === w.id}
@@ -142,9 +208,24 @@ const Dashboard = ({
         <ReactGridLayout
           breakpoints={{ lg: 1200, md: 996, sm: 768 }}
           className="layout"
-          cols={{ lg: 12, md: 8, sm: 4 }}
+          cols={COLUMNS}
           draggableHandle=".widget-drag-handle"
-          layouts={{ lg: layout }}
+          isBounded
+          layouts={layouts}
+          margin={[WIDGET_MARGIN, WIDGET_MARGIN]}
+          onBreakpointChange={(...bps) => {
+            // Keep track of current breakpoint state
+            setBreakpointState(bps);
+          }}
+          onDrag={(_l, _oi, _ni, _p, _e, element) => {
+            setMovingWidget(element.id);
+          }}
+          onDragStop={() => {
+            setMovingWidget();
+          }}
+          onLayoutChange={(_ly, lys) => {
+            setLayouts(lys);
+          }}
           resizeHandle={
             <div
               className="react-resizable-handle"
@@ -168,6 +249,7 @@ const Dashboard = ({
             </div>
           }
           rowHeight={30}
+          useCSSTransforms={false}
         >
           {widgetArray}
         </ReactGridLayout>

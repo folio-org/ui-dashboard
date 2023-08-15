@@ -74,5 +74,8 @@
 
 /* Come up with better grabbed css later */
 .grabbed {
-  border: 5px solid red;
+  opacity: 75%;
+  cursor: grabbing;
+  z-index: 10000;
+  position: relative;
 }

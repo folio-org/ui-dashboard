@@ -50,6 +50,7 @@ const Widget = forwardRef(({
         >
           <WidgetHeader
             key={`widget-header-${widget.id}`}
+            grabbed={grabbed}
             name={widget.name}
             onWidgetDelete={onWidgetDelete}
             onWidgetEdit={onWidgetEdit}

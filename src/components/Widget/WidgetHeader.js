@@ -16,6 +16,7 @@ import css from './WidgetHeader.css';
 import { useDashboardAccess } from '../hooks';
 
 const WidgetHeader = ({
+  grabbed,
   name,
   onWidgetDelete,
   onWidgetEdit,
@@ -105,18 +106,21 @@ const WidgetHeader = ({
     />
   );
 
-  const internalMoveHandler = useCallback(e => widgetMoveHandler(e, widgetId), [widgetId, widgetMoveHandler]);
+  const internalMoveHandler = useCallback(e => {
+    widgetMoveHandler(e, widgetId);
+  }, [widgetId, widgetMoveHandler]);
 
   return (
     <div
       className={css.header}
     >
       <div
-        aria-grabbed={false}
+        aria-grabbed={grabbed}
         className="widget-drag-handle"
         onKeyDown={internalMoveHandler}
         role="menuitem" // This feels wrong, but there is no role for handle?
         style={{
+          cursor: grabbed ? 'grabbing' : 'grab', // 'grabbing'
           height: 'auto',
           alignSelf: 'center'
         }}
