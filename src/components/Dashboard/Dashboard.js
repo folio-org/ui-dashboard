@@ -4,11 +4,12 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
 import orderBy from 'lodash/orderBy';
+import maxBy from 'lodash/maxBy';
 
 import { Responsive, WidthProvider, utils } from 'react-grid-layout';
 
@@ -20,7 +21,6 @@ import NoWidgets from './NoWidgets';
 import css from './Dashboard.css';
 import { ErrorModal } from '../ErrorComponents';
 import { Widget } from '../Widget';
-import useWidgetDefinition from '../useWidgetDefinition';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const ReactGridLayout = WidthProvider(Responsive);
@@ -233,6 +233,58 @@ const Dashboard = ({
       }
     }
   }, [movingWidget, moveWidget]);
+
+
+  // Ensure that new widgets get set up with a default layout
+  useEffect(() => {
+    widgets?.forEach(w => {
+      // Search the lg layout for this widget.
+      // If it doesn't exist it is a new widget
+      const layoutObj = layouts?.lg?.find(lw => lw.i === w.id);
+      if (!layoutObj) {
+        setLayouts({
+          lg: [
+            ...utils.cloneLayout(layouts?.lg ?? []),
+            {
+              x: 0,
+              minH: WIDGET_MINS.y,
+              minW: WIDGET_MINS.x,
+              w: WIDGET_MINS.x,
+              y: Infinity,
+              h: WIDGET_MINS.y,
+              i: w.id
+            }
+          ],
+          // TODO TEST that this works when saving and redrawing from saved data
+          // Then can maybe delete md and sm below
+          /* md: [
+            ...utils.cloneLayout(layouts?.md ?? []),
+            {
+              x: 0,
+              minH: WIDGET_MINS.y,
+              minW: WIDGET_MINS.x,
+              w: WIDGET_MINS.x,
+              y: Infinity,
+              h: WIDGET_MINS.y,
+              i: w.id
+            }
+          ],
+          sm: [
+            ...utils.cloneLayout(layouts?.sm ?? []),
+            {
+              x: 0,
+              minH: WIDGET_MINS.y,
+              minW: WIDGET_MINS.x,
+              w: WIDGET_MINS.x,
+              y: Infinity,
+              h: WIDGET_MINS.y,
+              i: w.id
+            }
+          ] */
+        });
+      }
+    });
+  }, [layouts, widgets]);
 
   const widgetArray = useMemo(() => orderBy(
     // Order widgets by y then x so tab order always makes sense
