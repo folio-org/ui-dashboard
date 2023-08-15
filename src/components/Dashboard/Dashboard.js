@@ -7,9 +7,9 @@
 import { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
 
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider, utils } from 'react-grid-layout';
 
 import {
   ConfirmationModal, Icon,
@@ -97,46 +97,107 @@ const Dashboard = ({
 
   // Assume large until proven otherwise
   const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
-  const moveWidget = useCallback((x, y) => {
-    const newLayout = {
-      ...layouts,
-      [breakpointState[0]]: layouts?.[breakpointState[0]]?.map((layoutObj) => {
-        if (layoutObj?.i !== movingWidget) {
-          return layoutObj;
+
+  // See https://github.com/react-grid-layout/react-grid-layout/issues/1306
+  const moveWidget = useCallback((eCode, eShift) => {
+    const cl = utils.cloneLayout(layouts?.[breakpointState[0]]);
+    const item = cl.find((widget) => widget.i === movingWidget);
+
+    if (!item) {
+      return;
+    }
+
+    if (eShift) {
+      switch (eCode) {
+        case 'ArrowRight':
+          item.w += 1;
+          break;
+        case 'ArrowLeft':
+          item.w += -1;
+          break;
+        case 'ArrowDown':
+          item.h += 1;
+          break;
+        case 'ArrowUp':
+          item.h += -1;
+          break;
+        default:
+          item.w += 0;
+          item.h += 0;
+          break;
+      }
+
+      item.w = Math.min(
+        Math.max(item.w, item.minW ?? 1),
+        item.maxW ?? breakpointState[1],
+      );
+
+      item.h = Math.max(item.h, item.minH ?? 1);
+      const newLayouts = {
+        ...layouts,
+        [breakpointState[0]]: cl
+      };
+
+      setLayouts(newLayouts);
+    } else {
+      const oldX = item.x;
+      const oldY = item.y;
+
+      // Iterate through trying to bump location until it works? -- Seems ugly
+      for (let a = 1; a < 100; a++) {
+        let newX = oldX;
+        let newY = oldY;
+        switch (eCode) {
+          case 'ArrowRight':
+            newX = oldX + a;
+            break;
+          case 'ArrowLeft':
+            newX = oldX - a;
+            break;
+          case 'ArrowDown':
+            newY = oldY + a;
+            break;
+          case 'ArrowUp':
+            newY = oldY - a;
+            break;
+          default:
+            break;
         }
 
-        let newX = layoutObj.x + x;
-        // Don't go off the left of screen
-        if (newX > 0) {
-          // Don't go too far to right
-          if (newX + layoutObj.w > breakpointState[1]) {
-            newX = layoutObj.x;
-          }
-        } else {
-          newX = 0;
+        // TODO also check max Y
+        if (newY < 0 || newX < 0 || newX + item.w > breakpointState[1]) {
+          break;
         }
 
-        let newY = layoutObj.y + y;
-        // Don't go off the top of screen
-        if (newY <= 0) {
-          newY = 0;
+        const nl = utils.compact(
+          utils.moveElement(
+            cl,
+            item,
+            newX,
+            newY,
+            true, // isUserAction
+            false, // preventCollision
+            'vertical',
+            breakpointState[1],
+            false, // No idea what this does
+          ),
+          'vertical',
+          breakpointState[1],
+        );
+
+        // Only set layout if something has changed
+        if (!isEqual(layouts?.[breakpointState[0]], nl)) {
+          const newLayouts = {
+            ...layouts,
+            [breakpointState[0]]: cl
+          };
+
+          setLayouts(newLayouts);
+          break;
         }
-
-        const newLayoutObj = {
-          ...layoutObj,
-          x: newX,
-          y: newY,
-        };
-
-        return (newLayoutObj);
-      })
-    };
-
-    setLayouts(newLayout);
+      }
+    }
   }, [breakpointState, layouts, movingWidget]);
-
-  console.log("LAYOUTS: %o", layouts)
-
 
   const widgetMoveHandler = useCallback((e, widgetId) => {
     if (movingWidget !== widgetId) {
@@ -159,17 +220,13 @@ const Dashboard = ({
           e.preventDefault();
           break;
         case 'ArrowRight':
-          moveWidget(1, 0);
-          break;
         case 'ArrowLeft':
-          moveWidget(-1, 0);
-          break;
         case 'ArrowUp':
-          moveWidget(0, -5);
+        case 'ArrowDown': {
+          e.preventDefault();
+          moveWidget(e.code, e.shiftKey);
           break;
-        case 'ArrowDown':
-          moveWidget(0, 5);
-          break;
+        }
         default:
           break;
       }
