@@ -31,7 +31,7 @@ import { NewBox } from '@folio/stripes-erm-components';
 
 import css from './UserAccessFieldArray.css';
 import UserLookupButton from '../UserLookup/UserLookupButton';
-import { useDashboardAccess } from '../hooks';
+import { useDashboardAccess } from '../../hooks';
 import DashboardAccessInfo from '../DashboardAccessInfo';
 import IfHasAccess from '../IfHasAccess';
 

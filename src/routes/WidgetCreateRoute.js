@@ -6,8 +6,9 @@ import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
+import { getComponentsFromType } from '../utils';
+
 import WidgetForm from '../components/WidgetForm';
-import getComponentsFromType from '../components/getComponentsFromType';
 
 const WidgetCreateRoute = ({
   dashboard,

@@ -1,7 +1,7 @@
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 
-import getComponentsFromType from './getComponentsFromType';
+import { getComponentsFromType } from '../utils';
 
 /* Hook to expose the definition and consequently
  * the components relevant to that def's type

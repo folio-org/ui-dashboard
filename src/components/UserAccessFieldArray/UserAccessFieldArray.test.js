@@ -13,7 +13,7 @@ import {
 import UserAccessFieldArray from './UserAccessFieldArray';
 
 import translationsProperties from '../../../test/helpers';
-import { useDashboardAccess } from '../hooks';
+import { useDashboardAccess } from '../../hooks';
 
 const onSubmit = jest.fn();
 const onClose = jest.fn();

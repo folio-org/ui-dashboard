@@ -39,8 +39,8 @@ const headerProps = {
 };
 
 
-jest.mock('../../hooks', () => ({
-  ...jest.requireActual('../../hooks'),
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
   useDashboardAccess: jest.fn()
     .mockReturnValueOnce({ hasAccess: () => false, hasAdminPerm: false })
     .mockReturnValueOnce({ hasAccess: () => false, hasAdminPerm: false })

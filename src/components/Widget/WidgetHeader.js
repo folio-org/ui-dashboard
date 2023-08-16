@@ -13,7 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import css from './WidgetHeader.css';
-import { useDashboardAccess } from '../hooks';
+import { useDashboardAccess } from '../../hooks';
 
 const WidgetHeader = ({
   grabbed,
@@ -146,6 +146,7 @@ const WidgetHeader = ({
 };
 
 WidgetHeader.propTypes = {
+  grabbed: PropTypes.bool,
   name: PropTypes.string.isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,

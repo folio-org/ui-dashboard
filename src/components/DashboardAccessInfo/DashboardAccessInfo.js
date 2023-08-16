@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { MessageBanner } from '@folio/stripes/components';
 
-import { useDashboardAccess } from '../hooks';
+import { useDashboardAccess } from '../../hooks';
 
 const DashboardAccessInfo = ({ dashId }) => {
   const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);

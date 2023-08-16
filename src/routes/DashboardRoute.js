@@ -66,6 +66,20 @@ const DashboardRoute = ({
       })
   );
 
+  // The EDIT for the dashboard itself
+  // We will use this for reordering
+  const { mutateAsync: editDashboard, isLoading: isEditing } = useMutation(
+    ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
+    (data) => ky.put(`servint/dashboard/${params.dashId}`, { json: data }).json()
+      .then(res => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
+
+        queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
+        // Ensure res is passed onto downstream .then
+        return res;
+      })
+  );
+
   const handleCreateWidget = () => {
     history.push(`${location.pathname}/createWidget`);
   };
@@ -105,10 +119,12 @@ const DashboardRoute = ({
           key={`dashboard-${dashboard.id}`}
           dashboard={dashboard}
           dashboards={dashboards}
+          isEditing={isEditing}
           onCreateDashboard={handleCreateDashboard}
           onCreateWidget={handleCreateWidget}
           onDeleteDashboard={() => setDeleteDashboardModal(true)}
-          onEdit={handleDashboardEdit}
+          onEdit={handleDashboardEdit} // This is to send the user to the edit ROUTE
+          onEditDashboard={editDashboard} // This is to ACTUALLY edit the dashboard -- unfortunate naming
           onManageDashboards={handleManageDashboards}
           onReorder={handleReorder}
           onUserAccess={handleUserAccess}

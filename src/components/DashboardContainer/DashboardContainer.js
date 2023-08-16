@@ -25,6 +25,7 @@ const propTypes = {
   onCreateWidget: PropTypes.func.isRequired,
   onDeleteDashboard: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onEditDashboard: PropTypes.func.isRequired,
   onManageDashboards: PropTypes.func.isRequired,
   onReorder: PropTypes.func,
   onUserAccess: PropTypes.func,
@@ -40,6 +41,7 @@ const DashboardContainer = ({
   onCreateWidget,
   onDeleteDashboard,
   onEdit,
+  onEditDashboard,
   onManageDashboards,
   onReorder,
   onUserAccess,
@@ -64,6 +66,7 @@ const DashboardContainer = ({
         />
         <Dashboard
           dashboard={dashboard}
+          onEditDashboard={onEditDashboard}
           onWidgetDelete={onWidgetDelete}
           onWidgetEdit={onWidgetEdit}
           widgets={widgets}

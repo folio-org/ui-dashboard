@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useDashboardAccess } from '../hooks';
+import { useDashboardAccess } from '../../hooks';
 
 const IfHasAccess = ({
   access,

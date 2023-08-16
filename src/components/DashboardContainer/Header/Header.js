@@ -13,7 +13,7 @@ import { ResponsiveButtonGroup } from '@k-int/stripes-kint-components';
 
 import ActionMenu from '../../ActionMenu';
 import css from './Header.css';
-import { useDashboardAccess } from '../../hooks';
+import { useDashboardAccess } from '../../../hooks';
 
 // This component will render the tab group for dashboards,
 // as well as the joint "dashboard" and "dashboards" actions

@@ -1,13 +1,13 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import { HasCommand, checkScope } from '@folio/stripes/components';
 
-import useWidgetDefinition from '../useWidgetDefinition';
+import { useWidgetDefinition } from '../../hooks';
+
 import WidgetHeader from './WidgetHeader';
 import css from './Widget.css';
-
 
 const Widget = forwardRef(({
   grabbed,

@@ -4,18 +4,24 @@
  * This will ALSO be used to render the actions menu for the "no dashboards" splash screen
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import isEqual from 'lodash/isEqual';
-import orderBy from 'lodash/orderBy';
-import maxBy from 'lodash/maxBy';
 
-import { Responsive, WidthProvider, utils } from 'react-grid-layout';
+// Lodash imports for tree shaking
+import orderBy from 'lodash/orderBy';
+import isEqualWith from 'lodash/isEqualWith';
+
+import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import {
-  ConfirmationModal, Icon,
+  ConfirmationModal,
+  Icon,
 } from '@folio/stripes/components';
+
+import { useWidgetLayouts } from '../../hooks';
+import { ignoreArrayOrderEqualityFunc } from '../../utils';
+import { COLUMNS, WIDGET_MARGIN } from '../../constants/dashboardConstants';
 
 import NoWidgets from './NoWidgets';
 import css from './Dashboard.css';
@@ -25,22 +31,10 @@ import DashboardAccessInfo from '../DashboardAccessInfo';
 
 const ReactGridLayout = WidthProvider(Responsive);
 
-const WIDGET_MARGIN = 20;
-const COLUMNS = { lg: 12, md: 8, sm: 4 };
-const WIDGET_MINS = { x: 4, y: 5 };
-
-const propTypes = {
-  dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  onWidgetDelete: PropTypes.func.isRequired,
-  onWidgetEdit: PropTypes.func.isRequired,
-  widgets: PropTypes.arrayOf(PropTypes.object),
-};
-
 const Dashboard = ({
   dashboard,
+  isEditing,
+  onEditDashboard,
   onWidgetDelete,
   onWidgetEdit,
   widgets
@@ -81,210 +75,22 @@ const Dashboard = ({
     setWidgetToDelete({ name: widgetName, id: widgetId });
   };
 
-  const [movingWidget, setMovingWidget] = useState();
-  const [layouts, setLayouts] = useState({
-    lg: widgets.map((w, i) => (
-      {
-        x: (i * WIDGET_MINS.x) % COLUMNS?.lg,
-        minH: WIDGET_MINS.y,
-        minW: WIDGET_MINS.x,
-        w: WIDGET_MINS.x,
-        y: 0,
-        h: WIDGET_MINS.y,
-        i: w.id
-      }
-    ))
+  // Farm out a large chunk of work to a separate hook to keep this component cleaner
+  // Easier to come here for render issues and go to hook for functionality issues
+  const {
+    breakpointState,
+    layouts,
+    movingWidget,
+    setBreakpointState,
+    setMovingWidget,
+    setLayouts,
+    widgetMoveHandler
+  } = useWidgetLayouts({
+    displayData: dashboard.displayData,
+    isEditing,
+    onEditDashboard,
+    widgets
   });
-
-  // Assume large until proven otherwise
-  const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
-
-  // See https://github.com/react-grid-layout/react-grid-layout/issues/1306
-  const moveWidget = useCallback((eCode, eShift) => {
-    const cl = utils.cloneLayout(layouts?.[breakpointState[0]]);
-    const item = cl.find((widget) => widget.i === movingWidget);
-
-    if (!item) {
-      return;
-    }
-
-    if (eShift) {
-      switch (eCode) {
-        case 'ArrowRight':
-          item.w += 1;
-          break;
-        case 'ArrowLeft':
-          item.w += -1;
-          break;
-        case 'ArrowDown':
-          item.h += 1;
-          break;
-        case 'ArrowUp':
-          item.h += -1;
-          break;
-        default:
-          item.w += 0;
-          item.h += 0;
-          break;
-      }
-
-      item.w = Math.min(
-        Math.max(item.w, item.minW ?? 1),
-        item.maxW ?? breakpointState[1],
-      );
-
-      item.h = Math.max(item.h, item.minH ?? 1);
-      const newLayouts = {
-        ...layouts,
-        [breakpointState[0]]: cl
-      };
-
-      setLayouts(newLayouts);
-    } else {
-      const oldX = item.x;
-      const oldY = item.y;
-
-      // Iterate through trying to bump location until it works? -- Seems ugly
-      for (let a = 1; a < 100; a++) {
-        let newX = oldX;
-        let newY = oldY;
-        switch (eCode) {
-          case 'ArrowRight':
-            newX = oldX + a;
-            break;
-          case 'ArrowLeft':
-            newX = oldX - a;
-            break;
-          case 'ArrowDown':
-            newY = oldY + a;
-            break;
-          case 'ArrowUp':
-            newY = oldY - a;
-            break;
-          default:
-            break;
-        }
-
-        // TODO also check max Y
-        if (newY < 0 || newX < 0 || newX + item.w > breakpointState[1]) {
-          break;
-        }
-
-        const nl = utils.compact(
-          utils.moveElement(
-            cl,
-            item,
-            newX,
-            newY,
-            true, // isUserAction
-            false, // preventCollision
-            'vertical',
-            breakpointState[1],
-            false, // No idea what this does
-          ),
-          'vertical',
-          breakpointState[1],
-        );
-
-        // Only set layout if something has changed
-        if (!isEqual(layouts?.[breakpointState[0]], nl)) {
-          const newLayouts = {
-            ...layouts,
-            [breakpointState[0]]: cl
-          };
-
-          setLayouts(newLayouts);
-          break;
-        }
-      }
-    }
-  }, [breakpointState, layouts, movingWidget]);
-
-  const widgetMoveHandler = useCallback((e, widgetId) => {
-    if (movingWidget !== widgetId) {
-      // Embdedded if here so we can ignore this logic in each case of the switch below
-      if (e.code === 'Space') {
-        // Prevent screen jumping to bottom
-        e.preventDefault();
-        // Set as the current moving widget
-        setMovingWidget(widgetId);
-      }
-    } else {
-      switch (e.code) {
-        case 'Space':
-          // Prevent screen jumping to bottom
-          e.preventDefault();
-          setMovingWidget();
-          break;
-        case 'Tab':
-          // Lock Tab when grabbed
-          e.preventDefault();
-          break;
-        case 'ArrowRight':
-        case 'ArrowLeft':
-        case 'ArrowUp':
-        case 'ArrowDown': {
-          e.preventDefault();
-          moveWidget(e.code, e.shiftKey);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-  }, [movingWidget, moveWidget]);
-
-
-  // Ensure that new widgets get set up with a default layout
-  useEffect(() => {
-    widgets?.forEach(w => {
-      // Search the lg layout for this widget.
-      // If it doesn't exist it is a new widget
-      const layoutObj = layouts?.lg?.find(lw => lw.i === w.id);
-      if (!layoutObj) {
-        setLayouts({
-          lg: [
-            ...utils.cloneLayout(layouts?.lg ?? []),
-            {
-              x: 0,
-              minH: WIDGET_MINS.y,
-              minW: WIDGET_MINS.x,
-              w: WIDGET_MINS.x,
-              y: Infinity,
-              h: WIDGET_MINS.y,
-              i: w.id
-            }
-          ],
-          // TODO TEST that this works when saving and redrawing from saved data
-          // Then can maybe delete md and sm below
-          /* md: [
-            ...utils.cloneLayout(layouts?.md ?? []),
-            {
-              x: 0,
-              minH: WIDGET_MINS.y,
-              minW: WIDGET_MINS.x,
-              w: WIDGET_MINS.x,
-              y: Infinity,
-              h: WIDGET_MINS.y,
-              i: w.id
-            }
-          ],
-          sm: [
-            ...utils.cloneLayout(layouts?.sm ?? []),
-            {
-              x: 0,
-              minH: WIDGET_MINS.y,
-              minW: WIDGET_MINS.x,
-              w: WIDGET_MINS.x,
-              y: Infinity,
-              h: WIDGET_MINS.y,
-              i: w.id
-            }
-          ] */
-        });
-      }
-    });
-  }, [layouts, widgets]);
 
   const widgetArray = useMemo(() => orderBy(
     // Order widgets by y then x so tab order always makes sense
@@ -335,7 +141,6 @@ const Dashboard = ({
           className="layout"
           cols={COLUMNS}
           draggableHandle=".widget-drag-handle"
-          isBounded
           layouts={layouts}
           margin={[WIDGET_MARGIN, WIDGET_MARGIN]}
           onBreakpointChange={(...bps) => {
@@ -349,7 +154,10 @@ const Dashboard = ({
             setMovingWidget();
           }}
           onLayoutChange={(_ly, lys) => {
-            setLayouts(lys);
+            // Avoid second call just for reordering sake
+            if (!isEqualWith(lys, layouts, ignoreArrayOrderEqualityFunc)) {
+              setLayouts(lys);
+            }
           }}
           resizeHandle={
             <div
@@ -423,4 +231,16 @@ const Dashboard = ({
 };
 
 export default Dashboard;
-Dashboard.propTypes = propTypes;
+
+Dashboard.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    displayData: PropTypes.string
+  }).isRequired,
+  isEditing: PropTypes.bool,
+  onEditDashboard: PropTypes.func.isRequired,
+  onWidgetDelete: PropTypes.func.isRequired,
+  onWidgetEdit: PropTypes.func.isRequired,
+  widgets: PropTypes.arrayOf(PropTypes.object),
+};
