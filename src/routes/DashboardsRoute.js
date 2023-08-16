@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useParams } from 'react-router';
@@ -11,6 +11,7 @@ import { useChunkedUsers } from '@folio/stripes-erm-components';
 import { useDashboardAccessStore } from '../hooks';
 
 import Loading from '../components/Loading';
+import { isEqual } from 'lodash';
 
 const DashboardsRoute = ({
   children,
@@ -88,9 +89,15 @@ const DashboardsRoute = ({
   );
 
   // If and only if we're within a route containing a dashId, fetch the dashboard
-  const { data: dashboard = {}, ...restOfDashboardQuery } = useQuery(
+  const [dashboard, setDashboard] = useState({});
+  const { data: _dashboard = {}, ...restOfDashboardQuery } = useQuery(
     ['ERM', 'Dashboard', dashId],
-    () => ky(`servint/dashboard/${dashId}`).json(),
+    () => ky(`servint/dashboard/${dashId}`).json().then((res) => {
+      // Doing this in state to avoid render after isFetching is false,
+      // but before dashboard is updated with correct data
+      setDashboard(res);
+      return res;
+    }),
     {
       enabled: !!dashId
     }
@@ -104,7 +111,6 @@ const DashboardsRoute = ({
       enabled: !!dashId
     }
   );
-
   // From the dashboard access, we need to fetch user information.
   // Batch fetch all users
   const { users, isLoading: areUsersLoading } = useChunkedUsers(dashboardUsers?.map(da => da?.user?.id), { enabled: !restOfDashboardUsersQuery?.isFetching && dashboardUsers.length });

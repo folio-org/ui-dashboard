@@ -10,30 +10,6 @@ import Header from './Header';
 import css from './DashboardContainer.css';
 import Dashboard from '../Dashboard';
 
-const propTypes = {
-  dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  dashboards: PropTypes.arrayOf(PropTypes.shape({
-    dashboard: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
-    }).isRequired
-  })).isRequired,
-  onCreateDashboard: PropTypes.func.isRequired,
-  onCreateWidget: PropTypes.func.isRequired,
-  onDeleteDashboard: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onEditDashboard: PropTypes.func.isRequired,
-  onManageDashboards: PropTypes.func.isRequired,
-  onReorder: PropTypes.func,
-  onUserAccess: PropTypes.func,
-  onWidgetDelete: PropTypes.func.isRequired,
-  onWidgetEdit: PropTypes.func.isRequired,
-  widgets: PropTypes.arrayOf(PropTypes.object),
-};
-
 const DashboardContainer = ({
   dashboard,
   dashboards,
@@ -41,7 +17,6 @@ const DashboardContainer = ({
   onCreateWidget,
   onDeleteDashboard,
   onEdit,
-  onEditDashboard,
   onManageDashboards,
   onReorder,
   onUserAccess,
@@ -66,7 +41,6 @@ const DashboardContainer = ({
         />
         <Dashboard
           dashboard={dashboard}
-          onEditDashboard={onEditDashboard}
           onWidgetDelete={onWidgetDelete}
           onWidgetEdit={onWidgetEdit}
           widgets={widgets}
@@ -77,4 +51,25 @@ const DashboardContainer = ({
 };
 
 export default DashboardContainer;
-DashboardContainer.propTypes = propTypes;
+DashboardContainer.propTypes = {
+  dashboard: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired,
+  dashboards: PropTypes.arrayOf(PropTypes.shape({
+    dashboard: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    }).isRequired
+  })).isRequired,
+  onCreateDashboard: PropTypes.func.isRequired,
+  onCreateWidget: PropTypes.func.isRequired,
+  onDeleteDashboard: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onManageDashboards: PropTypes.func.isRequired,
+  onReorder: PropTypes.func,
+  onUserAccess: PropTypes.func,
+  onWidgetDelete: PropTypes.func.isRequired,
+  onWidgetEdit: PropTypes.func.isRequired,
+  widgets: PropTypes.arrayOf(PropTypes.object),
+};

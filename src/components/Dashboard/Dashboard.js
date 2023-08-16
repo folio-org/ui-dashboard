@@ -33,8 +33,6 @@ const ReactGridLayout = WidthProvider(Responsive);
 
 const Dashboard = ({
   dashboard,
-  isEditing,
-  onEditDashboard,
   onWidgetDelete,
   onWidgetEdit,
   widgets
@@ -87,8 +85,6 @@ const Dashboard = ({
     widgetMoveHandler
   } = useWidgetLayouts({
     displayData: dashboard.displayData,
-    isEditing,
-    onEditDashboard,
     widgets
   });
 
@@ -150,15 +146,27 @@ const Dashboard = ({
           onDrag={(_l, _oi, _ni, _p, _e, element) => {
             setMovingWidget(element.id);
           }}
-          onDragStop={() => {
+          onDragStop={(_l, _oi, _ni, _p, _e, _element) => {
+            const newLayouts = {
+              ...layouts,
+              [breakpointState[0]]: _l
+            };
+            if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
+              setLayouts(newLayouts);
+            }
+
             setMovingWidget();
           }}
-          onLayoutChange={(_ly, lys) => {
-            // Avoid second call just for reordering sake
-            if (!isEqualWith(lys, layouts, ignoreArrayOrderEqualityFunc)) {
-              setLayouts(lys);
+          onResizeStop={(_l, _oi, _ni, _p, _e, _element) => {
+            const newLayouts = {
+              ...layouts,
+              [breakpointState[0]]: _l
+            };
+            if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
+              setLayouts(newLayouts);
             }
           }}
+          /* Don't use onLayoutChange because we already set Layouts manually */
           resizeHandle={
             <div
               className="react-resizable-handle"
@@ -238,8 +246,6 @@ Dashboard.propTypes = {
     name: PropTypes.string.isRequired,
     displayData: PropTypes.string
   }).isRequired,
-  isEditing: PropTypes.bool,
-  onEditDashboard: PropTypes.func.isRequired,
   onWidgetDelete: PropTypes.func.isRequired,
   onWidgetEdit: PropTypes.func.isRequired,
   widgets: PropTypes.arrayOf(PropTypes.object),

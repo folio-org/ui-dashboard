@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
+
+import { useParams } from 'react-router-dom';
 import { utils } from 'react-grid-layout';
+import { useMutation, useQueryClient } from 'react-query';
+import { FormattedMessage } from 'react-intl';
 
 import isEqualWith from 'lodash/isEqualWith';
 import isNil from 'lodash/isNil';
 import omitBy from 'lodash/omitBy';
+
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
+import { usePrevious } from '@folio/stripes-erm-components';
 
 import { ignoreArrayOrderEqualityFunc } from '../utils';
 
@@ -11,12 +18,42 @@ import useMoveWidget from './useMoveWidget';
 import useWindowResizing from './useWindowResizing';
 import { COLUMNS, WIDGET_MINS } from '../constants/dashboardConstants';
 
+
+
+/* Logical separation is a bit nmuddy here, this sets up
+ * the states necessary for ReactGridLayout, and handles
+ * new widgets being added etc, but ALSO performs the PUT
+ * which is potentially an overreach for the name of the hook
+ * However this allows us to keep the Dashboard component
+ * purely about display of widgets, and much, much smaller
+ *
+ * Am not sure about the mutate call living in here, but for now it
+ * is fine.
+ */
 const useWidgetLayouts = ({
   displayData,
-  isEditing,
-  onEditDashboard,
   widgets
 }) => {
+  // THE PUT FOR EDITING LAYOUT
+  const ky = useOkapiKy();
+  const callout = useCallout();
+  const queryClient = useQueryClient();
+  const { dashId } = useParams();
+  // We will use this for reordering
+  const { mutateAsync: editDashboard, isLoading: isEditing } = useMutation(
+    ['ERM', 'Dashboard', dashId, 'EditDashboardLayout'],
+    (data) => ky.put(`servint/dashboard/${dashId}`, { json: data }).json(),
+    {
+      onSuccess: (res) => {
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
+        queryClient.invalidateQueries(['ERM', 'Dashboard', dashId]);
+      }
+    }
+  );
+
+  // Assume large until proven otherwise
+  const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
+
   const [layouts, setLayouts] = useState(() => {
     if (displayData) {
       return JSON.parse(displayData);
@@ -38,9 +75,6 @@ const useWidgetLayouts = ({
     };
   });
 
-  // Assume large until proven otherwise
-  const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
-
   const {
     movingWidget,
     setMovingWidget,
@@ -52,6 +86,8 @@ const useWidgetLayouts = ({
   });
 
   const windowResizing = useWindowResizing();
+  const previousMovingWidget = usePrevious(movingWidget);
+
   // Ensure that new widgets get set up with a default layout
   useEffect(() => {
     // Grab all widgets which do not exist in lg layout
@@ -108,21 +144,17 @@ const useWidgetLayouts = ({
       !windowResizing &&
       !isEqualWith(layoutsNoNil, parsedDisplayDataNoNil, ignoreArrayOrderEqualityFunc)
     ) {
-      onEditDashboard({
+      editDashboard({
         displayData: JSON.stringify(layouts)
-      }).then((returnData) => {
-        // Safety check, don't set layouts if no displayData came back
-        if (returnData.displayData) {
-          setLayouts(JSON.parse(returnData?.displayData));
-        }
       });
     }
   }, [
     displayData,
+    editDashboard,
     isEditing,
     layouts,
     movingWidget,
-    onEditDashboard,
+    previousMovingWidget,
     widgets,
     windowResizing
   ]);

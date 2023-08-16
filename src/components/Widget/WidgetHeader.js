@@ -117,6 +117,7 @@ const WidgetHeader = ({
       <div
         aria-grabbed={grabbed}
         className="widget-drag-handle"
+        id={`widget-drag-handle-${widgetId}`}
         onKeyDown={internalMoveHandler}
         role="menuitem" // This feels wrong, but there is no role for handle?
         style={{

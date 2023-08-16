@@ -52,7 +52,6 @@ const useMoveWidget = ({
         ...layouts,
         [breakpointState[0]]: cl
       };
-
       setLayouts(newLayouts);
     } else {
       const oldX = item.x;
