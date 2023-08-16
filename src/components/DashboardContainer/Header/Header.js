@@ -38,14 +38,6 @@ const Header = ({
     const dashboardActions = [];
     const allDashboardActions = [];
 
-    dashboardActions.push(
-      <Button
-        onClick={() => document.getElementById('widget-drag-handle-fec934fa-93ca-4483-8946-4cb97b2a4c59').focus()}
-      >
-        FOCUS
-      </Button>
-    )
-
     if (hasAccess('edit') || hasAdminPerm) {
       dashboardActions.push(
         <Button

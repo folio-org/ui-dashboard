@@ -35,6 +35,7 @@ const Dashboard = ({
   dashboard,
   onWidgetDelete,
   onWidgetEdit,
+  setDashboard,
   widgets
 }) => {
   // Handle delete through a delete confirmation modal rather than directly
@@ -85,6 +86,7 @@ const Dashboard = ({
     widgetMoveHandler
   } = useWidgetLayouts({
     displayData: dashboard.displayData,
+    setDashboard,
     widgets
   });
 

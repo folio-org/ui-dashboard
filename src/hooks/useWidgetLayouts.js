@@ -32,6 +32,7 @@ import { COLUMNS, WIDGET_MINS } from '../constants/dashboardConstants';
  */
 const useWidgetLayouts = ({
   displayData,
+  setDashboard, // If the edit call is moved back to the route, remove this drilled prop from tree
   widgets
 }) => {
   // THE PUT FOR EDITING LAYOUT
@@ -45,6 +46,7 @@ const useWidgetLayouts = ({
     (data) => ky.put(`servint/dashboard/${dashId}`, { json: data }).json(),
     {
       onSuccess: (res) => {
+        setDashboard(res);
         callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
         queryClient.invalidateQueries(['ERM', 'Dashboard', dashId]);
       }
@@ -146,6 +148,8 @@ const useWidgetLayouts = ({
     ) {
       editDashboard({
         displayData: JSON.stringify(layouts)
+      }).then(() => {
+        document.getElementById(`widget-drag-handle-${previousMovingWidget}`).focus();
       });
     }
   }, [

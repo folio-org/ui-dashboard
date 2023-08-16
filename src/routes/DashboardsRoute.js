@@ -95,7 +95,9 @@ const DashboardsRoute = ({
     () => ky(`servint/dashboard/${dashId}`).json().then((res) => {
       // Doing this in state to avoid render after isFetching is false,
       // but before dashboard is updated with correct data
-      setDashboard(res);
+      if (!isEqual(dashboard, res)) {
+        setDashboard(res);
+      }
       return res;
     }),
     {
@@ -134,7 +136,8 @@ const DashboardsRoute = ({
     dashboardUsersQuery: restOfDashboardUsersQuery,
     dashboards,
     dashboard,
-    dashboardQuery: restOfDashboardQuery
+    dashboardQuery: restOfDashboardQuery,
+    setDashboard
   });
 };
 

@@ -22,6 +22,7 @@ const DashboardContainer = ({
   onUserAccess,
   onWidgetDelete,
   onWidgetEdit,
+  setDashboard,
   widgets
 }) => {
   return (
@@ -43,6 +44,7 @@ const DashboardContainer = ({
           dashboard={dashboard}
           onWidgetDelete={onWidgetDelete}
           onWidgetEdit={onWidgetEdit}
+          setDashboard={setDashboard}
           widgets={widgets}
         />
       </div>

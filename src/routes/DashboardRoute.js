@@ -17,8 +17,6 @@ const DashboardRoute = ({
   dashboard,
   dashboardQuery: {
     isLoading: dashboardLoading,
-    isRefetching: dashboardRefetching,
-    ...rest
   },
   dashboards,
   dashboardUsers = [],
@@ -27,6 +25,7 @@ const DashboardRoute = ({
   match: {
     params
   },
+  setDashboard
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
@@ -63,7 +62,6 @@ const DashboardRoute = ({
     () => ky.delete(`servint/dashboard/${params.dashId}`)
       .then(() => {
         callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.delete.success" values={{ dashboardName: dashboard.name }} /> });
-
         queryClient.invalidateQueries(['ERM', 'Dashboards']);
       })
   );
@@ -96,7 +94,7 @@ const DashboardRoute = ({
     history.push(`${location.pathname}/${id}/edit`);
   };
 
-  if (dashboardLoading || widgetsLoading || dashboardRefetching) {
+  if (dashboardLoading || widgetsLoading) {
     return <Loading />;
   }
 
@@ -116,6 +114,7 @@ const DashboardRoute = ({
           onUserAccess={handleUserAccess}
           onWidgetDelete={deleteWidget}
           onWidgetEdit={handleWidgetEdit}
+          setDashboard={setDashboard}
           widgets={widgets}
         />
         <ConfirmationModal
