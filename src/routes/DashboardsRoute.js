@@ -137,7 +137,6 @@ const DashboardsRoute = ({
     dashboards,
     dashboard,
     dashboardQuery: restOfDashboardQuery,
-    setDashboard
   });
 };
 

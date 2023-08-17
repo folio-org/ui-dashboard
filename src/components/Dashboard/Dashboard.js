@@ -17,6 +17,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import {
   ConfirmationModal,
   Icon,
+  Loading,
 } from '@folio/stripes/components';
 
 import { useWidgetLayouts } from '../../hooks';
@@ -35,7 +36,6 @@ const Dashboard = ({
   dashboard,
   onWidgetDelete,
   onWidgetEdit,
-  setDashboard,
   widgets
 }) => {
   // Handle delete through a delete confirmation modal rather than directly
@@ -85,8 +85,6 @@ const Dashboard = ({
     setLayouts,
     widgetMoveHandler
   } = useWidgetLayouts({
-    displayData: dashboard.displayData,
-    setDashboard,
     widgets
   });
 
@@ -124,85 +122,86 @@ const Dashboard = ({
   const dashboardContents = () => {
     if (!widgets?.length) {
       return (
-        <>
-          <DashboardAccessInfo dashId={dashboard.id} />
-          <NoWidgets />
-        </>
+        <NoWidgets />
+      );
+    }
+
+    if (!layouts) {
+      return (
+        <Loading />
       );
     }
 
     return (
-      <>
-        <DashboardAccessInfo dashId={dashboard.id} />
-        <ReactGridLayout
-          breakpoints={{ lg: 1200, md: 996, sm: 768 }}
-          className="layout"
-          cols={COLUMNS}
-          draggableHandle=".widget-drag-handle"
-          layouts={layouts}
-          margin={[WIDGET_MARGIN, WIDGET_MARGIN]}
-          onBreakpointChange={(...bps) => {
-            // Keep track of current breakpoint state
-            setBreakpointState(bps);
-          }}
-          onDrag={(_l, _oi, _ni, _p, _e, element) => {
-            setMovingWidget(element.id);
-          }}
-          onDragStop={(_l, _oi, _ni, _p, _e, _element) => {
-            const newLayouts = {
-              ...layouts,
-              [breakpointState[0]]: _l
-            };
-            if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
-              setLayouts(newLayouts);
-            }
-
-            setMovingWidget();
-          }}
-          onResizeStop={(_l, _oi, _ni, _p, _e, _element) => {
-            const newLayouts = {
-              ...layouts,
-              [breakpointState[0]]: _l
-            };
-            if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
-              setLayouts(newLayouts);
-            }
-          }}
-          /* Don't use onLayoutChange because we already set Layouts manually */
-          resizeHandle={
-            <div
-              className="react-resizable-handle"
-              style={{
-                display: 'flex',
-                position:'absolute',
-                bottom: 0,
-                right: 0,
-                cursor: 'se-resize',
-                padding: '5px'
-              }}
-              styles={{
-                height: '100%'
-              }}
-            >
-              <Icon
-                icon="caret-down"
-                // TODO this is clearly not ideal, we should add a corner icon
-                iconClassName={css.rotate}
-              />
-            </div>
+      <ReactGridLayout
+        breakpoints={{ lg: 1200, md: 996, sm: 768 }}
+        className="layout"
+        cols={COLUMNS}
+        draggableHandle=".widget-drag-handle"
+        layouts={layouts}
+        margin={[WIDGET_MARGIN, WIDGET_MARGIN]}
+        onBreakpointChange={(...bps) => {
+          // Keep track of current breakpoint state
+          setBreakpointState(bps);
+        }}
+        onDrag={(_l, _oi, _ni, _p, _e, element) => {
+          setMovingWidget(element.id);
+        }}
+        onDragStop={(_l, _oi, _ni, _p, _e, _element) => {
+          const newLayouts = {
+            ...layouts,
+            [breakpointState[0]]: _l
+          };
+          if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
+            setLayouts(newLayouts);
           }
-          rowHeight={30}
-          useCSSTransforms={false}
-        >
-          {widgetArray}
-        </ReactGridLayout>
-      </>
+
+          setMovingWidget();
+        }}
+        onResizeStop={(_l, _oi, _ni, _p, _e, _element) => {
+          const newLayouts = {
+            ...layouts,
+            [breakpointState[0]]: _l
+          };
+          if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
+            setLayouts(newLayouts);
+          }
+        }}
+        /* Don't use onLayoutChange because we already set Layouts manually */
+        resizeHandle={
+          <div
+            className="react-resizable-handle"
+            style={{
+              display: 'flex',
+              position:'absolute',
+              bottom: 0,
+              right: 0,
+              cursor: 'se-resize',
+              padding: '5px'
+            }}
+            styles={{
+              height: '100%'
+            }}
+          >
+            <Icon
+              icon="caret-down"
+              // TODO this is clearly not ideal, we should add a corner icon
+              iconClassName={css.rotate}
+            />
+          </div>
+        }
+        rowHeight={30}
+        useCSSTransforms={false}
+      >
+        {widgetArray}
+      </ReactGridLayout>
     );
   };
 
   return (
     <>
       <div className={css.dashboardContent}>
+        <DashboardAccessInfo dashId={dashboard.id} />
         {dashboardContents()}
       </div>
       <ConfirmationModal

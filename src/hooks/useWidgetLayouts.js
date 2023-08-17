@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import { utils } from 'react-grid-layout';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
 import isEqualWith from 'lodash/isEqualWith';
@@ -31,8 +31,6 @@ import { COLUMNS, WIDGET_MINS } from '../constants/dashboardConstants';
  * is fine.
  */
 const useWidgetLayouts = ({
-  displayData,
-  setDashboard, // If the edit call is moved back to the route, remove this drilled prop from tree
   widgets
 }) => {
   // THE PUT FOR EDITING LAYOUT
@@ -40,42 +38,36 @@ const useWidgetLayouts = ({
   const callout = useCallout();
   const queryClient = useQueryClient();
   const { dashId } = useParams();
-  // We will use this for reordering
-  const { mutateAsync: editDashboard, isLoading: isEditing } = useMutation(
-    ['ERM', 'Dashboard', dashId, 'EditDashboardLayout'],
-    (data) => ky.put(`servint/dashboard/${dashId}`, { json: data }).json(),
-    {
-      onSuccess: (res) => {
-        setDashboard(res);
-        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
-        queryClient.invalidateQueries(['ERM', 'Dashboard', dashId]);
-      }
-    }
-  );
+
+  const [layouts, setLayouts] = useState();
 
   // Assume large until proven otherwise
   const [breakpointState, setBreakpointState] = useState(['lg', COLUMNS.lg]);
 
-  const [layouts, setLayouts] = useState(() => {
-    if (displayData) {
-      return JSON.parse(displayData);
-    }
+  // Storing this in state to try and avoid weird locking issues?
+  const [displayData, setDisplayData] = useState();
 
-    // If no display data, default to a nice grid
-    return {
-      lg: widgets.map((w, i) => (
-        {
-          x: (i * WIDGET_MINS.x) % COLUMNS?.lg,
-          minH: WIDGET_MINS.y,
-          minW: WIDGET_MINS.x,
-          w: WIDGET_MINS.x,
-          y: 0,
-          h: WIDGET_MINS.y,
-          i: w.id
+  // Specific layout work
+  const { mutateAsync: editDashboardLayout, isLoading: isEditing } = useMutation(
+    ['ERM', 'Dashboard', dashId, 'EditDashboardLayout'],
+    (data) => ky.put(`servint/dashboard/${dashId}/displayData`, { json: data }).json()
+      .then((res) => {
+        setDisplayData(res);
+        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
+        queryClient.invalidateQueries(['ERM', 'Dashboard', dashId, 'Layout']);
+      }),
+  );
+
+  const { isFetching: isDisplayDataLoading } = useQuery(
+    ['ERM', 'Dashboard', dashId, 'Layout'],
+    () => ky.get(`servint/dashboard/${dashId}/displayData`).json()
+      .then(res => {
+        setDisplayData(res);
+        if (res.layoutData) {
+          setLayouts(JSON.parse(res.layoutData));
         }
-      ))
-    };
-  });
+      })
+  );
 
   const {
     movingWidget,
@@ -92,69 +84,80 @@ const useWidgetLayouts = ({
 
   // Ensure that new widgets get set up with a default layout
   useEffect(() => {
-    // Grab all widgets which do not exist in lg layout
-    const newWidgets = widgets?.filter(w => !layouts?.lg?.find(lw => lw.i === w.id))?.map((w, i) => {
-      return (
-        {
-          x: (i * WIDGET_MINS.x) % COLUMNS?.lg,
-          minH: WIDGET_MINS.y,
-          minW: WIDGET_MINS.x,
-          w: WIDGET_MINS.x,
-          y: 0,
-          h: WIDGET_MINS.y,
-          i: w.id
-        }
-      );
-    });
-
-    if (newWidgets.length) {
-      setLayouts({
-        lg: [
-          ...utils.cloneLayout(layouts?.lg ?? []),
-          ...newWidgets
-        ],
-        // TODO TEST that this works when saving and redrawing from saved data
-        // Then can maybe delete md and sm below
-        md: [
-          ...utils.cloneLayout(layouts?.md ?? []),
-          ...newWidgets
-        ],
-        sm: [
-          ...utils.cloneLayout(layouts?.sm ?? []),
-          ...newWidgets
-        ]
+    // Don't do anything until we have displayData (And the state has _actually_ been set)
+    // There appears to be an issue with react-query where the loading state
+    // changes before the data state?
+    // FIXME This is still an issue :'( display data isn't always set
+    if (!isDisplayDataLoading && displayData) {
+      // Once we've got the populated display data, now run all the following
+      // Grab all widgets which do not exist in lg layout
+      const newWidgets = widgets?.filter(w => !layouts?.lg?.find(lw => lw.i === w.id))?.map((w, i) => {
+        return (
+          {
+            x: (i * WIDGET_MINS.x) % COLUMNS?.lg,
+            minH: WIDGET_MINS.y,
+            minW: WIDGET_MINS.x,
+            w: WIDGET_MINS.x,
+            y: 0,
+            h: WIDGET_MINS.y,
+            i: w.id
+          }
+        );
       });
-    }
 
-    // SAVE LAYOUT WHEN CHANGED
-    // Parse out display data
-    const parsedDisplayData = JSON.parse(displayData ?? '{}');
+      if (newWidgets.length) {
+        setLayouts(currentLayouts => ({
+          lg: [
+            ...utils.cloneLayout(currentLayouts?.lg ?? []),
+            ...newWidgets
+          ],
+          // TODO TEST that this works when saving and redrawing from saved data
+          // Then can maybe delete md and sm below
+          md: [
+            ...utils.cloneLayout(currentLayouts?.md ?? []),
+            ...newWidgets
+          ],
+          sm: [
+            ...utils.cloneLayout(currentLayouts?.sm ?? []),
+            ...newWidgets
+          ]
+        }));
+      }
 
-    // Remove undefined keys from deep objects for comparison
-    const parsedDisplayDataNoNil = {};
-    Object.keys(parsedDisplayData).forEach(k => {
-      parsedDisplayDataNoNil[k] = parsedDisplayData[k].map(obj => omitBy(obj, isNil));
-    });
-    const layoutsNoNil = {};
-    Object.keys(layouts).forEach(k => {
-      layoutsNoNil[k] = layouts[k].map(obj => omitBy(obj, isNil));
-    });
+      // Parse out display data
+      // NOTE this shouldn't be set to layout if empty
+      const parsedDisplayData = JSON.parse(displayData?.layoutData ?? '{}');
 
-    if (
-      !movingWidget &&
-      !isEditing &&
-      !windowResizing &&
-      !isEqualWith(layoutsNoNil, parsedDisplayDataNoNil, ignoreArrayOrderEqualityFunc)
-    ) {
-      editDashboard({
-        displayData: JSON.stringify(layouts)
-      }).then(() => {
-        document.getElementById(`widget-drag-handle-${previousMovingWidget}`).focus();
+      // Remove undefined keys from deep objects for comparison
+      const parsedDisplayDataNoNil = {};
+      Object.keys(parsedDisplayData).forEach(k => {
+        parsedDisplayDataNoNil[k] = parsedDisplayData[k].map(obj => omitBy(obj, isNil));
       });
+      const layoutsNoNil = {};
+      Object.keys(layouts ?? {}).forEach(k => {
+        layoutsNoNil[k] = layouts?.[k].map(obj => omitBy(obj, isNil));
+      });
+
+      if (
+        !movingWidget &&
+        !isEditing &&
+        !windowResizing &&
+        !!layouts && // Don't PUT an empty object to layouts
+        !isEqualWith(layoutsNoNil, parsedDisplayDataNoNil, ignoreArrayOrderEqualityFunc)
+      ) {
+        // Lock the layouts again before editing layout
+        editDashboardLayout({
+          layoutData: JSON.stringify(layouts)
+        })/* .then(() => {
+          document.getElementById(`widget-drag-handle-${previousMovingWidget}`)?.focus();
+        }); */
+      }
     }
   }, [
+    breakpointState,
     displayData,
-    editDashboard,
+    editDashboardLayout,
+    isDisplayDataLoading,
     isEditing,
     layouts,
     movingWidget,

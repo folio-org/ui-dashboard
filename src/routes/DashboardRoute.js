@@ -25,7 +25,6 @@ const DashboardRoute = ({
   match: {
     params
   },
-  setDashboard
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
@@ -114,7 +113,6 @@ const DashboardRoute = ({
           onUserAccess={handleUserAccess}
           onWidgetDelete={deleteWidget}
           onWidgetEdit={handleWidgetEdit}
-          setDashboard={setDashboard}
           widgets={widgets}
         />
         <ConfirmationModal
