@@ -114,22 +114,24 @@ const WidgetHeader = ({
     <div
       className={css.header}
     >
-      <div
-        aria-grabbed={grabbed}
-        className="widget-drag-handle"
-        id={`widget-drag-handle-${widgetId}`}
-        onKeyDown={internalMoveHandler}
-        role="menuitem" // This feels wrong, but there is no role for handle?
-        style={{
-          cursor: grabbed ? 'grabbing' : 'grab', // 'grabbing'
-          height: 'auto',
-          alignSelf: 'center'
-        }}
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-        tabIndex={0}
-      >
-        <Icon icon="drag-drop" />
-      </div>
+      {(hasAccess('edit') || hasAdminPerm) ?
+        <div
+          aria-grabbed={grabbed}
+          className="widget-drag-handle"
+          id={`widget-drag-handle-${widgetId}`}
+          onKeyDown={internalMoveHandler}
+          role="menuitem" // This feels wrong, but there is no role for handle?
+          style={{
+            cursor: grabbed ? 'grabbing' : 'grab', // 'grabbing'
+            height: 'auto',
+            alignSelf: 'center'
+          }}
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
+        >
+          <Icon icon="drag-drop" />
+        </div> : null
+      }
       <span className={css.widgetTitle}>
         <Headline
           key={`widget-header-headline-${widgetId}`}

@@ -4,6 +4,8 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
+import { useParams } from 'react-router-dom';
+
 // Lodash imports for tree shaking
 import orderBy from 'lodash/orderBy';
 import isEqualWith from 'lodash/isEqualWith';
@@ -15,7 +17,7 @@ import {
   Loading,
 } from '@folio/stripes/components';
 
-import { useWidgetLayouts } from '../../hooks';
+import { useDashboardAccess, useWidgetLayouts } from '../../hooks';
 import { ignoreArrayOrderEqualityFunc } from '../../utils';
 import { COLUMNS, WIDGET_MARGIN } from '../../constants/dashboardConstants';
 
@@ -30,6 +32,9 @@ const Dashboard = ({
   setupConfirmationModal,
   widgets
 }) => {
+  const { dashId } = useParams();
+  const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
+
   // Farm out a large chunk of work to a separate hook to keep this component cleaner
   // Easier to come here for render issues and go to hook for functionality issues
   const {
@@ -87,7 +92,7 @@ const Dashboard = ({
       breakpoints={{ lg: 1200, md: 996, sm: 768 }}
       className="layout"
       cols={COLUMNS}
-      draggableHandle=".widget-drag-handle"
+      draggableHandle=".widget-drag-handle" // This should not render if no perms
       layouts={layouts}
       margin={[WIDGET_MARGIN, WIDGET_MARGIN]}
       onBreakpointChange={(...bps) => {
@@ -118,7 +123,7 @@ const Dashboard = ({
         }
       }}
       /* Don't use onLayoutChange because we already set Layouts manually */
-      resizeHandle={
+      resizeHandle={(hasAccess('edit') || hasAdminPerm) ?
         <div
           className="react-resizable-handle"
           style={{
@@ -138,7 +143,7 @@ const Dashboard = ({
             // TODO this is clearly not ideal, we should add a corner icon
             iconClassName={css.rotate}
           />
-        </div>
+        </div> : null
       }
       rowHeight={30}
       useCSSTransforms={false}
