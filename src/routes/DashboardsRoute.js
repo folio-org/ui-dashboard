@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { useParams } from 'react-router';
@@ -11,7 +11,6 @@ import { useChunkedUsers } from '@folio/stripes-erm-components';
 import { useDashboardAccessStore } from '../hooks';
 
 import Loading from '../components/Loading';
-import { isEqual } from 'lodash';
 
 const DashboardsRoute = ({
   children,

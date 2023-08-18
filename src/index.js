@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Switch } from 'react-router-dom';
 import { AppContextMenu, Route } from '@folio/stripes/core';
@@ -30,6 +30,30 @@ import WidgetOrderRoute from './routes/WidgetOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 import WidgetEditRoute from './routes/WidgetEditRoute';
 
+const DashboardsRouterRoute = ({
+  component: Component,
+  dashboardsProps,
+  path: innerPath,
+}) => (
+  <Route
+    path={innerPath}
+    render={(routeProps) => (
+      <Component
+        {...routeProps}
+        {...dashboardsProps}
+      />
+    )}
+  />
+);
+
+DashboardsRouterRoute.propTypes = {
+  path: PropTypes.string.isRequired,
+  dashboardsProps: PropTypes.object,
+  component: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+  ])
+};
 
 const App = ({ history, location, match: { path } }) => {
   const intl = useIntl();
@@ -85,37 +109,48 @@ const App = ({ history, location, match: { path } }) => {
           <Switch>
             <Route component={DashboardsRoute} path={`${path}/:dashId?`}>
               {(dashboardsProps) => {
-                // Pass each inner route all of dashboardsProps
-                const DashboardsRouterRoute = ({ component: Component, path: innerPath }) => (
-                  <Route
-                    path={innerPath}
-                    render={(routeProps) => (
-                      <Component
-                        {...routeProps}
-                        {...dashboardsProps}
-                      />
-                    )}
-                  />
-                );
-
-                DashboardsRouterRoute.propTypes = {
-                  path: PropTypes.string.isRequired,
-                  component: PropTypes.oneOfType([
-                    PropTypes.func,
-                    PropTypes.object,
-                  ])
-                };
-
                 return (
                   <Switch>
-                    <DashboardsRouterRoute component={DashboardCreateRoute} path={`${path}/:dashId/create`} />
-                    <DashboardsRouterRoute component={DashboardEditRoute} path={`${path}/:dashId/edit`} />
-                    <DashboardsRouterRoute component={WidgetCreateRoute} path={`${path}/:dashId/createWidget`} />
-                    <DashboardsRouterRoute component={WidgetEditRoute} path={`${path}/:dashId/:widgetId/edit`} />
-                    <DashboardsRouterRoute component={DashboardAccessRoute} path={`${path}/:dashId/userAccess`} />
-                    <DashboardsRouterRoute component={DashboardsManageRoute} path={`${path}/:dashId/manageDashboards`} />
-                    <DashboardsRouterRoute component={WidgetOrderRoute} path={`${path}/:dashId/editOrder`} />
-                    <DashboardsRouterRoute component={DashboardRoute} path={`${path}/:dashId`} />
+                    <DashboardsRouterRoute
+                      component={DashboardCreateRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/create`}
+                    />
+                    <DashboardsRouterRoute
+                      component={DashboardEditRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/edit`}
+                    />
+                    <DashboardsRouterRoute
+                      component={WidgetCreateRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/createWidget`}
+                    />
+                    <DashboardsRouterRoute
+                      component={WidgetEditRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/:widgetId/edit`}
+                    />
+                    <DashboardsRouterRoute
+                      component={DashboardAccessRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/userAccess`}
+                    />
+                    <DashboardsRouterRoute
+                      component={DashboardsManageRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/manageDashboards`}
+                    />
+                    <DashboardsRouterRoute
+                      component={WidgetOrderRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId/editOrder`}
+                    />
+                    <DashboardsRouterRoute
+                      component={DashboardRoute}
+                      dashboardsProps={dashboardsProps}
+                      path={`${path}/:dashId`}
+                    />
                   </Switch>
                 );
               }}

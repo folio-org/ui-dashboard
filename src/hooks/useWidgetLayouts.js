@@ -19,7 +19,6 @@ import useWindowResizing from './useWindowResizing';
 import { COLUMNS, WIDGET_MINS } from '../constants/dashboardConstants';
 
 
-
 /* Logical separation is a bit nmuddy here, this sets up
  * the states necessary for ReactGridLayout, and handles
  * new widgets being added etc, but ALSO performs the PUT
@@ -87,7 +86,6 @@ const useWidgetLayouts = ({
     // Don't do anything until we have displayData (And the state has _actually_ been set)
     // There appears to be an issue with react-query where the loading state
     // changes before the data state?
-    // FIXME This is still an issue :'( display data isn't always set
     if (!isDisplayDataLoading && displayData) {
       // Once we've got the populated display data, now run all the following
       // Grab all widgets which do not exist in lg layout

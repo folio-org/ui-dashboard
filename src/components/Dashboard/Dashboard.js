@@ -1,7 +1,6 @@
 /*
  * This component is called "Dashboard" but in reality is only the widget container
  */
-
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
