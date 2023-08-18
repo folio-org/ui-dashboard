@@ -16,7 +16,7 @@ import { ErrorPage } from '../components/ErrorComponents';
 const DashboardRoute = ({
   dashboard,
   dashboardQuery: {
-    isLoading: dashboardLoading,
+    isFetching: dashboardLoading,
   },
   dashboards,
   dashboardUsers = [],
@@ -97,63 +97,64 @@ const DashboardRoute = ({
     return <Loading />;
   }
 
-  if (dashboard) {
+  if (!dashboard) {
     return (
-      <>
-        <DashboardContainer
-          key={`dashboard-${dashboard.id}`}
-          dashboard={dashboard}
-          dashboards={dashboards}
-          onCreateDashboard={handleCreateDashboard}
-          onCreateWidget={handleCreateWidget}
-          onDeleteDashboard={() => setDeleteDashboardModal(true)}
-          onEdit={handleDashboardEdit} // This is to send the user to the edit ROUTE
-          onManageDashboards={handleManageDashboards}
-          onReorder={handleReorder}
-          onUserAccess={handleUserAccess}
-          onWidgetDelete={deleteWidget}
-          onWidgetEdit={handleWidgetEdit}
-          widgets={widgets}
-        />
-        <ConfirmationModal
-          buttonStyle="danger"
-          confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
-          data-test-delete-confirmation-modal
-          heading={
-            <FormattedMessage
-              id="ui-dashboard.deleteDashboardHeader"
-              values={{ name: dashboard.name }}
-            />}
-          id="delete-dashboard-confirmation"
-          message={dashboardUsers?.length > 1 ?
-            <>
-              <FormattedMessage
-                id="ui-dashboard.deleteDashboard.messageMultiUsers"
-                values={{ name: dashboard.name }}
-              />
-            </> :
-            <FormattedMessage
-              id="ui-dashboard.deleteDashboard.message"
-              values={{ name: dashboard.name }}
-            />
-          }
-          onCancel={() => {
-            setDeleteDashboardModal(false);
-          }}
-          onConfirm={() => {
-            deleteDashboard();
-            history.push('/dashboard');
-          }}
-          open={deleteDashboardModal}
-        />
-      </>
+      <ErrorPage>
+        <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashboard?.name }} />
+      </ErrorPage>
     );
   }
 
   return (
-    <ErrorPage>
-      <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashboard?.name }} />
-    </ErrorPage>
+    <>
+      <DashboardContainer
+        key={`dashboard-${dashboard.id}`}
+        dashboard={dashboard}
+        dashboardLoading={dashboardLoading}
+        dashboards={dashboards}
+        onCreateDashboard={handleCreateDashboard}
+        onCreateWidget={handleCreateWidget}
+        onDeleteDashboard={() => setDeleteDashboardModal(true)}
+        onEdit={handleDashboardEdit} // This is to send the user to the edit ROUTE
+        onManageDashboards={handleManageDashboards}
+        onReorder={handleReorder}
+        onUserAccess={handleUserAccess}
+        onWidgetDelete={deleteWidget}
+        onWidgetEdit={handleWidgetEdit}
+        widgets={widgets}
+      />
+      <ConfirmationModal
+        buttonStyle="danger"
+        confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
+        data-test-delete-confirmation-modal
+        heading={
+          <FormattedMessage
+            id="ui-dashboard.deleteDashboardHeader"
+            values={{ name: dashboard.name }}
+          />}
+        id="delete-dashboard-confirmation"
+        message={dashboardUsers?.length > 1 ?
+          <>
+            <FormattedMessage
+              id="ui-dashboard.deleteDashboard.messageMultiUsers"
+              values={{ name: dashboard.name }}
+            />
+          </> :
+          <FormattedMessage
+            id="ui-dashboard.deleteDashboard.message"
+            values={{ name: dashboard.name }}
+          />
+        }
+        onCancel={() => {
+          setDeleteDashboardModal(false);
+        }}
+        onConfirm={() => {
+          deleteDashboard();
+          history.push('/dashboard');
+        }}
+        open={deleteDashboardModal}
+      />
+    </>
   );
 };
 
@@ -165,7 +166,7 @@ DashboardRoute.propTypes = {
     name: PropTypes.string
   }),
   dashboardQuery: PropTypes.shape({
-    isLoading: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
   }),
   dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   dashboards: PropTypes.arrayOf(

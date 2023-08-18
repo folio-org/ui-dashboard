@@ -89,17 +89,9 @@ const DashboardsRoute = ({
   );
 
   // If and only if we're within a route containing a dashId, fetch the dashboard
-  const [dashboard, setDashboard] = useState({});
-  const { data: _dashboard = {}, ...restOfDashboardQuery } = useQuery(
+  const { data: dashboard = {}, ...restOfDashboardQuery } = useQuery(
     ['ERM', 'Dashboard', dashId],
-    () => ky(`servint/dashboard/${dashId}`).json().then((res) => {
-      // Doing this in state to avoid render after isFetching is false,
-      // but before dashboard is updated with correct data
-      if (!isEqual(dashboard, res)) {
-        setDashboard(res);
-      }
-      return res;
-    }),
+    () => ky(`servint/dashboard/${dashId}`).json(),
     {
       enabled: !!dashId
     }
