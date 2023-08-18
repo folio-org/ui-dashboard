@@ -146,7 +146,7 @@ const useWidgetLayouts = ({
         // Lock the layouts again before editing layout
         editDashboardLayout({
           layoutData: JSON.stringify(layouts)
-        })/* .then(() => {
+        });/* .then(() => {
           document.getElementById(`widget-drag-handle-${previousMovingWidget}`)?.focus();
         }); */
       }

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
@@ -9,14 +8,14 @@ import { useWidgetDefinition } from '../../hooks';
 import WidgetHeader from './WidgetHeader';
 import css from './Widget.css';
 
-const Widget = forwardRef(({
+const Widget = ({
   grabbed,
   onError,
   onWidgetDelete,
   onWidgetEdit,
   widget,
   widgetMoveHandler
-}, ref) => {
+}) => {
   const {
     specificWidgetDefinition: { definition: widgetDef, typeName },
     componentBundle: { WidgetComponent, FooterComponent },
@@ -80,7 +79,7 @@ const Widget = forwardRef(({
       </div>
     </HasCommand>
   );
-});
+};
 
 Widget.propTypes = {
   grabbed: PropTypes.bool,
