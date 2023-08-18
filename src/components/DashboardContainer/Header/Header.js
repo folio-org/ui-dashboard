@@ -28,7 +28,6 @@ const Header = ({
   onDeleteDashboard, // dashboard
   onEdit, // dashboard
   onManageDashboards, // All dashboards
-  onReorder, // dashboard
   onUserAccess // dashboard
 }) => {
   const history = useHistory();
@@ -53,22 +52,6 @@ const Header = ({
             icon="plus-sign"
           >
             <FormattedMessage id="ui-dashboard.newWidget" />
-          </Icon>
-        </Button>
-      );
-
-      dashboardActions.push(
-        <Button
-          key="clickable-reorderdashboard"
-          buttonStyle="dropdownItem"
-          disabled={!onReorder}
-          id="clickable-reorderdashboard"
-          onClick={onReorder}
-        >
-          <Icon
-            icon="gear"
-          >
-            <FormattedMessage id="ui-dashboard.manageWidgets" />
           </Icon>
         </Button>
       );

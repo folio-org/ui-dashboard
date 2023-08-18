@@ -26,7 +26,6 @@ import DashboardCreateRoute from './routes/DashboardCreateRoute';
 import DashboardEditRoute from './routes/DashboardEditRoute';
 import DashboardAccessRoute from './routes/DashboardAccessRoute';
 import DashboardsManageRoute from './routes/DashboardsManageRoute';
-import WidgetOrderRoute from './routes/WidgetOrderRoute';
 import WidgetCreateRoute from './routes/WidgetCreateRoute';
 import WidgetEditRoute from './routes/WidgetEditRoute';
 
@@ -140,11 +139,6 @@ const App = ({ history, location, match: { path } }) => {
                       component={DashboardsManageRoute}
                       dashboardsProps={dashboardsProps}
                       path={`${path}/:dashId/manageDashboards`}
-                    />
-                    <DashboardsRouterRoute
-                      component={WidgetOrderRoute}
-                      dashboardsProps={dashboardsProps}
-                      path={`${path}/:dashId/editOrder`}
                     />
                     <DashboardsRouterRoute
                       component={DashboardRoute}
