@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
-import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useHistory, useParams } from 'react-router-dom';
 
 import {
   Button,
@@ -31,6 +31,9 @@ const Header = ({
   onReorder, // dashboard
   onUserAccess // dashboard
 }) => {
+  const history = useHistory();
+  const queryClient = useQueryClient();
+
   const { hasAccess, hasAdminPerm } = useDashboardAccess(dashId);
   const { dashId: currentDashboardId } = useParams();
 
@@ -193,7 +196,11 @@ const Header = ({
               <Button
                 key={`clickable-tab-to-dashboard-${dba.dashboard?.id}`}
                 marginBottom0
-                to={`/dashboard/${dba.dashboard?.id}`}
+                onClick={() => {
+                  // Make sure we're going to an up to date version of the dashboard
+                  queryClient.invalidateQueries(['ERM', 'Dashboard', dashId]);
+                  history.push(`/dashboard/${dba.dashboard?.id}`);
+                }}
               >
                 {dba.dashboard?.name}
               </Button>

@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 
 import {
   ConfirmationModal,
-  Loading
 } from '@folio/stripes/components';
 
 import Header from './Header';
@@ -21,7 +20,6 @@ import DashboardAccessInfo from '../DashboardAccessInfo/DashboardAccessInfo';
 
 const DashboardContainer = ({
   dashboard,
-  dashboardLoading,
   dashboards,
   onCreateDashboard,
   onCreateWidget,
@@ -71,12 +69,6 @@ const DashboardContainer = ({
   };
 
   const dashboardContents = () => {
-    if (dashboardLoading) {
-      return (
-        <Loading />
-      );
-    }
-
     if (!widgets?.length) {
       return (
         <NoWidgets />
@@ -154,7 +146,6 @@ DashboardContainer.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
-  dashboardLoading: PropTypes.bool,
   dashboards: PropTypes.arrayOf(PropTypes.shape({
     dashboard: PropTypes.shape({
       id: PropTypes.string.isRequired,

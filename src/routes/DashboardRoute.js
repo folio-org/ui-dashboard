@@ -97,7 +97,7 @@ const DashboardRoute = ({
     return <Loading />;
   }
 
-  if (!dashboard) {
+  if (!Object.keys(dashboard).length) {
     return (
       <ErrorPage>
         <FormattedMessage id="ui-dashboard.error.noDashWithThatName" values={{ name: dashboard?.name }} />
@@ -110,7 +110,6 @@ const DashboardRoute = ({
       <DashboardContainer
         key={`dashboard-${dashboard.id}`}
         dashboard={dashboard}
-        dashboardLoading={dashboardLoading}
         dashboards={dashboards}
         onCreateDashboard={handleCreateDashboard}
         onCreateWidget={handleCreateWidget}
