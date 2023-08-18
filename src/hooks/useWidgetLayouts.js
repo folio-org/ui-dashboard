@@ -3,13 +3,12 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { utils } from 'react-grid-layout';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { FormattedMessage } from 'react-intl';
 
 import isEqualWith from 'lodash/isEqualWith';
 import isNil from 'lodash/isNil';
 import omitBy from 'lodash/omitBy';
 
-import { useCallout, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 import { usePrevious } from '@folio/stripes-erm-components';
 
 import { ignoreArrayOrderEqualityFunc } from '../utils';
@@ -34,7 +33,6 @@ const useWidgetLayouts = ({
 }) => {
   // THE PUT FOR EDITING LAYOUT
   const ky = useOkapiKy();
-  const callout = useCallout();
   const queryClient = useQueryClient();
   const { dashId } = useParams();
 
@@ -52,7 +50,6 @@ const useWidgetLayouts = ({
     (data) => ky.put(`servint/dashboard/${dashId}/displayData`, { json: data }).json()
       .then((res) => {
         setDisplayData(res);
-        callout.sendCallout({ message: <FormattedMessage id="ui-dashboard.dashboard.edit.success" values={{ dashboardName: res.name }} /> });
         queryClient.invalidateQueries(['ERM', 'Dashboard', dashId, 'Layout']);
       }),
   );
@@ -146,9 +143,9 @@ const useWidgetLayouts = ({
         // Lock the layouts again before editing layout
         editDashboardLayout({
           layoutData: JSON.stringify(layouts)
-        });/* .then(() => {
+        }).then(() => {
           document.getElementById(`widget-drag-handle-${previousMovingWidget}`)?.focus();
-        }); */
+        });
       }
     }
   }, [

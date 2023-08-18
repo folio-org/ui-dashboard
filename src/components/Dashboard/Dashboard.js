@@ -113,6 +113,10 @@ const Dashboard = ({
 
         setMovingWidget();
       }}
+      onResizeStart={(_l, _oi, _ni, _p, _e, element) => {
+        // Assumes that the parent is the drag and drop item -- seems flaky but works for now
+        setMovingWidget(element.parentElement.id);
+      }}
       onResizeStop={(_l, _oi, _ni, _p, _e, _element) => {
         const newLayouts = {
           ...layouts,
@@ -121,6 +125,7 @@ const Dashboard = ({
         if (!isEqualWith(newLayouts, layouts, ignoreArrayOrderEqualityFunc)) {
           setLayouts(newLayouts);
         }
+        setMovingWidget();
       }}
       /* Don't use onLayoutChange because we already set Layouts manually */
       resizeHandle={(hasAccess('edit') || hasAdminPerm) ?
