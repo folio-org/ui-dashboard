@@ -18,7 +18,13 @@ import { useDashboardAccess } from '../../hooks';
 const onSubmit = jest.fn();
 const onClose = jest.fn();
 
-jest.mock('../hooks');
+/* EXAMPLE overwriting a mock set up in hooks/__mocks__
+ * If there was no jest.mock set up in hooks/__mocks__ we would need
+ * to set this up as jest.mock(() => ({ useDashboardAccess: jest.fn() }))
+ * to ensure there was something to chaneg the mockImplementation of down
+ * the line.
+ */
+jest.mock('../../hooks');
 
 // Not loving this, needs refactoring to newer pattern at some point
 const access = [

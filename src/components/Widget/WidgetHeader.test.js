@@ -11,9 +11,10 @@ const widgetId = '123456789';
 
 const onWidgetEdit = jest.fn(() => null);
 const onWidgetDelete = jest.fn(() => null);
+const widgetMoveHandler = jest.fn(() => null);
 
-jest.mock('../hooks', () => ({
-  ...jest.requireActual('../hooks'),
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
   useDashboardAccess: jest.fn()
     .mockReturnValue({ hasAccess: () => true, hasAdminPerm: false })
     .mockReturnValueOnce({ hasAccess: () => true, hasAdminPerm: false })
@@ -31,6 +32,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );
@@ -45,6 +47,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );
@@ -64,6 +67,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );
@@ -83,6 +87,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );
@@ -99,6 +104,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );
@@ -118,6 +124,7 @@ describe('WidgetHeader', () => {
         onWidgetDelete={onWidgetDelete}
         onWidgetEdit={onWidgetEdit}
         widgetId={widgetId}
+        widgetMoveHandler={widgetMoveHandler}
       />,
       translationsProperties
     );

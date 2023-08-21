@@ -116,7 +116,6 @@ describe('Header', () => {
       await Headline('My dashboard').exists();
       await Button('New widget').exists();
       await Button('Edit dashboard').exists();
-      await Button('Manage widgets').exists();
       await Button('Manage user access').exists();
       await Button('Delete dashboard').exists();
     });
@@ -151,7 +150,6 @@ describe('Header', () => {
       await Headline('All dashboards').exists();
       await Button('New widget').exists();
       await Button('Edit dashboard').exists();
-      await Button('Manage widgets').exists();
       await Button('View user access').exists();
       await Button('Delete dashboard').absent();
     });
@@ -186,7 +184,6 @@ describe('Header', () => {
       await Headline('All dashboards').exists();
       await Button('New widget').absent();
       await Button('Edit dashboard').absent();
-      await Button('Manage widgets').absent();
       await Button('View user access').exists();
       await Button('Delete dashboard').absent();
     });
@@ -221,7 +218,6 @@ describe('Header', () => {
       await Headline('All dashboards').exists();
       await Button('New widget').exists();
       await Button('Edit dashboard').exists();
-      await Button('Manage widgets').exists();
       await Button('Manage user access').exists();
       await Button('Delete dashboard').exists();
     });

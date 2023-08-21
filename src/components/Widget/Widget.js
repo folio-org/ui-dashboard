@@ -90,7 +90,7 @@ Widget.propTypes = {
     definition: PropTypes.shape({
       name: PropTypes.string,
       version: PropTypes.string,
-    }),
+    }).isRequired,
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
