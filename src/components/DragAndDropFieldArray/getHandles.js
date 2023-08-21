@@ -1,4 +1,4 @@
-import { matches } from 'dom-helpers';
+import matches from 'dom-helpers/query/matches';
 
 const getHandles = (container = document) => {
   if (container.querySelectorAll) {

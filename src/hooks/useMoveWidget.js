@@ -78,7 +78,6 @@ const useMoveWidget = ({
             break;
         }
 
-        // TODO also check max Y
         if (newY < 0 || newX < 0 || newX + item.w > breakpointState[1]) {
           break;
         }

@@ -106,8 +106,6 @@ const useWidgetLayouts = ({
             ...utils.cloneLayout(currentLayouts?.lg ?? []),
             ...newWidgets
           ],
-          // TODO TEST that this works when saving and redrawing from saved data
-          // Then can maybe delete md and sm below
           md: [
             ...utils.cloneLayout(currentLayouts?.md ?? []),
             ...newWidgets
