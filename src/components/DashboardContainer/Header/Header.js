@@ -221,7 +221,6 @@ Header.propTypes = {
   onDeleteDashboard: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onManageDashboards: PropTypes.func,
-  onReorder: PropTypes.func,
   onUserAccess: PropTypes.func
 };
 
