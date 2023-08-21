@@ -1,6 +1,12 @@
 # Change history for ui-dashboard
 
 ## 5.0.0 In progress
+  * Dashboard canvas overhaul (refs ERM-1795, ERM-2972)
+    * Widgets can now be resized/drag-dropped into place
+    * Widget footer is now independent from widget body
+    * Major refactors to fetching of dahsboards/widget data
+    * Minor refactors to routing/code in general to allow for more efficient redraws
+    * Removed old "Manage widgets" action as it is rendered obsolete by changes
   * STRIPES-870 BREAKING upgrade react to v18
     * ERM-2996 Upgrade ui-dashboard React to v18
 
