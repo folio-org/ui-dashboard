@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import matches from 'dom-helpers/query/matches';
+import { matches } from 'dom-helpers';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
