@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useChunkedUsers } from '@folio/stripes-erm-components';
+import { useChunkedUsers, useParallelBatchFetch } from '@folio/stripes-erm-components';
 
 import { useDashboardAccessStore } from '../hooks';
 
@@ -97,13 +97,14 @@ const DashboardsRoute = ({
   );
 
   // If and only if we're within a route containing a dashId, fetch the dashboard users
-  const { data: dashboardUsers = [], ...restOfDashboardUsersQuery } = useQuery(
-    ['ERM', 'Dashboard', 'Users', dashId],
-    () => ky(`servint/dashboard/${dashId}/users`).json(),
-    {
+  const { items: dashboardUsers = [], ...restOfDashboardUsersQuery } = useParallelBatchFetch({
+    generateQueryKey: ({ offset }) => ['ERM', 'Dashboard', 'Users', dashId, offset],
+    endpoint: `servint/dashboard/${dashId}/users`,
+    queryParams: {
       enabled: !!dashId
     }
-  );
+  });
+
   // From the dashboard access, we need to fetch user information.
   // Batch fetch all users
   const { users, isLoading: areUsersLoading } = useChunkedUsers(dashboardUsers?.map(da => da?.user?.id), { enabled: !restOfDashboardUsersQuery?.isFetching && dashboardUsers.length });
