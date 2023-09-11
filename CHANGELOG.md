@@ -9,6 +9,7 @@
     * Removed old "Manage widgets" action as it is rendered obsolete by changes
   * STRIPES-870 BREAKING upgrade react to v18
     * ERM-2996 Upgrade ui-dashboard React to v18
+  * SI-35 *BREAKING* bump `react-intl` to `v6.4.4`
 
 ## 4.0.0 2023-02-22
   * ERM-2575 fix deprecated default export from 'zustand' in ui-dashboard
