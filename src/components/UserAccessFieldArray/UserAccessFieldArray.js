@@ -217,10 +217,10 @@ const UserAccessFieldArray = ({
             remove: <FormattedMessage id="ui-dashboard.dashboardUsers.remove" />,
           }}
           columnWidths={{
-            user: { min: 400, max: 800 },
+            user: { min: 500, max: 800 },
             status: { min: 100, max: 200 },
-            email: { min: 200, max: 400 },
-            accessLevel: { min: 150, max: 300 },
+            email: { min: 150, max: 400 },
+            accessLevel: { min: 100, max: 200 },
             remove: { min: 50, max: 100 },
           }}
           contentData={
