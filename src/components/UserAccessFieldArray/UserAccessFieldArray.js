@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -111,6 +111,144 @@ const UserAccessFieldArray = ({
     });
   };
 
+  const renderAccessLevel = useCallback((item) => {
+    // POC field in place of value
+    // Allow an admin to edit their own perm ONLY on create (Still don't allow delete)
+    if (
+      // EITHER
+      // User is not the current user AND has admin perm or manage access
+      ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
+      // OR
+      // User IS current user, but user has adminPerm and the access object didn't previously exist
+      (item?.user?.id === userId && hasAdminPerm && !item.id)
+    ) {
+      return (
+        <Field
+          component={Select}
+          dataOptions={[
+            {
+              value: 'view',
+              label: intl.formatMessage({
+                id: 'ui-dashboard.accessLevel.view'
+              })
+            },
+            {
+              value: 'edit',
+              label: intl.formatMessage({
+                id: 'ui-dashboard.accessLevel.edit'
+              })
+            },
+            {
+              value: 'manage',
+              label: intl.formatMessage({
+                id: 'ui-dashboard.accessLevel.manage'
+              })
+            }
+          ]}
+          id={`${item.id}-access-field`}
+          marginBottom0
+          name={`${fieldsName}[${item.index}].access`}
+          parse={v => v}
+        />
+      );
+    }
+
+    return <FormattedMessage id={`ui-dashboard.accessLevel.${item.access}`} />;
+  }, [fieldsName, hasAccess, hasAdminPerm, intl, userId]);
+
+  const renderUser = useCallback(item => {
+    if (item.user?.id) {
+      return (
+        <>
+          <AppIcon
+            app="users"
+            className={item.user.active ? undefined : css.inactiveAppIcon}
+            iconAlignment="baseline"
+            size="small"
+          >
+            <TextLink to={`/users/preview/${item.user.id}`}>{renderUserName(item)}</TextLink>
+          </AppIcon>
+          {
+            !item.id &&
+            <NewBox />
+          }
+        </>
+      );
+    }
+
+    return item.user;
+  }, []);
+
+  const renderStatus = useCallback(item => {
+    if (!item.user?.id) {
+      return (
+        <div className={css.error}>
+          <Icon icon="exclamation-circle">
+            <FormattedMessage id="ui-dashboard.dashboardUsers.status.error" />
+          </Icon>
+        </div>
+      );
+    }
+
+    if (!item.user.active) {
+      return (
+        <div className={css.warn}>
+          <Icon icon="exclamation-circle">
+            <FormattedMessage id="ui-dashboard.dashboardUsers.status.inactive" />
+          </Icon>
+        </div>
+      );
+    }
+
+    return <FormattedMessage id="ui-dashboard.dashboardUsers.status.active" />;
+  }, []);
+
+  const renderEmail = useCallback(item => {
+    if (item.user?.id) {
+      return item.user.personal?.email;
+    }
+    return '';
+  }, []);
+
+  const renderRemove = useCallback(item => {
+    if (
+      // EITHER
+      // User is not the current user AND has admin perm or manage access
+      ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
+      // OR
+      // User IS current user, but user has adminPerm and the access object didn't previously exist
+      (item?.user?.id === userId && hasAdminPerm && !item.id)
+    ) {
+      return (
+        <Tooltip
+          id={`remove-user-access-${item.id}`}
+          text={<FormattedMessage id="ui-dashboard.dashboardUsers.removeUser" values={{ name: renderUserName(item) }} />}
+        >
+          {({ ref, ariaIds }) => (
+            <IconButton
+              ref={ref}
+              aria-labelledby={ariaIds.text}
+              icon="trash"
+              iconClassName={css.marginBottom0}
+              onClick={item.onRemove}
+            />
+          )}
+        </Tooltip>
+      );
+    }
+    return '';
+  }, [hasAccess, hasAdminPerm, userId]);
+
+  const listItemFormatter = useCallback(item => (
+    <li
+      key={`removed-users-list=${item}`}
+    >
+      <strong>
+        {item}
+      </strong>
+    </li>
+  ), []);
+
   return (
     <>
       <Pane
@@ -217,139 +355,21 @@ const UserAccessFieldArray = ({
             remove: <FormattedMessage id="ui-dashboard.dashboardUsers.remove" />,
           }}
           columnWidths={{
-            user: { min: 200, max: 400 },
+            user: { min: 500, max: 800 },
             status: { min: 100, max: 200 },
-            email: { min: 200, max: 400 },
-            accessLevel: { min: 150, max: 300 },
+            email: { min: 150, max: 400 },
+            accessLevel: { min: 100, max: 200 },
             remove: { min: 50, max: 100 },
           }}
           contentData={
             items.map((item, index) => ({ ...item, index, onRemove: () => onDeleteField(index, item) }))
           }
           formatter={{
-            user: item => {
-              if (item.user?.id) {
-                return (
-                  <>
-                    <AppIcon
-                      app="users"
-                      className={item.user.active ? undefined : css.inactiveAppIcon}
-                      iconAlignment="baseline"
-                      size="small"
-                    >
-                      <TextLink to={`/users/preview/${item.user.id}`}>{renderUserName(item)}</TextLink>
-                    </AppIcon>
-                    {
-                      !item.id &&
-                      <NewBox />
-                    }
-                  </>
-                );
-              }
-
-              return item.user;
-            },
-            status: item => {
-              if (!item.user?.id) {
-                return (
-                  <div className={css.error}>
-                    <Icon icon="exclamation-circle">
-                      <FormattedMessage id="ui-dashboard.dashboardUsers.status.error" />
-                    </Icon>
-                  </div>
-                );
-              }
-
-              if (!item.user.active) {
-                return (
-                  <div className={css.warn}>
-                    <Icon icon="exclamation-circle">
-                      <FormattedMessage id="ui-dashboard.dashboardUsers.status.inactive" />
-                    </Icon>
-                  </div>
-                );
-              }
-
-              return <FormattedMessage id="ui-dashboard.dashboardUsers.status.active" />;
-            },
-            email: item => {
-              if (item.user?.id) {
-                return item.user.personal?.email;
-              }
-              return '';
-            },
-            accessLevel: item => {
-              // POC field in place of value
-              // Allow an admin to edit their own perm ONLY on create (Still don't allow delete)
-              if (
-                // EITHER
-                // User is not the current user AND has admin perm or manage access
-                ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
-                // OR
-                // User IS current user, but user has adminPerm and the access object didn't previously exist
-                (item?.user?.id === userId && hasAdminPerm && !item.id)
-              ) {
-                return (
-                  <Field
-                    component={Select}
-                    dataOptions={[
-                      {
-                        value: 'view',
-                        label: intl.formatMessage({
-                          id: 'ui-dashboard.accessLevel.view'
-                        })
-                      },
-                      {
-                        value: 'edit',
-                        label: intl.formatMessage({
-                          id: 'ui-dashboard.accessLevel.edit'
-                        })
-                      },
-                      {
-                        value: 'manage',
-                        label: intl.formatMessage({
-                          id: 'ui-dashboard.accessLevel.manage'
-                        })
-                      }
-                    ]}
-                    id={`${item.id}-access-field`}
-                    marginBottom0
-                    name={`${fieldsName}[${item.index}].access`}
-                    parse={v => v}
-                  />
-                );
-              }
-
-              return <FormattedMessage id={`ui-dashboard.accessLevel.${item.access}`} />;
-            },
-            remove: item => {
-              if (
-                // EITHER
-                // User is not the current user AND has admin perm or manage access
-                ((hasAccess('manage') || hasAdminPerm) && item?.user?.id !== userId) ||
-                // OR
-                // User IS current user, but user has adminPerm and the access object didn't previously exist
-                (item?.user?.id === userId && hasAdminPerm && !item.id)
-              ) {
-                return (
-                  <Tooltip
-                    id={`remove-user-access-${item.id}`}
-                    text={<FormattedMessage id="ui-dashboard.dashboardUsers.removeUser" values={{ name: renderUserName(item) }} />}
-                  >
-                    {({ ref, ariaIds }) => (
-                      <IconButton
-                        ref={ref}
-                        aria-labelledby={ariaIds.text}
-                        icon="trash"
-                        iconClassName={css.marginBottom0}
-                        onClick={item.onRemove}
-                      />
-                    )}
-                  </Tooltip>
-                );
-              }
-              return '';
-            }
+            user: renderUser,
+            status: renderStatus,
+            email: renderEmail,
+            accessLevel: renderAccessLevel,
+            remove: renderRemove
           }}
           interactive={false}
           visibleColumns={visibleColumns}
@@ -367,15 +387,7 @@ const UserAccessFieldArray = ({
           />,
           <List
             key="removed-users-confirmation-modal-1"
-            itemFormatter={item => (
-              <li
-                key={`removed-users-list=${item}`}
-              >
-                <strong>
-                  {item}
-                </strong>
-              </li>
-            )}
+            itemFormatter={listItemFormatter}
             items={removedUsers}
             listStyle="bullets"
           />,

@@ -26,7 +26,7 @@ const DashboardAccessRoute = ({
   },
   dashboardUsers = [],
   dashboardUsersQuery: {
-    isFetching: dashboardUsersLoading
+    isLoading: dashboardUsersLoading
   },
   history,
   match: {
@@ -115,15 +115,15 @@ export default DashboardAccessRoute;
 DashboardAccessRoute.propTypes = {
   areUsersLoading: PropTypes.bool,
   dashboard: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
+    id: PropTypes.string,
+    name: PropTypes.string
   }),
   dashboardQuery: PropTypes.shape({
     isLoading: PropTypes.bool.isRequired,
   }),
   dashboardUsers: PropTypes.arrayOf(PropTypes.object),
   dashboardUsersQuery: PropTypes.shape({
-    isFetching: PropTypes.bool.isRequired
+    isLoading: PropTypes.bool.isRequired
   }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
