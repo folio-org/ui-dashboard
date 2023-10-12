@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 5.1.0 In progress
+
 ## 5.0.0 2023-10-12
   * Updated github workflows to allow use of multiple cores while running jest tests
   * ERM-3040 "New" badge is wrapping onto two lines
