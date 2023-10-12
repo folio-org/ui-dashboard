@@ -1,15 +1,27 @@
 # Change history for ui-dashboard
 
-## 5.0.0 In progress
+## 5.0.0 2023-10-12
+  * Updated github workflows to allow use of multiple cores while running jest tests
+  * ERM-3040 "New" badge is wrapping onto two lines
+  * ERM-3014 Manage user access allows display of 10 users max
+  * ERM-3001 Update Node.js to v18 in GitHub Actions
+  * ERM-2980 Filters not completely cleared when editing widget
   * Dashboard canvas overhaul (refs ERM-1795, ERM-2972)
     * Widgets can now be resized/drag-dropped into place
     * Widget footer is now independent from widget body
     * Major refactors to fetching of dahsboards/widget data
     * Minor refactors to routing/code in general to allow for more efficient redraws
     * Removed old "Manage widgets" action as it is rendered obsolete by changes
-  * STRIPES-870 BREAKING upgrade react to v18
+  * ERM-2967 Use useChunkedCQLFetch consistently across ERM
+  * ERM-2934 Agreement lines simple search widget definition
+  * ERM-2641 Upgrade to Grails 5 (including Hibernate 5.6.x) for Poppy
+    * Added okapi interface dependency on new servint interface 3.0
+  * STRIPES-870 *BREAKING* upgrade react to v18
     * ERM-2996 Upgrade ui-dashboard React to v18
   * SI-35 *BREAKING* bump `react-intl` to `v6.4.4`
+    * ERM-3027 Update react-intl to v6
+  * SI-25 In UI limit length of widget URL input to 2048 chars
+  * SI-24 Avoid double encoding of user entered URLs in simple search widget
 
 ## 4.0.0 2023-02-22
   * ERM-2575 fix deprecated default export from 'zustand' in ui-dashboard
