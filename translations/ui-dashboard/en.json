@@ -11,6 +11,8 @@
   "error.noWidgetComponentForType": "No widget component for type: {widgetType}",
   "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
   "error.duplicateColumn": "Duplicate column, please rectify",
+  "error.noWidgetDefinition": "No definition found for widget",
+  "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}",
   "canvas.actions": "Actions",
   "httpError": "HTTPError: {errorCode} {errorText}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",

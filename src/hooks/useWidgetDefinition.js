@@ -1,7 +1,7 @@
 import { useOkapiKy } from '@folio/stripes/core';
 import { useQuery } from 'react-query';
 
-import { getComponentsFromType } from '../utils';
+import { getComponentsFromDefinition } from '../utils';
 
 /* Hook to expose the definition and consequently
  * the components relevant to that def's type
@@ -18,7 +18,11 @@ const useWidgetDefinition = (defName, defVersion = undefined) => {
     () => ky(`servint/widgets/definitions/global?name=${defName}${defVersion ? '&version=' + defVersion : ''}`).json()
   );
 
-  const componentBundle = getComponentsFromType(specificWidgetDefinition?.type?.name, isFetching);
+  const componentBundle = getComponentsFromDefinition({
+    definitionName: defName,
+    isLoading: isFetching,
+    selectedDefinition: specificWidgetDefinition,
+  });
   return { specificWidgetDefinition, componentBundle };
 };
 
