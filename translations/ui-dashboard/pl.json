@@ -235,5 +235,7 @@
     "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards.",
     "simpleSearchForm.error.invalidURL": "Proszę wprowadź poprawny adres URL",
     "simpleSearchForm.error.invalidURL.tooltip": "Zaczyna się od: \"https://\", \"http://\" or \"/\" i nie zawiera znaków specjalnych niedozwolonych w adresie URL",
-    "simpleSearchForm.error.invalidInputSize": "Maksymalna liczba znaków dla adresu URL to 2048"
+    "simpleSearchForm.error.invalidInputSize": "Maksymalna liczba znaków dla adresu URL to 2048",
+    "error.noWidgetDefinition": "No definition found for widget",
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }

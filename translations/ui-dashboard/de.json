@@ -235,5 +235,7 @@
     "userDashboards.edit.success": "<strong>Aktualisierungen gespeichert:</strong> Dashboards verwalten",
     "simpleSearchForm.error.invalidURL": "Bitte gültige URL eingeben",
     "simpleSearchForm.error.invalidURL.tooltip": "beginnt mit \"https://\", \"http://\" oder \"/\" und enthält keine Sonderzeichen, die in URLs nicht zulässig sind",
-    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
+    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long.",
+    "error.noWidgetDefinition": "No definition found for widget",
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }
