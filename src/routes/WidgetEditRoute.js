@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -6,7 +6,7 @@ import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { getComponentsFromDefinition } from '../utils';
+import { getComponentsFromType } from '../utils';
 
 import WidgetForm from '../components/WidgetForm';
 
@@ -47,7 +47,7 @@ const WidgetEditRoute = ({
     queryNS.push(widget?.id);
   }
 
-  const { data: widgetDefinitions, isLoading: areDefinitionsLoading } = useQuery(
+  const { data: widgetDefinitions } = useQuery(
     queryNS,
     () => ky(`servint/widgets/definitions/global${widget ? '?name=' + widget.definition?.name + '&version=' + widget.definition?.version : ''}`).json()
   );
@@ -65,11 +65,7 @@ const WidgetEditRoute = ({
     submitManipulation,
     widgetToInitialValues,
     WidgetFormComponent
-  } = getComponentsFromDefinition({
-    definitionName: widget?.definition?.name,
-    isLoading: areDefinitionsLoading,
-    selectedDefinition
-  });
+  } = getComponentsFromType(selectedDefinition?.type?.name ?? '');
 
   let initialValues = {};
   if (widget) {
@@ -130,7 +126,6 @@ const WidgetEditRoute = ({
           <form onSubmit={handleSubmit}>
             <WidgetForm
               data={{
-                areDefinitionsLoading,
                 dashId: params.dashId,
                 dashboardUsers,
                 // Pass initialValues in here so we can manually initialize when they're fetched
