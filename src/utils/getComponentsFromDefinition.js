@@ -1,4 +1,5 @@
 import { FormattedMessage } from 'react-intl';
+
 import { Spinner } from '@folio/stripes/components';
 
 // TODO figure out lazy loading of functions
@@ -19,9 +20,39 @@ import {
 
 import css from '../Style.css';
 
+const noop = (props) => (props);
+
 // This function ensures all of the switching logic between differing WidgetTypes happens in a single place,
 // and then passes the relevant components in a bundled object.
-const getComponentsFromType = (widgetType = '', isLoading = false) => {
+
+const getComponentsFromDefinition = ({
+  // Can pass definitionName OPTIONALLY, if passed it'll use for error where definition couldn't be fetched
+  definitionName,
+  isLoading = false,
+  selectedDefinition = {},
+}) => {
+  // If we have no selectedDefinition, return error components;
+  if (!Object.keys(selectedDefinition).length) {
+    const NoDefinitionError = () => (
+      definitionName ?
+        <ErrorComponent>
+          <FormattedMessage id="ui-dashboard.error.noWidgetDefinitionForName" values={{ defName: definitionName }} />
+        </ErrorComponent> :
+        <ErrorComponent>
+          <FormattedMessage id="ui-dashboard.error.noWidgetDefinition" />
+        </ErrorComponent>
+    );
+
+    return {
+      WidgetComponent: NoDefinitionError,
+      WidgetFormComponent: NoDefinitionError,
+      submitManipulation: noop,
+      widgetToInitialValues: noop,
+      createInitialValues: noop,
+    };
+  }
+
+  const { type: { name: widgetType = '' } = {} } = selectedDefinition;
   const componentBundle = {};
 
   const WidgetComponentError = () => (
@@ -40,9 +71,9 @@ const getComponentsFromType = (widgetType = '', isLoading = false) => {
     return {
       WidgetComponent: () => (<Spinner className={css.spinner} />),
       WidgetFormComponent: () => (<Spinner className={css.spinner} />),
-      submitManipulation: (props) => (props),
-      widgetToInitialValues: (props) => (props),
-      createInitialValues: (props) => (props),
+      submitManipulation: noop,
+      widgetToInitialValues: noop,
+      createInitialValues: noop,
     };
   }
 
@@ -60,13 +91,13 @@ const getComponentsFromType = (widgetType = '', isLoading = false) => {
     default:
       componentBundle.WidgetComponent = WidgetComponentError;
       componentBundle.WidgetFormComponent = WidgetFormComponentError;
-      componentBundle.submitManipulation = (props) => (props);
-      componentBundle.widgetToInitialValues = (props) => (props);
-      componentBundle.createInitialValues = (props) => (props);
+      componentBundle.submitManipulation = noop;
+      componentBundle.widgetToInitialValues = noop;
+      componentBundle.createInitialValues = noop;
   }
 
   return componentBundle;
 };
 
-export default getComponentsFromType;
+export default getComponentsFromDefinition;
 

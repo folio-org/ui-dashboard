@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -6,7 +6,7 @@ import arrayMutators from 'final-form-arrays';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { getComponentsFromType } from '../utils';
+import { getComponentsFromDefinition } from '../utils';
 
 import WidgetForm from '../components/WidgetForm';
 
@@ -36,7 +36,7 @@ const WidgetCreateRoute = ({
     submitManipulation,
     createInitialValues,
     WidgetFormComponent
-  } = getComponentsFromType(selectedDefinition?.type?.name ?? '');
+  } = getComponentsFromDefinition({ selectedDefinition });
 
   const initialValues = {
     widgetConfig: {
@@ -63,8 +63,8 @@ const WidgetCreateRoute = ({
     });
     // Include other necessary metadata
     const submitValue = {
-      definitionName: selectedDefinition.name,
-      definitionVersion: selectedDefinition.version,
+      definitionName: selectedDefinition?.name ?? '',
+      definitionVersion: selectedDefinition?.version ?? '',
       name,
       owner: { id: dashboard.id },
       configuration: conf

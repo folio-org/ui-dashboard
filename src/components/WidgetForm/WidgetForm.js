@@ -29,6 +29,7 @@ import DashboardMultipleUserInfo from '../DashboardMultipleUserInfo';
 
 const propTypes = {
   data: PropTypes.shape({
+    areDefinitionsLoading: PropTypes.bool,
     name: PropTypes.string,
     params: PropTypes.shape({
       widgetId: PropTypes.string,
@@ -48,6 +49,7 @@ const propTypes = {
 // This component should contain the logic to select a widget definition and push on to a specific widgetForm, ie SimpleSearchForm
 const WidgetForm = ({
   data: {
+    areDefinitionsLoading,
     dashId,
     dashboardUsers = [],
     initialValues,
@@ -199,7 +201,7 @@ const WidgetForm = ({
                 </KeyValue>
               </Col>
             </Row>
-            {selectedDefinition && WidgetFormComponent &&
+            {!areDefinitionsLoading && WidgetFormComponent &&
               <Field
                 name="widgetConfig"
                 render={() => (
