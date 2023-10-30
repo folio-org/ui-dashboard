@@ -233,7 +233,9 @@
     "dashboardUsers.edit.success": "<strong> 사용자 액세스 세부정보 업데이트: </strong> {dashboardName}",
     "userDashboards.default.info": "기본 대시보드는 대시보드 앱을 처음 열 때 기본적으로 표시되는 대시보드입니다.",
     "userDashboards.edit.success": "<strong> 업데이트 저장: </strong> 대시보드 관리",
-    "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
-    "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
-    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
+    "simpleSearchForm.error.invalidURL": "유효한 URL을 입력하세요.",
+    "simpleSearchForm.error.invalidURL.tooltip": "\"https://\", \"http://\" 또는 \"/\"로 시작하며 URL에 허용되지 않는 특수 문자를 포함하지 않습니다.",
+    "simpleSearchForm.error.invalidInputSize": "URL의 길이는 2048자까지만 가능합니다.",
+    "error.noWidgetDefinition": "No definition found for widget",
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }

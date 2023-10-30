@@ -132,9 +132,9 @@
     "simpleSearchForm.filters.filterField.comparator.Enum.isNotSet": "is not set",
     "simpleSearchForm.filters.filterField.comparator.UUID.isSet": "is set",
     "simpleSearchForm.filters.filterField.comparator.UUID.isNotSet": "is not set",
-    "simpleSearchForm.filters.filterField.comparator.DateTime.==": "is",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.==": "es",
     "simpleSearchForm.filters.filterField.comparator.DateTime.!=": "is not",
-    "simpleSearchForm.filters.filterField.comparator.DateTime.>": "after",
+    "simpleSearchForm.filters.filterField.comparator.DateTime.>": "después",
     "simpleSearchForm.filters.filterField.comparator.DateTime.>=": "on or after",
     "simpleSearchForm.filters.filterField.comparator.DateTime.<": "before",
     "simpleSearchForm.filters.filterField.comparator.DateTime.<=": "on or before",
@@ -184,8 +184,8 @@
     "dashboardUsers.userAccess": "User access - {dashboardName}",
     "dashboardUsers.user": "User",
     "dashboardUsers.status": "Status",
-    "dashboardUsers.status.active": "Active",
-    "dashboardUsers.status.inactive": "Inactive",
+    "dashboardUsers.status.active": "Activo",
+    "dashboardUsers.status.inactive": "Inactivo",
     "dashboardUsers.status.error": "Error",
     "dashboardUsers.email": "Email",
     "dashboardUsers.remove": "Remove",
@@ -235,5 +235,7 @@
     "userDashboards.edit.success": "<strong>Updates saved:</strong> Manage dashboards.",
     "simpleSearchForm.error.invalidURL": "Please enter a valid URL",
     "simpleSearchForm.error.invalidURL.tooltip": "starts with \"https://\", \"http://\" or \"/\" and doesn't contain special characters not allowed in URLs",
-    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long."
+    "simpleSearchForm.error.invalidInputSize": "The URL may only be 2048 characters long.",
+    "error.noWidgetDefinition": "No definition found for widget",
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }

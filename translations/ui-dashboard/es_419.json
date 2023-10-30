@@ -235,5 +235,7 @@
     "userDashboards.edit.success": "<strong>Actualizaciones guardadas:</strong> Gestionar cuadros de mando.",
     "simpleSearchForm.error.invalidURL": "Introduzca una URL válida",
     "simpleSearchForm.error.invalidURL.tooltip": "empieza por \"https://\", \"http://\" o \"/\" y no contiene caracteres especiales no permitidos en las URL.",
-    "simpleSearchForm.error.invalidInputSize": "La URL sólo puede tener 2048 caracteres."
+    "simpleSearchForm.error.invalidInputSize": "La URL sólo puede tener 2048 caracteres.",
+    "error.noWidgetDefinition": "No definition found for widget",
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }
