@@ -201,7 +201,7 @@ const WidgetForm = ({
                 </KeyValue>
               </Col>
             </Row>
-            {!areDefinitionsLoading && WidgetFormComponent &&
+            {values.definition && !areDefinitionsLoading && WidgetFormComponent &&
               <Field
                 name="widgetConfig"
                 render={() => (

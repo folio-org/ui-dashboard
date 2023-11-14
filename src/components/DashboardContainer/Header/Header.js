@@ -162,7 +162,7 @@ const Header = ({
     const selectedIndex = idOrder.indexOf(currentDashboardId);
     if (dashboards?.length === 1) {
       return (
-        <Headline>
+        <Headline margin="none">
           {dashName}
         </Headline>
       );
