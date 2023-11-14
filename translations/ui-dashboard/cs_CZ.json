@@ -236,6 +236,6 @@
     "simpleSearchForm.error.invalidURL": "Zadejte prosím platnou adresu URL",
     "simpleSearchForm.error.invalidURL.tooltip": "začíná na \"https://\", \"http://\" nebo \"/\" a neobsahuje speciální znaky, které nejsou v adresách URL povoleny",
     "simpleSearchForm.error.invalidInputSize": "URL může mít pouze 2048 znaků.",
-    "error.noWidgetDefinition": "No definition found for widget",
-    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
+    "error.noWidgetDefinition": "Pro widget nebyla nalezena žádná definice",
+    "error.noWidgetDefinitionForName": "Nelze načíst definici widgetu: {defName}"
 }
