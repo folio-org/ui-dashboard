@@ -135,6 +135,8 @@ const WidgetForm = ({
     ...widgetDefinitions.map((wd, index) => ({ value: index, label: wd.name }))
   ];
 
+  console.log("VALUES: %o", values)
+
   return (
     <>
       <HasCommand
@@ -201,7 +203,7 @@ const WidgetForm = ({
                 </KeyValue>
               </Col>
             </Row>
-            {values.definition && !areDefinitionsLoading && WidgetFormComponent &&
+            {!!selectedDefinition && !areDefinitionsLoading && !!WidgetFormComponent &&
               <Field
                 name="widgetConfig"
                 render={() => (
