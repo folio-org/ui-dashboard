@@ -142,7 +142,7 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "není nulový",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "je nastaven",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "není nastaven",
-    "simpleSearchForm.matches": "Vyhledávání",
+    "simpleSearchForm.matches": "Vyhledat",
     "appMenu.keyboardShortcuts": "Klávesové zkratky",
     "simpleSearchForm.filters.filterField.rule.and": "A",
     "widgetForm.editWidget": "Upravit widget - {widgetName}",
