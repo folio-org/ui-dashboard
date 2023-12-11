@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
@@ -77,16 +77,6 @@ const WidgetForm = ({
   // Need to keep track of "next" widgetDef index for use in the modal.
   // Can reset to null on cancel or use for select after wiping form.
   const [newDef, setNewDef] = useState();
-
-  const widgetFocusRef = useRef(null);
-
-  useEffect(() => {
-    if (!!params.widgetId && widgetFocusRef.current) {
-      setTimeout(() => {
-        widgetFocusRef.current.focus();
-      }, 500);
-    }
-  }, [params.widgetId]);
 
   const shortcuts = [
     {
@@ -176,8 +166,8 @@ const WidgetForm = ({
                   label={<FormattedMessage id="ui-dashboard.widgetForm.widgetName" />}
                 >
                   <Field
+                    autoFocus
                     component={TextField}
-                    inputRef={widgetFocusRef}
                     maxLength={255}
                     name="name"
                     required
