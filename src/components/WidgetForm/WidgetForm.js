@@ -18,6 +18,7 @@ import {
   Pane,
   Paneset,
   PaneFooter,
+  PaneHeader,
   Row,
   Select,
   TextField,
@@ -145,6 +146,20 @@ const WidgetForm = ({
     ...widgetDefinitions.map((wd, index) => ({ value: index, label: wd.name }))
   ];
 
+  const renderPaneHeader = renderProps => (
+    <PaneHeader
+      {...renderProps}
+      appIcon={<AppIcon app="dashboard" />}
+      dismissible
+      onClose={onClose}
+      paneTitle={
+        params.widgetId ?
+          <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetName: name }} /> :
+          <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
+      }
+    />
+  );
+
   return (
     <>
       <HasCommand
@@ -154,18 +169,11 @@ const WidgetForm = ({
       >
         <Paneset>
           <Pane
-            appIcon={<AppIcon app="dashboard" />}
             centerContent
             defaultWidth="100%"
-            dismissible
             footer={renderPaneFooter()}
             id="pane-widget-form"
-            onClose={onClose}
-            paneTitle={
-              params.widgetId ?
-                <FormattedMessage id="ui-dashboard.widgetForm.editWidget" values={{ widgetName: name }} /> :
-                <FormattedMessage id="ui-dashboard.widgetForm.createWidget" />
-            }
+            renderHeader={renderPaneHeader}
           >
             <DashboardAccessInfo dashId={dashId} />
             <DashboardMultipleUserInfo dashboardUsers={dashboardUsers} />
