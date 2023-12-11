@@ -29,7 +29,7 @@ const SimpleSearchResultField = ({ resultColumns, input }) => {
           {({ input: inputVal, meta }) => {
             return (
               <Select
-                autoFocus={meta.dirty}
+                autoFocus
                 {...inputVal}
                 dataOptions={selectifiedResultColumns}
                 error={meta && meta.error}
