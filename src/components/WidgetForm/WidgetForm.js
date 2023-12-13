@@ -82,12 +82,15 @@ const WidgetForm = ({
   const widgetFocusRef = useRef(null);
 
   useEffect(() => {
-    if (!!params.widgetId && widgetFocusRef.current) {
-      setTimeout(() => {
-        widgetFocusRef.current.focus();
-      }, 500);
-    }
-  }, [params.widgetId]);
+    /*
+       setTimeout necessary because autoFocus on various other fields
+       would move away the focus from the top (name field)
+    */
+    setTimeout(() => {
+      widgetFocusRef.current.focus();
+    }, 500);
+  }, []);
+
 
   const shortcuts = [
     {
