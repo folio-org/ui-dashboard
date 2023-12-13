@@ -91,6 +91,7 @@ const WidgetForm = ({
     }, 500);
   }, []);
 
+
   const shortcuts = [
     {
       name: 'save',

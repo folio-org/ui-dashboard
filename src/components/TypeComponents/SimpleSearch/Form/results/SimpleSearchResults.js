@@ -24,6 +24,8 @@ import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';
 
+
+
 const SimpleSearchResults = ({
   data: {
     resultColumns,
@@ -35,6 +37,18 @@ const SimpleSearchResults = ({
   id
 }) => {
   const intl = useIntl();
+
+  const invalidNumber = (value) => {
+    if (numberOfRows.configurable && (value < 1 || value > 100)) {
+      return (
+        <FormattedMessage
+          id="ui-dashboard.errors.invalidNumber"
+        />
+      );
+    }
+    return null;
+  };
+
   const renderResultField = ({ name: fieldName, index, fields }) => {
     return (
       <div className={css.resultLine}>
@@ -76,6 +90,7 @@ const SimpleSearchResults = ({
           <Field
             name="configurableProperties.numberOfRows"
             type="number"
+            validate={invalidNumber}
           >
             {({ ...fieldRenderProps }) => {
               if (numberOfRows.configurable) {
