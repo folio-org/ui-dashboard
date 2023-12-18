@@ -237,5 +237,6 @@
     "simpleSearchForm.error.invalidURL.tooltip": "beginnt mit \"https://\", \"http://\" oder \"/\" und enthält keine Sonderzeichen, die in URLs nicht zulässig sind",
     "simpleSearchForm.error.invalidInputSize": "Die URL darf maximal 2048 Zeichen lang sein.",
     "error.noWidgetDefinition": "No definition found for widget",
-    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}",
+    "errors.invalidNumber": "Please enter a valid number to continue"
 }
