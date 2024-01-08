@@ -42,7 +42,8 @@ const SimpleSearchResults = ({
     if (numberOfRows.configurable && (value < 1 || value > 100)) {
       return (
         <FormattedMessage
-          id="ui-dashboard.errors.invalidNumber"
+          id="stripes-erm-components.errors.decimalValueNotInRange"
+          values={{ min: 1, max: 100 }}
         />
       );
     }
