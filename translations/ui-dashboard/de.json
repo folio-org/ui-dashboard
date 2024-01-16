@@ -236,7 +236,7 @@
     "simpleSearchForm.error.invalidURL": "Bitte gültige URL eingeben",
     "simpleSearchForm.error.invalidURL.tooltip": "beginnt mit \"https://\", \"http://\" oder \"/\" und enthält keine Sonderzeichen, die in URLs nicht zulässig sind",
     "simpleSearchForm.error.invalidInputSize": "Die URL darf maximal 2048 Zeichen lang sein.",
-    "error.noWidgetDefinition": "No definition found for widget",
-    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}",
-    "errors.invalidNumber": "Please enter a valid number to continue"
+    "error.noWidgetDefinition": "Keine Definition für Widget gefunden",
+    "error.noWidgetDefinitionForName": "Widget-Definition konnte nicht geladen werden: {defName}",
+    "errors.invalidNumber": "Bitte gültige Nummer eingeben, um fortzufahren"
 }
