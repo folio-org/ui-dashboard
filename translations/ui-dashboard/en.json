@@ -13,7 +13,6 @@
   "error.duplicateColumn": "Duplicate column, please rectify",
   "error.noWidgetDefinition": "No definition found for widget",
   "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}",
-  "errors.invalidNumber": "Please enter a valid number to continue",
   "canvas.actions": "Actions",
   "httpError": "HTTPError: {errorCode} {errorText}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
