@@ -237,6 +237,5 @@
     "simpleSearchForm.error.invalidURL.tooltip": "\"https://\", \"http://\" 또는 \"/\"로 시작하며 URL에 허용되지 않는 특수 문자를 포함하지 않습니다.",
     "simpleSearchForm.error.invalidInputSize": "URL의 길이는 2048자까지만 가능합니다.",
     "error.noWidgetDefinition": "No definition found for widget",
-    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}",
-    "errors.invalidNumber": "Please enter a valid number to continue"
+    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
 }
