@@ -1,10 +1,11 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
-
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
+
+import { useErmForm } from '@folio/stripes-erm-components';  // Adjust the import path accordingly
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -19,6 +20,8 @@ const DashboardEditRoute = ({
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const callout = useCallout();
+
+  const { ERMForm } = useErmForm();  // Use the ERMForm from the hook
 
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
@@ -41,30 +44,26 @@ const DashboardEditRoute = ({
   };
 
   return (
-    <Form
-      initialValues={dashboard}
-      navigationCheck
-      onSubmit={doTheSubmit}
-      subscription={{ values: true }}
-    >
-      {({ handleSubmit }) => {
-        return (
-          <form onSubmit={handleSubmit}>
-            <DashboardForm
-              dashboardUsers={dashboardUsers}
-              handlers={{
-                onClose: () => handleClose(),
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
-        );
+    <ERMForm
+      FormComponent={({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <DashboardForm
+            dashboardUsers={dashboardUsers}
+            handlers={{
+              onClose: () => handleClose(),
+              onSubmit: handleSubmit,
+            }}
+          />
+        </form>
+      )}
+      formOptions={{
+        subscription: { values: true },
       }}
-    </Form>
+      initialValues={dashboard}
+      onSubmit={doTheSubmit}
+    />
   );
 };
-
-export default DashboardEditRoute;
 
 DashboardEditRoute.propTypes = {
   dashboard: PropTypes.shape({
@@ -88,3 +87,5 @@ DashboardEditRoute.propTypes = {
     })
   }).isRequired
 };
+
+export default DashboardEditRoute;
