@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
-import { useErmForm } from '@folio/stripes-erm-components';  // Adjust the import path accordingly
+import { useErmForm } from '@folio/stripes-erm-components';
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -21,7 +21,7 @@ const DashboardEditRoute = ({
   const queryClient = useQueryClient();
   const callout = useCallout();
 
-  const { ERMForm } = useErmForm();  // Use the ERMForm from the hook
+  const { ERMForm } = useErmForm();
 
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
