@@ -229,11 +229,11 @@ const WidgetForm = ({
                   /* Keeping this as a separate form allows us to deal with incoming WidgetForms as part of configuration only,
                    * which is useful to stop form value injection in the case we accept entire forms through the Registry
                    * It also means the changing initialValues only reinitialises the inner form
+                   * This needs to _not be_ an ERMForm, since that is set up above this
                    */
                   <Form
                     initialValues={initialValues.widgetConfig}
                     mutators={arrayMutators}
-                    navigationCheck
                     onSubmit={onSubmit}
                     render={({ form: { getState } }) => {
                       const { values: innerFormValues, valid } = getState();

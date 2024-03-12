@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useOkapiKy } from '@folio/stripes/core';
 import PropTypes from 'prop-types';
-import { Form } from 'react-final-form';
-import arrayMutators from 'final-form-arrays';
-
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { getComponentsFromDefinition } from '../utils';
+import { useOkapiKy } from '@folio/stripes/core';
+import { ERMForm } from '@folio/stripes-erm-components';
 
+import { getComponentsFromDefinition } from '../utils';
 import WidgetForm from '../components/WidgetForm';
 
 const WidgetEditRoute = ({
@@ -118,39 +116,35 @@ const WidgetEditRoute = ({
   };
 
   return (
-    <Form
+    <ERMForm
       initialValues={initialValues}
-      mutators={arrayMutators}
-      navigationCheck
       onSubmit={doTheSubmit}
       subscription={{ values: true }}
     >
       {({ handleSubmit }) => {
         return (
-          <form onSubmit={handleSubmit}>
-            <WidgetForm
-              data={{
-                areDefinitionsLoading,
-                dashId: params.dashId,
-                dashboardUsers,
-                // Pass initialValues in here so we can manually initialize when they're fetched
-                initialValues,
-                name: widget?.name,
-                params,
-                selectedDefinition,
-                widgetDefinitions,
-                WidgetFormComponent
-              }}
-              handlers={{
-                onClose: () => handleClose(params.widgetId),
-                onSubmit: handleSubmit,
-                setSelectedDef
-              }}
-            />
-          </form>
+          <WidgetForm
+            data={{
+              areDefinitionsLoading,
+              dashId: params.dashId,
+              dashboardUsers,
+              // Pass initialValues in here so we can manually initialize when they're fetched
+              initialValues,
+              name: widget?.name,
+              params,
+              selectedDefinition,
+              widgetDefinitions,
+              WidgetFormComponent
+            }}
+            handlers={{
+              onClose: () => handleClose(params.widgetId),
+              onSubmit: handleSubmit,
+              setSelectedDef
+            }}
+          />
         );
       }}
-    </Form>
+    </ERMForm>
   );
 };
 
