@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import isEqual from 'lodash/isEqual';
+
 import { FormattedMessage } from 'react-intl';
 import { Field, Form, useFormState, useForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
@@ -224,32 +226,35 @@ const WidgetForm = ({
             </Row>
             {!!selectedDefinition && !areDefinitionsLoading && !!WidgetFormComponent &&
               <Field
+                isEqual={isEqual}
                 name="widgetConfig"
-                render={() => (
+                render={() => {
                   /* Keeping this as a separate form allows us to deal with incoming WidgetForms as part of configuration only,
                    * which is useful to stop form value injection in the case we accept entire forms through the Registry
                    * It also means the changing initialValues only reinitialises the inner form
                    * This needs to _not be_ an ERMForm, since that is set up above this
                    */
-                  <Form
-                    initialValues={initialValues.widgetConfig}
-                    mutators={arrayMutators}
-                    onSubmit={onSubmit}
-                    render={({ form: { getState } }) => {
-                      const { values: innerFormValues, valid } = getState();
-                      setWidgetConfigvalues(innerFormValues);
-                      setInnerFormValidState(valid);
-                      return (
-                        /* Get specific form component for the selected widgetDefinition */
-                        <WidgetFormComponent
-                          isEdit={!!params.widgetId}
-                          specificWidgetDefinition={selectedDefinition}
-                        />
-                      );
-                    }}
-                    subscription={{ values: true }}
-                  />
-                )}
+                  return (
+                    <Form
+                      initialValues={initialValues.widgetConfig}
+                      mutators={arrayMutators}
+                      onSubmit={onSubmit}
+                      render={({ form: { getState } }) => {
+                        const { values: innerFormValues, valid } = getState();
+                        setWidgetConfigvalues(innerFormValues);
+                        setInnerFormValidState(valid);
+                        return (
+                          /* Get specific form component for the selected widgetDefinition */
+                          <WidgetFormComponent
+                            isEdit={!!params.widgetId}
+                            specificWidgetDefinition={selectedDefinition}
+                          />
+                        );
+                      }}
+                      subscription={{ values: true }}
+                    />
+                  );
+                }}
                 validate={() => !innerFormValidState}
               />
             }
