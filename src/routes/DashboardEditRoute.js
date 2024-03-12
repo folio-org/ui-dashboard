@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { Form } from 'react-final-form';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
-
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
+
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -20,6 +20,10 @@ const DashboardEditRoute = ({
   const queryClient = useQueryClient();
   const callout = useCallout();
 
+  const handleClose = () => {
+    history.push(`/dashboard/${params.dashId}`);
+  };
+
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
     (data) => ky.put(`servint/dashboard/${params.dashId}`, { json: data }).json()
@@ -28,43 +32,32 @@ const DashboardEditRoute = ({
 
         queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
         queryClient.invalidateQueries(['ERM', 'Dashboards']);
+
+        // Handle close needs to be async when working with ERMForm
+        handleClose();
       })
   );
 
-  const handleClose = () => {
-    history.push(`/dashboard/${params.dashId}`);
-  };
-
-  const doTheSubmit = (values) => {
-    putDashboard(values);
-    handleClose();
-  };
-
   return (
-    <Form
+    <ERMForm
       initialValues={dashboard}
-      navigationCheck
-      onSubmit={doTheSubmit}
+      onSubmit={putDashboard}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) => {
-        return (
-          <form onSubmit={handleSubmit}>
-            <DashboardForm
-              dashboardUsers={dashboardUsers}
-              handlers={{
-                onClose: () => handleClose(),
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
-        );
-      }}
-    </Form>
+      {({ handleSubmit, pristine, submitting }) => (
+        <DashboardForm
+          dashboardUsers={dashboardUsers}
+          handlers={{
+            onClose: () => handleClose(),
+            onSubmit: handleSubmit,
+          }}
+          pristine={pristine}
+          submitting={submitting}
+        />
+      )}
+    </ERMForm>
   );
 };
-
-export default DashboardEditRoute;
 
 DashboardEditRoute.propTypes = {
   dashboard: PropTypes.shape({
@@ -88,3 +81,5 @@ DashboardEditRoute.propTypes = {
     })
   }).isRequired
 };
+
+export default DashboardEditRoute;

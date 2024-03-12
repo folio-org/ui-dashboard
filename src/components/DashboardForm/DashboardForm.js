@@ -121,6 +121,7 @@ const DashboardForm = ({
                 }
                 maxLength={25}
                 name="name"
+                parse={v => v}
                 required
                 validate={compose(
                   required,
@@ -133,6 +134,7 @@ const DashboardForm = ({
                 component={TextArea}
                 label={<FormattedMessage id="ui-dashboard.dashboard.description" />}
                 name="description"
+                parse={v => v}
               />
             </Col>
           </Row>

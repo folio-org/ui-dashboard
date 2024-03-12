@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
-import { Form } from 'react-final-form';
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import { useMutation, useQueryClient } from 'react-query';
 
@@ -35,25 +34,24 @@ const DashboardCreateRoute = ({
   };
 
   return (
-    <Form
+    <ERMForm
       initialValues={{}}
-      navigationCheck
       onSubmit={postDashboard}
       subscription={{ values: true }}
     >
-      {({ handleSubmit }) => {
+      {({ handleSubmit, pristine, submitting }) => {
         return (
-          <form onSubmit={handleSubmit}>
-            <DashboardForm
-              handlers={{
-                onClose: () => handleClose(),
-                onSubmit: handleSubmit,
-              }}
-            />
-          </form>
+          <DashboardForm
+            handlers={{
+              onClose: () => handleClose(),
+              onSubmit: handleSubmit,
+            }}
+            pristine={pristine}
+            submitting={submitting}
+          />
         );
       }}
-    </Form>
+    </ERMForm>
   );
 };
 
