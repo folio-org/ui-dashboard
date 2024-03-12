@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
-import { useErmForm } from '@folio/stripes-erm-components';
+import { ERMForm } from '@folio/stripes-erm-components';
 
 import DashboardForm from '../components/DashboardForm';
 
@@ -21,7 +20,9 @@ const DashboardEditRoute = ({
   const queryClient = useQueryClient();
   const callout = useCallout();
 
-  const { ERMForm } = useErmForm();
+  const handleClose = () => {
+    history.push(`/dashboard/${params.dashId}`);
+  };
 
   const { mutateAsync: putDashboard } = useMutation(
     ['ERM', 'Dashboard', params.dashId, 'putDashboard'],
@@ -31,37 +32,30 @@ const DashboardEditRoute = ({
 
         queryClient.invalidateQueries(['ERM', 'Dashboard', params.dashId]);
         queryClient.invalidateQueries(['ERM', 'Dashboards']);
+
+        // Handle close needs to be async when working with ERMForm
+        handleClose();
       })
   );
 
-  const handleClose = () => {
-    history.push(`/dashboard/${params.dashId}`);
-  };
-
-  const doTheSubmit = (values) => {
-    putDashboard(values);
-    handleClose();
-  };
-
   return (
     <ERMForm
-      FormComponent={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
-          <DashboardForm
-            dashboardUsers={dashboardUsers}
-            handlers={{
-              onClose: () => handleClose(),
-              onSubmit: handleSubmit,
-            }}
-          />
-        </form>
-      )}
-      formOptions={{
-        subscription: { values: true },
-      }}
       initialValues={dashboard}
-      onSubmit={doTheSubmit}
-    />
+      onSubmit={putDashboard}
+      subscription={{ values: true }}
+    >
+      {({ handleSubmit, pristine, submitting }) => (
+        <DashboardForm
+          dashboardUsers={dashboardUsers}
+          handlers={{
+            onClose: () => handleClose(),
+            onSubmit: handleSubmit,
+          }}
+          pristine={pristine}
+          submitting={submitting}
+        />
+      )}
+    </ERMForm>
   );
 };
 
