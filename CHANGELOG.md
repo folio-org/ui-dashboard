@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 6.1.0 In progress
+
 ## 6.0.0 2023-03-22
 * ERM-3129 Remove explicit typescript version
 * ERM-3122 On editing a widget, the top of the widget configuration screen should display
