@@ -1,6 +1,11 @@
 # Change history for ui-dashboard
 
 ## 5.1.0 In progress
+* ERM-3041 Dashboard: the "unsaved changes" confirmation modal is missing
+* ERM-3121 Validate "Number of rows" field in KIWT / simple search based widgets
+* ERM-3122 On editing a widget, the top of the widget configuration screen should display
+* ERM-3129 Remove explicit typescript version
+* S-41 Improve error handling
 
 ## 5.0.0 2023-10-12
   * Updated github workflows to allow use of multiple cores while running jest tests
