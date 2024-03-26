@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { recursiveUrlDecoding } from '@folio/stripes-erm-components';
 
@@ -23,7 +23,7 @@ const SimpleSearchFooter = ({
     widgetDef
   });
 
-  const timestamp = dataUpdatedAt ? moment(dataUpdatedAt).format('hh:mm a') : '';
+  const timestamp = dataUpdatedAt ? dayjs(dataUpdatedAt).format('hh:mm a') : '';
   const { configurableProperties: { urlLink } = {} } = widgetConf;
 
   const urlLinkButton = () => {

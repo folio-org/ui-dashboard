@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import {
   Col,
@@ -82,7 +82,7 @@ const TokenDatePicker = ({
     } else {
       initialBackendDateValue = meta.initial;
       initialRadioValue = RADIO_VALUE_DATE;
-      initialDateMoment = moment(initialBackendDateValue, backendDateStandard);
+      initialDateMoment = dayjs(initialBackendDateValue, backendDateStandard);
       initialDateValue = initialDateMoment.format(acceptedFormat);
     }
   }
@@ -163,7 +163,7 @@ const TokenDatePicker = ({
 
   const handleDateChange = (e) => {
     setDateValue(e.target.value);
-    const parsedDate = moment(e.target.value, acceptedFormat);
+    const parsedDate = dayjs(e.target.value, acceptedFormat);
     setDateMoment(parsedDate);
     setBackendDateValue(parsedDate.format(backendDateStandard));
 

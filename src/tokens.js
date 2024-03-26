@@ -5,7 +5,7 @@
 // {{currentDate}} {{currentDate#15}} {{currentDate#-10}} {{currentDate#3#w}}
 // So currentDate, optionally +- up to 3 digits, then optionally a 'd', 'w', 'M' or 'y'
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 function tokens(valueString, stripes, options = {}) {
   const dateFormat = options.dateFormat || 'YYYY-MM-DD';
@@ -27,7 +27,7 @@ function tokens(valueString, stripes, options = {}) {
   const dateMatch = tokenMatch.match(/(currentDate)((#)(-?\d{1,3}))?((#)([d,w,M,y]))?/);
   if (dateMatch?.[1] === 'currentDate') {
     // We have matched the date pattern, do date logic
-    const currentDate = moment(new Date()).startOf('day');
+    const currentDate = dayjs(new Date()).startOf('day');
 
     if (dateMatch?.[4]) {
       const offsetInteger = parseInt(dateMatch[4], 10);
