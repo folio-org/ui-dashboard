@@ -152,7 +152,7 @@
     "simpleSearchForm.filters.dateFilterField.fixedDate": "Fixed date",
     "simpleSearchForm.filters.dateFilterField.number": "Number",
     "simpleSearchForm.filters.dateFilterField.infoPopover": "\"Date\" can be relative or fixed. Choose the third radio button option to filter by a fixed date. To apply a relative date choose either the first option \"Today\" or the second option and set the values of the three fields: \"Length of time\", \"Unit of time\" and \"Before or after today\".",
-    "httpError": "HTTPError: {errorCode} {errorText}",
+    "httpError": "HTTPエラー: {errorCode} {errorText}",
     "dashboard.errorDetailsDescription": "以下の現象が発生し、ウィジェットのコンテンツが表示されなくなりました。",
     "dashboard.copyErrorButtonAriaLabel": "クリップホルダーにエラーをコピーする",
     "dashboard.errorDetails": "エラーの詳細",
