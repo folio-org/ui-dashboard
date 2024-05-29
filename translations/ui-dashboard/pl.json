@@ -95,7 +95,7 @@
     "error.noWidgetFormComponentForType": "No widget form component for type: {widgetType}",
     "canvas.actions": "Akcje",
     "dashboard.reorderForm.dragAndDropHandleAria": "Change order of {widgetName} ({index})",
-    "simpleSearchForm.filters.dateFilterField.date": "Date",
+    "simpleSearchForm.filters.dateFilterField.date": "Data",
     "simpleSearchForm.filters.dateFilterField.uuid": "UUID",
     "simpleSearchForm.results.columns": "Columns",
     "simpleSearchForm.results.resultDeleteAria": "Remove column {index}",
