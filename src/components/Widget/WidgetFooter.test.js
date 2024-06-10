@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
@@ -11,7 +11,7 @@ import WidgetFooter from './WidgetFooter';
 
 const widgetFooterProps = {
   onRefresh: jest.fn(() => null),
-  timestamp: moment(Date.now()).format('hh:mm a'),
+  timestamp: dayjs(Date.now()).format('hh:mm a'),
   rightContent: <div> Right content </div>,
   widgetName: 'Test widget 1',
   widgetId: '123456789'
