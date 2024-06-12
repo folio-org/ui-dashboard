@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
 import {
   Col,
@@ -34,6 +35,8 @@ import {
 } from './constants';
 
 import css from './TokenPickers.css';
+
+dayjs.extend(utc);
 
 const TokenDatePicker = ({
   backendDateStandard = 'YYYY-MM-DD',
@@ -82,7 +85,7 @@ const TokenDatePicker = ({
     } else {
       initialBackendDateValue = meta.initial;
       initialRadioValue = RADIO_VALUE_DATE;
-      initialDateMoment = dayjs(initialBackendDateValue, backendDateStandard);
+      initialDateMoment = dayjs.utc(initialBackendDateValue, backendDateStandard);
       initialDateValue = initialDateMoment.format(acceptedFormat);
     }
   }
@@ -163,7 +166,7 @@ const TokenDatePicker = ({
 
   const handleDateChange = (e) => {
     setDateValue(e.target.value);
-    const parsedDate = dayjs(e.target.value, acceptedFormat);
+    const parsedDate = dayjs.utc(e.target.value, acceptedFormat);
     setDateMoment(parsedDate);
     setBackendDateValue(parsedDate.format(backendDateStandard));
 
