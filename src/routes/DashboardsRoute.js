@@ -27,6 +27,7 @@ const DashboardsRoute = ({
   const myDashboardsQueryParams = useMemo(() => (
     generateKiwtQueryParams(
       {
+        perPage: 100,
         sort: [
           {
             path: 'userDashboardWeight'
