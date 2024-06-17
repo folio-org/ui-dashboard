@@ -1,5 +1,9 @@
 import { FormattedMessage } from 'react-intl';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { RADIO_VALUE_DATE, RADIO_VALUE_OFFSET, RADIO_VALUE_USER } from './constants';
+
+dayjs.extend(customParseFormat);
 
 const offsetValidation = (value, radioValue) => {
   const valueInt = parseInt(value, 10);
@@ -10,11 +14,11 @@ const offsetValidation = (value, radioValue) => {
   return undefined;
 };
 
-const dateValidation = (value, radioValue, dateMoment, dateFormat) => {
+const dateValidation = (value, radioValue, dateDayjs, dateFormat) => {
   if (radioValue === RADIO_VALUE_DATE && (
     !value ||
-    !dateMoment?._isValid ||
-    dateMoment?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
+    !dateDayjs?.isValid() ||
+    dateDayjs?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
   )) {
     return <FormattedMessage id="ui-dashboard.tokenDatePicker.validation.invalidDate" values={{ dateFormat }} />;
   }

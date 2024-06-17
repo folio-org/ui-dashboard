@@ -64,7 +64,7 @@ const TokenDatePicker = ({
   let initialRadioValue = RADIO_VALUE_TODAY;
 
   // FIXED DATE FIELD
-  let initialDateMoment = {};
+  let initialDateDayjs = {};
   let initialDateValue = '';
   let initialBackendDateValue = '';
 
@@ -85,8 +85,8 @@ const TokenDatePicker = ({
     } else {
       initialBackendDateValue = meta.initial;
       initialRadioValue = RADIO_VALUE_DATE;
-      initialDateMoment = dayjs.utc(initialBackendDateValue, backendDateStandard);
-      initialDateValue = initialDateMoment.format(acceptedFormat);
+      initialDateDayjs = dayjs(initialBackendDateValue, backendDateStandard);
+      initialDateValue = initialDateDayjs.format(acceptedFormat);
     }
   }
 
@@ -95,7 +95,7 @@ const TokenDatePicker = ({
 
   // Keep track of what's entered into the date field and also what we'll send to the backend
   const [dateValue, setDateValue] = useState(initialDateValue);
-  const [dateMoment, setDateMoment] = useState(initialDateMoment);
+  const [dateDayjs, setDateDayjs] = useState(initialDateDayjs);
   const [backendDateValue, setBackendDateValue] = useState(initialBackendDateValue);
 
   // Keep track of relative offset fields
@@ -145,7 +145,7 @@ const TokenDatePicker = ({
 
     if (offsetValidation(offset, radioValue)) {
       changeOutputValue(ERROR_INVALID_OFFSET);
-    } else if (dateValidation(dateValue, radioValue, dateMoment, acceptedFormat)) {
+    } else if (dateValidation(dateValue, radioValue, dateDayjs, acceptedFormat)) {
       changeOutputValue(ERROR_INVALID_DATE_FIELD);
     } else {
       setValueIfRadioMatch(RADIO_VALUE_DATE, backendDateValue);
@@ -155,7 +155,7 @@ const TokenDatePicker = ({
   }, [
     acceptedFormat,
     backendDateValue,
-    dateMoment,
+    dateDayjs,
     dateValue,
     offset,
     offsetSign,
@@ -166,8 +166,8 @@ const TokenDatePicker = ({
 
   const handleDateChange = (e) => {
     setDateValue(e.target.value);
-    const parsedDate = dayjs.utc(e.target.value, acceptedFormat);
-    setDateMoment(parsedDate);
+    const parsedDate = dayjs(e.target.value, acceptedFormat, true);
+    setDateDayjs(parsedDate);
     setBackendDateValue(parsedDate.format(backendDateStandard));
 
     // Also if we've just changed the date, we should set the radio button accordingly (unless we're clearing the value)
@@ -320,7 +320,7 @@ const TokenDatePicker = ({
           <Datepicker
             backendDateStandard={backendDateStandard}
             disabled={disabled}
-            error={dateValidation(dateValue, radioValue, dateMoment, acceptedFormat)}
+            error={dateValidation(dateValue, radioValue, dateDayjs, acceptedFormat)}
             onChange={handleDateChange}
             timeZone="UTC"
             usePortal
