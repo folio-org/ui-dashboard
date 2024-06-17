@@ -1,9 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { RADIO_VALUE_DATE, RADIO_VALUE_OFFSET, RADIO_VALUE_USER } from './constants';
-
-dayjs.extend(customParseFormat);
 
 const offsetValidation = (value, radioValue) => {
   const valueInt = parseInt(value, 10);
