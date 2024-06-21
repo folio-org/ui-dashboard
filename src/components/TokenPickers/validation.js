@@ -11,12 +11,13 @@ const offsetValidation = (value, radioValue) => {
 };
 
 const dateValidation = (value, radioValue, dateDayjs, dateFormat) => {
-  if (radioValue === RADIO_VALUE_DATE && (
-    !value ||
-    !dateDayjs?.isValid() ||
-    dateDayjs?._pf?.unusedTokens.length // Stops the user being able to enter a subset of their format;
-  )) {
-    return <FormattedMessage id="ui-dashboard.tokenDatePicker.validation.invalidDate" values={{ dateFormat }} />;
+  if (radioValue === RADIO_VALUE_DATE && (!value || !dateDayjs?.isValid())) {
+    return (
+      <FormattedMessage
+        id="ui-dashboard.tokenDatePicker.validation.invalidDate"
+        values={{ dateFormat }}
+      />
+    );
   }
 
   return undefined;
