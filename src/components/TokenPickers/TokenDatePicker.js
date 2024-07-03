@@ -11,6 +11,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
+import { NumberField } from '@k-int/stripes-kint-components';
+
 import {
   Col,
   Datepicker,
@@ -19,7 +21,6 @@ import {
   RadioButton,
   Row,
   Select,
-  TextField
 } from '@folio/stripes/components';
 
 import { detokenise, tokenise } from '../../tokenise';
@@ -248,12 +249,11 @@ const TokenDatePicker = ({
           </div>
         </Col>
         <Col xs={3}>
-          <TextField
+          <NumberField
             disabled={disabled}
             error={offsetValidation(offset, radioValue)}
             marginBottom0
             onChange={handleOffsetChange}
-            type="number"
             validationEnabled
             value={offset}
           />

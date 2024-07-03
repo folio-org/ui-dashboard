@@ -23,6 +23,7 @@ import SimpleSearchSort from '../sort';
 import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';
+import { NumberField } from '@k-int/stripes-kint-components';
 
 
 
@@ -90,13 +91,12 @@ const SimpleSearchResults = ({
         <Col xs={numberOfRows.configurable ? 3 : 0}>
           <Field
             name="configurableProperties.numberOfRows"
-            type="number"
             validate={invalidNumber}
           >
             {({ ...fieldRenderProps }) => {
               if (numberOfRows.configurable) {
                 return (
-                  <TextField
+                  <NumberField
                     {...fieldRenderProps}
                     data-testid="simple-search-configurable-properties-number-of-rows"
                     id="simple-search-configurable-properties-number-of-rows"
