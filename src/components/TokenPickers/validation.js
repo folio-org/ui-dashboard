@@ -2,7 +2,9 @@ import { FormattedMessage } from 'react-intl';
 import { RADIO_VALUE_DATE, RADIO_VALUE_OFFSET, RADIO_VALUE_USER } from './constants';
 
 const offsetValidation = (value, radioValue) => {
-  const valueInt = parseInt(value, 10);
+  // Parse to float first to allow for negative and e values
+  const valueInt = parseInt(parseFloat(value), 10);
+
   if (radioValue === RADIO_VALUE_OFFSET && (valueInt < 0 || valueInt > 999)) {
     return <FormattedMessage id="ui-dashboard.tokenDatePicker.validation.invalidOffset" />;
   }
