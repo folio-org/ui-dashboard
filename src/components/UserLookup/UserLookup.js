@@ -69,7 +69,7 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
       id={`${id}-text-field`}
       onChange={onTextChange}
     />
-  )
+  );
 
   const renderUser = () => {
     const {
@@ -116,10 +116,8 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
   return (
     stripes.hasPerm('ui-users.view') ? (
       <Pluggable
-        type="find-user"
         dataKey="user"
         disableRecordCreation
-        selectUser={onResourceSelected}
         renderTrigger={(pluggableRenderProps) => (
           <Card
             cardStyle={value ? 'positive' : 'negative'}
@@ -131,15 +129,15 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
             {value ? renderUser() : renderEmpty()}
           </Card>
         )}
+        selectUser={onResourceSelected}
+        type="find-user"
       >
-        {/* <FormattedMessage id="stripes-erm-components.contacts.noUserPlugin" /> */}
         {renderTextField()}
       </Pluggable>
     ) : (
       renderTextField()
     )
   );
-
 };
 
 UserLookup.propTypes = propTypes;
