@@ -1,8 +1,18 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, Card, Col, KeyValue, Layout, Row, TextField, Tooltip } from '@folio/stripes/components';
+
 import { AppIcon, Pluggable, useStripes } from '@folio/stripes/core';
+import {
+  Button,
+  Card,
+  Col,
+  KeyValue,
+  Layout,
+  Row,
+  TextField,
+  Tooltip
+} from '@folio/stripes/components';
 import { renderUserName } from '@folio/stripes-erm-components';
 
 const propTypes = {
@@ -20,9 +30,9 @@ const propTypes = {
 const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, onTextChange, resource }) => {
   const stripes = useStripes();
 
-  let triggerButton = useRef(null);
+  const triggerButton = useRef(null);
   const renderLinkUserButton = (v, pluggableRenderProps) => {
-    triggerButton = pluggableRenderProps.buttonRef;
+    triggerButton.current = pluggableRenderProps.buttonRef;
     const buttonProps = {
       'aria-haspopup': 'true',
       'onClick': pluggableRenderProps.onClick,
@@ -113,30 +123,36 @@ const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, 
     </div>
   );
 
-  return (
-    stripes.hasPerm('ui-users.view') ? (
-      <Pluggable
-        dataKey="user"
-        disableRecordCreation
-        renderTrigger={(pluggableRenderProps) => (
-          <Card
-            cardStyle={value ? 'positive' : 'negative'}
-            headerEnd={renderLinkUserButton(value, pluggableRenderProps)}
-            headerStart={<AppIcon app="users" size="small"><strong><FormattedMessage id="stripes-erm-components.contacts.user" /></strong></AppIcon>}
-            id={`${id}-card`}
-            roundedBorder
-          >
-            {value ? renderUser() : renderEmpty()}
-          </Card>
-        )}
-        selectUser={onResourceSelected}
-        type="find-user"
+  const renderPluggableTriggerCard = (pluggableRenderProps) => {
+    return (
+      <Card
+        cardStyle={value ? 'positive' : 'negative'}
+        headerEnd={renderLinkUserButton(value, pluggableRenderProps)}
+        headerStart={<AppIcon app="users" size="small"><strong><FormattedMessage id="stripes-erm-components.contacts.user" /></strong></AppIcon>}
+        id={`${id}-card`}
+        roundedBorder
       >
-        {renderTextField()}
-      </Pluggable>
-    ) : (
-      renderTextField()
-    )
+        {value ? renderUser() : renderEmpty()}
+      </Card>
+    );
+  };
+
+  // If user can't view users, jump straight to fallback option
+  if (!stripes.hasPerm('ui-users.view')) {
+    return renderTextField();
+  }
+
+  return (
+    <Pluggable
+      dataKey="user"
+      disableRecordCreation
+      renderTrigger={renderPluggableTriggerCard}
+      selectUser={onResourceSelected}
+      type="find-user"
+    >
+      {/* Fallback if plugin missing */}
+      {renderTextField()}
+    </Pluggable>
   );
 };
 
