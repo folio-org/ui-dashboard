@@ -15,7 +15,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import UserLookup from '../UserLookup';
+import { UserLookupField } from '../UserLookup';
 import { detokenise, tokenise } from '../../tokenise';
 import { userValidation } from './validation';
 
@@ -191,7 +191,7 @@ const TokenUserPicker = ({
           </div>
         </Col>
         <Col xs={10}>
-          <UserLookup
+          <UserLookupField
             {...userSelectProps}
           />
         </Col>

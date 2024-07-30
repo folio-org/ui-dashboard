@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -27,7 +27,14 @@ const propTypes = {
   resource: PropTypes.object,
 };
 
-const UserLookup = ({ disabled, id, input: { name, value }, onResourceSelected, onTextChange, resource }) => {
+const UserLookup = ({
+  disabled,
+  id,
+  input: { name, value },
+  onResourceSelected,
+  onTextChange,
+  resource
+}) => {
   const stripes = useStripes();
 
   const triggerButton = useRef(null);
