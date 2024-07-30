@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Field, useForm, useFormState } from 'react-final-form';
+
+import sortBy from 'lodash/sortBy';
+
 import {
   Col,
   Select
@@ -53,7 +56,7 @@ const SimpleSearchSort = ({ data: { sortColumns } = {} }) => {
   }
 
   // We have multiple options
-  const selectifiedSortColumns = sortColumns.map(sc => ({ value: sc.name, label: sc.label || sc.name }));
+  const selectifiedSortColumns = sortBy(sortColumns.map(sc => ({ value: sc.name, label: sc.label || sc.name })), 'label');
   const selectifiedSortDirs = selectedSortCol?.sortTypes?.map(st => ({ value: st, label: st })) || [];
 
   return (

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
 
-import { get } from 'lodash';
+import get from 'lodash/get';
+import sortBy from 'lodash/sortBy';
 
 import { Field, useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
@@ -25,7 +26,10 @@ const SimpleSearchFilterField = ({ filterColumns, id, input: { name } }) => {
   const { change } = useForm();
 
   // Create values for available filters. If label available use that, else use name
-  const selectifiedFilterNames = [{ value: '', label: '', disabled: true }, ...filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name }))];
+  const selectifiedFilterNames = [
+    { value: '', label: '', disabled: true },
+    ...sortBy(filterColumns.map(fc => ({ value: fc.name, label: fc.label ?? fc.name })), 'label')
+  ];
 
   // Get currently selectedFilter and then find the full filterColumn from that value
   // TODO is there a better way to pass extra values on selects and get that data back?

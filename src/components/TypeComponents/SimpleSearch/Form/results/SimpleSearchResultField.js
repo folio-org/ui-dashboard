@@ -3,6 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { Field, useForm } from 'react-final-form';
+
+import sortBy from 'lodash/sortBy';
+
 import {
   Col,
   Row,
@@ -16,7 +19,7 @@ const SimpleSearchResultField = ({ resultColumns, input }) => {
   const { change } = useForm();
 
   // Set up result columns to populate result col select
-  const selectifiedResultColumns = resultColumns.map(rc => ({ value: rc.name, label: rc.label || rc.name }));
+  const selectifiedResultColumns = sortBy(resultColumns.map(rc => ({ value: rc.name, label: rc.label || rc.name })), 'label');
   return (
     <Row className={css.innerRow}>
       <Col xs={6}>
