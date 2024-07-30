@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 import css from './DragAndDropFieldArray.css';
 
@@ -34,10 +34,11 @@ const DragAndDropFieldArray = ({
   return (
     <>
       <DragDropContext onDragEnd={makeOnDragEndFunction(fields)}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId={`droppable-for-${fields.name}`}>
           {(droppableProvided, droppableSnapshot) => (
             <div
               ref={droppableProvided.innerRef}
+              id={`droppable-for-${fields.name}`}
               {...droppableProvided.droppableProps}
             >
               {fields.map((name, index) => (
@@ -77,6 +78,7 @@ const DragAndDropFieldArray = ({
                             className={css.handle}
                             data-handle
                             data-testid={name}
+                            id={`drag-handle-field-${name}[${index}]`}
                             {...draggableProvided.dragHandleProps}
                             {...getDragHandleProps({ name, index, item: fields.value[index] })}
                           >
