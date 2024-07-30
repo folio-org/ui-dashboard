@@ -1,6 +1,10 @@
 # Change history for ui-dashboard
 
 ## 6.1.0 In progress
+* SI-65 Dashboard: Drag and Drop Field array does not work in StictMode
+  * Replace `react-beautiful-dnd` with `@hello-pangea/dnd`
+* SI-64 Dashboard: Sort SimpleSearch fields
+* SI-60 Dashboard: TokenUserPicker checks for permission that is not assigned
 
 ## 6.0.0 2023-03-22
 * ERM-3129 Remove explicit typescript version

@@ -10,7 +10,7 @@
     "build": "stripes build --output ./output",
     "lint": "eslint .",
     "test": "yarn run test:jest",
-    "test:jest": "jest --ci --coverage",
+    "test:jest": "jest --ci --coverage --maxWorkers=50%",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-dashboard ./translations/ui-dashboard/compiled"
   },
@@ -88,10 +88,10 @@
     "@folio/stripes-erm-testing": "^2.1.0",
     "@formatjs/cli": "^6.1.3",
     "classnames": ">=2.2.6",
+    "dayjs": "^1.11.10",
     "dom-helpers": "^5.2.1",
     "eslint": "^7.32.0",
     "graphql": "^16.0.0",
-   "dayjs": "^1.11.10",
     "prop-types-extra": ">=1.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -106,6 +106,7 @@
     "zustand": "^4.4.0"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.6.0",
     "@k-int/stripes-kint-components": "^5.8.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.19.0",
@@ -113,7 +114,6 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^7.1.1",
-    "react-beautiful-dnd": "^13.0.0",
     "react-final-form": "^6.4.0",
     "react-final-form-arrays": "^3.1.1",
     "react-grid-layout": "^1.3.4",

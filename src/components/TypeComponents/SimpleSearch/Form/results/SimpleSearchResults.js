@@ -5,6 +5,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 
+import { NumberField } from '@k-int/stripes-kint-components';
+
 import {
   Accordion,
   Button,
@@ -14,7 +16,6 @@ import {
   IconButton,
   MessageBanner,
   Row,
-  TextField,
   Layout
 } from '@folio/stripes/components';
 
@@ -23,7 +24,6 @@ import SimpleSearchSort from '../sort';
 import DragAndDropFieldArray from '../../../../DragAndDropFieldArray';
 
 import css from './SimpleSearchResults.css';
-import { NumberField } from '@k-int/stripes-kint-components';
 
 
 

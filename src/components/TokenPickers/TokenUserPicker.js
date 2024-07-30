@@ -8,17 +8,14 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useModules, useStripes } from '@folio/stripes/core';
-
 import {
   Col,
   nativeChangeFieldValue as nativeChangeField,
   RadioButton,
   Row,
-  TextField
 } from '@folio/stripes/components';
 
-import UserLookup from '../UserLookup';
+import { UserLookupField } from '../UserLookup';
 import { detokenise, tokenise } from '../../tokenise';
 import { userValidation } from './validation';
 
@@ -40,13 +37,6 @@ const TokenUserPicker = ({
   resource
 }) => {
   const intl = useIntl();
-  // Set up stripes to handle plugin rendering
-  const stripes = useStripes();
-  const { plugin: modulePlugins } = useModules();
-
-  // TODO isEnabled for plugins/modules is something that should be exposed, perhaps via the registry
-  const findUserPluginAvailable = !!modulePlugins?.find(p => p.pluginType === 'find-user') &&
-    stripes.hasPerm('module.ui-plugin-find-user.enabled');
 
   // Refs
   const hiddenInput = useRef(null);
@@ -88,29 +78,17 @@ const TokenUserPicker = ({
     }
   };
 
-  let UserSelectComponent;
-  let userSelectProps = {};
-  if (findUserPluginAvailable) {
-    UserSelectComponent = UserLookup;
-    userSelectProps = {
-      disabled,
-      id: `${input.name}-user-lookup`,
-      input: {
-        name: `${input.name}-user-lookup`,
-        value: user
-      },
-      onResourceSelected: handleUserLookupChange,
-      resource: user
-    };
-  } else {
-    // If we can't use that plugin for whatever reason, ensure we fallback to TextField
-    UserSelectComponent = TextField;
-    userSelectProps = {
-      disabled,
-      id: `${input.name}-user-textfield`,
-      onChange: handleUserTextChange,
-    };
-  }
+  const userSelectProps = {
+    disabled,
+    id: `${input.name}-user-lookup`,
+    input: {
+      name: `${input.name}-user-lookup`,
+      value: user
+    },
+    onTextChange: handleUserTextChange,
+    onResourceSelected: handleUserLookupChange,
+    resource: user
+  };
 
   // Stripes form components have made it impossible to do this using ref.
   const radioButtonMe = document.getElementById(`${input.name}-tokenDatePicker-radio-me`);
@@ -213,7 +191,7 @@ const TokenUserPicker = ({
           </div>
         </Col>
         <Col xs={10}>
-          <UserSelectComponent
+          <UserLookupField
             {...userSelectProps}
           />
         </Col>
