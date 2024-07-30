@@ -23,11 +23,11 @@ const propTypes = {
     value: PropTypes.string
   }),
   onResourceSelected: PropTypes.func,
-  onTextChange: PropTypes.func.isRequired,
+  onTextChange: PropTypes.func,
   resource: PropTypes.object,
 };
 
-const UserLookup = ({
+const UserLookupField = ({
   disabled,
   id,
   input: { name, value },
@@ -163,6 +163,6 @@ const UserLookup = ({
   );
 };
 
-UserLookup.propTypes = propTypes;
+UserLookupField.propTypes = propTypes;
 
-export default UserLookup;
+export default UserLookupField;
