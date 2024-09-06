@@ -142,7 +142,7 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "is not null",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "is set",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "is not set",
-    "simpleSearchForm.matches": "Search",
+    "simpleSearchForm.matches": "検索",
     "appMenu.keyboardShortcuts": "キーボードショートカット",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
     "widgetForm.editWidget": "ウィジェットの編集: {widgetName}",
