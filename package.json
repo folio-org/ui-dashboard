@@ -66,13 +66,16 @@
         "visible": true
       },
       {
-        "permissionName": "ui-dashboard.dashboards.admin",
+        "permissionName": "ui-dashboard.dashboards.admin.manage",
         "displayName": "Dashboard: Dashboard administrator",
         "description": "A user with this permission has no user-based restrictions on which dashboards and widgets they can interact with, ie create/delete/update",
         "subPermissions": [
-          "servint.dashboards.admin"
+          "servint.dashboards.admin.manage"
         ],
-        "visible": true
+        "visible": true,
+        "replaces": [
+          "ui-dashboard.dashboards.admin"
+        ]
       }
     ]
   },
