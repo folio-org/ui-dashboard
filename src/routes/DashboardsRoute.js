@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
+
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { useChunkedUsers, useParallelBatchFetch } from '@folio/stripes-erm-components';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
