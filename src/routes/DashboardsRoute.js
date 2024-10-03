@@ -1,12 +1,12 @@
-import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useMemo } from 'react';
 
-import { useParams } from 'react-router';
-import { useQuery } from 'react-query';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useChunkedUsers, useParallelBatchFetch } from '@folio/stripes-erm-components';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 
 import { useDashboardAccessStore } from '../hooks';
 
@@ -81,7 +81,7 @@ const DashboardsRoute = ({
     ['ui-dashboard', 'dashboardRoute', 'my-access', dashId],
     () => ky(`servint/dashboard/${dashId}/my-access`).json()
       .then(res => {
-        setAccess(dashId, res.access, stripes.hasPerm('servint.dashboards.admin'));
+        setAccess(dashId, res.access, stripes.hasPerm('ui-dashboard.dashboards.admin.manage'));
       }),
     {
       enabled: !!dashId
