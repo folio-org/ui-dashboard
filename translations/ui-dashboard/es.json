@@ -190,7 +190,7 @@
     "dashboardUsers.email": "Correo electrónico",
     "dashboardUsers.remove": "Eliminar",
     "dashboardUsers.addUser": "Añadir usuario",
-    "dashboardUsers.accessWarning": "<strong> Advertencia </strong> : El usuario que ha iniciado sesión no existe como usuario en este panel. El acceso se otorga a través de un permiso de sistema de alto nivel (permiso de puerta de enlace Okapi \"servint.dashboard.admin\").",
+    "dashboardUsers.accessWarning": "<strong> Advertencia </strong> : El usuario que ha iniciado sesión no existe como usuario en este panel. El acceso se otorga a través de un permiso de sistema de alto nivel (\"ui-dashboard.dashboards.admin.manage\").",
     "dashboardUsers.warningInactive": "<strong>Advertencia</strong>: el usuario <strong>{user}</strong> está inactivo y debe ser eliminado de este panel.",
     "dashboardUsers.errorMissing": "<strong> Error </strong> : el usuario <strong> {user} </strong> no se puede encontrar en la aplicación Usuarios. Esto podría significar que el usuario ha sido eliminado permanentemente. Si el problema persiste, el usuario debe ser eliminado de este tablero.",
     "dashboardUsers.removeUsers": "Eliminar usuario(s)",

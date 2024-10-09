@@ -190,7 +190,7 @@
     "dashboardUsers.email": "E-mail",
     "dashboardUsers.remove": "Verwijderen",
     "dashboardUsers.addUser": "Gebruiker toevoegen",
-    "dashboardUsers.accessWarning": "<strong>Let op</strong>: De ingelogde gebruiker bestaat niet als gebruiker op dit dashboard. Toegang wordt verleend via systeemtoestemming (Okapi gateway-toestemming \"servint.dashboard.admin\").",
+    "dashboardUsers.accessWarning": "<strong>Let op</strong>: De ingelogde gebruiker bestaat niet als gebruiker op dit dashboard. Toegang wordt verleend via systeemtoestemming (\"ui-dashboard.dashboards.admin.manage\").",
     "dashboardUsers.warningInactive": "<strong>Let op</strong>: Gebruiker <strong>{user}</strong> is inactief en moet van dit dashboard verwijderd worden.",
     "dashboardUsers.errorMissing": "<strong>Fout</strong>: Gebruiker <strong>{user}</strong> kan niet worden gevonden in de gebruikersapp. Dit kan betekenen dat de gebruiker permanent verwijderd is. Als het probleem aanhoudt, moet de gebruiker van dit dashboard verwijderd worden.",
     "dashboardUsers.removeUsers": "Gebruiker(s) verwijderen",
