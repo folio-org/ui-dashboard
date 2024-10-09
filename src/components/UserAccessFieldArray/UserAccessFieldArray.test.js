@@ -235,7 +235,7 @@ describe('UserAccessFieldArray', () => {
     });
 
     test('Renders a warning about access', async () => {
-      await MessageBanner('<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (Okapi gateway permission "servint.dashboard.admin").').exists();
+      await MessageBanner('<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (via "ui-dashboard.dashboards.admin.manage").').exists();
     });
 
     test('Renders an MCL with the expected headers', async () => {
