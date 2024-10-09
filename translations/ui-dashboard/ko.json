@@ -190,7 +190,7 @@
     "dashboardUsers.email": "이메일",
     "dashboardUsers.remove": "제거",
     "dashboardUsers.addUser": "사용자 추가",
-    "dashboardUsers.accessWarning": "<strong> 경고 </strong> : 로그인한 사용자는 이 대시보드에 사용자로 존재하지 않습니다. 높은 수준의 시스템 권한(Okapi 게이트웨이 권한 \"servint.dashboard.admin\")을 통해 액세스 권한이 부여됩니다.",
+    "dashboardUsers.accessWarning": "<strong> 경고 </strong> : 로그인한 사용자는 이 대시보드에 사용자로 존재하지 않습니다. 높은 수준의 시스템 권한(\"ui-dashboard.dashboards.admin.manage\")을 통해 액세스 권한이 부여됩니다.",
     "dashboardUsers.warningInactive": "<strong> 경고 </strong> : <strong> {user} </strong> 사용자가 비활성 상태이므로 이 대시보드에서 제거해야 합니다.",
     "dashboardUsers.errorMissing": "<strong> 오류 </strong> : 사용자 <strong> {user} </strong> 를 사용자 앱에서 찾을 수 없습니다. 이는 사용자가 영구적으로 삭제되었음을 의미할 수 있습니다. 문제가 지속되면 이 대시보드에서 사용자를 제거해야 합니다.",
     "dashboardUsers.removeUsers": "사용자 제거",

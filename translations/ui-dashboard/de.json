@@ -190,7 +190,7 @@
     "dashboardUsers.email": "E-Mail",
     "dashboardUsers.remove": "Entfernen",
     "dashboardUsers.addUser": "Person hinzufügen",
-    "dashboardUsers.accessWarning": "<strong>Warnung</strong>: Die eingeloggte Person existiert nicht als Person auf diesem Dashboard. Der Zugriff wird über eine übergeordnete Systemberechtigung gewährt (Okapi-Gateway-Berechtigung \"servint.dashboard.admin\").",
+    "dashboardUsers.accessWarning": "<strong>Warnung</strong>: Die eingeloggte Person existiert nicht als Person auf diesem Dashboard. Der Zugriff wird über eine übergeordnete Systemberechtigung gewährt (\"ui-dashboard.dashboards.admin.manage\").",
     "dashboardUsers.warningInactive": "<strong>Warnung</strong>: Person <strong>{user}</strong> ist inaktiv und sollte aus diesem Dashboard entfernt werden.",
     "dashboardUsers.errorMissing": "<strong>Fehler</strong>: Person <strong>{user}</strong> kann in der Personenapp nicht gefunden werden. Dies könnte bedeuten, dass der Benutzer dauerhaft gelöscht wurde. Wenn das Problem weiterhin besteht, sollte die Person aus diesem Dashboard entfernt werden.",
     "dashboardUsers.removeUsers": "Person(en) entfernen",

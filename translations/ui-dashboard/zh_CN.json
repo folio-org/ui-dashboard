@@ -190,7 +190,7 @@
     "dashboardUsers.email": "电子邮件",
     "dashboardUsers.remove": "移除",
     "dashboardUsers.addUser": "添加用户",
-    "dashboardUsers.accessWarning": "<strong>警告</strong> ：登录用户在此仪表板上不作为用户存在。通过高级系统权限（Okapi 网关权限“servint.dashboard.admin”）授予访问权限。",
+    "dashboardUsers.accessWarning": "<strong>警告</strong> ：登录用户在此仪表板上不作为用户存在。通过高级系统权限（\"ui-dashboard.dashboards.admin.manage\"）授予访问权限。",
     "dashboardUsers.warningInactive": "<strong>警告</strong> ：用户<strong> {user} </strong>处于非激活状态，应从此仪表板中移除。",
     "dashboardUsers.errorMissing": "<strong>错误</strong> ：在用户应用程序中找不到用户<strong> {user} </strong> 。这可能意味着该用户已被永久删除。如果问题仍然存在，则应将用户从此仪表板中移除。",
     "dashboardUsers.removeUsers": "移除用户",

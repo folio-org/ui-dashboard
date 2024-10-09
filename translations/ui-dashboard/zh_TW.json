@@ -190,7 +190,7 @@
     "dashboardUsers.email": "電子郵件",
     "dashboardUsers.remove": "移除",
     "dashboardUsers.addUser": "新增使用者",
-    "dashboardUsers.accessWarning": "<strong>警告</strong> ：登入的使用者不作為此儀表板上的使用者存在。存取權限是透過進階系統權限（Okapi 閘道權限「servint.dashboard.admin」）授予的。",
+    "dashboardUsers.accessWarning": "<strong>警告</strong> ：登入的使用者不作為此儀表板上的使用者存在。存取權限是透過進階系統權限（\"ui-dashboard.dashboards.admin.manage\"）授予的。",
     "dashboardUsers.warningInactive": "<strong>警告</strong> ：使用者<strong> {user} </strong>處於非活動狀態，應從此儀表板中移除。",
     "dashboardUsers.errorMissing": "<strong>錯誤</strong> ：在「使用者」應用程式中找不到使用者<strong> {user} </strong> 。這可能意味著該使用者已被永久刪除。如果問題仍然存在，則應將該使用者從該儀表板中移除。",
     "dashboardUsers.removeUsers": "移除使用者",

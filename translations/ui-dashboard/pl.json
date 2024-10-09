@@ -190,7 +190,7 @@
     "dashboardUsers.email": "Email",
     "dashboardUsers.remove": "Usuń",
     "dashboardUsers.addUser": "Dodaj użytkownika",
-    "dashboardUsers.accessWarning": "<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (Okapi gateway permission \"servint.dashboard.admin\").",
+    "dashboardUsers.accessWarning": "<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (via \"ui-dashboard.dashboards.admin.manage\").",
     "dashboardUsers.warningInactive": "<strong>Uwaga</strong>: użytkownik <strong>{user}</strong> jest nieaktywny i powinien być usunięty z panelu kontrolnego (dashboard).",
     "dashboardUsers.errorMissing": "<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.",
     "dashboardUsers.removeUsers": "Usuń użytkownika(-ów)",
