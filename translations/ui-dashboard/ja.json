@@ -190,7 +190,7 @@
     "dashboardUsers.email": "Eメール",
     "dashboardUsers.remove": "削除",
     "dashboardUsers.addUser": "ユーザーの追加",
-    "dashboardUsers.accessWarning": "<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (via \"ui-dashboard.dashboards.admin.manage\").",
+    "dashboardUsers.accessWarning": "<strong>Warning</strong>: The logged in user does not exist as a user on this dashboard. Access is being granted through a high level system permission (Okapi gateway permission \"servint.dashboard.admin\").",
     "dashboardUsers.warningInactive": "<strong>警告</strong> : ユーザー<strong> {user} </strong>は無効なので、このダッシュボードから削除する必要があります。",
     "dashboardUsers.errorMissing": "<strong>Error</strong>: user <strong>{user}</strong> cannot be found in the Users app. This could mean that the user has been permanently deleted. If the problem persists the user should be removed from this dashboard.",
     "dashboardUsers.removeUsers": "Remove user(s)",
