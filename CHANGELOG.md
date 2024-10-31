@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 6.2.0 IN PROGRESS
+
 ## 6.1.0 2024-10-31
 * SI-65 Dashboard: Drag and Drop Field array does not work in StictMode
   * Replace `react-beautiful-dnd` with `@hello-pangea/dnd`
