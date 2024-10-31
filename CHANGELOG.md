@@ -1,13 +1,18 @@
 # Change history for ui-dashboard
 
-## 6.1.0 In progress
+## 6.1.0 2024-10-31
 * SI-65 Dashboard: Drag and Drop Field array does not work in StictMode
   * Replace `react-beautiful-dnd` with `@hello-pangea/dnd`
 * SI-64 Dashboard: Sort SimpleSearch fields
 * SI-60 Dashboard: TokenUserPicker checks for permission that is not assigned
+* SI-55 Dashboard app displays only the first 10 dashboards
+* SI-34 Dashboard fails if any module fails to respond to /servint/widgets/definitions/global
+* ERM-3376 Update module license and guidance for ui-dashboard
+* ERM-3351 Review and cleanup Module Descriptor for ui-dashboard
+* ERM-3165 Replace moment with dayjs across app suite
 * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
-## 6.0.0 2023-03-22
+## 6.0.0 2024-03-22
 * ERM-3129 Remove explicit typescript version
 * ERM-3122 On editing a widget, the top of the widget configuration screen should display
 * ERM-3121 Validate "Number of rows" field in KIWT / simple search based widgets
