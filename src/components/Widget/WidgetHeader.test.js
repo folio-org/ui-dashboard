@@ -25,8 +25,10 @@ jest.mock('../../hooks', () => ({
 
 
 describe('WidgetHeader', () => {
-  test('renders expected widget name', () => {
-    const { getByText } = renderWithIntl(
+  let renderComponent;
+  let actionsButton;
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
       <WidgetHeader
         name={widgetName}
         onWidgetDelete={onWidgetDelete}
@@ -37,23 +39,16 @@ describe('WidgetHeader', () => {
       translationsProperties
     );
 
+    actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
+  });
+
+  test('renders expected widget name', () => {
+    const { getByText } = renderComponent;
     expect(getByText(widgetName)).toBeInTheDocument();
   });
 
   test('renders actions button with correct menu options available on click with \'edit\' access', async () => {
-    const { getByRole } = renderWithIntl(
-      <WidgetHeader
-        name={widgetName}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widgetId={widgetId}
-        widgetMoveHandler={widgetMoveHandler}
-      />,
-      translationsProperties
-    );
-
-    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-
+    const { getByRole } = renderComponent;
     expect(actionsButton.exists());
 
     expect(getByRole('button', { name: /Edit widget: Widget Test 1/i, hidden: true })).toBeInTheDocument();
@@ -61,19 +56,7 @@ describe('WidgetHeader', () => {
   });
 
   test('renders actions button with correct menu options available on click without \'edit\' access', async () => {
-    const { getByRole } = renderWithIntl(
-      <WidgetHeader
-        name={widgetName}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widgetId={widgetId}
-        widgetMoveHandler={widgetMoveHandler}
-      />,
-      translationsProperties
-    );
-
-    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-
+    const { getByRole } = renderComponent;
     expect(actionsButton.exists());
 
     expect(getByRole('button', { name: /Edit widget: Widget Test 1/i, hidden: true })).toBeInTheDocument();
@@ -81,59 +64,34 @@ describe('WidgetHeader', () => {
   });
 
   test('renders actions button with correct menu options available on click without \'edit\' access but with admin perm', async () => {
-    renderWithIntl(
-      <WidgetHeader
-        name={widgetName}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widgetId={widgetId}
-        widgetMoveHandler={widgetMoveHandler}
-      />,
-      translationsProperties
-    );
-
-    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-
     expect(actionsButton.absent());
   });
 
-  test('fires onWidgetEdit on clicking edit button', async () => {
-    renderWithIntl(
-      <WidgetHeader
-        name={widgetName}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widgetId={widgetId}
-        widgetMoveHandler={widgetMoveHandler}
-      />,
-      translationsProperties
-    );
-
-    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-    await waitFor(async () => {
-      await actionsButton.choose('Edit');
+  describe('clicking edit button', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await actionsButton.choose('Edit');
+      });
     });
 
-    expect(onWidgetEdit.mock.calls.length).toBe(1);
+    test('fires onWidgetEdit on clicking edit button', async () => {
+      await waitFor(() => {
+        expect(onWidgetEdit.mock.calls.length).toBe(1);
+      });
+    });
   });
 
-  test('fires onWidgetDelete on clicking delete button', async () => {
-    renderWithIntl(
-      <WidgetHeader
-        name={widgetName}
-        onWidgetDelete={onWidgetDelete}
-        onWidgetEdit={onWidgetEdit}
-        widgetId={widgetId}
-        widgetMoveHandler={widgetMoveHandler}
-      />,
-      translationsProperties
-    );
-
-    const actionsButton = Dropdown(/Actions for widget: Widget Test 1/i);
-    await waitFor(async () => {
-      await actionsButton.choose('Delete');
+  describe('clicking delete button', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await actionsButton.choose('Delete');
+      });
     });
 
-    expect(onWidgetDelete.mock.calls.length).toBe(1);
+    test('fires onWidgetEdit on clicking edit button', async () => {
+      await waitFor(() => {
+        expect(onWidgetDelete.mock.calls.length).toBe(1);
+      });
+    });
   });
 });
