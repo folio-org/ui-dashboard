@@ -100,10 +100,8 @@ const DashboardContainer = ({
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}
         />
-        <div className={css.dashboardContent}>
-          <DashboardAccessInfo dashId={dashboard.id} />
-          {dashboardContents()}
-        </div>
+        <DashboardAccessInfo dashId={dashboard.id} />
+        <div className={css.dashboardContent}> {dashboardContents()} </div>
         <ConfirmationModal
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
@@ -129,7 +127,7 @@ const DashboardContainer = ({
         />
         <ErrorModal
           handlers={{
-            onHideModal: handleHideModal
+            onHideModal: handleHideModal,
           }}
           message={errorState.errorMessage}
           modalOpen={errorState.errorModalOpen}
