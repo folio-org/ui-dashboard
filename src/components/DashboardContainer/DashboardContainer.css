@@ -20,7 +20,12 @@
 /**
  * Pane Content
  */
-
+.dashboardContentBanner {
+  height: 100%;
+  outline: 0;
+  padding: var(--gutter-static);
+  position: relative
+}
 .dashboardContent {
   height: 100%;
   overflow-y: scroll;
