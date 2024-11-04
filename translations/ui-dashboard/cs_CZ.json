@@ -190,7 +190,7 @@
     "dashboardUsers.email": "E-mail",
     "dashboardUsers.remove": "Odstranit",
     "dashboardUsers.addUser": "Přidat uživatele",
-    "dashboardUsers.accessWarning": "<strong>Varování</strong>: Přihlášený uživatel na této nástěnce neexistuje jako uživatel. Přístup je udělován prostřednictvím systémového oprávnění vysoké úrovně (\"ui-dashboard.dashboards.admin.manage\").",
+    "dashboardUsers.accessWarning": "<strong>Varování</strong>: Přihlášený uživatel na této nástěnce neexistuje jako uživatel. Přístup je udělován prostřednictvím systémového oprávnění vysoké úrovně (oprávnění brány Okapi \"servint.dashboard.admin\").",
     "dashboardUsers.warningInactive": "<strong>Varování</strong>: uživatel <strong>{user}</strong> je neaktivní a měl by být z této nástěnky odstraněn.",
     "dashboardUsers.errorMissing": "<strong>Chyba</strong>: uživatele <strong>{user}</strong> nelze najít v aplikaci Uživatelé. To může znamenat, že uživatel byl trvale smazán. Pokud problém přetrvává, měl by být uživatel z této nástěnky odstraněn.",
     "dashboardUsers.removeUsers": "Odebrat uživatele",
