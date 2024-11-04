@@ -100,10 +100,8 @@ const DashboardContainer = ({
           onReorder={widgets?.length > 1 ? onReorder : null}
           onUserAccess={onUserAccess}
         />
-        <>
-          <div className={css.dashboardBannerContainer}><DashboardAccessInfo dashId={dashboard.id} /></div>
-          <div className={css.dashboardContent}> {dashboardContents()} </div>
-        </>
+        <div className={css.dashboardBannerContainer}><DashboardAccessInfo dashId={dashboard.id} /></div>
+        <div className={css.dashboardContent}> {dashboardContents()} </div>
         <ConfirmationModal
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-dashboard.delete" />}
