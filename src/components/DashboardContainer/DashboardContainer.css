@@ -21,11 +21,14 @@
  * Pane Content
  */
 
+.dashboardBannerContainer {
+  padding: var(--gutter-static);
+}
+
 .dashboardContent {
   height: 100%;
   overflow-y: scroll;
   overflow: auto;
   outline: 0;
-  padding: var(--gutter-static);
   position: relative
 }
