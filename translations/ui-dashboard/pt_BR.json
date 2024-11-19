@@ -142,7 +142,7 @@
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotNull": "não é nulo",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isSet": "está definido",
     "simpleSearchForm.filters.filterField.comparator.DateTime.isNotSet": "não está definido",
-    "simpleSearchForm.matches": "Pesquisa",
+    "simpleSearchForm.matches": "Buscar",
     "appMenu.keyboardShortcuts": "Atalhos do teclado",
     "simpleSearchForm.filters.filterField.rule.and": "AND",
     "widgetForm.editWidget": "Editar widget - {widgetName}",
