@@ -2,6 +2,10 @@
 
 ## 6.2.0 IN PROGRESS
 
+## 6.1.1 2024-11-28
+* SI- 70 Dashboard admin permission warning obscured by widgets
+* ERM-3309 Create UI equivalent to servint dashboard admin permission
+
 ## 6.1.0 2024-10-31
 * SI-65 Dashboard: Drag and Drop Field array does not work in StictMode
   * Replace `react-beautiful-dnd` with `@hello-pangea/dnd`
