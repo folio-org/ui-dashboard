@@ -1,6 +1,6 @@
 {
     "meta.title": "儀表板",
-    "noWidgets": "新增 widget 到儀表板",
+    "noWidgets": "新增 widget 小工具到儀表板",
     "dashboard.newWidget": "{label} widget",
     "widgetForm.createWidget": "新 widget",
     "widgetFooter.refreshButtonLabel": "重新整理 widget: {widgetName}",
