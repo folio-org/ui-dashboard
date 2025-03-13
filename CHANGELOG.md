@@ -1,6 +1,8 @@
 # Change history for ui-dashboard
 
-## 6.2.0 IN PROGRESS
+## 7.0.0 2025-03-13
+* ERM-3609 *BREAKING* Stripes v10 dependencies update (#312)
+  * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
 
 ## 6.1.1 2024-11-28
 * SI- 70 Dashboard admin permission warning obscured by widgets
