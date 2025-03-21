@@ -106,8 +106,8 @@
     "simpleSearchForm.filters.dateFilterField.offsetValidation": "Offset must be greater than or equal to 0 and no larger than 999",
     "simpleSearchForm.results.minimumWarning": "Błąd: Wyświetlane wyniki muszą zawierać co najmniej jedną kolumnę.",
     "simpleSearch.widget.linkTextForWidget": "{linkText} dla widżety: {widgetName}",
-    "dashboard.deleteWidget": "Delete widget",
-    "dashboard.deleteWidgetConfirmMessage": "Widget <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "dashboard.deleteWidget": "Usuń widżet",
+    "dashboard.deleteWidgetConfirmMessage": "Widżet<strong>{name}</strong> zostanie <strong>usunięty</strong>.",
     "simpleSearchForm.filters.filterField.comparator.Date.isSet": "jest ustawiono",
     "simpleSearchForm.filters.filterField.comparator.Date.isNotSet": "nie jest ustawiony",
     "simpleSearchForm.filters.filterField.comparator.String.isSet": "jest ustawiony",
@@ -236,6 +236,6 @@
     "simpleSearchForm.error.invalidURL": "Proszę wprowadź poprawny adres URL",
     "simpleSearchForm.error.invalidURL.tooltip": "Zaczyna się od: \"https://\", \"http://\" or \"/\" i nie zawiera znaków specjalnych niedozwolonych w adresie URL",
     "simpleSearchForm.error.invalidInputSize": "Maksymalna liczba znaków dla adresu URL to 2048",
-    "error.noWidgetDefinition": "No definition found for widget",
-    "error.noWidgetDefinitionForName": "Could not load widget definition: {defName}"
+    "error.noWidgetDefinition": "Nie znaleziono definicji dla widżetu",
+    "error.noWidgetDefinitionForName": "Nie można załadować definicji widżetu: {defName}"
 }
