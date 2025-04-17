@@ -217,7 +217,7 @@
     "dashboard.name": "Name",
     "dashboard.name.info": "The short name will be used to create the menu button for the dashboard. The number of characters is limited to 25 maximum",
     "dashboard.name.tooLong": "Dashboard name is limited to 25 characters.",
-    "dashboard.description": "Description",
+    "dashboard.description": "Опис",
     "userDashboards.dashboardOrder": "Dashboard menu order",
     "userDashboards.dashboardOrder.dragAndDropHandleAria": "Change order of {dashboard} ({index})",
     "deleteDashboardHeader": "Delete dashboard - {name}",
