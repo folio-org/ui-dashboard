@@ -1,5 +1,5 @@
 {
-    "meta.title": "Dashboard",
+    "meta.title": "Інформаційна панель",
     "noWidgets": "Додати новий віджет на свою інформаційну панель",
     "dashboard.newWidget": "{label} widget",
     "widgetForm.createWidget": "Новий віджет",
@@ -180,7 +180,7 @@
     "tokenUserPicker.validation.invalidUser": "Please choose a user to continue",
     "simpleSearchForm.filters.uuidFilterField.emptyWarning": "Please enter a valid UUID to continue",
     "saveAndClose": "Save & close",
-    "okay": "Okay",
+    "okay": "Добре",
     "dashboardUsers.userAccess": "User access - {dashboardName}",
     "dashboardUsers.user": "User",
     "dashboardUsers.status": "Status",
