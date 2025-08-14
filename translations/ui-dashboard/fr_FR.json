@@ -182,7 +182,7 @@
     "saveAndClose": "Save & close",
     "okay": "Okay",
     "dashboardUsers.userAccess": "User access - {dashboardName}",
-    "dashboardUsers.user": "User",
+    "dashboardUsers.user": "Utilisateur",
     "dashboardUsers.status": "Status",
     "dashboardUsers.status.active": "Active",
     "dashboardUsers.status.inactive": "Inactive",
