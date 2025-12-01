@@ -43,7 +43,11 @@
       {
         "permissionName": "module.dashboard.enabled",
         "displayName": "UI: Dashboard module is enabled",
-        "visible": false
+        "visible": false,
+        "subPermissions": [
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
+        ]
       },
       {
         "permissionName": "settings.dashboard.enabled",
@@ -51,7 +55,9 @@
         "subPermissions": [
           "settings.enabled",
           "servint.settings.write",
-          "servint.refdata.write"
+          "servint.refdata.write",
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
         ],
         "visible": false
       },
