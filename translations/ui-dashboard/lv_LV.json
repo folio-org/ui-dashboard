@@ -225,7 +225,7 @@
     "viewUserAccess": "View user access",
     "manageUserAccess": "Manage user access",
     "deleteDashboard.messageMultiUsers": "Deleting the dashboard <strong>{name}</strong> will remove access for one or more users. Select \"Delete\" to go ahead.",
-    "users": "Users",
+    "users": "Lietotāji",
     "dashboard.create.success": "<strong>Dashboard created:</strong> {dashboardName}",
     "dashboard.edit.success": "<strong>Dashboard updated:</strong> {dashboardName}",
     "dashboard.delete.success": "<strong>Dashboard deleted:</strong> {dashboardName}",
