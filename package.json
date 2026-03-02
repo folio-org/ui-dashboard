@@ -45,8 +45,7 @@
         "displayName": "UI: Dashboard module is enabled",
         "visible": false,
         "subPermissions": [
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ]
       },
       {
@@ -56,8 +55,7 @@
           "settings.enabled",
           "servint.settings.write",
           "servint.refdata.write",
-          "mod-settings.global.read.stripes-core.prefs.manage",
-          "mod-settings.entries.collection.get"
+          "stripes-core.settings.read"
         ],
         "visible": false
       },
