@@ -184,7 +184,7 @@
     "dashboardUsers.userAccess": "User access - {dashboardName}",
     "dashboardUsers.user": "Utilisateur",
     "dashboardUsers.status": "Status",
-    "dashboardUsers.status.active": "Active",
+    "dashboardUsers.status.active": "Actif",
     "dashboardUsers.status.inactive": "Inactive",
     "dashboardUsers.status.error": "Error",
     "dashboardUsers.email": "Email",
