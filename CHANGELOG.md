@@ -1,6 +1,9 @@
 # Change history for ui-dashboard
 
-## 7.1.0 IN PROGRESS
+## 7.1.0 2026-04-17
+  * SI-137 Include global permissions in package.json base permissions
+  * ERM-3886: ui-dashboard: include global permissions in package.json base permissions
+  * ERM-3797: Dashboard no longer loads after Zustand upgrade
 
 ## 7.0.0 2025-03-13
 * ERM-3609 *BREAKING* Stripes v10 dependencies update (#312)
