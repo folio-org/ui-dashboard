@@ -1,5 +1,7 @@
 # Change history for ui-dashboard
 
+## 7.2.0 IN PROGRESS
+
 ## 7.1.0 2026-04-17
   * SI-137 Include global permissions in package.json base permissions
   * ERM-3886: ui-dashboard: include global permissions in package.json base permissions
