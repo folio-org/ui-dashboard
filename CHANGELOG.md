@@ -1,6 +1,7 @@
 # Change history for ui-dashboard
 
-## 7.2.0 IN PROGRESS
+## 7.1.1 2026-05-28
+  * Updated dependencies for Trillium release
 
 ## 7.1.0 2026-04-17
   * SI-137 Include global permissions in package.json base permissions
