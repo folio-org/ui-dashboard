@@ -1,5 +1,6 @@
 {
     "meta.title": "Dashboard",
+    "simpleSearchForm.resourceName.localKB": "Local KB resource name",
     "noWidgets": "Add a new widget to your dashboard",
     "dashboard.newWidget": "{label} widget",
     "widgetForm.createWidget": "New widget",

@@ -56,7 +56,7 @@ const simpleSearchColumnParser = ({
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
     const headerText = (rc.label || drc.label || capitaliseText(drc.name));
     const headerTextWithClarity = (resource === 'entitlements' && drc.name === 'resourceName' && headerText === 'Resource name') ?
-      intl.formatMessage({ id: 'ui-agreements.agreementLines.localKBResourceName' }) :
+      intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.resourceName.localKB' }) :
       headerText;
 
     const returnColumn = { Header: headerTextWithClarity, accessor: drc.accessPath, id: `${rc.name}-[${index}]` };

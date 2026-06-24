@@ -39,7 +39,7 @@ const SimpleSearchForm = ({
   const { resource } = specificWidgetDefinition?.definition ?? {};
   const colOverride = (col) => (
     (resource === 'entitlements' && col.name === 'resourceName' && col.label === 'Resource name') ?
-      { ...col, label: intl.formatMessage({ id: 'ui-agreements.agreementLines.localKBResourceName' }) } :
+      { ...col, label: intl.formatMessage({ id: 'ui-dashboard.simpleSearchForm.resourceName.localKB' }) } :
       col
   );
 
