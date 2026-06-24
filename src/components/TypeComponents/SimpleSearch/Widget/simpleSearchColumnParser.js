@@ -43,7 +43,8 @@ const simpleSearchColumnParser = ({
     results: {
       columns: defResultColumns = []
     } = {}
-  } = {}
+  } = {},
+  intl
 }) => {
   // This again assumes that all of the result columns in the widgetinstance are coming from the widgetDef.
   // If they're not there it'll cause issues.
@@ -54,7 +55,11 @@ const simpleSearchColumnParser = ({
 
     // Heirachy is overwritten col label -> definition column label -> definition column name (capitalised)
     const headerText = (rc.label || drc.label || capitaliseText(drc.name));
-    const returnColumn = { Header: headerText, accessor: drc.accessPath, id: `${rc.name}-[${index}]` };
+    const headerTextWithClarity = (resource === 'entitlements' && drc.name === 'resourceName' && headerText === 'Resource name') ?
+      intl.formatMessage({ id: 'ui-agreements.agreementLines.localKBResourceName' }) :
+      headerText;
+
+    const returnColumn = { Header: headerTextWithClarity, accessor: drc.accessPath, id: `${rc.name}-[${index}]` };
 
     // Add any custom column rendering in here
     // NOTE this is column-wide, not cell wide.

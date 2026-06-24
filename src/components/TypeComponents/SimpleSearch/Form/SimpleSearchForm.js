@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { useIntl } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
@@ -20,6 +21,7 @@ import SimpleSearchConfigurableProperties from './configurableProperties/SimpleS
 const SimpleSearchForm = ({
   specificWidgetDefinition
 }) => {
+  const intl = useIntl();
   const {
     configurableProperties,
     matches,
@@ -33,6 +35,22 @@ const SimpleSearchForm = ({
       columns: sortColumns = []
     } = {},
   } = specificWidgetDefinition?.definition ?? {};
+  console.log('SimpleSearchForm specificWidgetDefinition', specificWidgetDefinition);
+
+  const { resource } = specificWidgetDefinition?.definition ?? {};
+  const colOverride = (col) => (
+    (resource === 'entitlements' && col.name === 'resourceName' && col.label === 'Resource name') ?
+      { ...col, label: intl.formatMessage({ id: 'ui-agreements.agreementLines.localKBResourceName' }) } :
+      col
+  );
+
+  const filterResourceName = filterColumns.map(colOverride);
+  const resultResourceName = resultColumns.map(colOverride);
+  const displayResourceName = sortColumns.map(colOverride);
+  const matchesWithClarity = {
+    ...matches,
+    columns: matches?.columns?.map(colOverride)
+  };
 
   const accordionStatusRef = useRef();
 
@@ -69,7 +87,7 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchMatches
               data={{
-                matches,
+                matches: matchesWithClarity,
               }}
               id="simple-search-form-matches"
             />
@@ -78,7 +96,7 @@ const SimpleSearchForm = ({
               addLabelId="ui-dashboard.simpleSearchForm.filters.addFilter"
               component={SimpleSearchFilterArray}
               data={{
-                filterColumns
+                filterColumns: filterResourceName
               }}
               deleteButtonTooltipId="ui-dashboard.simpleSearchForm.filters.removeFilter"
               headerId="ui-dashboard.simpleSearchForm.filters"
@@ -87,9 +105,9 @@ const SimpleSearchForm = ({
             />
             <SimpleSearchResults
               data={{
-                resultColumns,
+                resultColumns: resultResourceName,
                 configurableProperties,
-                sortColumns
+                sortColumns: displayResourceName
               }}
               id="simple-search-form-results"
             />
