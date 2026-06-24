@@ -35,7 +35,6 @@ const SimpleSearchForm = ({
       columns: sortColumns = []
     } = {},
   } = specificWidgetDefinition?.definition ?? {};
-  console.log('SimpleSearchForm specificWidgetDefinition', specificWidgetDefinition);
 
   const { resource } = specificWidgetDefinition?.definition ?? {};
   const colOverride = (col) => (
